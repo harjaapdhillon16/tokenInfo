@@ -1,0 +1,340 @@
+@import "./variables";
+html {
+  font-size: 16px;
+}
+body {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-weight: 700;
+}
+h1,
+.h1 {
+  /* font-size: 32px; */
+  font-size: 2rem;
+}
+h2,
+.h2 {
+  /* font-size: 3em; */
+}
+h4,
+.h4 {
+  /* font-size: 2.25em; */
+}
+h5,
+.h5 {
+  /* font-size: 20px; */
+  font-size: 1.25rem;
+}
+h6,
+.h6 {
+  /* font-size: 18px; */
+  font-size: 1.125rem;
+}
+p {
+  margin-bottom: 1rem;
+}
+
+button {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  background: none;
+  cursor: pointer;
+  &:focus {
+    outline: 0;
+  }
+}
+a {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  color: inherit;
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+.breadcrumb {
+  padding: 40px 0 10px;
+  background-color: transparent;
+  margin: 0;
+  .breadcrumb-item {
+    // color: inherit;
+    & + .breadcrumb-item {
+      &:before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-top: 1px solid rgba($black, 0.5);
+        border-right: 1px solid rgba($black, 0.5);
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+        display: inline-block;
+        margin: 6px 10px 0 0;
+      }
+    }
+    a {
+      display: block;
+      color: inherit;
+    }
+  }
+}
+
+.form-group {
+  // border-bottom: 1px solid $black;
+  position: relative;
+  h6 {
+    margin-bottom: 0.5rem;
+  }
+  .formGroupActionRight {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  label {
+    font-weight: 700;
+  }
+}
+.inputGroupWithBtn {
+  position: relative;
+  .btn {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    right: 5px;
+  }
+  .form-control {
+    padding-right: 85px;
+  }
+}
+.btn {
+  &.btn-primary {
+    background: $primaryColor;
+    border-color: $primaryColor;
+    &:active {
+      background: $primaryColor !important;
+      border-color: $primaryColor !important;
+    }
+    &.btn-link {
+      padding: 0;
+      margin: 0;
+      background: none !important;
+      border: 0;
+      color: $primaryColor;
+      font-weight: 700;
+      color: $primaryColor;
+      &:active,
+      &:focus {
+        box-shadow: none !important;
+        background: none !important;
+        border: 0;
+        color: $primaryColor;
+        outline: 0;
+        text-decoration: none;
+      }
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.formItemStatus {
+  padding: 8px 15px 8px;
+  border-radius: 50px;
+  background-color: rgba($black, 0.5);
+  display: inline-block;
+  font-size: .9em;
+  color: #ffffff;
+  box-shadow: 0 0 5px rgba($black, 0.1);
+  text-transform: capitalize;
+  svg{
+    width: 18px;
+    height: 18px;
+    path{
+      fill: #ffffff;
+    }
+  }
+  &.in_transit {
+    background-color: $success;
+  }
+  &.rejected {
+    background-color: $error;
+    color: $white;
+  }
+  &.accepted {
+    background-color: $info;
+    color: $white;
+  }
+}
+.refreshIcon{ margin-left: 20px; svg{
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  path{ fill: $success;}
+} }
+
+.cardBox {
+  // margin-top: 30px;
+  // height: -webkit-calc(100% - 30px);
+  // height: calc(100% - 30px);
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba($black, 0.16);
+  border-radius: 8px;
+  display: block;
+  color: inherit;
+  transition: all 200ms;
+
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+    transition: all 200ms;
+    transform: scale(1.05);
+    box-shadow: 0 2px 16px rgba($black, 0.16);
+  }
+  &.noAnimation{
+    &:hover {
+       
+      transform:none;
+      box-shadow: 0 2px 8px rgba($black, 0.16);
+    }
+  }
+  .cardBoxIcon {
+    margin-bottom: 0.5rem;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    svg,
+    img {
+      width: 50px;
+      height: 50px;
+      // display: block;
+    }
+  }
+  h6 {
+    margin-bottom: 0.5rem;
+  }
+  p {
+    margin-bottom: 0;
+  }
+}
+.cards {
+  margin-bottom: 30px;
+  .cardBox {
+    margin-top: 30px;
+    height: calc(100% - 30px);
+  }
+}
+.dragDroop {
+  width: 195px;
+  height: 195px;
+  border: 1px dashed $black;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0;
+  position: relative;
+  background-image: url(../images/iconAddPhoto.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 80px auto;
+  cursor: pointer;
+  &.active {
+    border-color: $success;
+    border-style: solid;
+    background-color: rgba($black, 0.1);
+    outline: 0;
+  }
+  &:focus {
+    outline: 0;
+  }
+  &:hover {
+    background-color: rgba($black, 0.1);
+  }
+}
+
+.stickySide {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 100px;
+}
+
+.text-error {
+  color: $error;
+}
+.flex1 {
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+.dropdown-item,.requestQueriesCard .dropdown .dropdown-toggle{ text-transform: capitalize;}
+.locationItem{  
+ 
+  padding: 10px 0;
+  .locationItemRow{ 
+    display: flex;
+  }
+ 
+ .editIcon
+{
+     
+    padding: 0 0 0 12px  !important;
+    font-size: .9em;
+
+  
+  &.border-right{
+    border-right:2px solid #008489;
+    border-radius: 0; 
+    padding: 0 12px 0 12px  !important;
+  }
+    svg { 
+      width: 16px;  margin-top: -4px;
+    }
+}
+}
+.addButton{ 
+   color:#008489;
+   font-weight:700 ;
+   font-size: 14px;
+  svg{
+  width: 20px;
+  margin-right: 5px;
+  ;
+  path{fill:#008489; stroke: 1px;}
+}}
+.btn-group{ margin-left: auto;}
+.attr-list{
+   li{
+      display: inline-block;
+      margin-left: 2px;
+     &::after{
+       content: ",";
+     } 
+     &:last-child{
+      &::after{
+        content: "";
+      } 
+     }
+   }
+}
