@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-cribfoxformui-dev-194510-authRole",
+      "UnauthRoleArn": "arn:aws:iam::709032463030:role/amplify-cribfoxformui-dev-194510-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::709032463030:role/amplify-cribfoxformui-dev-194510-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-cribfoxformui-dev-194510-deployment",
+      "UnauthRoleName": "amplify-cribfoxformui-dev-194510-unauthRole",
+      "StackName": "amplify-cribfoxformui-dev-194510",
+      "StackId": "arn:aws:cloudformation:us-east-2:709032463030:stack/amplify-cribfoxformui-dev-194510/62750ff0-8be6-11eb-bc76-02f4fb1d662e",
+      "AmplifyAppId": "dbu94aroqt6oc"
+    },
+    "categories": {
+      "auth": {
+        "cribfoxformuiaa250364": {}
+      }
+    }
+  }
+}
