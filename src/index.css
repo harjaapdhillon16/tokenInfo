@@ -57,6 +57,42 @@ code {
   color: #000 !important;
   border: solid 1px #000 !important;
 }
+.breadcrumb-item+.breadcrumb-item::before{
+  content:">";
+}
+.title-bar{
+  background-color:none !important;
+}
+.options{
+  font-size: 14px;
+  width: 140px;
+  margin-right: 4px;
+  border-radius: 13px !important;
+}
+.options:hover {
+  color: #000;
+  background-color: none !important;
+  border-color:none !important;
+}
+.sent-option{
+  padding: 9px 30px 9px !important;
+  border-radius: 50px !important;
+  background-color: #307AFE !important;
+  display: inline-block !important;
+  font-size: .9em !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 5px rgb(0 0 0 / 10%) !important;
+  margin-right:4px;
+}
+.title-bar ol {
+  background: transparent;
+  padding-left: 0px;
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+.title-bar ol a {
+  color:#000;
+}
 
 /* media queries start */
 @media (min-width:420px){
