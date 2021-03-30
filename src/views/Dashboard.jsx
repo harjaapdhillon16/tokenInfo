@@ -12,6 +12,39 @@ const Dashboard = () => {
 
   }, []);
 
+  const appCards = [
+    {  icon:<IconEmail />,
+       title:'Deals',
+       desc:'Review and manage your leads and deals pipeline.',
+       sectionPath:"/deals"
+      },
+      {  icon:<IconEmail />,
+        title:'Feedback',
+        desc:'Keep track of and aggregate feedback on listings.',
+        sectionPath:"/feedback"
+       },
+       {  icon:<IconEmail />,
+        title:'Contacts',
+        desc:'Add contacts, edit client info and view relationship history',
+        sectionPath:"/contacts"
+       },
+       {  icon:<IconEmail />,
+        title:'Forms',
+        desc:'View status, download signed forms and send reminders.',
+        sectionPath:"/forms"
+       },
+       {  icon:<IconEmail />,
+        title:'QR Codes',
+        desc:'QR codes to forms when you are on the go.',
+        sectionPath:"/code"
+       },
+       {  icon:<IconEmail />,
+        title:'Account',
+        desc:'Review and update your account information',
+        sectionPath:"/account"
+       },
+  ]
+
 
   return (
 
@@ -36,18 +69,9 @@ const Dashboard = () => {
         </Col>
       </Row>
       <Row>
-        <Col md={4}>
-          <AppCard icon={<IconEmail />} title={'Clients'} desc={'Add clients, edit clients info and view history.'} />
-        </Col>
-        <Col md={4}>
-          <AppCard icon={<IconBuilding />} title={'Forms'} desc={'View status, download signed forms and send reminders'} />
-        </Col>
-        <Col md={4}>
-          <AppCard icon={<IconSmartphone />} title={'Account'} desc={' Review and update your account information.'} />
-
-        </Col>
-
-
+        {appCards.map(item=> <Col md={4}>
+          <AppCard icon={item.icon} title={item.title} desc={item.desc} sectionPath={item.sectionPath} />
+        </Col> )}
       </Row>
 
     </Container>

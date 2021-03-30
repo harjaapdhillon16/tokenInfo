@@ -17,9 +17,8 @@ const ApplicationRouter = () => {
         <Suspense fallback={<div className="appRouterLoader"><Loader /></div>}>
 
           
-          
         <Route exact path="/forms" component={FormsScreen} />
-          <Route exact path="/" component={Dashboard} />
+        <Route exact path="/" component={Dashboard} />
         </Suspense>
 
         <Redirect to="not-found" />

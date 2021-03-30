@@ -1,12 +1,13 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
+import {Link} from "react-router-dom";
  const AppCard = (props) => {
  
     return ( 
-        <Card className="mt-4">
+      <Link to={props.sectionPath}>
+        <Card className="mt-4 cardtext">
             <Card.Body>
               <div className="cardBoxIcon ">
-                {/* <IconBuilding /> */}
                 {props.icon}
               </div>
               <Card.Title>
@@ -17,6 +18,7 @@ import { Card } from 'react-bootstrap';
               </Card.Text>
             </Card.Body>
           </Card>
+          </Link>
      );
 }
  

@@ -93,6 +93,29 @@ code {
 .title-bar ol a {
   color:#000;
 }
+.cardtext h6 ,p{
+  color:#000;
+}
+a:hover{
+ text-decoration:none  !important
+}
+.card-text p:focus{
+  outline:none !important;
+}
+.pop-btn {
+  padding: 5px 40px 5px 40px !important;
+}
+.input-group-text{
+  background-color:transparent !important;
+  border:none !important;
+}
+#formBasicSearch {
+  width: 80%;
+  margin-left: 5%;
+}
+.pop-header{
+  border-bottom:none !important;
+}
 
 /* media queries start */
 @media (min-width:420px){

@@ -1,10 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Row, Col, Button } from 'react-bootstrap';
 import { Navbar } from "react-bootstrap";
 import { IconMenu } from "../../assets/icons/icons";
 import UserIcon from "../../assets/icons/images/user-icon.png";
 import { Dropdown } from "react-bootstrap";
+import SendForm from "../sendForm/sendForm";
 const Header = () => {
+  const [formModal,setFormModal] = useState(false);
+     
+  const handleFormModal = (value) => {
+    setFormModal(!value)
+  }
+
     return ( 
         <Row className="header">
         <Col   className="top-head">
@@ -16,7 +23,7 @@ const Header = () => {
         </Col>
         <Col md={6} className="account">
           <div class=" d-flex ml-auto pt-3 p-2">
-        <Button className="send">Send Form</Button>
+        <Button className="send" onClick={()=>handleFormModal(formModal)}>Send Form</Button>
           <Dropdown>
             <Dropdown.Toggle className="drop-btn">
               <span>Chris Oliver</span>
@@ -32,6 +39,7 @@ const Header = () => {
           </div>
         </div>
         </Col>
+        <SendForm formModal={formModal}  onHandleFormModal={handleFormModal} />
       </Row>
      );
 }
