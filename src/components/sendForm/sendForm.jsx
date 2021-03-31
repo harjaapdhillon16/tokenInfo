@@ -1,9 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import {
-  IconBuilding,
-  IconEmail,
-  IconSmartphone,
-  IconMenu,
+  IconPlus
 } from "../../assets/icons/icons";
 import {
   Container,
@@ -117,8 +114,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
             </InputGroup.Prepend>
             <span>Morgan Freeman</span>
           </InputGroup>
-          <div className="d-flex ml-auto mr-auto justify-content-center">
-            <IconMenu /> Add a new client
+          <div className="d-flex ml-auto mr-auto justify-content-center add-client">
+            <IconPlus /> Add a new client
           </div>
         </Modal.Body>
         <Modal.Footer>
