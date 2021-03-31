@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { IconBuilding, IconEmail, IconSmartphone, IconMenu } from "../assets/icons/icons"
+import { IconDeal, IconFeedback, IconForms, IconContacts, IconQR, IconUser } from "../assets/icons/icons"
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Dropdown } from "react-bootstrap";
 import AppCard from "../components/card/card";
@@ -13,32 +13,32 @@ const Dashboard = () => {
   }, []);
 
   const appCards = [
-    {  icon:<IconEmail />,
+    {  icon:<IconDeal />,
        title:'Deals',
        desc:'Review and manage your leads and deals pipeline.',
        sectionPath:"/deals"
       },
-      {  icon:<IconEmail />,
+      {  icon:<IconFeedback />,
         title:'Feedback',
         desc:'Keep track of and aggregate feedback on listings.',
         sectionPath:"/feedback"
        },
-       {  icon:<IconEmail />,
+       {  icon:<IconForms />,
         title:'Contacts',
         desc:'Add contacts, edit client info and view relationship history',
         sectionPath:"/contacts"
        },
-       {  icon:<IconEmail />,
+       {  icon:<IconContacts />,
         title:'Forms',
         desc:'View status, download signed forms and send reminders.',
         sectionPath:"/forms"
        },
-       {  icon:<IconEmail />,
+       {  icon:<IconQR />,
         title:'QR Codes',
         desc:'QR codes to forms when you are on the go.',
         sectionPath:"/code"
        },
-       {  icon:<IconEmail />,
+       {  icon:<IconUser />,
         title:'Account',
         desc:'Review and update your account information',
         sectionPath:"/account"
