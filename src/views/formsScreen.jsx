@@ -3,7 +3,8 @@ import { IconBuilding, IconEmail, IconSmartphone, IconMenu } from "../assets/ico
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Dropdown } from "react-bootstrap";
 import Badge from 'react-bootstrap/Badge'
-import Breadcrumb from 'react-bootstrap/Breadcrumb'
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { Link } from "react-router-dom";
 
 const FormsScreen = () => {
   const [loading, setLoading] = useState(true);
@@ -17,8 +18,10 @@ const FormsScreen = () => {
 
     <Container>
       <Breadcrumb className="title-bar">
-        <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
-        <Breadcrumb.Item href="">Form</Breadcrumb.Item>
+        <Breadcrumb.Item >
+        <Link to="/">Home</Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Item>Form</Breadcrumb.Item>
       </Breadcrumb>
       <Row>
         <Col md={12} className="dashboardCards pt-5">

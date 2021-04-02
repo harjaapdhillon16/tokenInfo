@@ -121,6 +121,9 @@ a:hover{
   max-width: 16px;
   margin-right: 10px;
 }
+.border-bottom {
+  border-bottom: 1px solid #000 !important;
+}
 
 /* media queries start */
 @media (min-width:420px){
