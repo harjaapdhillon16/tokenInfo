@@ -5,6 +5,7 @@ import App from './App';
 import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { BrowserRouter} from "react-router-dom"; 
+import {AppContext} from "./context/appContext"
 
 
 Amplify.configure(awsconfig);
@@ -12,7 +13,9 @@ Amplify.configure(awsconfig);
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
+		  <AppContext >
 			<App />
+			</AppContext>
 		</BrowserRouter>
 
 	</React.StrictMode>,

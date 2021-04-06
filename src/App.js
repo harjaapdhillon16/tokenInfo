@@ -7,7 +7,9 @@ import { withAuthenticator } from '@aws-amplify/ui-react';
 
 function App() {
   return (
+    <>
     <MainWrapper />
+   </>
   );
 }
 export default withAuthenticator(App);

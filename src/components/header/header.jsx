@@ -4,6 +4,7 @@ import { Navbar } from "react-bootstrap";
 import { IconMenu } from "../../assets/icons/icons";
 import UserIcon from "../../assets/icons/images/user-icon.png";
 import { Dropdown } from "react-bootstrap";
+import { AmplifySignOut } from '@aws-amplify/ui-react';
 import SendForm from "../sendForm/sendForm";
 const Header = () => {
   const [formModal,setFormModal] = useState(false);
@@ -23,7 +24,8 @@ const Header = () => {
         </Col>
         <Col md={6} className="account">
           <div class=" d-flex ml-auto pt-3 p-2">
-        <Button className="send" onClick={()=>handleFormModal(formModal)}>Send Form</Button>
+          <Button variant="outline-secondary invite mr-3">Invite</Button>
+          <Button className="send" onClick={()=>handleFormModal(formModal)}>Send Form</Button>
           <Dropdown>
             <Dropdown.Toggle className="drop-btn">
               <span>Chris Oliver</span>
@@ -31,7 +33,11 @@ const Header = () => {
             <Dropdown.Menu>
               <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
               <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+              <Dropdown.Item>
+                <div className="signout-btn">
+                  <AmplifySignOut />
+                  </div>
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
           <div className="profile">

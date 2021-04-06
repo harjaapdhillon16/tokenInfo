@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
-import {
-  IconPlus
-} from "../../assets/icons/icons";
+
+import { IconPlus } from "../../assets/icons/icons";
 import {
   Container,
   Modal,
@@ -14,10 +13,12 @@ import {
 import { Dropdown } from "react-bootstrap";
 import AppCard from "../card/card";
 import Header from "../header/header";
+import AppContext from "../../context/appContext";
 
 const SendForm = ({ formModal, onHandleFormModal }) => {
   const [currentState, handleCurrentState] = useState(1);
-
+  const  { formsTypes , clients } = useContext(AppContext);
+ 
   useEffect(() => {
     handleCurrentState(1);
   }, [formModal]);
@@ -33,26 +34,11 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           <Modal.Title></Modal.Title>
         </Modal.Header>
         <Modal.Body className="modal-options">
-          <Form.Group controlId="formBasicCheckbox1">
-            <Form.Check type="checkbox" label="REBNY COVID Liability Form" />
-          </Form.Group>
-         
-          <Form.Group controlId="formBasicCheckbox2">
-            <Form.Check type="checkbox" label="REBNY COVID Health Screening Form" />
-          </Form.Group>
-         
-          <Form.Group controlId="formBasicCheckbox3">
-            <Form.Check type="checkbox" label="New York Agency Disclosure Form for Buyer and Seller" />
-          </Form.Group>
-
-          <Form.Group controlId="formBasicCheckbox4">
-            <Form.Check type="checkbox" label="New York State Disclosure Form for Landlord and Tenant" />
-          </Form.Group>
-
-          <Form.Group controlId="formBasicCheckbox5">
-            <Form.Check type="checkbox" label="New York State Housing Discrimination Disclosure Form" />
-          </Form.Group>
-
+          {formsTypes.map((item) => (
+            <Form.Check
+             id={item.id} 
+            label={item.title} />
+          ))}
         </Modal.Body>
         <Modal.Footer>
           <Button
@@ -80,40 +66,10 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           <Form.Control type="search" placeholder="Search" />
         </Form.Group>
         <Modal.Body className="modal-options">
-          <InputGroup className="mb-3">
-            <InputGroup.Prepend>
-              <InputGroup.Checkbox aria-label="Checkbox for following text input" />
-            </InputGroup.Prepend>
-            <span>Mila Kunas</span>
-          </InputGroup>
 
-          <InputGroup className="mb-3">
-            <InputGroup.Prepend>
-              <InputGroup.Checkbox aria-label="Checkbox for following text input" />
-            </InputGroup.Prepend>
-            <span>Tom Cruise</span>
-          </InputGroup>
-
-          <InputGroup className="mb-3">
-            <InputGroup.Prepend>
-              <InputGroup.Checkbox aria-label="Checkbox for following text input" />
-            </InputGroup.Prepend>
-            <span>Jack Ryan</span>
-          </InputGroup>
-
-          <InputGroup className="mb-3">
-            <InputGroup.Prepend>
-              <InputGroup.Checkbox aria-label="Checkbox for following text input" />
-            </InputGroup.Prepend>
-            <span>George Clooney</span>
-          </InputGroup>
-
-          <InputGroup className="mb-3">
-            <InputGroup.Prepend>
-              <InputGroup.Checkbox aria-label="Checkbox for following text input" />
-            </InputGroup.Prepend>
-            <span>Morgan Freeman</span>
-          </InputGroup>
+          {clients.map((item) => (
+            <Form.Check id={item.id} label={item.name} />
+          ))}
           <div className="d-flex ml-auto mr-auto justify-content-center add-client">
             <IconPlus /> Add a new client
           </div>

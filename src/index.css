@@ -52,9 +52,10 @@ code {
   background:transparent;
   box-shadow:none !important;
 }
-.send {
+.send, .invite {
   background: transparent  !important;
   color: #000 !important;
+  width: 120px;
   border: solid 1px #000 !important;
 }
 .breadcrumb-item+.breadcrumb-item::before{
@@ -113,6 +114,9 @@ a:hover{
   width: 80%;
   margin-left: 5%;
 }
+#formBasicEmail{
+  width:300px;
+}
 .pop-header{
   border-bottom:none !important;
 }
@@ -123,6 +127,26 @@ a:hover{
 }
 .border-bottom {
   border-bottom: 1px solid #000 !important;
+}
+.form-check{
+  margin: 0px 0px 15px 20px;
+}
+.add-contact{
+  height: 39px;
+}
+.contact-table td{
+  font-size:14px;
+  text-align: center;
+
+}
+.check-head{
+  margin:0px;
+}
+.contact-table th{
+  border: 1px solid #dee2e6;
+}
+.table-bordered thead td, .table-bordered thead th{
+  font-weight:normal;
 }
 
 /* media queries start */
