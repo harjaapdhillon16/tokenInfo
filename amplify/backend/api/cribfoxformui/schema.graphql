@@ -1,0 +1,20 @@
+type Agent {
+	id: ID!
+	name: String!
+	email: String!
+}
+
+type Contact @model @key(name: "byAgent", fields: ["agentId"], queryField: "contactByAgent") {
+	id: ID!
+	agentId: ID!
+	name: String
+	email: String
+}
+
+type FormData @model @key(name: "byAgent", fields: ["senderId"], queryField: "formsByAgent") {
+	id: ID!
+	senderId: ID!
+	receiverId: ID!
+	formName: String!
+	data: [String]
+}
