@@ -1,0 +1,125 @@
+html{
+    overflow-x:hidden;
+}
+body{
+    margin:0;
+    overflow-x: hidden;
+}
+span{
+    font-weight:700;
+}
+.border-left{
+    padding-left: 15px;
+    border-left: 2px solid #000000 !important;
+}
+.header-right{
+    text-align: end;
+}
+.header-right ul{
+    list-style:none;
+    font-size: 14px;
+}
+.title-bar {
+    border-top: solid 2px #000;
+    border-bottom: solid 2px #000;
+}
+.submit-form  .form-control{
+    width:380px !important;
+    margin-left:15px;
+    border: none;
+    border-bottom: solid 1px;
+    border-radius: 0px;
+}
+.detail .form-control{
+    width: 50%;
+    margin-left: 15px;
+    border: none;
+    border-bottom: solid 1px;
+    border-radius: 0px;
+}
+.submit-form .form-control:focus{
+    box-shadow:none;
+}
+.detail .form-control:focus{
+    box-shadow:none;
+}
+
+
+/* Responsive design with media queries */
+
+@media (max-width:1200px){}
+@media (min-width: 1200px){
+}
+@media (min-width: 1024px) and (max-width: 1200px) {
+}
+@media (min-width: 992px) and (max-width: 1024px) { 
+    .border-left{
+        font-size:35px;
+    }
+    .detail .form-control{
+        width:45%;
+    }
+ }
+@media (min-width: 768px) and (max-width: 992px) {
+    .border-left{
+        font-size:24px;
+    }
+    .title-bar h4 {
+        font-size: 23px;
+    }
+ }
+@media (min-width: 576px) and (max-width: 768px) { 
+    .border-left{
+        font-size:17px;
+    }
+ }
+@media (min-width: 420px) and (max-width: 576px) {  
+    .logo{
+        width:200px !important;
+        display:flex;
+        margin-left:auto;
+        margin-right:auto;  
+    }
+    .border-left{
+        border-left:none !important;
+        font-size: 24px;
+        text-align: center;
+        padding-top: 27px;
+    }
+    .header-right {
+        text-align: center;
+        padding-top: 20px;
+    }
+    .title-bar h4{
+        text-align:center;
+        font-size:20px;
+        line-height:28px;
+    }
+    /* p, ul,li, label{
+        font-size:14px;
+    } */
+}
+@media (min-width: 360px) and (max-width: 420px) { 
+    .logo{
+        width:100px !important;
+        display:flex;
+        margin-left:auto;
+        margin-right:auto;  
+    }
+    .border-left{
+        border-left:none !important;
+        font-size: 24px;
+        text-align: center;
+        padding-top: 27px;
+    }
+    .header-right {
+        text-align: center;
+        padding-top: 20px;
+    }
+    .title-bar h4{
+        text-align:center;
+        font-size:16px;
+        line-height:24px;
+    }
+
+}
