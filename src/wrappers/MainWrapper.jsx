@@ -5,6 +5,9 @@ import { Dropdown } from "react-bootstrap";
 import AppCard from "../components/card/card";
 import Header from "../components/header/header";
 import ApplicationRouter from "../router/applicationRouter";
+import { withAuthenticator } from '@aws-amplify/ui-react';
+
+
 
 const MainWrapper = () => {
   const [loading, setLoading] = useState(true);
@@ -22,4 +25,4 @@ const MainWrapper = () => {
   );
 };
 
-export default MainWrapper;
+export default withAuthenticator(MainWrapper);

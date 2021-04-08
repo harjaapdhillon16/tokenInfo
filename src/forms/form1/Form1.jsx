@@ -89,16 +89,13 @@ const Form1 = () => {
                         <div className="footer pl-0">
                             <p>Please note that this form should not be construed as providing legal advice and you should review this form with an attorney before signing</p>
                         <Row>
-                            <Col md={6} className="p-0"> 
-                            <ul>
-                                <li>Real Estate board of New York</li>
-                                <li>rebny.com</li>
-                            </ul>
+                            <Col md={6} className="pt-2"> 
+                            <h6>Real Estate board of New York | rebny.com</h6>
                             </Col>
-                            <Col md={6} className="p-0">
+                            <Col md={6}>
                                 <ul>
                                     <li>
-                                        Stay in Touch
+                                        <h6 className="pt-1">Stay in Touch</h6>
                                     </li>
                                     <li><IconTwitter /></li>
                                     <li><IconFacebook /></li>

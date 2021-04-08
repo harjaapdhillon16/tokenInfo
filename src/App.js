@@ -3,13 +3,21 @@ import './App.css';
 import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MainWrapper from './wrappers/MainWrapper'
-import { withAuthenticator } from '@aws-amplify/ui-react';
+import FormController from "./views/FormController"
+import { Switch, Route, Redirect } from "react-router-dom";
+
+ 
 
 function App() {
   return (
+    
     <>
-    <MainWrapper />
+     <Switch>
+        <Route exact path="/formSubmission/:id" component={FormController} />
+        <Route exact path="/" component={MainWrapper} />
+      </Switch>
+ 
    </>
   );
 }
-export default withAuthenticator(App);
+export default App;
