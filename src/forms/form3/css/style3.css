@@ -58,7 +58,17 @@ span{
 .question-title span{
    color:#c81c1c;
 }
-
+.detail .form-control{
+    width: 100%;
+    margin-left: 15px;
+    border: none;
+    border-bottom: solid 1px;
+    border-radius: 0px;
+    max-width: 300px;
+}
+.logo{
+    
+}
 
 
 /* Responsive design with media queries */
@@ -66,7 +76,7 @@ span{
 @media (max-width:1200px){}
 @media (min-width: 1200px){
 .container {
-    max-width: 816px;
+    max-width: 1024px;
 }
 }
 @media (min-width: 1024px) and (max-width: 1200px) {

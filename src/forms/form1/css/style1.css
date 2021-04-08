@@ -46,7 +46,10 @@ body{
 .left-side li:first-child {
         border-right:solid 1px red;
 }
-
+#formBasicSign {
+    width: 285px;
+    margin: 0;
+}
 
 
 
@@ -55,7 +58,7 @@ body{
 @media (max-width:1200px){}
 @media (min-width: 1200px){
 .container {
-    max-width: 816px;
+    max-width: 1024px;
 }
 }
 @media (min-width: 1024px) and (max-width: 1200px) {

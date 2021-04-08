@@ -10,7 +10,7 @@ const Form1 = () => {
                 <Col md={6} className="pt-5">
                 <h4 class="resource-title font-weight-light">REBNY Resources</h4>
                 </Col>
-                <Col md={6}>
+                <Col md={6} className="pt-5">
                     <img src={Logo} alt="logo" />
                 </Col>
             </Row>

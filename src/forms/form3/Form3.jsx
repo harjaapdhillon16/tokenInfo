@@ -10,8 +10,8 @@ const Form3 = () => {
                 <Col md={6} className="pt-5">
                 <h4 class="resource-title font-weight-light">REBNY Resources | March 8,2021</h4>
                 </Col>
-                <Col md={6}>
-                    <img src={Logo} alt="logo" />
+                <Col md={6} className="pt-5">
+                    <img src={Logo} alt="logo" className="logo"/>
                 </Col>
             </Row>
             <Row>
@@ -158,29 +158,29 @@ const Form3 = () => {
                         <div class="form-row detail pt-5">
                     <div class="col-md-4 mb-3">
                       <input type="text" class="form-control"/>
-                      <label class="pt-2 input-head">Print Name</label>
+                      <label class="pt-2 pl-3 input-head">Print Name</label>
                     </div>
                     <div class="col-md-4 mb-3">
                         <input type="text" class="form-control"/>
-                        <label class="pt-2 input-head">Signature</label>
+                        <label class="pt-2  pl-3 input-head">Signature</label>
                       </div>
                       <div class="col-md-4 mb-3">
                         <input type="text" class="form-control"/>
-                        <label class="pt-2 input-head">Date</label>
+                        <label class="pt-2  pl-3 input-head">Date</label>
                       </div>
                 </div>
                 <div class="form-row detail pt-">
                     <div class="col-md-4 mb-3">
                       <input type="text" class="form-control"/>
-                      <label class="pt-2 input-head">Property Address</label>
+                      <label class="pt-2  pl-3 input-head">Property Address</label>
                     </div>
                     <div class="col-md-4 mb-3">
                         <input type="text" class="form-control"/>
-                        <label class="pt-2 input-head">Name of Real Estate Licensee</label>
+                        <label class="pt-2  pl-3 input-head">Name of Real Estate Licensee</label>
                       </div>
                       <div class="col-md-4 mb-3">
                         <input type="text" class="form-control"/>
-                        <label class="pt-2 input-head">Name of Brokerage Company</label>
+                        <label class="pt-2  pl-3 input-head">Name of Brokerage Company</label>
                       </div>
                 </div>
                 </Col>

@@ -49,6 +49,9 @@ span{
 
 @media (max-width:1200px){}
 @media (min-width: 1200px){
+    .container {
+        max-width: 1024px;
+    }
 }
 @media (min-width: 1024px) and (max-width: 1200px) {
 }
@@ -59,10 +62,13 @@ span{
     .detail .form-control{
         width:45%;
     }
+    .logo, .top-title {
+        padding-top: 45px;
+    }
  }
 @media (min-width: 768px) and (max-width: 992px) {
     .border-left{
-        font-size:24px;
+        font-size:32px;
     }
     .title-bar h4 {
         font-size: 23px;
@@ -70,8 +76,15 @@ span{
  }
 @media (min-width: 576px) and (max-width: 768px) { 
     .border-left{
-        font-size:17px;
+        font-size:22px;
     }
+    .logo, .top-title {
+        padding-top: 50px;
+    }
+    .date-block{
+        margin-left:46% !important;
+    }
+    
  }
 @media (min-width: 420px) and (max-width: 576px) {  
     .logo{
@@ -95,9 +108,9 @@ span{
         font-size:20px;
         line-height:28px;
     }
-    /* p, ul,li, label{
-        font-size:14px;
-    } */
+    .top-title{
+        padding-top:10px;
+    }
 }
 @media (min-width: 360px) and (max-width: 420px) { 
     .logo{
@@ -120,6 +133,12 @@ span{
         text-align:center;
         font-size:16px;
         line-height:24px;
+    }
+    .date-block {
+        margin-left: 50% !important;
+    }
+    .input-head {
+        font-size: 13px !important;
     }
 
 }
