@@ -12,8 +12,9 @@ function App() {
   return (
     
     <>
+{/* <MainWrapper /> */}
      <Switch>
-        <Route exact path="/formSubmission/:id" component={FormController} />
+        <Route   path="/formSubmission/:id" component={FormController} />
         <Route exact path="/" component={MainWrapper} />
       </Switch>
  

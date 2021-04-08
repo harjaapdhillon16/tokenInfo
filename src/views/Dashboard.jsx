@@ -4,9 +4,11 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Dropdown } from "react-bootstrap";
 import AppCard from "../components/card/card";
 import Header from "../components/header/header";
+import AppContext from "../context/appContext";
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
+  const { user }= useContext(AppContext);
 
   useEffect(() => {
 
@@ -51,7 +53,9 @@ const Dashboard = () => {
     <Container>
       <Row>
         <Col md={12} className="dashboardCards pt-5">
-          <h1>Chris Oliver</h1>
+          <h1>
+          {user.attributes.email}
+          </h1>
           <div className="d-flex">
             <h6 className="pt-1">HomeDax Real Estate</h6>
             <Dropdown>

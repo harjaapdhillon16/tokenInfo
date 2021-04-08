@@ -4,16 +4,30 @@ import { Container, Row, Col, Button, Form, Table } from 'react-bootstrap';
 import { Dropdown } from "react-bootstrap";
 import Badge from 'react-bootstrap/Badge'
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { API, graphqlOperation } from "aws-amplify";
+import { listContacts } from "../graphql/queries";
 import { Link } from "react-router-dom";
 
 const FormsScreen = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
+    handleContact()
   }, []);
 
-
+const handleContact = async() => {
+  try {
+    const hotelAmenities = await API.graphql(
+      graphqlOperation(listContacts)
+    );
+    console.log(hotelAmenities);
+    const item = hotelAmenities.data.createHotelFeature;
+    
+  } catch (err) {
+    console.log(err);
+   
+  }
+}
   return (
 
     <Container>
