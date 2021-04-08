@@ -21,7 +21,7 @@ const ApplicationRouter = () => {
         <Route exact path="/deals" component={DealScreen} />
         <Route exact path="/forms" component={FormsScreen} />
         <Route exact path="/account" component={Account} />
-        <Route exact path="/" component={Dashboard} />
+        <Route exact path="/dashboard" component={Dashboard} />
         </Suspense>
 
         <Redirect to="not-found" />

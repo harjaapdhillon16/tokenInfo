@@ -17,7 +17,7 @@ const Form1 = () => {
   const handleShow = () => setShow(true);
 
   return (
-    <Container>
+    <Container className="form1">
       <Row>
         <Col md={6} className="pt-5">
           <h4 class="resource-title font-weight-light">REBNY Resources</h4>

@@ -5,7 +5,7 @@ import { IconFacebook,IconTwitter,IconLinkedin, IconInstagram } from "../../asse
 import Logo from "../../assets/FormImages/og_image.png";
 const Form2 = () => {
     return ( 
-        <Container>
+        <Container className="form2">
             <Row className="pt-4">
                 <Col md={2} sm={12} xs={12}>
                     <img src={Logo} alt="logo" className=" img-fluid logo"/>

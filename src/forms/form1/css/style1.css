@@ -1,61 +1,58 @@
-body{
-    margin:0;
-    overflow-x: hidden;
-}
-.title-bg{
+ 
+.form1 .title-bg{
     background-color:#f3f4f4;
     border-bottom: solid 1px #c9cfcf;
 }
-.title-bg img{
+.form1 .title-bg img{
     float: right;
     width: 100%;
     max-width: 200px;
     padding-top: 30px;
 }
-.form-title h3{
+.form1 .form-title h3{
         color:#ce1343;
 }
-.acknowledge{
+.form1 .acknowledge{
     font-weight: 700;
 }
-.detail input {
+.form1 .detail input {
     border: none;
     border-bottom: solid 2px #5e5e5d;
     border-radius: 0px;
     width: 240px;
     background-color:#f1f4ff;
 }
-.detail input:focus{
+.form1 .detail input:focus{
     border-color:#5e5e5d;
     box-shadow:none;
 }
-.footer p{
+.form1 .footer p{
     border-bottom:solid 1px #eaebeb;
     padding-bottom: 15px;
 }
-.footer {
+.form1 .footer {
     padding-top:10%;
 }
-.footer ul{
+.form1 .footer ul{
     list-style:none;
 }
-.footer li{
+.form1 .footer li{
     padding:5px;
     float:left;
 }
-.left-side li:first-child {
+.form1 .left-side li:first-child {
         border-right:solid 1px red;
 }
-#formBasicSign {
+.form1 #formBasicSign {
     width: 285px;
     margin: 0;
 }
-#formBasicText{
+.form1 #formBasicText{
     border: none;
     border-bottom: solid 1px;
     border-radius: 0;
 }
-#formBasicText:focus{
+.form1 #formBasicText:focus{
     box-shadow:none;
 }
 
@@ -65,61 +62,61 @@ body{
 
 @media (max-width:1200px){}
 @media (min-width: 1200px){
-.container {
+    .form1.container {
     max-width: 1024px;
 }
 }
 @media (min-width: 1024px) and (max-width: 1200px) {
-    .detail input {
+    .form1 .detail input {
         width: 250px;
     }
   }
 @media (min-width: 992px) and (max-width: 1024px) { 
-    .detail input {
+    .form1  .detail input {
         width: 250px;
     }
  }
 @media (min-width: 768px) and (max-width: 992px) {
-    .detail input {
+    .form1 .detail input {
         width: 200px;
     }
  }
 @media (min-width: 576px) and (max-width: 768px) { 
  }
 @media (min-width: 420px) and (max-width: 576px) {  
-    .form-title h1 {
+    .form1 .form-title h1 {
         font-size: 28px;
     }
-    .form-title h3{
+    .form1 .form-title h3{
         font-size: 24px;
     }
-    .detail input{
+    .form1  .detail input{
         width:350px;
     }
 }
 @media (min-width: 360px) and (max-width: 420px) { 
-    .footer p,li{
+    .form1  .footer p,li{
     font-size: 14px;
  }
- .form-title h1,h3{
+ .form1 .form-title h1,h3{
      font-size:20px;
  }
- .resource-title{
+ .form1 .resource-title{
      text-align:center;
  } 
- .title-bg img {
+ .form1 .title-bg img {
      max-width:150px;
      display: flex;
      margin:auto;
      float:none;
  }
- .form-title{
+ .form1 .form-title{
      text-align: center;
  }
- .detail{
+ .form1 .detail{
      padding:15px;
  }
- .input-head {
+ .form1 .input-head {
     font-size: 14px !important;
 }
 }
