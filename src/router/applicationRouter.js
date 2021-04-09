@@ -7,6 +7,7 @@ const FormsScreen = lazy(() => import("../views/formsScreen"));
 const DealScreen = lazy(() => import ("../views/DealScreen"));
 const Account = lazy(() =>import ("../views/Account"));
 const Contact =lazy(() => import ("../views/Contact"));
+const FeedbackScreen =lazy(() => import ("../views/FeedbackScreen"));
  
 
 const ApplicationRouter = () => {
@@ -17,6 +18,7 @@ const ApplicationRouter = () => {
     <React.Fragment>
       <Switch>
         <Suspense fallback={<div className="appRouterLoader"><Loader /></div>}>
+        <Route exact path="/feedback" component={FeedbackScreen} />
         <Route exact path="/contacts" component={Contact} />
         <Route exact path="/deals" component={DealScreen} />
         <Route exact path="/forms" component={FormsScreen} />

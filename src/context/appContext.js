@@ -17,14 +17,6 @@ export class AppContext extends Component {
         id: 3,
         title: "New York Agency Disclosure Form for Buyer and Seller",
       },
-	  {
-        id: 4,
-        title: "New York State Disclosure Form for Landlord and Tenant",
-      },
-	  {
-        id: 5,
-        title: "New York State Housing Discrimination Disclosure Form",
-      },
     ],
 	clients:[{
 		id:"1",
