@@ -1,138 +1,143 @@
-body{
-    margin:0;
-    overflow-x: hidden;
-}
-span{
+ 
+.form3 span{
     font-weight:700;
 }
-.title-bg{
+.form3 .title-bg{
     background-color:#f3f4f4;
     border-bottom: solid 1px #c9cfcf;
 }
-.title-bg img{
+.form3 .title-bg img{
     float: right;
     width: 100%;
     max-width: 200px;
     padding-top: 30px;
 }
-.form-title h3{
+.form3 .form-title h3{
         color:#ce1343;
 }
-.acknowledge{
+.form3 .acknowledge{
     font-weight: 700;
 }
-.detail input {
+.form3 .detail input {
     border: none;
     border-bottom: solid 2px #5e5e5d;
     border-radius: 0px;
     width: 240px;
     background-color:#f1f4ff;
 }
-.detail input:focus{
+.form3 .detail input:focus{
     border-color:#5e5e5d;
     box-shadow:none;
 }
-.footer p{
+.form3 .footer p{
     border-bottom:solid 1px #eaebeb;
     padding-bottom: 15px;
 }
-.footer {
+.form3 .footer {
     padding-top:10%;
 }
-.footer ul{
+.form3 .footer ul{
     list-style:none;
 }
-.footer li{
+.form3 .footer li{
     padding:5px;
     float:left;
 }
-.left-side li:first-child {
+.form3 .left-side li:first-child {
         border-right:solid 1px red;
 }
-.card-text{
+.form3 .card-text{
     font-size:14px;
 }
-.card{
+.form3 .card{
     background-color:#f8f8f8;
 }
-.question-title span{
+.form3 .question-title span{
    color:#c81c1c;
 }
-
+.form3 .detail .form-control{
+    width: 100%;
+    margin-left: 15px;
+    border: none;
+    border-bottom: solid 1px;
+    border-radius: 0px;
+    max-width: 300px;
+}
+ 
 
 
 /* Responsive design with media queries */
 
 @media (max-width:1200px){}
 @media (min-width: 1200px){
-.container {
-    max-width: 816px;
+    .form3.container {
+    max-width: 1024px;
 }
 }
 @media (min-width: 1024px) and (max-width: 1200px) {
-    .detail input {
+    .form3 .detail input {
         width: 250px;
     }
   }
 @media (min-width: 992px) and (max-width: 1024px) { 
-    .detail input {
+    .form3 .detail input {
         width: 250px;
     }
  }
 @media (min-width: 768px) and (max-width: 992px) {
-    .detail input {
+    .form3 .detail input {
         width: 200px;
     }
  }
 @media (min-width: 576px) and (max-width: 768px) { 
-    .title-bg img {
+    .form3 .title-bg img {
         max-width:150px;
         display: flex;
         margin:auto;
         float:none;
     }
-    .form-title h2 {
+    .form3 .form-title h2 {
         font-size: 27px;
     }
     
  }
 @media (min-width: 420px) and (max-width: 576px) {  
-    .form-title h1 {
+    .form3  .form-title h1 {
         font-size: 28px;
     }
-    .form-title h2,h3{
+    .form3 .form-title h2,h3{
         font-size: 24px;
     }
-    .detail input{
+    .form3  .detail input{
         width:350px;
     }
-    .form-title h2,h3{
+    .form3  .form-title h2,h3{
         text-align: center;
     }
 }
 @media (min-width: 360px) and (max-width: 420px) { 
-    .footer p,li{
+    .form3  .footer p,li{
     font-size: 14px;
  }
- .form-title h1,h3{
+ .form3.form-title h1,h3{
      font-size:20px;
  }
- .resource-title{
+ .form3 .resource-title{
      text-align:center;
  } 
- .title-bg img {
+ .form3 .title-bg img {
      max-width:150px;
      display: flex;
      margin:auto;
      float:none;
  }
- .form-title{
+ .form3 .form-title{
      text-align: center;
  }
- .detail{
+ .form3 .detail{
      padding:15px;
  }
- .input-head {
+ .form3 .input-head {
     font-size: 14px !important;
 }
 }

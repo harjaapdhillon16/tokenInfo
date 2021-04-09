@@ -5,22 +5,22 @@ import { IconFacebook,IconTwitter,IconLinkedin, IconInstagram } from "../../asse
 import Logo from "../../assets/FormImages/og_image.png";
 const Form2 = () => {
     return ( 
-        <Container>
+        <Container className="form2">
             <Row className="pt-4">
-                <Col md={2} sm={2} xs={12} className="pt-md-5 pt-sm-5">
+                <Col md={2} sm={12} xs={12}>
                     <img src={Logo} alt="logo" className=" img-fluid logo"/>
                 </Col>
-                 <Col md={4} sm={4} xs={12} className="pt-md-5 pt-sm-5">
-                    <h1 className="border-left">Division of Licensing Service</h1>
+                 <Col md={4} sm={12} xs={12} className="top-title">
+                    <h2 className="border-left">Division of Licensing Service</h2>
                 </Col> 
-                <Col md={6} sm={6} xs={12} className="header-right">
+                <Col md={6} sm={12} xs={12} className="header-right">
                     <div>
                             <ul>
                                 <li>
                                     New York state
                                 </li>
                                 <li>
-                                    Department of state, Division of Licensing Services
+                                    <span>Department of state, Division of Licensing Services</span>
                                 </li>
                                 <li>
                                     (518) 474-4429
@@ -36,7 +36,7 @@ const Form2 = () => {
                                 New York state
                             </li>
                             <li>
-                                Division of Consumer Rights
+                                <span>Division of Consumer Rights</span>
                             </li>
                             <li>
                                 (888) 392-3644
@@ -48,7 +48,7 @@ const Form2 = () => {
             <Row>
                 <Col md={12}>
                     <div className="title-bar">
-                    <h4 className="py-2">New York State Housing and Anti-Discrimination Disclosure Form</h4>
+                    <h4 className="py-2 mb-0">New York State Housing and Anti-Discrimination Disclosure Form</h4>
                     </div>
                     <div className="pt-3">
                         <p>
@@ -141,25 +141,25 @@ const Form2 = () => {
                            </p> 
                     </form>
                     <div class="form-row pt-4 detail ">
-                        <div class="col-md-7 mb-3 d-flex">
+                        <div class="col-md-8 mb-3 d-flex">
                             <label class="pt-2 input-head">Buyer/Tenant/Seller/Landlord Signature</label>
                             <input type="text" class="form-control"/>
                           </div>
                     
-                          <div class="col-md-5 mb-3 d-flex">
+                          <div class="col-md-4 mb-3 d-flex">
                             <label class="pt-2 input-head">Date:</label>
-                            <input type="text" class="form-control"/>
+                            <input type="text" class="form-control date-block"/>
                           </div>
                     </div>
                     <div class="form-row pt-4 detail ">
-                        <div class="col-md-7 mb-3 d-flex">
+                        <div class="col-md-8 mb-3 d-flex">
                             <label class="pt-2 input-head">Buyer/Tenant/Seller/Landlord Signature</label>
                             <input type="text" class="form-control"/>
                           </div>
                     
-                          <div class="col-md-5 mb-3 d-flex">
+                          <div class="col-md-4 mb-3 d-flex">
                             <label class="pt-2  input-head">Date:</label>
-                            <input type="text" class="form-control"/>
+                            <input type="text" class="form-control date-block"/>
                           </div>
                     </div>
                     <p class="pt-4">

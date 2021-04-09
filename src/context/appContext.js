@@ -2,6 +2,8 @@ import React, { Component } from "react";
 const Context = React.createContext();
 export class AppContext extends Component {
   state = {
+    user:null,
+
     formsTypes: [
       {
         id: 1,
@@ -46,11 +48,17 @@ export class AppContext extends Component {
 }]
   };
 
+  handleUserUpdate = (user) => {
+
+    this.setState({user})
+  } 
+
   render() {
     return (
       <Context.Provider
         value={{
           ...this.state,
+          onUserUpdate :this.handleUserUpdate
         }}
       >
         {this.props.children}
