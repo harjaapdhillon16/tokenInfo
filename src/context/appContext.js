@@ -3,6 +3,7 @@ const Context = React.createContext();
 export class AppContext extends Component {
   state = {
     user:null,
+    
 
     formsTypes: [
       {
@@ -26,39 +27,24 @@ export class AppContext extends Component {
         title: "New York State Housing Discrimination Disclosure Form",
       },
     ],
-	clients:[{
-		id:"1",
-		name:"Mila Kunas"
-	},
-	{
-		id:"2",
-		name:"Tom Cruise"
-	},
-	{
-		id:"3",
-		name:"Jack Ryan"
-	},
-	{
-		id:"4",
-		name:"George Clooney"
-	},
-	{
-	id:"5",
-	name:"Morgan Freeman"
-}]
+	contacts:[]
   };
 
   handleUserUpdate = (user) => {
 
     this.setState({user})
   } 
+  handleContactUpdates = (contacts) =>{
+    this.setState({contacts})
+  }
 
   render() {
     return (
       <Context.Provider
         value={{
           ...this.state,
-          onUserUpdate :this.handleUserUpdate
+          onUserUpdate :this.handleUserUpdate,
+          onUpdateContacts:this.handleContactUpdates
         }}
       >
         {this.props.children}

@@ -17,6 +17,8 @@ import { listContacts } from "../graphql/queries";
 import { createContact } from "../graphql/mutations";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
+import AppContext from "../context/appContext"
+
 
 const FormsScreen = () => {
   const [loading, setLoading] = useState(true);
@@ -25,6 +27,8 @@ const FormsScreen = () => {
   const handleClose = () => setShow(false);
   const [error, setError] = useState(false);
   const handleShow = () => setShow(true);
+
+  const { contacts, onUpdateContacts} = useContext(AppContext);
 
   const formik = useFormik({
     initialValues: {
@@ -54,10 +58,11 @@ const FormsScreen = () => {
     }
     try {
       const createdContact = await API.graphql(
-       graphqlOperation(createContact, { input: data })
-      
-      );
-     console.log(createdContact);
+       graphqlOperation(createContact, { input: data })  );
+       const newContacts = [...contacts,createdContact.data.createContact]
+       onUpdateContacts(newContacts)
+       console.log(createdContact.data.createContact);
+       
     } catch (err) {
       console.log(err,"Error creating contact");
     }
@@ -71,7 +76,8 @@ const FormsScreen = () => {
   const handleContact = async () => {
     try {
       const listContactsData = await API.graphql(graphqlOperation(listContacts));
-      console.log(listContacts);
+      console.log(listContactsData.data.listContacts.items);
+      onUpdateContacts(listContactsData.data.listContacts.items)
     
     } catch (err) {
       console.log(err);
@@ -298,45 +304,22 @@ const FormsScreen = () => {
           </tr>
         </thead>
         <tbody>
+          {contacts.map(item =>
           <tr>
-            <td>
-              <Form.Check className="check-head"></Form.Check>
-            </td>
-            <td>John Smith</td>
-            <td>john@smith.com</td>
-            <td>9175527895</td>
-            <td>Smith & Wesson</td>
-            <td>Director</td>
-            <td>Buyer</td>
-            <td>8/1/2020</td>
-            <td>3/31/2021</td>
-          </tr>
-          <tr>
-            <td>
-              <Form.Check className="check-head"></Form.Check>
-            </td>
-            <td>Jane Smith</td>
-            <td>jane@smith.com</td>
-            <td>9175527495</td>
-            <td>Elliman</td>
-            <td>Licensed</td>
-            <td>Agent</td>
-            <td>8/2/2020</td>
-            <td>3/30/2021</td>
-          </tr>
-          <tr>
-            <td>
-              <Form.Check className="check-head"></Form.Check>
-            </td>
-            <td>Dorian Gra</td>
-            <td>dorian@smith.com</td>
-            <td>9175521895</td>
-            <td>CVX Intl</td>
-            <td>Analyst</td>
-            <td>Seller</td>
-            <td>11/1/2020</td>
-            <td>3/29/2021</td>
-          </tr>
+          <td>
+            <Form.Check className="check-head"></Form.Check>
+          </td>
+          <td>{item.name}</td>
+          <td>{item.email}</td>
+          <td>9175527895</td>
+          <td>Smith & Wesson</td>
+          <td>Director</td>
+          <td>Buyer</td>
+          <td>8/1/2020</td>
+          <td>3/31/2021</td>
+        </tr>
+            )}
+         
         </tbody>
       </Table>
     </Container>

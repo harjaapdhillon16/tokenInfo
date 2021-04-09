@@ -17,7 +17,7 @@ import AppContext from "../../context/appContext";
 
 const SendForm = ({ formModal, onHandleFormModal }) => {
   const [currentState, handleCurrentState] = useState(1);
-  const  { formsTypes , clients } = useContext(AppContext);
+  const  { formsTypes , contacts } = useContext(AppContext);
  
   useEffect(() => {
     handleCurrentState(1);
@@ -67,7 +67,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         </Form.Group>
         <Modal.Body className="modal-options">
 
-          {clients.map((item) => (
+          {contacts.map((item) => (
             <Form.Check id={item.id} label={item.name} />
           ))}
           <div className="d-flex ml-auto mr-auto justify-content-center add-client">
