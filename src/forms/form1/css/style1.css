@@ -55,10 +55,8 @@
   box-shadow: none;
 }
 
- 
-
 @media (min-width: 1200px) {
-  .form1 {
+  .form1.container {
     max-width: 1024px;
   }
 }
