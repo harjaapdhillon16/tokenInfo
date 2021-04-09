@@ -5,6 +5,9 @@ import { Dropdown } from "react-bootstrap";
 import Badge from 'react-bootstrap/Badge'
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from "react-router-dom";
+import { useFormik } from "formik";
+
+
 
 const FormsScreen = () => {
   const [loading, setLoading] = useState(true);
@@ -12,6 +15,20 @@ const FormsScreen = () => {
   useEffect(() => {
 
   }, []);
+
+  
+  
+  const formik = useFormik({
+    initialValues: {
+     // hotelPolicyUrl: hotel.hotelPolicyUrl,
+    },
+    // validationSchema: Yup.object({
+    //   hotelPolicyUrl: Yup.string().url("Please enter valid URL!"),
+    // }),
+    onSubmit: (values) => {
+      //updateHotelProperty(values);
+    },
+  });
 
 
   return (

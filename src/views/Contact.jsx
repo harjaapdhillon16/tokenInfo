@@ -1,11 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
 import {
-  IconBuilding,
-  IconEmail,
-  IconSmartphone,
-  IconMenu,
-} from "../assets/icons/icons";
-import {
   Container,
   Row,
   Col,
@@ -15,18 +9,60 @@ import {
   Modal,
 } from "react-bootstrap";
 import { Dropdown } from "react-bootstrap";
+import * as Yup from "yup";
 import Badge from "react-bootstrap/Badge";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { API, graphqlOperation } from "aws-amplify";
 import { listContacts } from "../graphql/queries";
+import { createContact } from "../graphql/mutations";
 import { Link } from "react-router-dom";
+import { useFormik } from "formik";
 
 const FormsScreen = () => {
   const [loading, setLoading] = useState(true);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
+  const [error, setError] = useState(false);
   const handleShow = () => setShow(true);
+
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      companyName: "",
+      // type:''
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Please enter valid name!"),
+      email: Yup.string().email("Please enter valid email!").required("Please enter valid email!"),
+      companyName: Yup.string().required("Please enter your company name!"),
+      // type: Yup.string().required("Select the type!"),
+    }),
+    onSubmit: (values) => {
+      handleContactCreation(values)
+
+    },
+  });
+
+  const handleContactCreation = async (values) => {
+  
+    const data = {
+      agentId:"1",
+      name:values.name,
+      email:values.email
+    }
+    try {
+      const createdContact = await API.graphql(
+       graphqlOperation(createContact, { input: data })
+      
+      );
+     console.log(createdContact);
+    } catch (err) {
+      console.log(err,"Error creating contact");
+    }
+
+  }
 
   useEffect(() => {
     handleContact();
@@ -34,9 +70,9 @@ const FormsScreen = () => {
 
   const handleContact = async () => {
     try {
-      const hotelAmenities = await API.graphql(graphqlOperation(listContacts));
-      console.log(hotelAmenities);
-      const item = hotelAmenities.data.createHotelFeature;
+      const listContactsData = await API.graphql(graphqlOperation(listContacts));
+      console.log(listContacts);
+    
     } catch (err) {
       console.log(err);
     }
@@ -78,33 +114,81 @@ const FormsScreen = () => {
         </Col>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
-            <Modal.Title className="text-center m-auto">Add New Contact</Modal.Title>
+            <Modal.Title className="text-center m-auto">
+              Add New Contact
+            </Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <Form.Group controlId="exampleForm.ControlInput1" class="m-auto w-75 pt-3">
-              <Form.Control type="text" placeholder="Julia Roberts" />
-            </Form.Group>
-            <Form.Group controlId="exampleForm.ControlInput1" class="m-auto w-75 pt-3">
-              <Form.Control type="text" placeholder="juliaroberts@hotmail.com" />
-            </Form.Group>
-            <Form.Group controlId="exampleForm.ControlInput1" class="m-auto w-75 pt-3">
-              <Form.Control type="text" placeholder="Company(optional)" />
-            </Form.Group>
-            <Form.Group controlId="exampleForm.ControlSelect1">
-              <Form.Control as="select">
-                <option>Buyer</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </Form.Control>
-  </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="primary" className="m-auto px-5" onClick={handleClose}>
-              Save
-            </Button>
-          </Modal.Footer>
+          <Form onSubmit={formik.handleSubmit}>
+            <Modal.Body>
+              <Form.Control
+                className="mb-3"
+                name="name"
+                value={formik.values.name}
+                type="text"
+                placeholder="Enter your name"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+              />
+              {formik.touched.name && formik.errors.name && (
+                <Form.Text className="text-error">
+                  {formik.errors.name}
+                </Form.Text>
+              )}
+
+              <Form.Control
+                className="mb-3"
+                name="email"
+                value={formik.values.email}
+                type="text"
+                placeholder="Enter your valid email"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+              />
+              {formik.touched.email && formik.errors.email && (
+                <Form.Text className="text-error">
+                  {formik.errors.email}
+                </Form.Text>
+              )}
+              <div>
+                <Form.Control
+                  className="mb-3"
+                  name="companyName"
+                  value={formik.values.companyName}
+                  type="text"
+                  placeholder="Company name (optional)"
+                  onBlur={formik.handleBlur}
+                  onChange={formik.handleChange}
+                />
+                {formik.touched.companyName && formik.errors.companyName && (
+                  <Form.Text className="text-error">
+                    {formik.errors.companyName}
+                  </Form.Text>
+                )}
+              </div>
+              <Form.Group controlId="exampleForm.ControlSelect1">
+                <Form.Control as="select">
+                  <option>Buyer</option>
+                  <option>Agent</option>
+                  <option>Seller</option>
+                </Form.Control>
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant="primary"
+                className="m-auto px-5"
+                type="submit"
+                disabled={
+                  !(
+                    formik.isValid &&
+                    formik.dirty
+  
+                  )                }
+              >
+                Save
+              </Button>
+            </Modal.Footer>
+          </Form>
         </Modal>
       </Row>
       <Table bordered hover className="contact-table mt-4">

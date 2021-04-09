@@ -155,6 +155,9 @@ a:hover{
 .close {
   margin-left: 0 !important;
 }
+.text-error{
+  color:red;
+}
 
 /* media queries start */
 @media (min-width:420px){
