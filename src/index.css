@@ -148,6 +148,13 @@ a:hover{
 .table-bordered thead td, .table-bordered thead th{
   font-weight:normal;
 }
+.add-contact {
+  width: 100%;
+  min-width: 126px;
+}
+.close {
+  margin-left: 0 !important;
+}
 
 /* media queries start */
 @media (min-width:420px){

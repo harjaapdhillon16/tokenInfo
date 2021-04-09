@@ -19,10 +19,10 @@ span{
     list-style:none;
     font-size: 14px;
 }
-.title-bar {
+/* .title-bar {             
     border-top: solid 2px #000;
     border-bottom: solid 2px #000;
-}
+} */
 .submit-form  .form-control{
     width:380px !important;
     margin-left:15px;
@@ -49,9 +49,9 @@ span{
 
 @media (max-width:1200px){}
 @media (min-width: 1200px){
-    .container {
+    /* .container {
         max-width: 1024px;
-    }
+    } */
 }
 @media (min-width: 1024px) and (max-width: 1200px) {
 }

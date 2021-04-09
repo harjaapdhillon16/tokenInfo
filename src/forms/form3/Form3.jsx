@@ -139,7 +139,7 @@ const Form3 = () => {
                             </div>
                         </div>
                         <div>
-                            <div class="card mt-4">
+                            <div class="card-note mt-4">
                                 <p class="card-text mb-0 p-3">*Per updated CDC guidance released on March 8, 2021, <span>“asymptomatic</span> fully vaccinated individuals,” meaning those who have
                                     received a single-shot vaccine or. <span>both</span> shots of a two-shot vaccine,
                                     are no longer required to quarantine if they have been in close
