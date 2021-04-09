@@ -1,46 +1,40 @@
-html{
-    overflow-x:hidden;
-}
-body{
-    margin:0;
-    overflow-x: hidden;
-}
-span{
+ 
+.form2 span{
     font-weight:700;
 }
-.border-left{
+.form2 .border-left{
     padding-left: 15px;
     border-left: 2px solid #000000 !important;
 }
-.header-right{
+.form2 .header-right{
     text-align: end;
 }
-.header-right ul{
+.form2 .header-right ul{
     list-style:none;
     font-size: 14px;
 }
-/* .title-bar {             
+.form2 .title-bar {
     border-top: solid 2px #000;
     border-bottom: solid 2px #000;
-} */
-.submit-form  .form-control{
+}
+.form2  .submit-form  .form-control{
     width:380px !important;
     margin-left:15px;
     border: none;
     border-bottom: solid 1px;
     border-radius: 0px;
 }
-.detail .form-control{
+.form2 .detail .form-control{
     width: 50%;
     margin-left: 15px;
     border: none;
     border-bottom: solid 1px;
     border-radius: 0px;
 }
-.submit-form .form-control:focus{
+.form2 .submit-form .form-control:focus{
     box-shadow:none;
 }
-.detail .form-control:focus{
+.form2 .detail .form-control:focus{
     box-shadow:none;
 }
 
@@ -49,95 +43,95 @@ span{
 
 @media (max-width:1200px){}
 @media (min-width: 1200px){
-    /* .container {
+    .form2.container {
         max-width: 1024px;
     } */
 }
 @media (min-width: 1024px) and (max-width: 1200px) {
 }
 @media (min-width: 992px) and (max-width: 1024px) { 
-    .border-left{
+    .form2 .border-left{
         font-size:35px;
     }
-    .detail .form-control{
+    .form2 .detail .form-control{
         width:45%;
     }
-    .logo, .top-title {
+    .form2 .logo, .top-title {
         padding-top: 45px;
     }
  }
 @media (min-width: 768px) and (max-width: 992px) {
-    .border-left{
+    .form2 .border-left{
         font-size:32px;
     }
-    .title-bar h4 {
+    .form2  .title-bar h4 {
         font-size: 23px;
     }
  }
 @media (min-width: 576px) and (max-width: 768px) { 
-    .border-left{
+    .form2   .border-left{
         font-size:22px;
     }
-    .logo, .top-title {
+    .form2 .logo, .top-title {
         padding-top: 50px;
     }
-    .date-block{
+    .form2 .date-block{
         margin-left:46% !important;
     }
     
  }
 @media (min-width: 420px) and (max-width: 576px) {  
-    .logo{
+    .form2 .logo{
         width:200px !important;
         display:flex;
         margin-left:auto;
         margin-right:auto;  
     }
-    .border-left{
+    .form2  .border-left{
         border-left:none !important;
         font-size: 24px;
         text-align: center;
         padding-top: 27px;
     }
-    .header-right {
+    .form2  .header-right {
         text-align: center;
         padding-top: 20px;
     }
-    .title-bar h4{
+    .form2 .title-bar h4{
         text-align:center;
         font-size:20px;
         line-height:28px;
     }
-    .top-title{
+    .form2  .top-title{
         padding-top:10px;
     }
 }
 @media (min-width: 360px) and (max-width: 420px) { 
-    .logo{
+    .form2  .logo{
         width:100px !important;
         display:flex;
         margin-left:auto;
         margin-right:auto;  
     }
-    .border-left{
+    .form2 .border-left{
         border-left:none !important;
         font-size: 24px;
         text-align: center;
         padding-top: 27px;
     }
-    .header-right {
+    .form2  .header-right {
         text-align: center;
         padding-top: 20px;
     }
-    .title-bar h4{
+    .form2  .title-bar h4{
         text-align:center;
         font-size:16px;
         line-height:24px;
     }
-    .date-block {
+    .form2 .date-block {
         margin-left: 50% !important;
     }
-    .input-head {
+    .form2  .input-head {
         font-size: 13px !important;
     }
 
