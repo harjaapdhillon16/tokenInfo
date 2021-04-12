@@ -11,6 +11,7 @@ import {
 import { Dropdown } from "react-bootstrap";
 import * as Yup from "yup";
 import Badge from "react-bootstrap/Badge";
+import Header from "../components/header/header";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { API, graphqlOperation } from "aws-amplify";
 import { listContacts } from "../graphql/queries";
@@ -78,6 +79,8 @@ const FormsScreen = () => {
     }
   };
   return (
+    <Container fluid>
+      <Header />
     <Container>
       <Breadcrumb className="title-bar">
         <Breadcrumb.Item>
@@ -339,6 +342,7 @@ const FormsScreen = () => {
           </tr>
         </tbody>
       </Table>
+    </Container>
     </Container>
   );
 };

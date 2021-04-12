@@ -49,7 +49,8 @@ const Dashboard = () => {
 
 
   return (
-
+    <Container fluid> 
+      <Header/>
     <Container>
       <Row>
         <Col md={12} className="dashboardCards pt-5">
@@ -78,6 +79,7 @@ const Dashboard = () => {
         </Col> )}
       </Row>
 
+    </Container>
     </Container>
 
   );

@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { IconChecked } from "../assets/icons/icons";
 import { Container, Row, Col, Card, InputGroup, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Header from "../components/header/header";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 
 const FormsScreen = () => {
@@ -10,6 +11,9 @@ const FormsScreen = () => {
   useEffect(() => {}, []);
 
   return (
+  <Container fluid>
+    <Header/>
+  
     <Container>
       <Breadcrumb className="title-bar">
         <Breadcrumb.Item>
@@ -82,6 +86,7 @@ const FormsScreen = () => {
           </Card>
         </Col>
       </Row>
+    </Container>
     </Container>
   );
 };

@@ -3,6 +3,7 @@ import { IconBuilding, IconEmail, IconSmartphone, IconMenu } from "../assets/ico
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Dropdown } from "react-bootstrap";
 import Badge from 'react-bootstrap/Badge'
+import Header from "../components/header/header";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
@@ -32,7 +33,8 @@ const FormsScreen = () => {
 
 
   return (
-
+    <Container fluid>
+      <Header/>
     <Container>
       <Breadcrumb className="title-bar">
         <Breadcrumb.Item >
@@ -158,6 +160,7 @@ const FormsScreen = () => {
         </Col>
       </Row>
 
+    </Container>
     </Container>
 
   );

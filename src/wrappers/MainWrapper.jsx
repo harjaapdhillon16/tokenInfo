@@ -30,7 +30,7 @@ const MainWrapper = () => {
  if(!user) return("Loading...")
   return (
     <Container fluid>
-      <Header />
+      {/* <Header /> */}
        <ApplicationRouter />
      </Container>
   );

@@ -6,6 +6,7 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { IconPlus } from "../assets/icons/icons";
+import Header from "../components/header/header";
 
 
 
@@ -32,7 +33,8 @@ const FormsScreen = () => {
 
 
   return (
-
+    <Container fluid>
+      <Header/>
     <Container>
       <Breadcrumb className="title-bar">
         <Breadcrumb.Item >
@@ -142,6 +144,7 @@ const FormsScreen = () => {
         </a>
           </div>
 
+    </Container>
     </Container>
 
   );

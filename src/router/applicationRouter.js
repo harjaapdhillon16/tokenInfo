@@ -1,5 +1,6 @@
 import React, { Suspense, lazy , useContext  } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+// import Header from "../components/header/header";
 import Loader from "../components/Loader/Loader"
  
 const Dashboard = lazy(() => import("../views/Dashboard"));
@@ -11,11 +12,10 @@ const FeedbackScreen =lazy(() => import ("../views/FeedbackScreen"));
  
 
 const ApplicationRouter = () => {
-    
-   
-  
+
   return (
     <React.Fragment>
+      {/* <Header /> */}
       <Switch>
         <Suspense fallback={<div className="appRouterLoader"><Loader /></div>}>
         <Route exact path="/feedback" component={FeedbackScreen} />

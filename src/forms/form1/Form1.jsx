@@ -1,5 +1,5 @@
-import React, { Component, useState } from "react";
-
+import React, { Component, useState, useRef} from "react";
+import SignaturePad from 'react-signature-canvas';
 import { Container, Row, Col, Form, Modal, Button } from "react-bootstrap";
 import "../form1/css/style1.css";
 import {
@@ -12,9 +12,13 @@ import Logo from "../../assets/FormImages/rebny-logo.png";
 
 const Form1 = () => {
   const [show, setShow] = useState(false);
-
+  const sigPad =useRef({})
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  function clear(){
+    sigPad.current.clear();
+  }
 
   return (
     <Container className="form1">
@@ -147,21 +151,20 @@ const Form1 = () => {
           <Modal.Title>
               <h5>Please Confirm Full name and Signature</h5></Modal.Title>
         </Modal.Header>
-        <Modal.Body className="d-flex sign-modal">
-            <Form.Group controlId="formBasicText" class="pl-2">
-                <Form.Label>Draw</Form.Label>
-                <Form.Control type="text" />
-            </Form.Group>
-            <Form.Group controlId="formBasicText" className="ml-5">
+        <Modal.Body className="draw-modal">
+          <h6>Draw</h6>
+            <SignaturePad
+              canvasProps={{width: 400, height: 200, className: 'sigCanvas'}}
+                  ref={sigPad}
+            />
+            <Form.Group controlId="formBasicText" className="sign-modal">
                 <Form.Label>Type</Form.Label>
                 <Form.Control type="text" />
             </Form.Group>
             </Modal.Body>
         <Modal.Footer>
         I am Chris Oliver and this is my legal representation of my Signature.
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
+          <Button variant="secondary" onClick={clear}>Clear </Button>
           <Button variant="primary" onClick={handleClose}>
             Insert Signature
           </Button>

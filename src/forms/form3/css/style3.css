@@ -28,6 +28,7 @@
 .form3 .detail input:focus{
     border-color:#5e5e5d;
     box-shadow:none;
+    background-color:transparent;
 }
 .form3 .footer p{
     border-bottom:solid 1px #eaebeb;
@@ -63,9 +64,6 @@
     border-radius: 0px;
     max-width: 300px;
 }
- 
-
-
 /* Responsive design with media queries */
 
 @media (max-width:1200px){}
@@ -114,6 +112,17 @@
     .form3  .form-title h2,h3{
         text-align: center;
     }
+    .logo, .resource-title{
+        display:flex;
+        margin:auto;
+        justify-content: center;
+    }
+    .form-title h1,h3{
+        text-align:center;
+    }
+    .form3 .detail .form-control {
+        max-width:400px;
+    }
 }
 @media (min-width: 360px) and (max-width: 420px) { 
     .form3  .footer p,li{
@@ -139,5 +148,21 @@
  }
  .form3 .input-head {
     font-size: 14px !important;
+}
+.form3 .detail .form-control{
+    margin:0px;
+}
+.form3 .input-head{
+    padding: 0 !important;
+}
+.logo{
+    width:100% !important;
+    max-width:180px  !important;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+}
+.form3 .form-title h1{
+    font-size:25px;
 }
 }
