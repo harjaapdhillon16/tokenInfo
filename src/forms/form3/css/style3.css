@@ -123,6 +123,9 @@
     .form3 .detail .form-control {
         max-width:400px;
     }
+    .form3 .footer ul{
+        padding:0;
+    }
 }
 @media (min-width: 360px) and (max-width: 420px) { 
     .form3  .footer p,li{
@@ -164,5 +167,8 @@
 }
 .form3 .form-title h1{
     font-size:25px;
+}
+.form3 .footer ul{
+    padding:0;
 }
 }

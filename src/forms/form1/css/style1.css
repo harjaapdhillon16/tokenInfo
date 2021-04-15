@@ -105,6 +105,11 @@ width:100%;
   .form1.container {
     max-width: 1024px;
   }
+  .form1-logo {
+    width: 100%;
+    max-width: 216px;
+    float: right;
+}
 }
 @media (min-width: 1024px) and (max-width: 1200px) {
   .form1 .detail input {
@@ -120,8 +125,26 @@ width:100%;
   .form1 .detail input {
     width: 200px;
   }
+  .form1-logo{
+    width: 100%;
+    max-width: 200px;
+    margin-left: 105px;
+  }
+
 }
 @media (min-width: 576px) and (max-width: 768px) {
+  .form1-logo{  
+    display: flex;
+    margin: auto;
+    max-width: 196px;
+  }
+  .form1 #formBasicSign{
+    width: 204px;
+  }
+  .form1 .footer h6 {
+    display: flex;
+    justify-content: center;
+}
 }
 @media (min-width: 420px) and (max-width: 576px) {
   .form1 .form-title h1 {
@@ -133,6 +156,12 @@ width:100%;
   .form1 .detail input {
     width: 350px;
   }
+  .form1 #formBasicSign {
+    width: 400px;
+}
+.form1 .footer ul {
+  padding:0;
+}
 }
 @media (min-width: 360px) and (max-width: 420px) {
   .form1 .footer p,
@@ -161,4 +190,24 @@ width:100%;
   .form1 .input-head {
     font-size: 14px !important;
   }
+  .form1 #formBasicSign {
+    width: 360px;
+}
+.form1-logo {
+  width: 100%;
+  max-width: 180px;
+  display: flex;
+  margin: auto;
+}
+.form1 .footer ul {
+  padding:0;
+}
+}
+@media (max-width:360px){
+  .form1 #formBasicSign {
+    width: 301px;
+}
+.form1 .footer ul {
+  padding:0;
+}
 }

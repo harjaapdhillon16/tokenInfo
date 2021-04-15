@@ -145,6 +145,9 @@ a:hover{
 .contact-table th{
   border: 1px solid #dee2e6;
 }
+.table thead th{
+  vertical-align: middle !important;
+}
 .table-bordered thead td, .table-bordered thead th{
   font-weight:normal;
 }
@@ -158,6 +161,28 @@ a:hover{
 .text-error{
   color:red;
 }
+.deal-right ul{
+  list-style:none;
+}
+.form-group{
+  position:relative !important;
+}
+.form-group img {
+  height: 100px;
+  margin-top: -45px;
+  z-index: 1;
+  position:absolute;
+}
+.contact-right{
+  padding-left:15%;
+}
+
+
+
+
+
+
+
 
 /* media queries start */
 @media (min-width:420px){

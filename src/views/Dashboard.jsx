@@ -49,7 +49,7 @@ const Dashboard = () => {
 
 
   return (
-    <Container fluid> 
+    <Container fluid className="p-0"> 
       <Header/>
     <Container>
       <Row>

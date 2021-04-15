@@ -365,13 +365,10 @@ const Form3 = () => {
           and/or practices.{" "}
         </p>
         <Row>
-          <Col md={6} className="p-0">
-            <ul>
-              <li>Real Estate board of New York</li>
-              <li>rebny.com</li>
-            </ul>
+        <Col md={6} className="pt-2 d-flex justify-content-center">
+            <h6>Real Estate board of New York | rebny.com</h6>
           </Col>
-          <Col md={6} className="p-0">
+          <Col md={6} className="p-0 d-flex justify-content-center">
             <ul>
               <li>Stay in Touch</li>
               <li>

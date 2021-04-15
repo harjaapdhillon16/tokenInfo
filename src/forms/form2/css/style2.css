@@ -75,10 +75,12 @@
     .form2 .logo, .top-title {
         padding-top: 50px;
     }
-    .form2 .date-block{
+    /* .form2 .date-block{
         margin-left:46% !important;
+    } */
+    .form2 .detail .form-control{
+        width: 80%;
     }
-    
  }
 @media (min-width: 420px) and (max-width: 576px) {  
     .form2 .logo{

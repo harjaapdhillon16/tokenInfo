@@ -12,6 +12,7 @@ import { Dropdown } from "react-bootstrap";
 import * as Yup from "yup";
 import Badge from "react-bootstrap/Badge";
 import Header from "../components/header/header";
+import _ from 'lodash';
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { API, graphqlOperation } from "aws-amplify";
 import { listContacts } from "../graphql/queries";
@@ -57,12 +58,15 @@ const FormsScreen = () => {
       name:values.name,
       email:values.email
     }
+ 
     try {
       const createdContact = await API.graphql(
        graphqlOperation(createContact, { input: data })  );
+       console.log(createdContact)
        const newContacts = [...contacts,createdContact.data.createContact]
        onUpdateContacts(newContacts)
        console.log(createdContact.data.createContact);
+       setShow(false);
        
     } catch (err) {
       console.log(err,"Error creating contact");
@@ -77,13 +81,15 @@ const FormsScreen = () => {
   const handleContact = async () => {
     try {
       const listContactsData = await API.graphql(graphqlOperation(listContacts));
-      console.log(listContactsData.data.listContacts.items);
+
       onUpdateContacts(listContactsData.data.listContacts.items)
     
     } catch (err) {
       console.log(err);
     }
   };
+   const sorted = _.orderBy(contacts, [user => user.name.toLowerCase()], ['asc']);
+   console.log(sorted,contacts)
   return (
     <Container fluid>
       <Header />
@@ -99,7 +105,7 @@ const FormsScreen = () => {
           <h5>Contacts</h5>
         </Col>
         <Col md={6}>
-          <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-center contact-right">
             <Form.Group controlId="formBasicEmail">
               <Form.Control type="text" placeholder="Search" />
             </Form.Group>
@@ -307,7 +313,7 @@ const FormsScreen = () => {
           </tr>
         </thead>
         <tbody>
-          {contacts.map(item =>
+          {sorted.map(item =>
           <tr>
           <td>
             <Form.Check className="check-head"></Form.Check>

@@ -1,5 +1,5 @@
-import React, { Component, useState, useRef} from "react";
-import SignaturePad from 'react-signature-canvas';
+import React, { Component, useState, useRef } from "react";
+import SignaturePad from "react-signature-canvas";
 import { Container, Row, Col, Form, Modal, Button } from "react-bootstrap";
 import "../form1/css/style1.css";
 import {
@@ -8,18 +8,48 @@ import {
   IconLinkedin,
   IconInstagram,
 } from "../../assets/icons/icons";
+import Nav from "react-bootstrap/Nav";
+import Accordion from "react-bootstrap/Accordion";
 import Logo from "../../assets/FormImages/rebny-logo.png";
 
 const Form1 = () => {
   const [show, setShow] = useState(false);
-  const sigPad =useRef({})
+  const [canvasShow, setCanvasShow] = useState(false);
+  const [fieldShow, setFieldShow] = useState(false);
+  const sigPad = useRef({});
+  // const sigText =useRef({})
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [signImage, setSignImage] = useState(null);
+  // const [signText, setSignText] = useState('')
 
-  function clear(){
+  function clear() {
     sigPad.current.clear();
   }
 
+  const genrateImage = () => {
+    setSignImage(sigPad.current.toDataURL());
+  };
+
+  const toggleMethod = () => {
+    if(canvasShow == false){
+      setCanvasShow(true)
+    }else{
+      setCanvasShow(false)
+    }
+
+  }
+  // const toggleMethod = () => {
+  //   if(fieldShow == false){
+  //     setFieldShow(true)
+  //   }else{
+  //     setFieldShow(false)
+  //   }
+
+  // }
+  // const generateText =() => {
+  //   setSignText(signText.current.text)
+  // }
   return (
     <Container className="form1">
       <Row>
@@ -27,7 +57,7 @@ const Form1 = () => {
           <h4 class="resource-title font-weight-light">REBNY Resources</h4>
         </Col>
         <Col md={6} className="pt-5">
-          <img src={Logo} alt="logo" />
+          <img src={Logo} alt="logo" className="form1-logo" />
         </Col>
       </Row>
       <Row>
@@ -76,6 +106,8 @@ const Form1 = () => {
         <Form.Row className="detail pt-5">
           <Col md={4}>
             <Form.Group onClick={handleShow} controlId="formBasicSign">
+              {signImage && <img src={signImage} />}
+              {/* <signText /> */}
               <Form.Control type="text" />
               <Form.Label>Signature</Form.Label>
             </Form.Group>
@@ -122,10 +154,10 @@ const Form1 = () => {
           advice and you should review this form with an attorney before signing
         </p>
         <Row>
-          <Col md={6} className="pt-2">
+          <Col md={6} className="pt-2 d-flex justify-content-center">
             <h6>Real Estate board of New York | rebny.com</h6>
           </Col>
-          <Col md={6}>
+          <Col md={6} className="d-flex justify-content-center">
             <ul>
               <li>
                 <h6 className="pt-1">Stay in Touch</h6>
@@ -149,23 +181,48 @@ const Form1 = () => {
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>
-              <h5>Please Confirm Full name and Signature</h5></Modal.Title>
+            <h5>Please Confirm Full name and Signature</h5>
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body className="draw-modal">
-          <h6>Draw</h6>
-            <SignaturePad
-              canvasProps={{width: 400, height: 200, className: 'sigCanvas'}}
-                  ref={sigPad}
-            />
-            <Form.Group controlId="formBasicText" className="sign-modal">
-                <Form.Label>Type</Form.Label>
-                <Form.Control type="text" />
-            </Form.Group>
-            </Modal.Body>
+          {/* <Button variant="secondary" onClick={toggleMethod}>Draw </Button>
+            {canvasShow &&
+              <SignaturePad
+                canvasProps={{width: 400, height: 'auto', className: 'sigCanvas'}}
+                    ref={sigPad}
+              />
+            }
+
+                <Button variant="secondary" onClick={toggleMethod}>Type </Button>
+            {fieldShow &&
+              <SignaturePad
+                canvasProps={{width: 400, height: 'auto', className: 'sigCanvas'}}
+                    ref={sigPad}
+              />
+            } */}
+          <Nav variant="tabs" defaultActiveKey="/home">
+            <Nav.Item>
+              <Nav.Link onClick={toggleMethod}>Draw
+              </Nav.Link>
+              {canvasShow &&
+              <SignaturePad
+                canvasProps={{width: 400, height: 'auto', className: 'sigCanvas'}}
+                    ref={sigPad}
+              />
+            }
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link eventKey="link-1" onClick={toggleMethod}>Type
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+        </Modal.Body>
         <Modal.Footer>
-        I am Chris Oliver and this is my legal representation of my Signature.
-          <Button variant="secondary" onClick={clear}>Clear </Button>
-          <Button variant="primary" onClick={handleClose}>
+          I am Chris Oliver and this is my legal representation of my Signature.
+          <Button variant="secondary" onClick={clear}>
+            Clear{" "}
+          </Button>
+          <Button variant="primary" onClick={genrateImage}>
             Insert Signature
           </Button>
         </Modal.Footer>
