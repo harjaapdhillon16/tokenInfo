@@ -169,12 +169,16 @@ a:hover{
 }
 .form-group img {
   height: 100px;
-  margin-top: -45px;
+  margin-top: -22%;
   z-index: 1;
   position:absolute;
 }
 .contact-right{
   padding-left:15%;
+}
+.sign{
+  position: absolute;
+    margin-top: -10%;
 }
 
 
