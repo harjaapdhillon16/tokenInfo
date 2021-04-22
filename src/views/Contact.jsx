@@ -20,11 +20,13 @@ import { createContact } from "../graphql/mutations";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import AppContext from "../context/appContext"
+import { BasicTable } from "../components/basicTable";
+import ContactDetail from "./ContactDetail";
 
 
 const FormsScreen = () => {
   const [loading, setLoading] = useState(true);
-
+  const [tableData, setTableData] = useState({});
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const [error, setError] = useState(false);
@@ -58,14 +60,18 @@ const FormsScreen = () => {
       name:values.name,
       email:values.email
     }
- 
+    
+    
+    
     try {
       const createdContact = await API.graphql(
        graphqlOperation(createContact, { input: data })  );
-       console.log(createdContact)
+       console.log('createdContact', createdContact)
        const newContacts = [...contacts,createdContact.data.createContact]
        onUpdateContacts(newContacts)
-       console.log(createdContact.data.createContact);
+       console.log('updated records', createdContact.data.createContact);
+       setTableData(newContacts);
+       console.log('tableData', tableData);
        setShow(false);
        
     } catch (err) {
@@ -88,11 +94,15 @@ const FormsScreen = () => {
       console.log(err);
     }
   };
+  
    const sorted = _.orderBy(contacts, [user => user.name.toLowerCase()], ['asc']);
    console.log(sorted,contacts)
   return (
-    <Container fluid>
+    <Container fluid className="p-0">
       <Header />
+      <div>
+        <BasicTable tableData={contacts}/>
+      </div>
     <Container>
       <Breadcrumb className="title-bar">
         <Breadcrumb.Item>
@@ -135,6 +145,11 @@ const FormsScreen = () => {
           </Modal.Header>
           <Form onSubmit={formik.handleSubmit}>
             <Modal.Body>
+            {formik.touched.name && formik.errors.name && (
+                <Form.Text className="text-error">
+                  {formik.errors.name}
+                </Form.Text>
+              )}
               <Form.Control
                 className="mb-3"
                 name="name"
@@ -144,12 +159,12 @@ const FormsScreen = () => {
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
               />
-              {formik.touched.name && formik.errors.name && (
+              
+              {formik.touched.email && formik.errors.email && (
                 <Form.Text className="text-error">
-                  {formik.errors.name}
+                  {formik.errors.email}
                 </Form.Text>
               )}
-
               <Form.Control
                 className="mb-3"
                 name="email"
@@ -159,12 +174,13 @@ const FormsScreen = () => {
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
               />
-              {formik.touched.email && formik.errors.email && (
-                <Form.Text className="text-error">
-                  {formik.errors.email}
-                </Form.Text>
-              )}
+             
               <div>
+              {formik.touched.companyName && formik.errors.companyName && (
+                  <Form.Text className="text-error">
+                    {formik.errors.companyName}
+                  </Form.Text>
+                )}
                 <Form.Control
                   className="mb-3"
                   name="companyName"
@@ -174,11 +190,6 @@ const FormsScreen = () => {
                   onBlur={formik.handleBlur}
                   onChange={formik.handleChange}
                 />
-                {formik.touched.companyName && formik.errors.companyName && (
-                  <Form.Text className="text-error">
-                    {formik.errors.companyName}
-                  </Form.Text>
-                )}
               </div>
               <Form.Group controlId="exampleForm.ControlSelect1">
                 <Form.Control as="select">
@@ -318,7 +329,9 @@ const FormsScreen = () => {
           <td>
             <Form.Check className="check-head"></Form.Check>
           </td>
-          <td>{item.name}</td>
+          <td>
+            <Link to ={`./ContactDetail/${item.id}`}>{item.name}</Link>
+          </td>
           <td>{item.email}</td>
           <td>9175527895</td>
           <td>Smith & Wesson</td>

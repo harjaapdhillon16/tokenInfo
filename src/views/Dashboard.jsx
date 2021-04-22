@@ -35,11 +35,11 @@ const Dashboard = () => {
         desc:'View status, download signed forms and send reminders.',
         sectionPath:"/forms"
        },
-       {  icon:<IconQR />,
-        title:'QR Codes',
-        desc:'QR codes to forms when you are on the go.',
-        sectionPath:"/code"
-       },
+      //  {  icon:<IconQR />,
+      //   title:'QR Codes',
+      //   desc:'QR codes to forms when you are on the go.',
+      //   sectionPath:"/code"
+      //  },
        {  icon:<IconUser />,
         title:'Account',
         desc:'Review and update your account information',

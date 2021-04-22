@@ -9,6 +9,7 @@ const DealScreen = lazy(() => import ("../views/DealScreen"));
 const Account = lazy(() =>import ("../views/Account"));
 const Contact =lazy(() => import ("../views/Contact"));
 const FeedbackScreen =lazy(() => import ("../views/FeedbackScreen"));
+const ContactDetail =lazy(() => import ("../views/ContactDetail"));
  
 
 const ApplicationRouter = () => {
@@ -18,6 +19,7 @@ const ApplicationRouter = () => {
       {/* <Header /> */}
       <Switch>
         <Suspense fallback={<div className="appRouterLoader"><Loader /></div>}>
+        <Route   path= "/ContactDetail/:id" component={ContactDetail}/>
         <Route exact path="/feedback" component={FeedbackScreen} />
         <Route exact path="/contacts" component={Contact} />
         <Route exact path="/deals" component={DealScreen} />
