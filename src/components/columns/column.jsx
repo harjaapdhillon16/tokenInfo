@@ -1,0 +1,38 @@
+export const COLUMNS = [
+    {
+        Header:'Id',
+        accessor:'id'
+    },
+    {
+        Header:'Name',
+        accessor:'first_name'
+    },
+    {
+        Header:'Email',
+        accessor:'email'
+    },
+    {
+        Header:'Phone',
+        accessor:'phone'
+    },
+    {
+        Header:'Company',
+        accessor:'company'
+    },
+    {
+        Header:'Title',
+        accessor:'title'
+    },
+    {
+        Header:'Type',
+        accessor:'type'
+    },
+    {
+        Header:'Created',
+        accessor:'created'
+    },
+    {
+        Header:'Last Update',
+        accessor:'last_update'
+    }
+]

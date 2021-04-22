@@ -188,6 +188,23 @@ a:hover{
 
 
 
+.detail-contact-right{
+  border: solid 1px #000;
+}
+.about-detail{
+  box-shadow:none;
+  border: 1px solid #000 !important;
+}
+.about-detail .card-header{
+  background:transparent;
+  padding-top: 0;
+}
+.about-detail .btn.btn-link {
+  color: #000;
+}
+.about-detail .btn.btn-link:focus{
+  box-shadow:none;
+}
 
 
 

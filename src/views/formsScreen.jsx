@@ -96,10 +96,11 @@ const FormsScreen = () => {
     <Row className="w-100 border-bottom pb-3 mt-5 ">
         <Col md={5}><h6>REBNY COVID Liability Form</h6> 
         
-        Mila Kunas
+        <Link to='#'>Mila Kunas</Link>
         </Col>
         <Col md={3} className="text-center">
           <Badge variant="secondary sent-option text-center">Sent</Badge>{' '}
+          <p style={{fontSize: 13 }}>1 min ago</p>
         </Col>
         <Col md={4} className="text-right">
          <Button variant="outline-secondary options">View Form</Button>{' '}
@@ -113,11 +114,14 @@ const FormsScreen = () => {
       <Row className="w-100 border-bottom pb-3 mt-5 ">
         <Col md={5}><h6>REBNY COVID Health Screening Form</h6> 
         
-        Tom Cruise
-        <p>435 Fifth Avenue, Apt 4, New York, NY 10345</p>
+        <Link to='#'>Tom Cruise</Link>
+        <p>
+          <Link to= '#'>435 Fifth Avenue, Apt 4, New York, NY 10345</Link>
+        </p>
         </Col>
         <Col md={3} className="text-center">
           <Badge variant="secondary sent-option text-center">Signed</Badge>{' '}
+          <p style={{fontSize: 13 }}>1 hour ago</p>
         </Col>
         <Col md={4} className="text-right">
          <Button variant="outline-secondary options">View Form</Button>{' '}
@@ -131,11 +135,14 @@ const FormsScreen = () => {
       <Row className="w-100 border-bottom pb-3 mt-5 ">
         <Col md={5}><h6>View New York State Housing Discrim</h6> 
         
-        Jack Ryan
-        <p>435 Fifth Avenue, Apt 4, New York, NY 10345</p>
+        <Link to ='#'>Jack Ryan</Link>
+        <p>
+          <Link to= '#'>435 Fifth Avenue, Apt 4, New York, NY 10345</Link>
+        </p>
         </Col>
         <Col md={3} className="text-center">
           <Badge variant="secondary sent-option text-center">Viewed</Badge>{' '}
+          <p style={{fontSize: 13 }}>1 day ago</p>
         </Col>
         <Col md={4} className="text-right">
          <Button variant="outline-secondary options">View Form</Button>{' '}
@@ -149,10 +156,11 @@ const FormsScreen = () => {
       <Row className="w-100 border-bottom pb-3 mt-5 ">
         <Col md={5}><h6>REBNY COVID Liability Form</h6> 
         
-        George Clooney
+        <Link to ='#'>George Clooney</Link>
         </Col>
         <Col md={3} className="text-center">
           <Badge variant="secondary sent-option text-center">Sent</Badge>{' '}
+          <p style={{fontSize: 13 }}>2 weeks ago</p>
         </Col>
         <Col md={4} className="text-right">
          <Button variant="outline-secondary options">View Form</Button>{' '}

@@ -245,4 +245,7 @@ width:100%;
 .form1 .footer ul {
   padding:0;
 }
+.draw-modal canvas{
+  width:276px;
+}
 }
