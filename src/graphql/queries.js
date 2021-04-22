@@ -8,6 +8,10 @@ export const getContact = /* GraphQL */ `
       agentId
       name
       email
+      phoneNum
+      companyName
+      roleInCompany
+      type
       createdAt
       updatedAt
     }
@@ -25,6 +29,10 @@ export const listContacts = /* GraphQL */ `
         agentId
         name
         email
+        phoneNum
+        companyName
+        roleInCompany
+        type
         createdAt
         updatedAt
       }
@@ -85,6 +93,10 @@ export const contactByAgent = /* GraphQL */ `
         agentId
         name
         email
+        phoneNum
+        companyName
+        roleInCompany
+        type
         createdAt
         updatedAt
       }

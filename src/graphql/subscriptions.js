@@ -8,6 +8,10 @@ export const onCreateContact = /* GraphQL */ `
       agentId
       name
       email
+      phoneNum
+      companyName
+      roleInCompany
+      type
       createdAt
       updatedAt
     }
@@ -20,6 +24,10 @@ export const onUpdateContact = /* GraphQL */ `
       agentId
       name
       email
+      phoneNum
+      companyName
+      roleInCompany
+      type
       createdAt
       updatedAt
     }
@@ -32,6 +40,10 @@ export const onDeleteContact = /* GraphQL */ `
       agentId
       name
       email
+      phoneNum
+      companyName
+      roleInCompany
+      type
       createdAt
       updatedAt
     }

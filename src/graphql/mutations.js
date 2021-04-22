@@ -11,6 +11,10 @@ export const createContact = /* GraphQL */ `
       agentId
       name
       email
+      phoneNum
+      companyName
+      roleInCompany
+      type
       createdAt
       updatedAt
     }
@@ -26,6 +30,10 @@ export const updateContact = /* GraphQL */ `
       agentId
       name
       email
+      phoneNum
+      companyName
+      roleInCompany
+      type
       createdAt
       updatedAt
     }
@@ -41,6 +49,10 @@ export const deleteContact = /* GraphQL */ `
       agentId
       name
       email
+      phoneNum
+      companyName
+      roleInCompany
+      type
       createdAt
       updatedAt
     }
