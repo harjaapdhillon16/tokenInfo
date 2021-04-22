@@ -1,7 +1,15 @@
+enum UserType {
+	AGENT
+	BUYER
+	SELLER
+}
+
 type Agent {
 	id: ID!
 	name: String!
 	email: String!
+	brokerageName: String
+	stateOfLicensure: String
 }
 
 type Contact @model @key(name: "byAgent", fields: ["agentId"], queryField: "contactByAgent") {
@@ -9,6 +17,10 @@ type Contact @model @key(name: "byAgent", fields: ["agentId"], queryField: "cont
 	agentId: ID!
 	name: String
 	email: String
+	phoneNum: String
+	companyName: String
+	roleInCompany: String
+	type: UserType
 }
 
 type FormData @model @key(name: "byAgent", fields: ["senderId"], queryField: "formsByAgent") {
@@ -18,3 +30,11 @@ type FormData @model @key(name: "byAgent", fields: ["senderId"], queryField: "fo
 	formName: String!
 	data: [String]
 }
+
+# type ContactHistory {
+
+# }
+
+# type Deal {}
+
+# type ContactDeals {}

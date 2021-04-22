@@ -180,6 +180,10 @@ a:hover{
   position: absolute;
     margin-top: -10%;
 }
+.contactsList {
+  height: 255px;
+  overflow-y: scroll;
+}
 
 
 

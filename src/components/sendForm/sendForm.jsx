@@ -14,15 +14,89 @@ import { Dropdown } from "react-bootstrap";
 import AppCard from "../card/card";
 import Header from "../header/header";
 import AppContext from "../../context/appContext";
+import { API, graphqlOperation } from "aws-amplify";
+import { listContacts } from "../../graphql/queries";
+import * as emailjs from "emailjs-com";
 
 const SendForm = ({ formModal, onHandleFormModal }) => {
   const [currentState, handleCurrentState] = useState(1);
-  const  { formsTypes , contacts } = useContext(AppContext);
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const [email, setEmail] = useState('techaditi669@gmail.com');
+  
+  
+  const  { formsTypes , contacts, onUpdateContacts } = useContext(AppContext);
  
   useEffect(() => {
     handleCurrentState(1);
+    handleContact();
   }, [formModal]);
 
+  const handleContact = async () => {
+    
+    if(contacts.length == 0){
+      try {
+        const listContactsData = await API.graphql(graphqlOperation(listContacts));
+        console.log('listContacts', listContactsData);
+        onUpdateContacts(listContactsData.data.listContacts.items)
+      
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    
+  };
+
+  const emailSend = (email) => {
+    
+    let SERVICE_ID = 'service_le2r21n';
+    let TEMPLATE_ID = 'template_difn49p';
+    let USER_ID = 'user_xtMibwUvYsK5NraUVFG1J'; 
+
+    let data = {
+      from_name: "adad",
+      to_name: "asdasd",
+      message: "asdasd",
+      reply_to: "asdasd",
+      
+      }
+
+    {
+      
+    };
+
+    // var data = {
+    //   service_id: SERVICE_ID,
+    //   template_id: TEMPLATE_ID,
+    //   user_id: USER_ID,
+    //   template_params: {
+    //       'username': 'James',
+    //       to_email:email,
+    //   }
+    // };
+
+    // fetch('https://api.emailjs.com/api/v1.0/email/send', {
+    //   type: 'POST',
+    //   data: JSON.stringify(data),
+    //   contentType: 'application/json'
+    // }).then(function() {
+    //     alert('Your mail is sent!');
+    // }).catch(function(error) {
+    //     alert('Oops... ' + JSON.stringify(error));
+    // });
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, data, USER_ID).then(
+      function (response) {
+        console.log(response);
+        console.log(response.status, response.text);
+      },
+      function (err) {
+        console.log(err);
+      }
+    );
+
+  }
+  console.log('contacts:', contacts);
   const formSelection = () => {
     return (
       <Modal
@@ -47,6 +121,12 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           >
             Next
           </Button>
+          <Button
+            onClick={() => emailSend(email)}
+            variant="outline-secondary  pop-btn d-flex ml-auto mr-auto"
+          >
+            Next
+          </Button>
         </Modal.Footer>
       </Modal>
     );
@@ -67,11 +147,23 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         </Form.Group>
         <Modal.Body className="modal-options">
 
-          {contacts.map((item) => (
-            <Form.Check id={item.id} label={item.name} />
-          ))}
+          <div className="contactsList">
+            {contacts.map((item) => (
+              <Form.Check id={item.id} label={item.name} />
+            ))}
+          </div>
+          
           <div className="d-flex ml-auto mr-auto justify-content-center add-client">
-            <IconPlus /> Add a new client
+          <Button
+            variant="primary"
+            className="m-auto px-5"
+            type="submit"
+            onClick={handleShow}
+          >
+            <IconPlus /> 
+            Add a new client
+          </Button>
+            {/* <IconPlus /> Add a new client */}
           </div>
         </Modal.Body>
         <Modal.Footer>

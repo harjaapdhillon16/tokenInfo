@@ -20,6 +20,7 @@ import { createContact } from "../graphql/mutations";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import AppContext from "../context/appContext"
+import CreateContactForm from "../components/createContactForm/createContactForm";
 
 
 const FormsScreen = () => {
@@ -127,7 +128,9 @@ const FormsScreen = () => {
             </Button>
           </div>
         </Col>
-        <Modal show={show} onHide={handleClose}>
+
+          <CreateContactForm show={show} handleClose={handleClose} setShow={setShow}/>
+        {/* <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title className="text-center m-auto">
               Add New Contact
@@ -198,13 +201,13 @@ const FormsScreen = () => {
                     formik.isValid &&
                     formik.dirty
   
-                  )                }
+                  )}
               >
                 Save
               </Button>
             </Modal.Footer>
           </Form>
-        </Modal>
+        </Modal> */}
       </Row>
       <Table bordered hover className="contact-table mt-4">
         <thead>
