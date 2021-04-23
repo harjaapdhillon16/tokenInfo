@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useContext } from "react";
 import {
   useTable,
   useSortBy,
@@ -11,12 +11,15 @@ import { COLUMNS } from "./columns/column";
 import { Container } from "react-bootstrap";
 import { handleContactCreation, dr } from "../views/Contact";
 import "./table.css";
-import Moment from 'react-moment';
+import Moment from "react-moment";
+import AppContext from "../context/appContext";
 
+export const BasicTable = ({tableData,onDeleteContact}) => {
+ 
 
-export const BasicTable = (item) => {
-  console.log("values:", item.tableData);
-  const data = React.useMemo(() => item.tableData, []);
+  
+
+  const data = React.useMemo(() => tableData, []);
 
   const columns = React.useMemo(
     () => [
@@ -51,14 +54,30 @@ export const BasicTable = (item) => {
       {
         Header: "Created at",
         accessor: "createdAt", // accessor is the "key" in the data
-        Cell: props =>  <Moment format="YYYY/MM/DD">{props.value}</Moment> 
+        Cell: (props) => <Moment format="YYYY/MM/DD">{props.value}</Moment>,
       },
       {
         Header: "Updated at",
         accessor: "updatedAt", // accessor is the "key" in the data
-        Cell: props =>  <Moment format="YYYY/MM/DD">{props.value}</Moment> 
-      }
-      
+        Cell: (props) => <Moment format="YYYY/MM/DD">{props.value}</Moment>,
+      },
+      {
+        id: "delete",
+        accessor: (str) => "delete",
+
+        Cell: (row) => (
+          <span
+            style={{
+              cursor: "pointer",
+              color: "blue",
+              textDecoration: "underline",
+            }}
+            onClick={() =>   onDeleteContact(row.row.original.id)
+            }
+          > Delete
+          </span>
+        ),
+      },
     ],
     []
   );
@@ -70,10 +89,14 @@ export const BasicTable = (item) => {
     rows,
     prepareRow,
   } = useTable({ columns, data }, useFilters, useSortBy);
-
+ 
   return (
     <Container>
-      <table  className="contact-table mt-4" {...getTableProps()} style={{ border: "solid 1px blue" }}>
+      <table
+        className="contact-table mt-4"
+        {...getTableProps()}
+        style={{ border: "solid 1px blue" }}
+      >
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
@@ -81,10 +104,12 @@ export const BasicTable = (item) => {
                 <th
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                   style={{
-                    borderBottom: "solid 3px red",
+                 
                     background: "aliceblue",
                     color: "black",
                     fontWeight: "bold",
+                    padding:10
+
                   }}
                 >
                   {column.render("Header")}

@@ -20,12 +20,12 @@ import { createContact } from "../../graphql/mutations";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-const CreateContactForm = ({show, handleClose, setShow}) => {
+
+const CreateContactForm = ({ show, handleClose, setShow }) => {
   // const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
-  const { contacts, onUpdateContacts} = useContext(AppContext);
-  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
-
+  const { contacts, onUpdateContacts } = useContext(AppContext);
+  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   const formik = useFormik({
     initialValues: {
@@ -34,9 +34,8 @@ const CreateContactForm = ({show, handleClose, setShow}) => {
       companyName: "",
       phoneNum: "",
       roleInCompany: "",
-      createdAt: "",
-      updatedAt: "",
 
+      agentId: "",
       // type:''
     },
     validationSchema: Yup.object({
@@ -44,15 +43,10 @@ const CreateContactForm = ({show, handleClose, setShow}) => {
       email: Yup.string()
         .email("Please enter valid email!")
         .required("Please enter valid email!"),
-      companyName: Yup.string().required("Please enter your company name!"),
-      phoneNum: Yup.string().required("Enter your valid phone number!"),
+
+      phoneNum: Yup.number().required("Enter your valid phone number!"),
       roleInCompany: Yup.string().required("Your role in Company"),
-      createdAt: Yup.string().required("This field is required"),
-      updatedAt: Yup.string().required("Fill this field"),
-
-
-
-      // type: Yup.string().required("Select the type!"),
+      agentId: Yup.string().required("Enter your valid agent id"),
     }),
     onSubmit: (values) => {
       handleContactCreation(values);
@@ -61,9 +55,12 @@ const CreateContactForm = ({show, handleClose, setShow}) => {
 
   const handleContactCreation = async (values) => {
     const data = {
-      agentId: "1",
+      agentId: values.agentId,
       name: values.name,
       email: values.email,
+      phoneNum: values.phoneNum,
+      roleInCompany: values.roleInCompany,
+      companyName: values.companyName,
     };
 
     try {
@@ -89,7 +86,7 @@ const CreateContactForm = ({show, handleClose, setShow}) => {
       </Modal.Header>
       <Form onSubmit={formik.handleSubmit}>
         <Modal.Body>
-        {formik.touched.name && formik.errors.name && (
+          {formik.touched.name && formik.errors.name && (
             <Form.Text className="text-error">{formik.errors.name}</Form.Text>
           )}
           <Form.Control
@@ -101,7 +98,23 @@ const CreateContactForm = ({show, handleClose, setShow}) => {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
-            {formik.touched.email && formik.errors.email && (
+
+          {formik.touched.agentId && formik.errors.agentId && (
+            <Form.Text className="text-error">
+              {formik.errors.agentId}
+            </Form.Text>
+          )}
+          <Form.Control
+            className="mb-3"
+            name="agentId"
+            value={formik.values.agentId}
+            type="text"
+            placeholder="Enter agent id"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+          />
+
+          {formik.touched.email && formik.errors.email && (
             <Form.Text className="text-error">{formik.errors.email}</Form.Text>
           )}
           <Form.Control
@@ -113,33 +126,22 @@ const CreateContactForm = ({show, handleClose, setShow}) => {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
-          
+
           <div>
-          {formik.touched.companyName && formik.errors.companyName && (
-              <Form.Text className="text-error">
-                {formik.errors.companyName}
-              </Form.Text>
-            )}
             <Form.Control
               className="mb-3"
               name="companyName"
               value={formik.values.companyName}
               type="text"
               placeholder="Company name (optional)"
-              onBlur={formik.handleBlur}
               onChange={formik.handleChange}
             />
-            
           </div>
-          <Form.Group controlId="exampleForm.ControlSelect1">
-            <Form.Control as="select">
-              <option>Buyer</option>
-              <option>Agent</option>
-              <option>Seller</option>
-            </Form.Control>
-          </Form.Group>
+
           {formik.touched.phoneNum && formik.errors.phoneNum && (
-            <Form.Text className="text-error">{formik.errors.phoneNum}</Form.Text>
+            <Form.Text className="text-error">
+              {formik.errors.phoneNum}
+            </Form.Text>
           )}
           <Form.Control
             className="mb-3"
@@ -151,19 +153,24 @@ const CreateContactForm = ({show, handleClose, setShow}) => {
             onChange={formik.handleChange}
           />
           {formik.touched.roleInCompany && formik.errors.roleInCompany && (
-            <Form.Text className="text-error">{formik.errors.roleInCompany}</Form.Text>
+            <Form.Text className="text-error">
+              {formik.errors.roleInCompany}
+            </Form.Text>
           )}
-          <Form.Control
-            className="mb-3"
-            name="roleInCompany"
-            value={formik.values.roleInCompany}
-            type="text"
-            placeholder="Your role in Company"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-          />
-           
-          
+
+          <Form.Group controlId="exampleForm.ControlSelect1">
+            <Form.Control
+              as="select"
+              name="roleInCompany"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+              value={formik.values.roleInCompany}
+            >
+              <option>Buyer</option>
+              <option>Agent</option>
+              <option>Seller</option>
+            </Form.Control>
+          </Form.Group>
         </Modal.Body>
         <Modal.Footer>
           <Button

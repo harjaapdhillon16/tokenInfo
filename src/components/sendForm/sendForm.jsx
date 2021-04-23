@@ -16,54 +16,75 @@ import Header from "../header/header";
 import AppContext from "../../context/appContext";
 import { API, graphqlOperation } from "aws-amplify";
 import { listContacts } from "../../graphql/queries";
+import { createFormData } from "../../graphql/mutations";
 import * as emailjs from "emailjs-com";
 
 const SendForm = ({ formModal, onHandleFormModal }) => {
   const [currentState, handleCurrentState] = useState(1);
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
-  const [email, setEmail] = useState('techaditi669@gmail.com');
-  
-  
-  const  { formsTypes , contacts, onUpdateContacts } = useContext(AppContext);
- 
+  const [email, setEmail] = useState("techaditi669@gmail.com");
+
+  const { formsTypes, contacts, onUpdateContacts } = useContext(AppContext);
+
   useEffect(() => {
     handleCurrentState(1);
     handleContact();
   }, [formModal]);
 
   const handleContact = async () => {
-    
-    if(contacts.length == 0){
+    if (contacts.length == 0) {
       try {
-        const listContactsData = await API.graphql(graphqlOperation(listContacts));
-        console.log('listContacts', listContactsData);
-        onUpdateContacts(listContactsData.data.listContacts.items)
-      
+        const listContactsData = await API.graphql(
+          graphqlOperation(listContacts)
+        );
+        console.log("listContacts", listContactsData);
+        onUpdateContacts(listContactsData.data.listContacts.items);
       } catch (err) {
         console.log(err);
       }
     }
-    
+  };
+
+  const handleFormData = async (values) => {
+    const data = {
+      senderId: 1,
+      receiverId: 2,
+      formName: "REBNY COVID Liability Form",
+      data: "dadad"   
+    };
+
+    try {
+      const createdContact = await API.graphql(
+        graphqlOperation(createFormData, { input: data })
+      );
+     
+      // const newContacts = [...contacts, createdContact.data.createContact];
+      // onUpdateContacts(newContacts);
+      // console.log(createdContact.data.createContact);
+      // setShow(false);
+    } catch (err) {
+      console.log(err, "Error creating Formdata");
+    }
   };
 
   const emailSend = (email) => {
+     
     
-    let SERVICE_ID = 'service_le2r21n';
-    let TEMPLATE_ID = 'template_difn49p';
-    let USER_ID = 'user_xtMibwUvYsK5NraUVFG1J'; 
+    handleCurrentState(currentState + 1);
+    let SERVICE_ID = "service_39gsjaw";
+    let TEMPLATE_ID = "template_difn49p";
+    let USER_ID = "user_xtMibwUvYsK5NraUVFG1J";
 
     let data = {
-      from_name: "adad",
-      to_name: "asdasd",
-      message: "asdasd",
+      from_name: "Simarjot",
+      to_name: "Simarjot",
+      message: "http://localhost:3000/formSubmission/1/user_xtMibwUvYsK5NraUVFG1J",
       reply_to: "asdasd",
-      
-      }
+    };
 
     {
-      
-    };
+    }
 
     // var data = {
     //   service_id: SERVICE_ID,
@@ -84,19 +105,22 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
     // }).catch(function(error) {
     //     alert('Oops... ' + JSON.stringify(error));
     // });
+ 
+  handleFormData();
+  emailjs.send(SERVICE_ID, TEMPLATE_ID, data, USER_ID).then(
+    function (response) {
+      console.log(response);
+      console.log(response.status, response.text);
+    },
+    function (err) {
+      console.log(err);
+    }
+  );
 
-    emailjs.send(SERVICE_ID, TEMPLATE_ID, data, USER_ID).then(
-      function (response) {
-        console.log(response);
-        console.log(response.status, response.text);
-      },
-      function (err) {
-        console.log(err);
-      }
-    );
-
-  }
-  console.log('contacts:', contacts);
+ 
+    
+  };
+  
   const formSelection = () => {
     return (
       <Modal
@@ -109,20 +133,12 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         </Modal.Header>
         <Modal.Body className="modal-options">
           {formsTypes.map((item) => (
-            <Form.Check
-             id={item.id} 
-            label={item.title} />
+            <Form.Check id={item.id} label={item.title} />
           ))}
         </Modal.Body>
         <Modal.Footer>
           <Button
-            onClick={() => handleCurrentState(currentState + 1)}
-            variant="outline-secondary  pop-btn d-flex ml-auto mr-auto"
-          >
-            Next
-          </Button>
-          <Button
-            onClick={() => emailSend(email)}
+            onClick={() => emailSend("simarjots9@gmail.com")}
             variant="outline-secondary  pop-btn d-flex ml-auto mr-auto"
           >
             Next
@@ -146,23 +162,13 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           <Form.Control type="search" placeholder="Search" />
         </Form.Group>
         <Modal.Body className="modal-options">
-
           <div className="contactsList">
             {contacts.map((item) => (
               <Form.Check id={item.id} label={item.name} />
             ))}
           </div>
-          
+
           <div className="d-flex ml-auto mr-auto justify-content-center add-client">
-          <Button
-            variant="primary"
-            className="m-auto px-5"
-            type="submit"
-            onClick={handleShow}
-          >
-            <IconPlus /> 
-            Add a new client
-          </Button>
             {/* <IconPlus /> Add a new client */}
           </div>
         </Modal.Body>

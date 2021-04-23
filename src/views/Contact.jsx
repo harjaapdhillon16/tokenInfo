@@ -33,7 +33,7 @@ const FormsScreen = () => {
   const [error, setError] = useState(false);
   const handleShow = () => setShow(true);
 
-  const { contacts, onUpdateContacts } = useContext(AppContext);
+  const { contacts, onUpdateContacts, onDeleteContact } = useContext(AppContext);
 
   const formik = useFormik({
     initialValues: {
@@ -95,6 +95,10 @@ const FormsScreen = () => {
       setLoading(false);
     }
   };
+  const handleDeleteContact = (id) => {
+    onDeleteContact(id)
+ 
+  }
 
   const sorted = _.orderBy(
     contacts,
@@ -231,7 +235,7 @@ const FormsScreen = () => {
           </Form>
         </Modal> */}
         </Row>
-        <BasicTable tableData={contacts} />
+        <BasicTable tableData={contacts} onDeleteContact ={handleDeleteContact} />
         {/* <Table bordered hover className="contact-table table-striped table mt-4">
           <thead className="thead-light">
             <tr>
