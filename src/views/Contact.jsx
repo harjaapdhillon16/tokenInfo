@@ -12,18 +12,18 @@ import { Dropdown } from "react-bootstrap";
 import * as Yup from "yup";
 import Badge from "react-bootstrap/Badge";
 import Header from "../components/header/header";
-import _ from 'lodash';
+import _ from "lodash";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { API, graphqlOperation } from "aws-amplify";
 import { listContacts } from "../graphql/queries";
 import { createContact } from "../graphql/mutations";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
-import AppContext from "../context/appContext"
+import AppContext from "../context/appContext";
 import CreateContactForm from "../components/createContactForm/createContactForm";
 import { BasicTable } from "../components/basicTable";
 import ContactDetail from "./ContactDetail";
-
+import Loader from "../components/Loader/Loader";
 
 const FormsScreen = () => {
   const [loading, setLoading] = useState(true);
@@ -33,7 +33,7 @@ const FormsScreen = () => {
   const [error, setError] = useState(false);
   const handleShow = () => setShow(true);
 
-  const { contacts, onUpdateContacts} = useContext(AppContext);
+  const { contacts, onUpdateContacts } = useContext(AppContext);
 
   const formik = useFormik({
     initialValues: {
@@ -44,42 +44,39 @@ const FormsScreen = () => {
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Please enter valid name!"),
-      email: Yup.string().email("Please enter valid email!").required("Please enter valid email!"),
+      email: Yup.string()
+        .email("Please enter valid email!")
+        .required("Please enter valid email!"),
       companyName: Yup.string().required("Please enter your company name!"),
       // type: Yup.string().required("Select the type!"),
     }),
     onSubmit: (values) => {
-      handleContactCreation(values)
-
+      handleContactCreation(values);
     },
   });
 
   const handleContactCreation = async (values) => {
-  
     const data = {
-      agentId:"1",
-      name:values.name,
-      email:values.email
-    }
-    
-    
-    
+      agentId: "1",
+      name: values.name,
+      email: values.email,
+    };
+
     try {
       const createdContact = await API.graphql(
-       graphqlOperation(createContact, { input: data })  );
-       console.log('createdContact', createdContact)
-       const newContacts = [...contacts,createdContact.data.createContact]
-       onUpdateContacts(newContacts)
-       console.log('updated records', createdContact.data.createContact);
-       setTableData(newContacts);
-       console.log('tableData', tableData);
-       setShow(false);
-       
+        graphqlOperation(createContact, { input: data })
+      );
+      console.log("createdContact", createdContact);
+      const newContacts = [...contacts, createdContact.data.createContact];
+      onUpdateContacts(newContacts);
+      console.log("updated records", createdContact.data.createContact);
+      setTableData(newContacts);
+      console.log("tableData", tableData);
+      setShow(false);
     } catch (err) {
-      console.log(err,"Error creating contact");
+      console.log(err, "Error creating contact");
     }
-
-  }
+  };
 
   useEffect(() => {
     handleContact();
@@ -87,60 +84,74 @@ const FormsScreen = () => {
 
   const handleContact = async () => {
     try {
-      const listContactsData = await API.graphql(graphqlOperation(listContacts));
+      const listContactsData = await API.graphql(
+        graphqlOperation(listContacts)
+      );
 
-      onUpdateContacts(listContactsData.data.listContacts.items)
-    
+      onUpdateContacts(listContactsData.data.listContacts.items);
+      setLoading(false);
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
-  
-   const sorted = _.orderBy(contacts, [user => user.name.toLowerCase()], ['asc']);
-   console.log(sorted,contacts)
+
+  const sorted = _.orderBy(
+    contacts,
+    [(user) => user.name.toLowerCase()],
+    ["asc"]
+  );
+  console.log(sorted, contacts);
+  if (loading) return <Loader />;
   return (
     <Container fluid className="p-0">
       <Header />
-      <div>
-        <BasicTable tableData={contacts}/>
-      </div>
-    <Container>
-      <Breadcrumb className="title-bar">
-        <Breadcrumb.Item>
-          <Link to="/">Home</Link>
-        </Breadcrumb.Item>
-        <Breadcrumb.Item>Contacts</Breadcrumb.Item>
-      </Breadcrumb>
-      <Row className="pt-4">
-        <Col md={6}>
-          <h5>Contacts</h5>
-        </Col>
-        <Col md={6}>
-          <div className="d-flex justify-content-center contact-right">
-            <Form.Group controlId="formBasicEmail">
-              <Form.Control type="text" placeholder="Search" />
-            </Form.Group>
-            <Dropdown>
-              <Dropdown.Toggle className="drop-btn px-4">
-                Actions
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-            <Button
-              variant="outline-secondary add-contact"
-              onClick={handleShow}
-            >
-              Add Contact
-            </Button>
-          </div>
-        </Col>
+      
+      <Container>
+        <Breadcrumb className="title-bar">
+          <Breadcrumb.Item>
+            <Link to="/">Home</Link>
+          </Breadcrumb.Item>
+          <Breadcrumb.Item>Contacts</Breadcrumb.Item>
+        </Breadcrumb>
+        <Row className="pt-4">
+          <Col md={6}>
+            <h5>Contacts</h5>
+          </Col>
+          <Col md={6}>
+            <div className="d-flex justify-content-center contact-right">
+              <Form.Group controlId="formBasicEmail">
+                <Form.Control type="text" placeholder="Search" />
+              </Form.Group>
+              <Dropdown>
+                <Dropdown.Toggle className="drop-btn px-4">
+                  Actions
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                  <Dropdown.Item href="#/action-2">
+                    Another action
+                  </Dropdown.Item>
+                  <Dropdown.Item href="#/action-3">
+                    Something else
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+              <Button
+                variant="outline-secondary add-contact"
+                onClick={handleShow}
+              >
+                Add Contact
+              </Button>
+            </div>
+          </Col>
 
-          <CreateContactForm show={show} handleClose={handleClose} setShow={setShow}/>
-        {/* <Modal show={show} onHide={handleClose}>
+          <CreateContactForm
+            show={show}
+            handleClose={handleClose}
+            setShow={setShow}
+          />
+          {/* <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title className="text-center m-auto">
               Add New Contact
@@ -219,135 +230,136 @@ const FormsScreen = () => {
             </Modal.Footer>
           </Form>
         </Modal> */}
-      </Row>
-      <Table bordered hover className="contact-table mt-4">
-        <thead>
-          <tr>
-            <th>
-              <Form.Check className="check-head"></Form.Check>
-            </th>
-            <th>
-              <Dropdown>
-                <Dropdown.Toggle className="drop-btn px-4">
-                  Name
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">
-                    Another action
-                  </Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">
-                    Something else
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>
-              <Dropdown>
-                <Dropdown.Toggle className="drop-btn px-4">
-                  Company
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">
-                    Another action
-                  </Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">
-                    Something else
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </th>
-            <th>
-              <Dropdown>
-                <Dropdown.Toggle className="drop-btn px-4">
-                  Title
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">
-                    Another action
-                  </Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">
-                    Something else
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </th>
-            <th>
-              <Dropdown>
-                <Dropdown.Toggle className="drop-btn px-4">
-                  Type
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">
-                    Another action
-                  </Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">
-                    Something else
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </th>
-            <th>
-              <Dropdown>
-                <Dropdown.Toggle className="drop-btn px-4">
-                  Created
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">
-                    Another action
-                  </Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">
-                    Something else
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </th>
-            <th>
-              <Dropdown>
-                <Dropdown.Toggle className="drop-btn px-4">
-                  Last Update
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">
-                    Another action
-                  </Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">
-                    Something else
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {sorted.map(item =>
-          <tr>
-          <td>
-            <Form.Check className="check-head"></Form.Check>
-          </td>
-          <td>
-            <Link to ={`./ContactDetail/${item.id}`}>{item.name}</Link>
-          </td>
-          <td>{item.email}</td>
-          <td>9175527895</td>
-          <td>Smith & Wesson</td>
-          <td>Director</td>
-          <td>Buyer</td>
-          <td>8/1/2020</td>
-          <td>3/31/2021</td>
-        </tr>
-            )}
-         
-        </tbody>
-      </Table>
-    </Container>
+        </Row>
+        <BasicTable tableData={contacts} />
+        {/* <Table bordered hover className="contact-table table-striped table mt-4">
+          <thead className="thead-light">
+            <tr>
+              <th>
+                <Form.Check className="check-head"></Form.Check>
+              </th>
+              <th>
+                <Dropdown>
+                  <Dropdown.Toggle className="drop-btn px-4">
+                    Name
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2">
+                      Another action
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#/action-3">
+                      Something else
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>
+                <Dropdown>
+                  <Dropdown.Toggle className="drop-btn px-4">
+                    Company
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2">
+                      Another action
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#/action-3">
+                      Something else
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </th>
+              <th>
+                <Dropdown>
+                  <Dropdown.Toggle className="drop-btn px-4">
+                    Title
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2">
+                      Another action
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#/action-3">
+                      Something else
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </th>
+              <th>
+                <Dropdown>
+                  <Dropdown.Toggle className="drop-btn px-4">
+                    Type
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2">
+                      Another action
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#/action-3">
+                      Something else
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </th>
+              <th>
+                <Dropdown>
+                  <Dropdown.Toggle className="drop-btn px-4">
+                    Created
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2">
+                      Another action
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#/action-3">
+                      Something else
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </th>
+              <th>
+                <Dropdown>
+                  <Dropdown.Toggle className="drop-btn px-4">
+                    Last Update
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                    <Dropdown.Item href="#/action-2">
+                      Another action
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#/action-3">
+                      Something else
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {sorted.map((item) => (
+              <tr>
+                <td>
+                  <Form.Check className="check-head"></Form.Check>
+                </td>
+                <td>
+                  <Link to={`./ContactDetail/${item.id}`}>{item.name}</Link>
+                </td>
+                <td>{item.email}</td>
+                <td>9175527895</td>
+                <td>Smith & Wesson</td>
+                <td>Director</td>
+                <td>Buyer</td>
+                <td>8/1/2020</td>
+                <td>3/31/2021</td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      */}
+      </Container>
     </Container>
   );
 };

@@ -30,6 +30,11 @@ const CreateContactForm = ({show, handleClose, setShow}) => {
       name: "",
       email: "",
       companyName: "",
+      phoneNum: "",
+      roleInCompany: "",
+      createdAt: "",
+      updatedAt: "",
+
       // type:''
     },
     validationSchema: Yup.object({
@@ -38,6 +43,13 @@ const CreateContactForm = ({show, handleClose, setShow}) => {
         .email("Please enter valid email!")
         .required("Please enter valid email!"),
       companyName: Yup.string().required("Please enter your company name!"),
+      phoneNum: Yup.string().required("Enter your valid phone number!"),
+      roleInCompany: Yup.string().required("Your role in Company"),
+      createdAt: Yup.string().required("This field is required"),
+      updatedAt: Yup.string().required("Fill this field"),
+
+
+
       // type: Yup.string().required("Select the type!"),
     }),
     onSubmit: (values) => {
@@ -75,6 +87,9 @@ const CreateContactForm = ({show, handleClose, setShow}) => {
       </Modal.Header>
       <Form onSubmit={formik.handleSubmit}>
         <Modal.Body>
+        {formik.touched.name && formik.errors.name && (
+            <Form.Text className="text-error">{formik.errors.name}</Form.Text>
+          )}
           <Form.Control
             className="mb-3"
             name="name"
@@ -84,10 +99,9 @@ const CreateContactForm = ({show, handleClose, setShow}) => {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
-          {formik.touched.name && formik.errors.name && (
-            <Form.Text className="text-error">{formik.errors.name}</Form.Text>
+            {formik.touched.email && formik.errors.email && (
+            <Form.Text className="text-error">{formik.errors.email}</Form.Text>
           )}
-
           <Form.Control
             className="mb-3"
             name="email"
@@ -97,10 +111,13 @@ const CreateContactForm = ({show, handleClose, setShow}) => {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
-          {formik.touched.email && formik.errors.email && (
-            <Form.Text className="text-error">{formik.errors.email}</Form.Text>
-          )}
+          
           <div>
+          {formik.touched.companyName && formik.errors.companyName && (
+              <Form.Text className="text-error">
+                {formik.errors.companyName}
+              </Form.Text>
+            )}
             <Form.Control
               className="mb-3"
               name="companyName"
@@ -110,11 +127,7 @@ const CreateContactForm = ({show, handleClose, setShow}) => {
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
             />
-            {formik.touched.companyName && formik.errors.companyName && (
-              <Form.Text className="text-error">
-                {formik.errors.companyName}
-              </Form.Text>
-            )}
+            
           </div>
           <Form.Group controlId="exampleForm.ControlSelect1">
             <Form.Control as="select">
@@ -123,6 +136,32 @@ const CreateContactForm = ({show, handleClose, setShow}) => {
               <option>Seller</option>
             </Form.Control>
           </Form.Group>
+          {formik.touched.phoneNum && formik.errors.phoneNum && (
+            <Form.Text className="text-error">{formik.errors.phoneNum}</Form.Text>
+          )}
+          <Form.Control
+            className="mb-3"
+            name="phoneNum"
+            value={formik.values.phoneNum}
+            type="number"
+            placeholder="Enter your valid phone number"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+          />
+          {formik.touched.roleInCompany && formik.errors.roleInCompany && (
+            <Form.Text className="text-error">{formik.errors.roleInCompany}</Form.Text>
+          )}
+          <Form.Control
+            className="mb-3"
+            name="roleInCompany"
+            value={formik.values.roleInCompany}
+            type="text"
+            placeholder="Your role in Company"
+            onBlur={formik.handleBlur}
+            onChange={formik.handleChange}
+          />
+           
+          
         </Modal.Body>
         <Modal.Footer>
           <Button
