@@ -24,6 +24,8 @@ const CreateContactForm = ({show, handleClose, setShow}) => {
   // const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const { contacts, onUpdateContacts} = useContext(AppContext);
+  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
+
 
   const formik = useFormik({
     initialValues: {
