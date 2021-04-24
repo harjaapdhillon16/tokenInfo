@@ -23,7 +23,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
   const [currentState, handleCurrentState] = useState(1);
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
-  const [email, setEmail] = useState("techaditi669@gmail.com");
+  const [email, setEmail] = useState("sandalsimar@gmail.com");
 
   const { formsTypes, contacts, onUpdateContacts } = useContext(AppContext);
 
@@ -38,7 +38,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         const listContactsData = await API.graphql(
           graphqlOperation(listContacts)
         );
-        console.log("listContacts", listContactsData);
+        
         onUpdateContacts(listContactsData.data.listContacts.items);
       } catch (err) {
         console.log(err);
@@ -72,7 +72,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
      
     
     handleCurrentState(currentState + 1);
-    let SERVICE_ID = "service_39gsjaw";
+    let SERVICE_ID = "service_tjry678";
     let TEMPLATE_ID = "template_difn49p";
     let USER_ID = "user_xtMibwUvYsK5NraUVFG1J";
 
@@ -81,6 +81,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       to_name: "Simarjot",
       message: "http://localhost:3000/formSubmission/1/user_xtMibwUvYsK5NraUVFG1J",
       reply_to: "asdasd",
+      to_email:email,
     };
 
     {

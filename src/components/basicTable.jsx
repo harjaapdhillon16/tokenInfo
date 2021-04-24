@@ -13,6 +13,7 @@ import { handleContactCreation, dr } from "../views/Contact";
 import "./table.css";
 import Moment from "react-moment";
 import AppContext from "../context/appContext";
+import { Link} from "react-router-dom"
 
 export const BasicTable = ({tableData,onDeleteContact}) => {
  
@@ -30,6 +31,7 @@ export const BasicTable = ({tableData,onDeleteContact}) => {
       {
         Header: "Name",
         accessor: "name", // accessor is the "key" in the data
+        Cell: (props) => <Link to={`/contactdetail/${props.row.original.id}`}>{ props.value }</Link>
       },
       {
         Header: "Email",
@@ -105,7 +107,7 @@ export const BasicTable = ({tableData,onDeleteContact}) => {
                   {...column.getHeaderProps(column.getSortByToggleProps())}
                   style={{
                  
-                    background: "aliceblue",
+                    background: "#f5f5f5",
                     color: "black",
                     fontWeight: "bold",
                     padding:10
