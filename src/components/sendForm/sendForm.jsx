@@ -46,12 +46,15 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
     }
   };
 
+  const formData = {
+    data: ['name', 'Simarjot', 'age', '25', 'address', 'Punjab']
+  }; 
   const handleFormData = async (values) => {
     const data = {
       senderId: 1,
       receiverId: 2,
       formName: "REBNY COVID Liability Form",
-      data: "dadad"   
+      data: formData  
     };
 
     try {
