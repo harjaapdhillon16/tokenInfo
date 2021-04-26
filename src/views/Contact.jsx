@@ -16,7 +16,7 @@ import _ from "lodash";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { API, graphqlOperation } from "aws-amplify";
 import { listContacts } from "../graphql/queries";
-import { createContact } from "../graphql/mutations";
+import { createContact,deleteContact } from "../graphql/mutations";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import AppContext from "../context/appContext";
@@ -95,10 +95,20 @@ const FormsScreen = () => {
       setLoading(false);
     }
   };
-  const handleDeleteContact = (id) => {
-    onDeleteContact(id)
- 
-  }
+  const handleDeleteContact = async (id) => {
+    try {
+      const deleteContactData = await API.graphql(
+        graphqlOperation(deleteContact,id)
+      );
+
+      onDeleteContact(deleteContactData.data.deleteContact.item.id);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setLoading(false);
+    }
+  };
+  
 
   const sorted = _.orderBy(
     contacts,
@@ -119,35 +129,16 @@ const FormsScreen = () => {
           <Breadcrumb.Item>Contacts</Breadcrumb.Item>
         </Breadcrumb>
         <Row className="pt-4">
-          <Col md={6}>
+          <Col md={10}>
             <h5>Contacts</h5>
           </Col>
-          <Col md={6}>
-            <div className="d-flex justify-content-center contact-right">
-              <Form.Group controlId="formBasicEmail">
-                <Form.Control type="text" placeholder="Search" />
-              </Form.Group>
-              <Dropdown>
-                <Dropdown.Toggle className="drop-btn px-4">
-                  Actions
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">
-                    Another action
-                  </Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">
-                    Something else
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+          <Col md={2}>
               <Button
                 variant="outline-secondary add-contact"
                 onClick={handleShow}
               >
                 Add Contact
               </Button>
-            </div>
           </Col>
 
           <CreateContactForm

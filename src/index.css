@@ -131,9 +131,6 @@ a:hover{
 .form-check{
   margin: 0px 0px 15px 20px;
 }
-.add-contact{
-  height: 39px;
-}
 .contact-table td{
   font-size:14px;
   text-align: center;
@@ -153,7 +150,10 @@ a:hover{
 }
 .add-contact {
   width: 100%;
-  min-width: 126px;
+  max-width: 134px;
+  height: 40px;
+  margin-left: 26px;
+  margin-bottom: 20px;
 }
 .close {
   margin-left: 0 !important;

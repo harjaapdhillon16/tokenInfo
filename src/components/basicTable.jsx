@@ -1,4 +1,4 @@
-import React, { useMemo, useContext } from "react";
+import React, { useMemo, useContext,useState } from "react";
 import {
   useTable,
   useSortBy,
@@ -6,18 +6,26 @@ import {
   useGlobalFilter,
   useAsyncDebounce,
 } from "react-table";
+import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import MOCK_DATA from "./MOCK_DATA.json";
 import { COLUMNS } from "./columns/column";
-import { Container } from "react-bootstrap";
+import { Container, Table, Button } from "react-bootstrap";
 import { handleContactCreation, dr } from "../views/Contact";
 import "./table.css";
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import Moment from "react-moment";
+import CreateContactForm from "../components/createContactForm/createContactForm";
 import AppContext from "../context/appContext";
 import { Link} from "react-router-dom"
 
 export const BasicTable = ({tableData,onDeleteContact}) => {
  
-
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  const [show, setShow] = useState(false);
   
 
   const data = React.useMemo(() => tableData, []);
@@ -66,23 +74,12 @@ export const BasicTable = ({tableData,onDeleteContact}) => {
       {
         id: "delete",
         accessor: (str) => "delete",
-
-        Cell: (row) => (
-          <span
-            style={{
-              cursor: "pointer",
-              color: "blue",
-              textDecoration: "underline",
-            }}
-            onClick={() =>   onDeleteContact(row.row.original.id)
-            }
-          > Delete
-          </span>
-        ),
       },
     ],
     []
   );
+  // const [gridApi, setGridApi] = useState(null);
+  // const [gridColumnApi, setGridColumnApi] = useState(null);
 
   const {
     getTableProps,
@@ -91,16 +88,57 @@ export const BasicTable = ({tableData,onDeleteContact}) => {
     rows,
     prepareRow,
   } = useTable({ columns, data }, useFilters, useSortBy);
+
  
   return (
-    <Container>
-      <table
-        className="contact-table mt-4"
+    <Container className="p-0">
+      <Table striped bordered hover>
+  <thead>
+    <tr>
+      <th>AgentID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Phone Number</th>
+      <th>Company Name</th>
+      <th>Role in Company</th>
+      <th>Type</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {tableData.map(item =>  <tr>
+      <td>{item.agentId}</td>
+      <td>
+      <Link to={`./ContactDetail/${item.id}`}>{item.name}</Link>
+      </td>
+      <td>{item.email}</td>
+      <td>{item.phoneNum}</td>
+      <td>{item.companyName}</td>
+      <td>{item.roleInCompany}</td>
+      <td>{item.type}</td>
+      <td>
+      <Button variant="danger"  onClick={()=>onDeleteContact(item.id)}>Delete</Button>
+      <Button
+                variant="outline-secondary"
+                onClick={handleShow}
+              >
+                Edit
+              </Button>
+              <CreateContactForm
+            show={show}
+            handleClose={handleClose}
+            setShow={setShow}
+          />
+      </td>
+    </tr> )}
+  </tbody>
+</Table>
+      {/* <Table striped bordered hover className="contact-table mt-4"
         {...getTableProps()}
         style={{ border: "solid 1px blue" }}
       >
-        <thead>
-          {headerGroups.map((headerGroup) => (
+  <thead>
+  {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 <th
@@ -122,8 +160,8 @@ export const BasicTable = ({tableData,onDeleteContact}) => {
               ))}
             </tr>
           ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
+  </thead>
+  <tbody {...getTableBodyProps()}>
           {rows.map((row, i) => {
             prepareRow(row);
             return (
@@ -136,8 +174,8 @@ export const BasicTable = ({tableData,onDeleteContact}) => {
               </tr>
             );
           })}
-        </tbody>
-      </table>
+</tbody>
+</Table> */}
     </Container>
   );
 };

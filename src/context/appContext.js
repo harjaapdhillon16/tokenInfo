@@ -28,6 +28,7 @@ export class AppContext extends Component {
     this.setState({ contacts });
   };
   handleContactDelete = (id) => {
+    
       this.setState({ contacts: this.state.contacts.filter( (item) =>  item.id !== id  && item  ) });
   };
 
