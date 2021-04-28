@@ -31,7 +31,10 @@ export class AppContext extends Component {
     
       this.setState({ contacts: this.state.contacts.filter( (item) =>  item.id !== id  && item  ) });
   };
+  handleUpdate= (data) => {
+    this.setState({data});
 
+  }
   render() {
     return (
       <Context.Provider
@@ -40,6 +43,7 @@ export class AppContext extends Component {
           onUserUpdate: this.handleUserUpdate,
           onUpdateContacts: this.handleContactUpdates,
           onDeleteContact: this.handleContactDelete,
+          onEditContact: this.handleUpdate,
         }}
       >
         {this.props.children}

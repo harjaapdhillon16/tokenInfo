@@ -16,40 +16,39 @@ import Header from "../header/header";
 import AppContext from "../../context/appContext";
 import { API, graphqlOperation } from "aws-amplify";
 import { listContacts } from "../../graphql/queries";
-import { createContact } from "../../graphql/mutations";
+import { createContact, updateContact } from "../../graphql/mutations";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 
-const CreateContactForm = ({ show, handleClose, setShow }) => {
-  // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  const { contacts, onUpdateContacts } = useContext(AppContext);
+const UpdateContactForm = ({ show, handleClose, setShow, data, editState }) => {
+  console.log('editdata', data);
+  const { contacts, onEditContact } = useContext(AppContext);
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      email: "",
-      companyName: "",
-      phoneNum: "",
-      roleInCompany: "",
-
-      agentId: "",
-      // type:''
+      name: data.name,
+      email: data.email,
+      companyName: data.companyName,
+      phoneNum: data.phoneNum,
+      roleInCompany: data.roleInCompany,
+      agentId: data.agentId,
     },
+    enableReinitialize: true,
     validationSchema: Yup.object({
       name: Yup.string().required("Please enter valid name!"),
       email: Yup.string()
         .email("Please enter valid email!")
         .required("Please enter valid email!"),
       phoneNum: Yup.string()
-        .required("Enter your valid phone number!")
-        .matches(phoneRegExp, 'Phone number is not valid')
-        .min(10, "to short")
-        .max(10, "to long"),
+      .required("Enter your valid phone number!")
+      .matches(phoneRegExp, 'Phone number is not valid')
+      .min(10, "to short")
+      .max(10, "to long"),
       roleInCompany: Yup.string().required("Your role in Company"),
       agentId: Yup.string().required("Enter your valid agent id"),
+      
     }),
     onSubmit: (values) => {
       handleContactCreation(values);
@@ -66,20 +65,33 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
       companyName: values.companyName,
     };
 
-    try {
-      const createdContact = await API.graphql(
-        graphqlOperation(createContact, { input: data })
-      );
-      console.log(createdContact);
-      const newContacts = [...contacts, createdContact.data.createContact];
-      onUpdateContacts(newContacts);
-      console.log(createdContact.data.createContact);
-      setShow(false);
-    } catch (err) {
-      console.log(err, "Error creating contact");
-    }
-  };
-
+  //   try {
+  //     const createdContact = await API.graphql(
+  //       graphqlOperation(createContact, { input: data })
+  //     );
+  //     console.log(createdContact);
+  //     const newContacts = [...contacts, createdContact.data.createContact];
+  //     onUpdateContacts(newContacts);
+  //     console.log(createdContact.data.createContact);
+  //     setShow(false);
+  //   } catch (err) {
+  //     console.log(err, "Error creating contact");
+  //   }
+  // };
+  try {
+    const editContacts = await API.graphql(
+      graphqlOperation(updateContact, { input: data })
+    );
+    console.log(editContacts);
+    const updateContacts = [...contacts, editContacts.data.updateContact];
+    onEditContact(updateContacts);
+    console.log(editContacts.data.updateContact);
+    setShow(false);
+  } catch (err) {
+    console.log(err, "Error creating contact");
+  }
+};
+ 
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
@@ -89,18 +101,19 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
       </Modal.Header>
       <Form onSubmit={formik.handleSubmit}>
         <Modal.Body>
-          {formik.touched.name && formik.errors.name && (
-            <Form.Text className="text-error">{formik.errors.name}</Form.Text>
-          )}
-          <Form.Control
-            className="mb-3"
-            name="name"
-            value={formik.values.name}
-            type="text"
-            placeholder="Enter your name"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-          />
+            <Form.Control
+              className="mb-3"
+              name="name"
+              value={formik.values.name}
+              type="text"
+              placeholder="Enter your name"
+              onBlur={formik.handleBlur}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.name && formik.errors.name && (
+              <Form.Text className="text-error">{formik.errors.name}</Form.Text>
+            )}
+
 
           {formik.touched.agentId && formik.errors.agentId && (
             <Form.Text className="text-error">
@@ -190,4 +203,4 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
   );
 };
 
-export default CreateContactForm;
+export default UpdateContactForm;

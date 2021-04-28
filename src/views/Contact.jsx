@@ -16,7 +16,7 @@ import _ from "lodash";
 import Breadcrumb from "react-bootstrap/Breadcrumb";
 import { API, graphqlOperation } from "aws-amplify";
 import { listContacts } from "../graphql/queries";
-import { createContact,deleteContact } from "../graphql/mutations";
+import { createContact, deleteContact } from "../graphql/mutations";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import AppContext from "../context/appContext";
@@ -88,8 +88,9 @@ const FormsScreen = () => {
         graphqlOperation(listContacts)
       );
 
-      onUpdateContacts(listContactsData.data.listContacts.items);
+      // onUpdateContacts(listContactsData.data.listContacts.items);
       setLoading(false);
+    
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -146,215 +147,10 @@ const FormsScreen = () => {
             handleClose={handleClose}
             setShow={setShow}
           />
-          {/* <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title className="text-center m-auto">
-              Add New Contact
-            </Modal.Title>
-          </Modal.Header>
-          <Form onSubmit={formik.handleSubmit}>
-            <Modal.Body>
-            {formik.touched.name && formik.errors.name && (
-                <Form.Text className="text-error">
-                  {formik.errors.name}
-                </Form.Text>
-              )}
-              <Form.Control
-                className="mb-3"
-                name="name"
-                value={formik.values.name}
-                type="text"
-                placeholder="Enter your name"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-              />
-              
-              {formik.touched.email && formik.errors.email && (
-                <Form.Text className="text-error">
-                  {formik.errors.email}
-                </Form.Text>
-              )}
-              <Form.Control
-                className="mb-3"
-                name="email"
-                value={formik.values.email}
-                type="text"
-                placeholder="Enter your valid email"
-                onBlur={formik.handleBlur}
-                onChange={formik.handleChange}
-              />
-             
-              <div>
-              {formik.touched.companyName && formik.errors.companyName && (
-                  <Form.Text className="text-error">
-                    {formik.errors.companyName}
-                  </Form.Text>
-                )}
-                <Form.Control
-                  className="mb-3"
-                  name="companyName"
-                  value={formik.values.companyName}
-                  type="text"
-                  placeholder="Company name (optional)"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                />
-              </div>
-              <Form.Group controlId="exampleForm.ControlSelect1">
-                <Form.Control as="select">
-                  <option>Buyer</option>
-                  <option>Agent</option>
-                  <option>Seller</option>
-                </Form.Control>
-              </Form.Group>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button
-                variant="primary"
-                className="m-auto px-5"
-                type="submit"
-                disabled={
-                  !(
-                    formik.isValid &&
-                    formik.dirty
-  
-                  )}
-              >
-                Save
-              </Button>
-            </Modal.Footer>
-          </Form>
-        </Modal> */}
+          
         </Row>
         <BasicTable tableData={contacts} onDeleteContact ={handleDeleteContact} />
-        {/* <Table bordered hover className="contact-table table-striped table mt-4">
-          <thead className="thead-light">
-            <tr>
-              <th>
-                <Form.Check className="check-head"></Form.Check>
-              </th>
-              <th>
-                <Dropdown>
-                  <Dropdown.Toggle className="drop-btn px-4">
-                    Name
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">
-                      Another action
-                    </Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">
-                      Something else
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>
-                <Dropdown>
-                  <Dropdown.Toggle className="drop-btn px-4">
-                    Company
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">
-                      Another action
-                    </Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">
-                      Something else
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </th>
-              <th>
-                <Dropdown>
-                  <Dropdown.Toggle className="drop-btn px-4">
-                    Title
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">
-                      Another action
-                    </Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">
-                      Something else
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </th>
-              <th>
-                <Dropdown>
-                  <Dropdown.Toggle className="drop-btn px-4">
-                    Type
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">
-                      Another action
-                    </Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">
-                      Something else
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </th>
-              <th>
-                <Dropdown>
-                  <Dropdown.Toggle className="drop-btn px-4">
-                    Created
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">
-                      Another action
-                    </Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">
-                      Something else
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </th>
-              <th>
-                <Dropdown>
-                  <Dropdown.Toggle className="drop-btn px-4">
-                    Last Update
-                  </Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">
-                      Another action
-                    </Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">
-                      Something else
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {sorted.map((item) => (
-              <tr>
-                <td>
-                  <Form.Check className="check-head"></Form.Check>
-                </td>
-                <td>
-                  <Link to={`./ContactDetail/${item.id}`}>{item.name}</Link>
-                </td>
-                <td>{item.email}</td>
-                <td>9175527895</td>
-                <td>Smith & Wesson</td>
-                <td>Director</td>
-                <td>Buyer</td>
-                <td>8/1/2020</td>
-                <td>3/31/2021</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      */}
-      </Container>
+          </Container>
     </Container>
   );
 };

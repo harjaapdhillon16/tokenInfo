@@ -6,89 +6,44 @@ import {
   useGlobalFilter,
   useAsyncDebounce,
 } from "react-table";
-import { AgGridColumn, AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import MOCK_DATA from "./MOCK_DATA.json";
 import { COLUMNS } from "./columns/column";
-import { Container, Table, Button } from "react-bootstrap";
+import { Container, Table, Button, Modal, Form } from "react-bootstrap";
 import { handleContactCreation, dr } from "../views/Contact";
 import "./table.css";
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import Moment from "react-moment";
-import CreateContactForm from "../components/createContactForm/createContactForm";
+import { updateContact } from "../graphql/mutations";
+import { API, graphqlOperation } from "aws-amplify";
+import UpdateContactForm from "../components/updateContactModal/updateContactModal";
 import AppContext from "../context/appContext";
 import { Link} from "react-router-dom"
 
-export const BasicTable = ({tableData,onDeleteContact}) => {
- 
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
+export const BasicTable = ({tableData,onDeleteContact,data}) => {
+
   const [show, setShow] = useState(false);
-  
+  const handleClose = () => setShow(false);
+  const [loading, setLoading] = useState(true);
+  const handleShow = () => setShow(true);
+  const [formData, setFormData] = useState('');
 
-  const data = React.useMemo(() => tableData, []);
+const  setOnEditContact = (item) => {
+  console.log('editdata', item);
+  setFormData(item)
+  handleShow()
+} 
+const EditContact = async (item) => {
+  try {
+    const updateContact = await API.graphql(
+      graphqlOperation(updateContact,item)
+    );
 
-  const columns = React.useMemo(
-    () => [
-      {
-        Header: "Agent ID",
-        accessor: "agentId", // accessor is the "key" in the data
-      },
-      {
-        Header: "Name",
-        accessor: "name", // accessor is the "key" in the data
-        Cell: (props) => <Link to={`/contactdetail/${props.row.original.id}`}>{ props.value }</Link>
-      },
-      {
-        Header: "Email",
-        accessor: "email", // accessor is the "key" in the data
-      },
-      {
-        Header: "Phone Number",
-        accessor: "phoneNum", // accessor is the "key" in the data
-      },
-      {
-        Header: "Company Name",
-        accessor: "companyName", // accessor is the "key" in the data
-      },
-      {
-        Header: "Role In Company",
-        accessor: "roleInCompany", // accessor is the "key" in the data
-      },
-      {
-        Header: "Type",
-        accessor: "type", // accessor is the "key" in the data
-      },
-      {
-        Header: "Created at",
-        accessor: "createdAt", // accessor is the "key" in the data
-        Cell: (props) => <Moment format="YYYY/MM/DD">{props.value}</Moment>,
-      },
-      {
-        Header: "Updated at",
-        accessor: "updatedAt", // accessor is the "key" in the data
-        Cell: (props) => <Moment format="YYYY/MM/DD">{props.value}</Moment>,
-      },
-      {
-        id: "delete",
-        accessor: (str) => "delete",
-      },
-    ],
-    []
-  );
-  // const [gridApi, setGridApi] = useState(null);
-  // const [gridColumnApi, setGridColumnApi] = useState(null);
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({ columns, data }, useFilters, useSortBy);
-
+    EditContact(updateContact.data.updateContact.item);
+    setLoading(false);
+  } catch (err) {
+    console.log(err);
+    setLoading(false);
+  }
+};
  
   return (
     <Container className="p-0">
@@ -116,66 +71,26 @@ export const BasicTable = ({tableData,onDeleteContact}) => {
       <td>{item.companyName}</td>
       <td>{item.roleInCompany}</td>
       <td>{item.type}</td>
-      <td>
-      <Button variant="danger"  onClick={()=>onDeleteContact(item.id)}>Delete</Button>
+      <td className="d-flex">
+      <Button variant="danger" className="mr-2" onClick={()=>onDeleteContact(item.id)}>Delete</Button>{' '}
       <Button
                 variant="outline-secondary"
-                onClick={handleShow}
+                onClick={()=>setOnEditContact(item)}
               >
-                Edit
+               Edit
               </Button>
-              <CreateContactForm
+
+          <UpdateContactForm 
             show={show}
             handleClose={handleClose}
             setShow={setShow}
+            data={formData}
+            editState={"true"}
           />
       </td>
     </tr> )}
   </tbody>
 </Table>
-      {/* <Table striped bordered hover className="contact-table mt-4"
-        {...getTableProps()}
-        style={{ border: "solid 1px blue" }}
-      >
-  <thead>
-  {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps(column.getSortByToggleProps())}
-                  style={{
-                 
-                    background: "#f5f5f5",
-                    color: "black",
-                    fontWeight: "bold",
-                    padding:10
-
-                  }}
-                >
-                  {column.render("Header")}
-                  <span>
-                    {column.isSorted ? (column.isSortedAsec ? "🔽" : "🔼") : ""}
-                  </span>
-                </th>
-              ))}
-            </tr>
-          ))}
-  </thead>
-  <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-</tbody>
-</Table> */}
     </Container>
   );
 };
