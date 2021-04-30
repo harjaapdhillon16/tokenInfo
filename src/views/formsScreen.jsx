@@ -25,12 +25,12 @@ const FormsScreen = () => {
 
   const handleFormsData = async () => {
     try {
-      const  newFormsData = await API.graphql(
+      const newFormsData = await API.graphql(
         graphqlOperation(listFormDatas)
       );
         
       setFormsData(newFormsData.data.listFormDatas.items)
-      console.log(newFormsData.data.listFormDatas.items);
+      // console.log('listforms', newFormsData.data.listFormDatas.items );
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -118,8 +118,8 @@ const FormsScreen = () => {
     {formsData.map(item =>  <Row className="w-100 border-bottom pb-3 mt-5 ">
           <Col md={5}>
             <h6>{item.formName}</h6>
-
-            <Link to="#">Mila Kunas</Link>
+            
+            <Link to="#">{item.name}</Link>
           </Col>
           <Col md={3} className="text-center">
             <Badge variant="secondary sent-option text-center">Sent</Badge>{" "}

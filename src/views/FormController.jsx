@@ -1,24 +1,51 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import { API, graphqlOperation } from "aws-amplify";
+import {getFormData} from "../graphql/queries"; 
 import Form1 from "../forms/form1/Form1";
 import Form2 from "../forms/form2/Form2";
 import Form3 from "../forms/form3/Form3";
 
 const FormController = (props) => {
-  const renderFormType = (id) => {
-    console.log(id, 2);
-    switch (id) {
-      case 1:
+  console.log(props);
+  const [formData, setFormData] = useState([])
+
+  useEffect(() => {
+    handleForms();
+  }, []);
+
+  const handleForms = async () => {
+    try {
+ 
+      const getFormsData = await API.graphql(graphqlOperation(getFormData, {
+        id: props.match.params.id
+      }));
+
+      setFormData(getFormsData.data.getFormData);
+      console.log('getFormsData',getFormsData.data.getFormData);
+        
+    } catch (err) {
+      console.log(err);
+      
+    }
+  };
+
+  const renderFormType = (formtype) => {
+    console.log('formtype:', formtype);
+    switch (formtype) {
+      case "REBNY COVID Liability Form":
         return <Form1 />;
-      case 2:
+      case "New York Agency Disclosure Form for Buyer and Seller":
         return <Form2 />;
-      case 3:
+      case "REBNY COVID Health Screening Form":
         return <Form3 />;
 
       default:
         return "NOt Found!";
     }
   };
-  return renderFormType(parseInt(props.match.params.id));
+  // console.log(props.match.params.id);
+  return renderFormType(formData.formName);
+  
 };
 export default FormController;
  

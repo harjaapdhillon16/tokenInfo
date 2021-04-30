@@ -21,13 +21,14 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 
-const UpdateContactForm = ({ show, handleClose, setShow, data, editState }) => {
-  console.log('editdata', data);
+const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
+  console.log('editdata:', data);
   const { contacts, onEditContact } = useContext(AppContext);
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   const formik = useFormik({
     initialValues: {
+      id:data.id,
       name: data.name,
       email: data.email,
       companyName: data.companyName,
@@ -51,44 +52,40 @@ const UpdateContactForm = ({ show, handleClose, setShow, data, editState }) => {
       
     }),
     onSubmit: (values) => {
-      handleContactCreation(values);
+      handleContactCreation({values});
     },
   });
 
   const handleContactCreation = async (values) => {
-    const data = {
-      agentId: values.agentId,
-      name: values.name,
-      email: values.email,
-      phoneNum: values.phoneNum,
-      roleInCompany: values.roleInCompany,
-      companyName: values.companyName,
-    };
+    
+    // const updateData = {
+    //   id: data.id,
+    //   agentId: values.agentId,
+    //   name: values.name,
+    //   email: values.email,
+    //   phoneNum: values.phoneNum,
+    //   roleInCompany: values.roleInCompany,
+    //   companyName: values.companyName,
+    // };
+    console.log(values);
 
-  //   try {
-  //     const createdContact = await API.graphql(
-  //       graphqlOperation(createContact, { input: data })
-  //     );
-  //     console.log(createdContact);
-  //     const newContacts = [...contacts, createdContact.data.createContact];
-  //     onUpdateContacts(newContacts);
-  //     console.log(createdContact.data.createContact);
-  //     setShow(false);
-  //   } catch (err) {
-  //     console.log(err, "Error creating contact");
-  //   }
-  // };
+
   try {
     const editContacts = await API.graphql(
-      graphqlOperation(updateContact, { input: data })
+      graphqlOperation(updateContact, { input: values })
     );
-    console.log(editContacts);
-    const updateContacts = [...contacts, editContacts.data.updateContact];
-    onEditContact(updateContacts);
-    console.log(editContacts.data.updateContact);
-    setShow(false);
+    console.log('editContacts', editContacts);
+    // if(updateData.id === editContacts.id){
+    //   const updateContacts = [...contacts, editContacts.data.updateContact];
+    // }
+    // const updateContacts = [...contacts, editContacts.data.updateContact];
+    // console.log('updateContacts', updateContacts);
+
+    // onEditContact(updateContacts);
+    // console.log(editContacts.data.updateContact);
+    // setShow(false);
   } catch (err) {
-    console.log(err, "Error creating contact");
+    console.log(err, "Error updating contact"); 
   }
 };
  
@@ -130,9 +127,6 @@ const UpdateContactForm = ({ show, handleClose, setShow, data, editState }) => {
             onChange={formik.handleChange}
           />
 
-          {formik.touched.email && formik.errors.email && (
-            <Form.Text className="text-error">{formik.errors.email}</Form.Text>
-          )}
           <Form.Control
             className="mb-3"
             name="email"
@@ -142,6 +136,9 @@ const UpdateContactForm = ({ show, handleClose, setShow, data, editState }) => {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
+          {formik.touched.email && formik.errors.email && (
+            <Form.Text className="text-error">{formik.errors.email}</Form.Text>
+          )}
 
           <div>
             <Form.Control
@@ -154,11 +151,6 @@ const UpdateContactForm = ({ show, handleClose, setShow, data, editState }) => {
             />
           </div>
 
-          {formik.touched.phoneNum && formik.errors.phoneNum && (
-            <Form.Text className="text-error">
-              {formik.errors.phoneNum}
-            </Form.Text>
-          )}
           <Form.Control
             className="mb-3"
             name="phoneNum"
@@ -168,9 +160,9 @@ const UpdateContactForm = ({ show, handleClose, setShow, data, editState }) => {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
-          {formik.touched.roleInCompany && formik.errors.roleInCompany && (
+          {formik.touched.phoneNum && formik.errors.phoneNum && (
             <Form.Text className="text-error">
-              {formik.errors.roleInCompany}
+              {formik.errors.phoneNum}
             </Form.Text>
           )}
 
@@ -187,6 +179,11 @@ const UpdateContactForm = ({ show, handleClose, setShow, data, editState }) => {
               <option>Seller</option>
             </Form.Control>
           </Form.Group>
+          {formik.touched.roleInCompany && formik.errors.roleInCompany && (
+            <Form.Text className="text-error">
+              {formik.errors.roleInCompany}
+            </Form.Text>
+          )}
         </Modal.Body>
         <Modal.Footer>
           <Button

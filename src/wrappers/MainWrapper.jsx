@@ -31,6 +31,7 @@ const MainWrapper = () => {
   return (
     <Container fluid>
       {/* <Header /> */}
+      
        <ApplicationRouter />
      </Container>
   );

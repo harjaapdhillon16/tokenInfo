@@ -27,6 +27,7 @@ export const BasicTable = ({tableData,onDeleteContact,data}) => {
   const [formData, setFormData] = useState('');
 
 const  setOnEditContact = (item) => {
+  console.log('modal open');
   console.log('editdata', item);
   setFormData(item)
   handleShow()
@@ -74,23 +75,22 @@ const EditContact = async (item) => {
       <td className="d-flex">
       <Button variant="danger" className="mr-2" onClick={()=>onDeleteContact(item.id)}>Delete</Button>{' '}
       <Button
-                variant="outline-secondary"
-                onClick={()=>setOnEditContact(item)}
-              >
-               Edit
-              </Button>
-
-          <UpdateContactForm 
-            show={show}
-            handleClose={handleClose}
-            setShow={setShow}
-            data={formData}
-            editState={"true"}
-          />
+        variant="outline-secondary"
+        onClick={()=>setOnEditContact(item)}
+      >
+        Edit
+      </Button>
       </td>
     </tr> )}
   </tbody>
 </Table>
+<UpdateContactForm 
+  show={show}
+  handleClose={handleClose}
+  setShow={setShow} 
+  data={formData}
+  editState={"true"}
+/>
     </Container>
   );
 };

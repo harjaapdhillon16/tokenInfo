@@ -28,6 +28,9 @@ const ApplicationRouter = () => {
         <Route exact path="/" component={Dashboard} />
         </Suspense>
 
+
+
+
         <Redirect to="not-found" />
       </Switch>
     </React.Fragment>

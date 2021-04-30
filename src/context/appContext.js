@@ -8,14 +8,41 @@ export class AppContext extends Component {
       {
         id: 1,
         title: "REBNY COVID Liability Form",
+        data:[
+          {
+            name:'',
+            date:'',
+            name_of_real_estate:'',
+            real_estate_brockerage_company:''
+          }
+        ]
       },
       {
         id: 2,
-        title: "REBNY COVID Health Screening Form",
+        title: "New York Agency Disclosure Form for Buyer and Seller",
+        data:[
+          {
+            name_of_broker:'',
+            name_of_real_estate_company:'',
+            account_type:'',
+            real_estate_brockerage_company:'',
+            firstdate:'',
+            lastdate:''
+          }
+        ]
       },
       {
         id: 3,
-        title: "New York Agency Disclosure Form for Buyer and Seller",
+        title: "REBNY COVID Health Screening Form",
+        data:[
+          {
+            name:'',
+            date:'',
+            property_address:'',
+            real_estate_name:'',
+            name_of_brockerage_company:''
+          }
+        ]
       },
     ],
     contacts: [],
