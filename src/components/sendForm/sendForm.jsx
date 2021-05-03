@@ -27,6 +27,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
   const [email, setEmail] = useState("sandalsimar@gmail.com");
   const [updatedFormTypes, setUpdatedFormTypes] = useState([]);
   const [updatedContacts, setUpdatedContacts] = useState([]);
+  const [input, setInput] = useState('');
+  const [contactList, setContactList] = useState();
   
 
   const { formsTypes, contacts, onUpdateContacts } = useContext(AppContext);
@@ -46,10 +48,26 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
     setUpdatedFormTypes(updatedTypes);
   };
 
+  //get contacts list
   const handleContactTypes = () => {
     console.log(contacts);
     setUpdatedContacts(contacts);
   };
+
+  const handleSearch = (val) => {
+    let filtered = [];
+    console.log(val);
+    if (val !== ""){
+      filtered = updatedContacts.filter(item => {
+        return item.name.toLowerCase().includes(val.toLowerCase())
+      })
+    }else{
+      filtered = contacts;
+    }
+  
+    setInput(val);
+    setUpdatedContacts(filtered);
+  }
 
   const handleContact = async () => {
     if (contacts.length == 0) {
@@ -147,24 +165,41 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
     let data = [];
 
     if (formid === 1) {
-      data.name = formData.name;
-      data.date = "";
-      data.name_of_real_estate = formData.companyName;
-      data.real_estate_brockerage_company = "";
+      
+      data[0] = "name";
+      data[1] = formData.name;
+      data[2] = "name_of_real_estate";
+      data[3] = formData.companyName;
+      data[4] = "real_estate_brockerage_company";
+      data[5] = formData.companyName;
+      
     } else if (formid === 2) {
-      data.name = formData.name;
-      data.name_of_real_estate_company = formData.companyName;
-      data.account_type = "";
-      data.real_estate_brockerage_company = "";
-      data.firstdate = "";
-      data.lastdate = "";
+
+      data[0] = "name";
+      data[1] = formData.name;
+      data[2] = "name_of_real_estate_company";
+      data[3] = formData.companyName;
+      data[4] = "account_type";
+      data[5] = "";
+      data[6] = "real_estate_brockerage_company";
+      data[7] = "";
+      data[8] = "firstdate";
+      data[9] = "";
+      data[10] = "lastdate";
+      data[11] = "";
+
     } else if (formid === 3) {
-      data.name = formData.name;
-      data.date = "";
-      data.account_type = "";
-      data.property_address = "";
-      data.real_estate_name = formData.companyName;
-      data.name_of_brockerage_company = "";
+
+      data[0] = "name";
+      data[1] = formData.name;
+      data[2] = "account_type";
+      data[3] = "";
+      data[4] = "property_address";
+      data[5] = "";
+      data[4] = "real_estate_name";
+      data[5] = formData.companyName;
+      data[6] = "name_of_brockerage_company";
+      data[7] = "";
     }
     return data;
   };
@@ -179,12 +214,12 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
     );
 
     let finalData = [];
-    // let data = [];
+    
     selectedcontacts.map((item) => {
       selectedforms.map(function (form) {
 
         let finalObject = {};
-        finalObject.senderId = "1";
+        finalObject.senderId = user.username;
         finalObject.receiverId = item.id;
         finalObject.formName = form.title;
 
@@ -246,7 +281,6 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
   };
 
  
-
   const formSelection = () => {
     return (
       <Modal
@@ -292,21 +326,43 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           <Modal.Title></Modal.Title>
         </Modal.Header>
         <Form.Group controlId="formBasicSearch">
-          <Form.Control type="search" placeholder="Search" />
+          <Form.Control 
+            type="search" 
+            placeholder="Search" 
+            name={input} 
+            onChange={(e) => handleSearch(e.target.value)}
+          />
         </Form.Group>
         <Modal.Body className="modal-options">
-          <div className="contactsList">
-            {updatedContacts.map((item) => (
-              <Form.Check
-                id={item.id}
-                label={item.name}
-                type="checkbox"
-                checked={item.isActive}
-                onChange={() => onhandleContactMethod(item.id)}
-              />
-            ))}
-          </div>
 
+          {/* {contactList === undefined  ? */}
+
+            <div className="contactsList">
+              {updatedContacts.map((item) => (
+                <Form.Check
+                  id={item.id}
+                  label={item.name}
+                  type="checkbox"
+                  checked={item.isActive}
+                  onChange={() => onhandleContactMethod(item.id)}
+                />
+              ))}
+            </div>
+           
+          {/* : */}
+            {/* <div className="contactsList">
+              {contactList.map((item) => (
+                <Form.Check
+                  id={item.id}
+                  label={item.name}
+                  type="checkbox"
+                  checked={item.isActive}
+                  onChange={() => onhandleContactMethod(item.id)}
+                />
+              ))}
+            </div> */}
+          {/* } */}
+          
           <div className="d-flex ml-auto mr-auto justify-content-center add-client">
             {/* <IconPlus /> Add a new client */}
           </div>

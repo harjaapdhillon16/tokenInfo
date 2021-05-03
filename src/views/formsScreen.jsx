@@ -14,8 +14,11 @@ import { Link } from "react-router-dom";
 import { useFormik } from "formik";
 import { API, graphqlOperation } from "aws-amplify";
 import { listFormDatas } from "../graphql/queries";
+import AppContext from '../../src/context/appContext';
+import * as emailjs from "emailjs-com";
 
 const FormsScreen = () => {
+  const { user } = useContext(AppContext);
   const [loading, setLoading] = useState(true);
   const [formsData,setFormsData] = useState([])
 
@@ -30,13 +33,38 @@ const FormsScreen = () => {
       );
         
       setFormsData(newFormsData.data.listFormDatas.items)
-      // console.log('listforms', newFormsData.data.listFormDatas.items );
+      console.log('listforms', newFormsData.data.listFormDatas.items );
       setLoading(false);
     } catch (err) {
       console.log(err);
       setLoading(false);
     }
   };
+
+  const handleReminderSent = async (userid) => {
+    let SERVICE_ID = "service_tjry678";
+    let TEMPLATE_ID = "template_difn49p";
+    let USER_ID = "user_xtMibwUvYsK5NraUVFG1J";
+    let receiverId = userid;
+
+    let emailData = {
+      from_name: user.username,
+      to_name: "test",
+      message:`http://localhost:3000/formSubmission/${receiverId}`,
+      reply_to: user.attributes.email,
+      to_email:"test@gmail.com",
+    };
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
+      function (response) {
+        console.log(response);
+        console.log(response.status, response.text);
+      },
+      function (err) {
+        console.log(err);
+      }
+    );
+  }
 
   return (
     <Container fluid>
@@ -115,19 +143,23 @@ const FormsScreen = () => {
             </div>
           </Col>
         </Row>
-    {formsData.map(item =>  <Row className="w-100 border-bottom pb-3 mt-5 ">
+        {formsData.map(item =>  <Row className="w-100 border-bottom pb-3 mt-5 ">
           <Col md={5}>
             <h6>{item.formName}</h6>
+            {/* {item.data.map((key) => {
+              return(
+                <Link to="#">{key.name}</Link>
+              )
+            })} */}
             
-            <Link to="#">{item.name}</Link>
           </Col>
           <Col md={3} className="text-center">
             <Badge variant="secondary sent-option text-center">Sent</Badge>{" "}
             <p style={{ fontSize: 13 }}>1 min ago</p>
           </Col>
           <Col md={4} className="text-right">
-            <Button variant="outline-secondary options">View Form</Button>
-            <Button variant="outline-secondary options">Reminder Sent </Button>
+            <Button variant="outline-secondary options"><a href={`http://localhost:3000/formSubmission/${item.id}`}>View Form</a></Button>
+            <Button variant="outline-secondary options" onClick={() => handleReminderSent(item.receiverId)}>Send Reminder</Button>
           </Col>
         </Row>
         )}

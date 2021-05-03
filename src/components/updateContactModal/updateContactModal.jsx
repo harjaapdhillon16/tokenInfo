@@ -58,32 +58,31 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
 
   const handleContactCreation = async (values) => {
     
-    // const updateData = {
-    //   id: data.id,
-    //   agentId: values.agentId,
-    //   name: values.name,
-    //   email: values.email,
-    //   phoneNum: values.phoneNum,
-    //   roleInCompany: values.roleInCompany,
-    //   companyName: values.companyName,
-    // };
-    console.log(values);
+    const updateData = {
+      id: data.id,
+      agentId: values.values.agentId,
+      name: values.values.name,
+      email: values.values.email,
+      phoneNum: values.values.phoneNum,
+      roleInCompany: values.values.roleInCompany,
+      companyName: values.values.companyName,
+    };
+    console.log('values', updateData);
 
 
   try {
     const editContacts = await API.graphql(
-      graphqlOperation(updateContact, { input: values })
+      graphqlOperation(updateContact, { input: updateData })
     );
-    console.log('editContacts', editContacts);
-    // if(updateData.id === editContacts.id){
-    //   const updateContacts = [...contacts, editContacts.data.updateContact];
-    // }
-    // const updateContacts = [...contacts, editContacts.data.updateContact];
-    // console.log('updateContacts', updateContacts);
+    console.log('editContacts', editContacts.data.updateContact);
 
-    // onEditContact(updateContacts);
-    // console.log(editContacts.data.updateContact);
-    // setShow(false);
+    if(updateData.id === editContacts.data.updateContact.id){
+      const updateContacts = [...contacts, editContacts.data.updateContact];
+      console.log('updateContacts', updateContacts);
+      onEditContact(updateContacts)
+    }
+    
+    setShow(false);
   } catch (err) {
     console.log(err, "Error updating contact"); 
   }

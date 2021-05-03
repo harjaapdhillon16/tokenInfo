@@ -96,13 +96,18 @@ const FormsScreen = () => {
       setLoading(false);
     }
   };
-  const handleDeleteContact = async (id) => {
+  const handleDeleteContact = async (contactid) => {
+    const data = {
+      id: contactid,
+    };
+
     try {
       const deleteContactData = await API.graphql(
-        graphqlOperation(deleteContact,id)
+        graphqlOperation(deleteContact, { input: data })
       );
 
-      onDeleteContact(deleteContactData.data.deleteContact.item.id);
+      console.log('deleteContactData', deleteContactData.data.deleteContact);
+      onDeleteContact(deleteContactData.data.deleteContact.id);
       setLoading(false);
     } catch (err) {
       console.log(err);
