@@ -137,21 +137,21 @@ const Form2 = (formItem) => {
                            <p>
                             This form was provided to me by <input type="text" class="form-control mb-2 mr-sm-2" value={formItem.formItem.data[1]}/>
                             (print name of Real Estate Salesperson/
-                            Broker) of<input type="text" class="form-control mb-2 mr-sm-2" />
+                            Broker) of<input type="text" class="form-control mb-2 mr-sm-2"  value={formItem.formItem.data[3]}/>
                             (print name of Real Estate company, firm or brokerage)<br/>
-                            (I)(We)<input type="text" class="form-control mb-2 mr-sm-2"/>
+                            (I)(We)<input type="text" class="form-control mb-2 mr-sm-2" value={formItem.formItem.data[5]}/>
                             (Buyer/Tenant/Seller/Landlord) acknowledge receipt of a copy of this disclosure form:
                            </p> 
                     </form>
                     <div class="form-row pt-4 detail ">
                         <div class="col-md-8 mb-3 d-flex">
                             <label class="pt-2 input-head">Buyer/Tenant/Seller/Landlord Signature</label>
-                            <input type="text" class="form-control"/>
+                            <input type="text" class="form-control" />
                           </div>
                     
                           <div class="col-md-4 mb-3 d-flex">
                             <label class="pt-2 input-head">Date:</label>
-                            <input type="text" class="form-control date-block"/>
+                            <input type="text" class="form-control date-block" value={formItem.formItem.data[9]}/>
                           </div>
                     </div>
                     <div class="form-row pt-4 detail ">
@@ -162,7 +162,7 @@ const Form2 = (formItem) => {
                     
                           <div class="col-md-4 mb-3 d-flex">
                             <label class="pt-2  input-head">Date:</label>
-                            <input type="text" class="form-control date-block"/>
+                            <input type="text" class="form-control date-block" value={formItem.formItem.data[11]}/>
                           </div>
                     </div>
                     <p class="pt-4">

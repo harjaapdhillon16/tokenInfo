@@ -42,7 +42,7 @@ const FormController = (props) => {
       case "New York Agency Disclosure Form for Buyer and Seller":
         return <Form2 formItem={formData} />;
       case "REBNY COVID Health Screening Form":
-        return <Form3 />;
+        return <Form3 formItem={formData}/>;
 
       default:
         return "NOt Found!";
