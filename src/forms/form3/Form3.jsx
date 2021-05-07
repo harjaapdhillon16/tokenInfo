@@ -8,7 +8,9 @@ import {
   IconInstagram,
 } from "../../assets/icons/icons";
 import Logo from "../../assets/FormImages/rebny-logo.png";
-const Form3 = () => {
+const Form3 = (formItem) => {
+  console.log('formItem', formItem);
+
   return (
     <Container className="form3">
       <Row>
@@ -226,7 +228,7 @@ const Form3 = () => {
         <Col md={12}>
           <div class="form-row detail pt-5">
             <div class="col-md-4 mb-3">
-              <input type="text" class="form-control" />
+              <input type="text" class="form-control" value={formItem.formItem.data[1]}/>
               <label class="pt-2 pl-3 input-head">Print Name</label>
             </div>
             <div class="col-md-4 mb-3">
@@ -234,23 +236,23 @@ const Form3 = () => {
               <label class="pt-2  pl-3 input-head">Signature</label>
             </div>
             <div class="col-md-4 mb-3">
-              <input type="text" class="form-control" />
+              <input type="text" class="form-control"  value={formItem.formItem.data[3]}/>
               <label class="pt-2  pl-3 input-head">Date</label>
             </div>
           </div>
           <div class="form-row detail pt-">
             <div class="col-md-4 mb-3">
-              <input type="text" class="form-control" />
+              <input type="text" class="form-control" value={formItem.formItem.data[5]}/>
               <label class="pt-2  pl-3 input-head">Property Address</label>
             </div>
             <div class="col-md-4 mb-3">
-              <input type="text" class="form-control" />
+              <input type="text" class="form-control" value={formItem.formItem.data[7]}/>
               <label class="pt-2  pl-3 input-head">
                 Name of Real Estate Licensee
               </label>
             </div>
             <div class="col-md-4 mb-3">
-              <input type="text" class="form-control" />
+              <input type="text" class="form-control" value={formItem.formItem.data[9]}/>
               <label class="pt-2  pl-3 input-head">
                 Name of Brokerage Company
               </label>

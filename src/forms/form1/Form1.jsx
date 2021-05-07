@@ -120,7 +120,7 @@ const Form1 = ({formItem}) => {
         <Form.Row className="detail pt-5">
           <Col md={4}>
             <Form.Group onClick={handleShow} controlId="formBasicSign">
-             { signMethod === "draw" ?  <img src={signImage} /> : <span className="sign">{signAsText}</span>}  
+             { signMethod === "draw" ?  <img src={signImage} /> : <span className="sign apply-font">{signAsText}</span>}  
               <div className="sign-field">
               {/* <Form.Control type="text" className="apply-font" /> */}
               </div>
@@ -240,7 +240,7 @@ const Form1 = ({formItem}) => {
                     
                     onChange={(nextFont) =>
                         setActiveFontFamily(
-                             nextFont.family,
+                          nextFont.family,
                         )
                     }
                 />

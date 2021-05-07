@@ -192,20 +192,20 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 
       data[0] = "name";
       data[1] = formData.name;
-      data[2] = "account_type";
+      data[2] = "date";
       data[3] = "";
       data[4] = "property_address";
       data[5] = "";
-      data[4] = "real_estate_name";
-      data[5] = formData.companyName;
-      data[6] = "name_of_brockerage_company";
-      data[7] = "";
+      data[6] = "real_estate_name";
+      data[7] = formData.companyName;
+      data[8] = "name_of_brockerage_company";
+      data[9] = "";
     }
     return data;
   };
 
   const handleSecondForm = () => {
-    //  handleCurrentState(currentState + 1)
+     handleCurrentState(currentState + 1)
     let selectedforms = updatedFormTypes.filter(
       (item) => item.isActive === true
     );
@@ -348,20 +348,6 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
                 />
               ))}
             </div>
-           
-          {/* : */}
-            {/* <div className="contactsList">
-              {contactList.map((item) => (
-                <Form.Check
-                  id={item.id}
-                  label={item.name}
-                  type="checkbox"
-                  checked={item.isActive}
-                  onChange={() => onhandleContactMethod(item.id)}
-                />
-              ))}
-            </div> */}
-          {/* } */}
           
           <div className="d-flex ml-auto mr-auto justify-content-center add-client">
             {/* <IconPlus /> Add a new client */}
@@ -372,7 +358,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
             onClick={() => handleSecondForm()}
             variant="outline-secondary  pop-btn d-flex ml-auto mr-auto"
           >
-            Next contact submit
+            Next
           </Button>{" "}
         </Modal.Footer>
       </Modal>
