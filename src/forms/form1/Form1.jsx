@@ -14,7 +14,9 @@ import Accordion from "react-bootstrap/Accordion";
 import Logo from "../../assets/FormImages/rebny-logo.png";
 
 
-  const Form1 = () => {
+const Form1 = ({formItem}) => {
+  console.log('formItem', formItem);
+  
   const [show, setShow] = useState(false);
   const [canvasShow, setCanvasShow] = useState(true);
   const [fieldShow, setFieldShow] = useState(false);
@@ -73,6 +75,7 @@ import Logo from "../../assets/FormImages/rebny-logo.png";
       </Row>
       <Row>
         <Col md={10} className="pt-5 form-title pb-5">
+      
           <h1>Limitation of Liability-Form</h1>
           <h3>For Coronavirus (COVID-19)</h3>
         </Col>
@@ -126,7 +129,7 @@ import Logo from "../../assets/FormImages/rebny-logo.png";
           </Col>
           <Col md={4}>
             <Form.Group controlId="formBasicSign">
-              <Form.Control type="text" />
+              <Form.Control type="text" value={formItem.data[1]}/>
               <Form.Label>Full Name</Form.Label>
             </Form.Group>
           </Col>
@@ -145,7 +148,7 @@ import Logo from "../../assets/FormImages/rebny-logo.png";
           </Col>
           <Col md={3} className="mb-3">
             <Form.Group controlId="formBasicSign">
-              <Form.Control type="text" />
+              <Form.Control type="text" value={formItem.data[3]}/>
               <Form.Label>Name of Real Estate License</Form.Label>
             </Form.Group>
           </Col>
@@ -154,7 +157,7 @@ import Logo from "../../assets/FormImages/rebny-logo.png";
           </Col>
           <Col md={4} className="mb-3">
             <Form.Group controlId="formBasicSign">
-              <Form.Control type="text" />
+              <Form.Control type="text" value={formItem.data[5]} />
               <Form.Label>Real Estate Brokerage Company</Form.Label>
             </Form.Group>
           </Col>

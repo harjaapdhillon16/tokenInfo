@@ -38,9 +38,9 @@ const FormController = (props) => {
     console.log('formtype:', formtype);
     switch (formtype) {
       case "REBNY COVID Liability Form":
-        return <Form1 />;
+        return <Form1 formItem={formData}/>;
       case "New York Agency Disclosure Form for Buyer and Seller":
-        return <Form2 />;
+        return <Form2 formItem={formData} />;
       case "REBNY COVID Health Screening Form":
         return <Form3 />;
 

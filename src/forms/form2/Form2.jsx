@@ -3,7 +3,10 @@ import { Container, Row, Col, Form } from 'react-bootstrap';
 import '../form2/css/style2.css';
 import { IconFacebook,IconTwitter,IconLinkedin, IconInstagram } from "../../assets/icons/icons";
 import Logo from "../../assets/FormImages/og_image.png";
-const Form2 = () => {
+
+const Form2 = (formItem) => {
+    console.log('formItem', formItem);
+
     return ( 
         <Container className="form2">
             <Row className="pt-4">
@@ -132,7 +135,7 @@ const Form2 = () => {
                        </p>
                        <form class="form-inline submit-form">
                            <p>
-                            This form was provided to me by <input type="text" class="form-control mb-2 mr-sm-2"/>
+                            This form was provided to me by <input type="text" class="form-control mb-2 mr-sm-2" value={formItem.formItem.data[1]}/>
                             (print name of Real Estate Salesperson/
                             Broker) of<input type="text" class="form-control mb-2 mr-sm-2" />
                             (print name of Real Estate company, firm or brokerage)<br/>
