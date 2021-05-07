@@ -88,12 +88,10 @@ const Form3 = () => {
         </Col>
       </Row>
       <Row>
-        <Col md={6} className="pl-4">
+        <Col md={7} className="pl-4">
           <div class="pt-4">
             <p>
-              <span>1.</span> Have you knowingly been in close or proximate
-              contact in the past 14 days with anyone who has tested positive
-              for COVID-19 or who has had symptoms of COVID-19?
+              <span>1.</span>Have you knowingly been in close or proximate contact in the past 14 days with anyone who has tested positive for COVID-19 or who has had symptoms of COVID-19?
             </p>
             <div class="form-check form-check-inline">
               <input
@@ -176,9 +174,7 @@ const Form3 = () => {
           </div>
           <div class="pt-4">
             <p>
-              <span>4.</span> In the past 10 days, have you traveled more than
-              24 hours to a state or country for which New York State requires a
-              quarantine?{" "}
+              <span>4.</span> Are you fully vaccinated having completed your two-week immunity window following vaccination?
             </p>
             <div class="form-check form-check-inline">
               <input
@@ -203,118 +199,26 @@ const Form3 = () => {
               </label>
             </div>
           </div>
-          <div class="pt-4 pl-3">
-            <p>
-              <span>a.</span> If yes, have you quarantined for at least three
-              (3) days, been tested for COVID-19 on or after the fourth (4th)
-              day of returning to New York and received a negative test result?
-              OR have you quarantined for 10 days?{" "}
-            </p>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="inlineCheckbox9"
-                value="option1"
-              />
-              <label class="form-check-label" for="inlineCheckbox9">
-                Yes
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="inlineCheckbox10"
-                value="option2"
-              />
-              <label class="form-check-label" for="inlineCheckbox10">
-                No
-              </label>
-            </div>
-          </div>
         </Col>
-        <Col md={6}>
-          <div class="pt-4">
-            <p>
-              <span>5.</span> In the past 10 days, have you traveled less than
-              24 hours to a state or country which New York State deems to have
-              a significant degree of community-wide spread of COVID-19?{" "}
-            </p>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="inlineCheckbox11"
-                value="option1"
-              />
-              <label class="form-check-label" for="inlineCheckbox11">
-                Yes
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="inlineCheckbox12"
-                value="option2"
-              />
-              <label class="form-check-label" for="inlineCheckbox12">
-                No
-              </label>
-            </div>
-          </div>
-          <div class="pt-4 pl-3">
-            <p>
-              <span>a.</span> If yes, did you take a COVID-19 test on or after
-              the 4th day following your arrival and receive a negative test
-              result?{" "}
-            </p>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="inlineCheckbox13"
-                value="option1"
-              />
-              <label class="form-check-label" for="inlineCheckbox13">
-                Yes
-              </label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="inlineCheckbox14"
-                value="option2"
-              />
-              <label class="form-check-label" for="inlineCheckbox14">
-                No
-              </label>
-            </div>
-          </div>
+        <Col md={5}>
           <div>
             <div class="card mt-4">
               <p class="card-text mb-0 p-3">
-                *Per updated CDC guidance released on March 8, 2021,{" "}
-                <span>“asymptomatic</span> fully vaccinated individuals,”
-                meaning those who have received a single-shot vaccine or.{" "}
-                <span>both</span> shots of a two-shot vaccine, are no longer
-                required to quarantine if they have been in close contact with a
-                person who has COVID-19. <span>However,</span>at least two weeks
-                must have passed since the individual’s final shot prior to the
-                exposure. Please read more from the{" "}
-                <a href="https://www.cdc.gov/coronavirus/2019-ncov/vaccines/fully-vaccinated.html">
-                  CDC Here
-                </a>
-              </p>
+              <a href="https://coronavirus.health.ny.gov/covid-19-travel-advisory">Per updated New York State travel guidance,</a> asymptomatic travelers entering
+              New York from another country, U.S. state
+              or territory are no longer required to test or
+              quarantine as of April 10, 2021.</p>
+              <p class="card-text p-3">Please note that <span>PPE, social distancing and
+              other protective protocols are still required
+              and enforced for ALL individuals, including
+              those fully vaccinated, in public settings</span>.</p>
               <p class="card-text p-3">
-                Please also note that{" "}
-                <span>
-                  t PPE, social distancing and other protective protocols are
-                  still required and enforced for ALL individuals, including
-                  those fully vaccinated, in public settings.
-                </span>
+              REBNY’s Health Questionnaire Screening
+              Form is a suggested form, and therefore
+              real estate licensees should continue to use
+              their best judgment as to whether they feel
+              comfortable showing property based on the
+              information provided.
               </p>
             </div>
           </div>
