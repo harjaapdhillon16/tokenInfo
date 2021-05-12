@@ -4,7 +4,7 @@ enum UserType {
 	SELLER
 }
 
-type Agent {
+type Agent @model @key(name: "byId", fields: ["id"], queryField: "agentById") {
 	id: ID!
 	name: String!
 	email: String!
@@ -27,8 +27,16 @@ type FormData @model @key(name: "byAgent", fields: ["senderId"], queryField: "fo
 	id: ID!
 	senderId: ID!
 	receiverId: ID!
+	receiverName: String
+	receiverEmail: String
 	formName: String!
 	data: [String]
+	status: String
+	emailStatus: String
+	emailTimestamp: String
+	signature: String
+	signatureFont: String
+	isSignatureTyped: Boolean
 }
 
 # type ContactHistory {
