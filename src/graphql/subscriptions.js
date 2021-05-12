@@ -1,6 +1,45 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateAgent = /* GraphQL */ `
+  subscription OnCreateAgent {
+    onCreateAgent {
+      id
+      name
+      email
+      brokerageName
+      stateOfLicensure
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateAgent = /* GraphQL */ `
+  subscription OnUpdateAgent {
+    onUpdateAgent {
+      id
+      name
+      email
+      brokerageName
+      stateOfLicensure
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteAgent = /* GraphQL */ `
+  subscription OnDeleteAgent {
+    onDeleteAgent {
+      id
+      name
+      email
+      brokerageName
+      stateOfLicensure
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateContact = /* GraphQL */ `
   subscription OnCreateContact {
     onCreateContact {
@@ -55,8 +94,16 @@ export const onCreateFormData = /* GraphQL */ `
       id
       senderId
       receiverId
+      receiverName
+      receiverEmail
       formName
       data
+      status
+      emailStatus
+      emailTimestamp
+      signature
+      signatureFont
+      isSignatureTyped
       createdAt
       updatedAt
     }
@@ -68,8 +115,16 @@ export const onUpdateFormData = /* GraphQL */ `
       id
       senderId
       receiverId
+      receiverName
+      receiverEmail
       formName
       data
+      status
+      emailStatus
+      emailTimestamp
+      signature
+      signatureFont
+      isSignatureTyped
       createdAt
       updatedAt
     }
@@ -81,8 +136,16 @@ export const onDeleteFormData = /* GraphQL */ `
       id
       senderId
       receiverId
+      receiverName
+      receiverEmail
       formName
       data
+      status
+      emailStatus
+      emailTimestamp
+      signature
+      signatureFont
+      isSignatureTyped
       createdAt
       updatedAt
     }

@@ -1,6 +1,39 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getAgent = /* GraphQL */ `
+  query GetAgent($id: ID!) {
+    getAgent(id: $id) {
+      id
+      name
+      email
+      brokerageName
+      stateOfLicensure
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listAgents = /* GraphQL */ `
+  query ListAgents(
+    $filter: ModelAgentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAgents(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        email
+        brokerageName
+        stateOfLicensure
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getContact = /* GraphQL */ `
   query GetContact($id: ID!) {
     getContact(id: $id) {
@@ -46,8 +79,16 @@ export const getFormData = /* GraphQL */ `
       id
       senderId
       receiverId
+      receiverName
+      receiverEmail
       formName
       data
+      status
+      emailStatus
+      emailTimestamp
+      signature
+      signatureFont
+      isSignatureTyped
       createdAt
       updatedAt
     }
@@ -64,8 +105,44 @@ export const listFormDatas = /* GraphQL */ `
         id
         senderId
         receiverId
+        receiverName
+        receiverEmail
         formName
         data
+        status
+        emailStatus
+        emailTimestamp
+        signature
+        signatureFont
+        isSignatureTyped
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const agentById = /* GraphQL */ `
+  query AgentById(
+    $id: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelAgentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    agentById(
+      id: $id
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        email
+        brokerageName
+        stateOfLicensure
         createdAt
         updatedAt
       }
@@ -123,8 +200,16 @@ export const formsByAgent = /* GraphQL */ `
         id
         senderId
         receiverId
+        receiverName
+        receiverEmail
         formName
         data
+        status
+        emailStatus
+        emailTimestamp
+        signature
+        signatureFont
+        isSignatureTyped
         createdAt
         updatedAt
       }
