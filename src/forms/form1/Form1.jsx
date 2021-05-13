@@ -1,7 +1,8 @@
-import React, { Component, useState, useRef } from "react";
+import React, { Component, useState, useRef, useEffect } from "react";
 import SignaturePad from "react-signature-canvas";
 import FontPicker from "font-picker-react";
 import { Container, Row, Col, Form, Modal, Button } from "react-bootstrap";
+import { API, graphqlOperation } from "aws-amplify";
 import "../form1/css/style1.css";
 import {
   IconFacebook,
@@ -12,6 +13,9 @@ import {
 import Nav from "react-bootstrap/Nav";
 import Accordion from "react-bootstrap/Accordion";
 import Logo from "../../assets/FormImages/rebny-logo.png";
+import { updateFormData } from "../../graphql/mutations";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 
 const Form1 = ({formItem}) => {
@@ -23,10 +27,23 @@ const Form1 = ({formItem}) => {
   const sigPad = useRef({});
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [signImage, setSignImage] = useState(null);
+  const [signImage, setSignImage] = useState('');
   const [activeFontFamily,setActiveFontFamily] = useState("Open Sans");
   const [signAsText,setSignAsText] = useState("");
-  const [signMethod,setSignMethod]= useState("draw")
+  const [signMethod,setSignMethod]= useState("draw");
+  const [todayDate, setTodayDate] = useState('');
+
+  useEffect(() => {
+    const getTodayDate = ()=>{
+      const date = new Date();
+      console.log('date', date);
+      let newDate = JSON.stringify(date)
+      newDate = newDate.slice(1,11); 
+      console.log('newDate', newDate);    
+      setTodayDate(newDate);
+    }
+    getTodayDate();
+  }, []);
 
   function clear() {
     sigPad.current.clear();
@@ -62,6 +79,58 @@ const Form1 = ({formItem}) => {
       setFieldShow(false);
     }
   }
+
+  const formik = useFormik({
+    initialValues: {
+      fullName: formItem.data[1],
+      currentDate: todayDate,
+      realEstateName: formItem.data[3],
+      realEstateBrokerageCompany: formItem.data[5]
+    },
+    validationSchema: Yup.object({
+      fullName: Yup.string().required("Please enter valid name!"),
+      currentDate: Yup.string().required("Please enter the date"),
+      realEstateName: Yup.string().required("Please enter the Real Estate Name"),
+      realEstateBrokerageCompany: Yup.string().required("Please enter the Real Estate Brockerage Company Name"),
+    }),
+    onSubmit: (values) => {
+      submitForm(values);
+    },
+  });
+
+  const submitForm = async(values) => {
+    // let updateData = [];
+    // let finalObject = {};
+
+    // let data = [];
+    // data[0] = "name";
+    // data[1] = formItem.data[1];
+    // data[2] = "name_of_real_estate";
+    // data[3] = formItem.data[3];
+    // data[4] = "real_estate_brockerage_company";
+    // data[5] = formItem.data[5];
+
+    // if(signAsText !== ""){
+    //   finalObject.id = formItem.id;
+    //   finalObject.isSignatureTyped = signAsText;
+    //   finalObject.signatureFont = activeFontFamily;
+    //   finalObject.data = data;
+    //   updateData = [...updateData, finalObject];
+    // }else if(signImage !== ""){
+    //   finalObject.id = formItem.id;
+    //   finalObject.signature = signImage;
+    //   finalObject.data = data;
+    //   updateData = [...updateData, finalObject];
+    // }
+
+    console.log("updateData", values);
+
+    // const createdContact = await API.graphql(
+    //   graphqlOperation(updateFormData, { input: data })
+    // );
+  }
+
+ console.log('todayDate', todayDate);
  
   return (
     <Container className="form1">
@@ -116,39 +185,73 @@ const Form1 = ({formItem}) => {
           </p>
         </Col>
       </Row>
-      <Form>
+      <Form onSubmit={formik.handleSubmit}>
         <Form.Row className="detail pt-5">
           <Col md={4}>
             <Form.Group onClick={handleShow} controlId="formBasicSign">
-             { signMethod === "draw" ?  <img src={signImage} /> : <span className="sign apply-font">{signAsText}</span>}  
-              <div className="sign-field">
-              {/* <Form.Control type="text" className="apply-font" /> */}
+             {/* { signMethod === "draw" ?  <img src={signImage} /> : <span className="sign apply-font">{signAsText}</span>}  */}
+            { signMethod === "draw" ?
+              <div className="sign-field">  
+              <img src={signImage} /> 
               </div>
+             :
+              <Form.Control  className="apply-font" type="text" value={signAsText}/>
+            }   
+              {/* <div className="sign-field"> */}
+              {/* <Form.Control type="text" className="apply-font" /> */}
+              {/* </div> */}
               <Form.Label>Signature</Form.Label>
             </Form.Group>
           </Col>
           <Col md={4}>
             <Form.Group controlId="formBasicSign">
-              <Form.Control type="text" value={formItem.data[1]}/>
+              <Form.Control
+                className="mb-3"
+                name="fullName"
+                value={formik.values.fullName}
+                type="text"
+                placeholder=""
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+              />
+              {/* <Form.Control type="text" value={formItem.data[1]}/> */}
               <Form.Label>Full Name</Form.Label>
             </Form.Group>
           </Col>
           <Col md={4}>
             <Form.Group controlId="formBasicSign">
-              <Form.Control type="text" />
+              <Form.Control
+                className="mb-3"
+                name="currentDate"
+                value={formik.values.currentDate}
+                type="text"
+                placeholder=""
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+              />
+              {/* <Form.Control type="text" value={todayDate}/> */}
               <Form.Label>Date</Form.Label>
             </Form.Group>
           </Col>
         </Form.Row>
-      </Form>
-      <Form>
+      
+      
         <Form.Row className="detail pt-4">
           <Col md={4} className="mb-3">
             <p>This form was presented to me by </p>
           </Col>
           <Col md={3} className="mb-3">
             <Form.Group controlId="formBasicSign">
-              <Form.Control type="text" value={formItem.data[3]}/>
+              <Form.Control
+                className="mb-3"
+                name="realEstateName"
+                value={formik.values.realEstateName}
+                type="text"
+                placeholder=""
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+              />
+              {/* <Form.Control type="text" value={formItem.data[3]}/> */}
               <Form.Label>Name of Real Estate License</Form.Label>
             </Form.Group>
           </Col>
@@ -157,12 +260,53 @@ const Form1 = ({formItem}) => {
           </Col>
           <Col md={4} className="mb-3">
             <Form.Group controlId="formBasicSign">
-              <Form.Control type="text" value={formItem.data[5]} />
+              <Form.Control
+                className="mb-3"
+                name="realEstateBrokerageCompany"
+                value={formik.values.realEstateBrokerageCompany}
+                type="text"
+                placeholder=""
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
+              />
+              {/* <Form.Control type="text" value={formItem.data[5]} /> */}
               <Form.Label>Real Estate Brokerage Company</Form.Label>
             </Form.Group>
           </Col>
         </Form.Row>
+        {signImage !== "" && 
+        <Form.Row className="bottomBar">
+          <Col md={12} className="py-3 d-flex justify-content-center">
+            <Button 
+              variant="secondary" 
+              // onClick={submitForm}
+              className="m-auto px-5"
+              type="submit"
+              disabled={!(formik.isValid && formik.dirty)}
+            >
+              Submit
+            </Button>
+          </Col>
+        </Form.Row>
+        }
+
+      {signAsText !=="" && 
+        <Form.Row className="bottomBar">
+          <Col md={12} className="py-3 d-flex justify-content-center">
+            <Button 
+              variant="secondary" 
+              // onClick={submitForm}
+              className="m-auto px-5"
+              type="submit"
+              disabled={!(formik.isValid && formik.dirty)}
+            >
+              Submit
+            </Button>
+          </Col>
+        </Form.Row>
+        }
       </Form>
+      
       <div className="footer pl-0">
         <p>
           Please note that this form should not be construed as providing legal
@@ -193,6 +337,7 @@ const Form1 = ({formItem}) => {
           </Col>
         </Row>
       </div>
+
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>

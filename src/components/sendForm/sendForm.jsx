@@ -164,8 +164,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
   const handleMultipleFormsData = (formid, formData) => {
     let data = [];
 
-    if (formid === 1) {
-      
+    if (formid === 1) {      
       data[0] = "name";
       data[1] = formData.name;
       data[2] = "name_of_real_estate";
@@ -213,6 +212,16 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       (item) => item.isActive === true
     );
 
+    // let today = Date.now();
+    let today = new Date();
+    console.log(today);
+
+    let time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+    console.log(time);
+
+    // let timestamp = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(today);
+    // console.log(timestamp);
+
     let finalData = [];
     
     selectedcontacts.map((item) => {
@@ -221,6 +230,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         let finalObject = {};
         finalObject.senderId = user.username;
         finalObject.receiverId = item.id;
+        finalObject.receiverName = item.name;
+        finalObject.receiverEmail = item.email;
         finalObject.formName = form.title;
 
         finalObject.data = handleMultipleFormsData(form.id, item);
@@ -255,28 +266,24 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       
       let emailData = {
         from_name: user.username,
-        to_name: data.data.name,
+        to_name: data.receiverName,
         message:`http://localhost:3000/formSubmission/${receiverId}`,
         reply_to: user.attributes.email,
-        to_email:"test@gmail.com",
+        to_email:data.receiverEmail
       };
+      
+      // emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
+      //   function (response) {
+      //     console.log(response);
+      //     console.log(response.status, response.text);
+      //   },
+      //   function (err) {
+      //     console.log(err);
+      //   }
+      // );
 
-      emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
-        function (response) {
-          console.log(response);
-          console.log(response.status, response.text);
-        },
-        function (err) {
-          console.log(err);
-        }
-      );
-
-      // const newContacts = [...contacts, createdContact.data.createContact];
-      // onUpdateContacts(newContacts);
-      // console.log(createdContact.data.createContact);
-      // setShow(false);
     } catch (err) {
-      console.log(err, "Error creating Formdata");
+      console.log("Error creating Formdata", err);
     }
   };
 
