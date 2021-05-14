@@ -155,12 +155,20 @@ console.log('user context', user);
             
           </Col>
           <Col md={3} className="text-center">
-            {item.emailStatus === null &&
+            {/* {item.emailStatus === null &&
               // <Badge variant="secondary sent-option text-center">Sent</Badge>{" "}
               <Badge variant="secondary sent-option text-center">Sent</Badge>
+            } */}
+            {item.status === "SENT" &&
+              <Badge variant="secondary sent-option text-center">Sent</Badge>
             }
-            {item.emailStatus !== null &&
-              <Badge variant="secondary sent-option text-center">{item.emailStatus}</Badge>
+
+            {item.status === "VIEWED" &&
+              <Badge variant="secondary sent-option text-center">Viewed</Badge>
+            }
+
+            {item.status === "SIGNED" &&
+              <Badge variant="secondary sent-option text-center">Signed</Badge>
             }
             <p style={{ fontSize: 13 }}><Moment format="YYYY-MM-DD HH:mm">{item.updatedAt}</Moment></p>
           </Col>
@@ -170,7 +178,7 @@ console.log('user context', user);
           </Col>
         </Row>
         )}
-          </Container>
+      </Container>
     </Container>
   );
 };

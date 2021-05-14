@@ -162,6 +162,11 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
   };
 
   const handleMultipleFormsData = (formid, formData) => {
+
+    const date = new Date();
+    let newDate = JSON.stringify(date)
+    newDate = newDate.slice(1,11); 
+
     let data = [];
 
     if (formid === 1) {      
@@ -171,6 +176,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       data[3] = formData.companyName;
       data[4] = "real_estate_brockerage_company";
       data[5] = formData.companyName;
+      data[6] = "date";
+      data[7] = newDate;
       
     } else if (formid === 2) {
 
@@ -233,6 +240,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         finalObject.receiverName = item.name;
         finalObject.receiverEmail = item.email;
         finalObject.formName = form.title;
+        finalObject.status = "SENT";
 
         finalObject.data = handleMultipleFormsData(form.id, item);
         finalData = [...finalData, finalObject];
@@ -272,15 +280,15 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         to_email:data.receiverEmail
       };
       
-      // emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
-      //   function (response) {
-      //     console.log(response);
-      //     console.log(response.status, response.text);
-      //   },
-      //   function (err) {
-      //     console.log(err);
-      //   }
-      // );
+      emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
+        function (response) {
+          console.log(response);
+          console.log(response.status, response.text);
+        },
+        function (err) {
+          console.log(err);
+        }
+      );
 
     } catch (err) {
       console.log("Error creating Formdata", err);
