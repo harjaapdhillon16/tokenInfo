@@ -166,7 +166,7 @@ const Form1 = ({formItem}) => {
     <Container className="form1">
       <Row>
         <Col md={6} className="pt-5">
-          <h4 class="resource-title font-weight-light">REBNY Resources{signedStatus}</h4>
+          <h4 class="resource-title font-weight-light">REBNY Resources</h4>
         </Col>
         <Col md={6} className="pt-5">
           <img src={Logo} alt="logo" className="form1-logo" />
@@ -489,7 +489,7 @@ const Form1 = ({formItem}) => {
         
         </Modal.Body>
        
-      </Modal>
+      {/* </Modal> */}
     </Container>
   );
 };
