@@ -18,8 +18,9 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 
 
-const Form1 = ({formItem}) => {
-  console.log('formItem', formItem);
+const Form1 = ({formData}) => {
+ 
+  const [formItem,setFormItem] = useState(formData)
   
   const [show, setShow] = useState(false);
   const [canvasShow, setCanvasShow] = useState(true);
@@ -34,6 +35,7 @@ const Form1 = ({formItem}) => {
 
   useEffect(() => {
     sendViewStatus();
+    //setFormItem
   }, []);
 
   const sendViewStatus = async()=>{
@@ -153,6 +155,7 @@ const Form1 = ({formItem}) => {
       console.log('editFormData', editForm);
       console.log(editForm.data.updateFormData.status);
       formItem.status = editForm.data.updateFormData.status;
+      setFormItem(formItem)
 
     }catch (err) {
       console.log(err, "Error updating Form data"); 
@@ -166,7 +169,7 @@ const Form1 = ({formItem}) => {
     <Container className="form1">
       <Row>
         <Col md={6} className="pt-5">
-          <h4 class="resource-title font-weight-light">REBNY Resources{signedStatus}</h4>
+          <h4 class="resource-title font-weight-light">REBNY Resources</h4>
         </Col>
         <Col md={6} className="pt-5">
           <img src={Logo} alt="logo" className="form1-logo" />
@@ -356,7 +359,7 @@ const Form1 = ({formItem}) => {
             </Form.Group>
           </Col>
         </Form.Row>
-
+      {formItem.status !== "SIGNED"  &&  <>
         {signImage !== "" && 
         <Form.Row className="bottomBar">
           <Col md={12} className="py-3 d-flex justify-content-center">
@@ -387,6 +390,10 @@ const Form1 = ({formItem}) => {
             </Col>
           </Form.Row>
         }
+        </>
+      
+      }
+     
       </Form>
       
       <div className="footer pl-0">

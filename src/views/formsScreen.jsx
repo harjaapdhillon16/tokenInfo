@@ -69,7 +69,9 @@ const FormsScreen = () => {
     );
   }
 
-console.log('user context', user);
+ 
+var base_url = window.location.origin;
+
   return (
     <Container fluid>
       <Header />
@@ -173,7 +175,7 @@ console.log('user context', user);
             <p style={{ fontSize: 13 }}><Moment format="YYYY-MM-DD HH:mm">{item.updatedAt}</Moment></p>
           </Col>
           <Col md={4} className="text-right">
-            <Button variant="outline-secondary options"><a href={`http://localhost:3000/formSubmission/${item.id}`}>View Form</a></Button>
+            <Button variant="outline-secondary options"><a  target="_blank" href={`${base_url}/formSubmission/${item.id}`}>View Form</a></Button>
             <Button variant="outline-secondary options" onClick={() => handleReminderSent(item.receiverId, item.receiverName, item.receiverEmail)}>Send Reminder</Button>
           </Col>
         </Row>
