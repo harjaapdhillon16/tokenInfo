@@ -19,9 +19,8 @@ import * as Yup from "yup";
 
 
 const Form1 = ({formData}) => {
- 
-  const [formItem,setFormItem] = useState(formData)
-  
+
+  const [formItem, setFormItem] = useState(formData);
   const [show, setShow] = useState(false);
   const [canvasShow, setCanvasShow] = useState(true);
   const [fieldShow, setFieldShow] = useState(false);
@@ -57,8 +56,6 @@ const Form1 = ({formData}) => {
       }catch (err) {
         console.log(err, "Error updating Form View status"); 
       }
-    // }else{
-    //   setActiveFontFamily(formItem.signatureFont)
     }
   }
 
@@ -71,6 +68,7 @@ const Form1 = ({formData}) => {
     setSignMethod("draw")
     setSignImage(sigPad.current.toDataURL());
   };
+  
   const handleSignAsText = () => {
     setShow(false);
     setSignMethod("sign");
@@ -367,7 +365,7 @@ const Form1 = ({formData}) => {
               variant="secondary" 
               className="m-auto px-5"
               type="submit"
-              disabled={!(formik.isValid && formik.dirty)}
+              disabled={!(formik.isValid)}
             >
               Submit
             </Button>
@@ -383,7 +381,7 @@ const Form1 = ({formData}) => {
                 // onClick={submitForm}
                 className="m-auto px-5"
                 type="submit"
-                disabled={!(formik.isValid && formik.dirty)}
+                disabled={!(formik.isValid)}
               >
                 Submit
               </Button>

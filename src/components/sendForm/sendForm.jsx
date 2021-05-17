@@ -187,12 +187,10 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       data[3] = formData.companyName;
       data[4] = "account_type";
       data[5] = "";
-      data[6] = "real_estate_brockerage_company";
-      data[7] = "";
-      data[8] = "firstdate";
-      data[9] = "";
-      data[10] = "lastdate";
-      data[11] = "";
+      data[6] = "firstdate";
+      data[7] = newDate;
+      data[8] = "lastdate";
+      data[9] = newDate;
 
     } else if (formid === 3) {
 

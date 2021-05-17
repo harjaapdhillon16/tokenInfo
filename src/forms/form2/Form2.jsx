@@ -1,11 +1,162 @@
-import React, { Component } from 'react';
-import { Container, Row, Col, Form } from 'react-bootstrap';
+import React, {useState, useRef, useEffect} from 'react';
+import { Container, Row, Col, Form, Modal, Button, Image } from 'react-bootstrap';
+import Nav from "react-bootstrap/Nav";
+import SignaturePad from "react-signature-canvas";
+import FontPicker from "font-picker-react";
 import '../form2/css/style2.css';
 import { IconFacebook,IconTwitter,IconLinkedin, IconInstagram } from "../../assets/icons/icons";
 import Logo from "../../assets/FormImages/og_image.png";
+import { API, graphqlOperation } from "aws-amplify";
+import { updateFormData } from "../../graphql/mutations";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const Form2 = (formItem) => {
     console.log('formItem', formItem);
+    console.log('formItem', formItem.formData.isSignatureTyped);
+    
+    
+    const [show, setShow] = useState(false);
+    const [canvasShow, setCanvasShow] = useState(true);
+    const [fieldShow, setFieldShow] = useState(false);
+    const sigPad = useRef({});
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+    const [signImage, setSignImage] = useState('');
+    const [signAsText, setSignAsText] = useState("");
+    const [signMethod,setSignMethod]= useState("draw");
+    const [activeFontFamily,setActiveFontFamily] = useState("Open Sans");
+
+    useEffect(() => {
+        sendViewStatus();
+    }, []);
+    
+      const sendViewStatus = async()=>{
+        if(formItem.formData.status === "SENT"){
+          let data = {};
+          data.id = formItem.formData.id;
+          data.status = "VIEWED";
+          console.log(data);
+    
+          try{
+            const checkFormStatus = await API.graphql(
+              graphqlOperation(updateFormData, { input: data })
+            );
+            console.log('checkFormStatus', checkFormStatus);
+    
+    
+          }catch (err) {
+            console.log(err, "Error updating Form View status"); 
+          }
+        }
+    }
+
+    const genrateImage = () => {
+        setShow(false);
+        setSignMethod("draw")
+        setSignImage(sigPad.current.toDataURL());
+    };
+
+    const handleSignAsText = () => {
+        setShow(false);
+        setSignMethod("sign");
+    }
+
+    function clear() {
+        sigPad.current.clear();
+    }
+
+    const toggleMethod = () => {
+        if (canvasShow == false) {
+          setCanvasShow(true);
+          setFieldShow(false);
+        } else {
+          setCanvasShow(false);
+          
+        }
+    };
+
+    const toggleField =() => {
+        if(fieldShow == false) {
+          setFieldShow(true);
+          setCanvasShow(false);
+        }
+        else{
+          setFieldShow(false);
+        }
+    }
+
+    const formik = useFormik({
+        initialValues: {
+          fullName: formItem.formData.data[1],
+          realEstateCompany: formItem.formData.data[3],
+          accountType: formItem.formData.data[5],
+          firstDate: formItem.formData.data[7],
+          lastDate: formItem.formData.data[9]
+        },
+        enableReinitialize: true,
+        validationSchema: Yup.object({
+          fullName: Yup.string().required("Please enter the name"),
+          realEstateCompany: Yup.string().required("Please enter the Real Estate Company Name"),
+          accountType: Yup.string().required("Required accountype"),
+          firstDate: Yup.string().required("Please enter the date"),
+          lastDate: Yup.string().required("Please enter the date")
+        }),
+        onSubmit: (values) => {
+            console.log('values', values);
+            submitForm(values);
+        },
+    });
+
+    const submitForm = async(values) => {
+        let updateData = [];
+        let finalObject = {};
+
+        let data = [];
+        data[0] = "name";
+        data[1] = values.fullName;
+        data[2] = "name_of_real_estate_company";
+        data[3] = values.realEstateCompany;
+        data[4] = "account_type";
+        data[5] = values.accountType;
+        data[6] = "firstdate";
+        data[7] = values.firstDate;
+        data[8] = "lastdate";
+        data[9] = values.lastDate;
+
+        if(signAsText !== ""){
+            finalObject.id = formItem.formData.id;
+            finalObject.isSignatureTyped = true;
+            finalObject.signatureFont = activeFontFamily;
+            finalObject.signature = signAsText;
+            finalObject.status = "SIGNED";
+            finalObject.data = data;
+            updateData = finalObject;
+          }else if(signImage !== ""){
+            finalObject.id = formItem.formData.id;
+            finalObject.isSignatureTyped = false;
+            finalObject.signature = signImage;
+            finalObject.status = "SIGNED";
+            finalObject.data = data;
+            updateData = finalObject;
+        }
+
+        console.log("updateData", updateData);
+
+        
+        try{
+            const editForm = await API.graphql(
+                graphqlOperation(updateFormData, { input: updateData })
+            );
+            console.log('editFormData', editForm);
+            console.log(editForm.data.updateFormData.status);
+            formItem.status = editForm.data.updateFormData.status;
+    
+        }catch (err) {
+            console.log(err, "Error updating Form data"); 
+        }
+  
+    }
 
     return ( 
         <Container className="form2">
@@ -133,44 +284,290 @@ const Form2 = (formItem) => {
                            <a href="https://dhr.ny.gov/fairhousing">https://dhr.ny.gov/fairhousing</a> and <a href="https://www.dos.ny.gov/licensing/fairhousing.html">https://www.dos.ny.gov/licensing/fairhousing.html
                            </a>
                        </p>
-                       <form class="form-inline submit-form">
+                       <form class="form-inline submit-form" onSubmit={formik.handleSubmit}>
                            <p>
-                            This form was provided to me by <input type="text" class="form-control mb-2 mr-sm-2" value={formItem.formItem.data[1]}/>
+                            This form was provided to me by 
+                            {formItem.formData.status !== "SIGNED" ?
+                                <span>
+                                    <input 
+                                        class="form-control mb-2 mr-sm-2" 
+                                        id="fullName"
+                                        name="fullName"
+                                        type="text" 
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.fullName}
+                                    />
+                                
+                                    {formik.touched.fullName && formik.errors.fullName && (
+                                        <Form.Text className="text-error">{formik.errors.fullName}</Form.Text>
+                                    )}
+                                </span>
+                                
+                            :
+                                <input 
+                                    class="form-control mb-2 mr-sm-2" 
+                                    value={formik.values.fullName}
+                                    disabled
+                                /> 
+                            }
+                           
                             (print name of Real Estate Salesperson/
-                            Broker) of<input type="text" class="form-control mb-2 mr-sm-2"  value={formItem.formItem.data[3]}/>
+                            Broker) of
+                            {formItem.formData.status !== "SIGNED" ?
+                                <span>
+                                    <input 
+                                        class="form-control mb-2 mr-sm-2"  
+                                        type="text" 
+                                        id="realEstateCompany"
+                                        name="realEstateCompany"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.realEstateCompany}
+                                    />
+                                    {formik.touched.realEstateCompany && formik.errors.realEstateCompany && (
+                                        <Form.Text className="text-error">{formik.errors.realEstateCompany}</Form.Text>
+                                    )}
+                                </span>
+                            :
+                                <input 
+                                    class="form-control mb-2 mr-sm-2" 
+                                    value={formik.values.realEstateCompany}
+                                    disabled
+                                />
+                            }
                             (print name of Real Estate company, firm or brokerage)<br/>
-                            (I)(We)<input type="text" class="form-control mb-2 mr-sm-2" value={formItem.formItem.data[5]}/>
+                            (I)(We)
+                            {formItem.formData.status !== "SIGNED" ?
+                                <span>
+                                    <input 
+                                        class="form-control mb-2 mr-sm-2"
+                                        type="text" 
+                                        id="accountType"
+                                        name="accountType"
+                                        onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
+                                        value={formik.values.accountType}
+                                    />
+                                    {formik.touched.accountType && formik.errors.accountType && (
+                                        <Form.Text className="text-error">{formik.errors.accountType}</Form.Text>
+                                    )}
+                                </span>
+                            :
+                                <input 
+                                    class="form-control mb-2 mr-sm-2" 
+                                    value={formik.values.accountType}
+                                    disabled
+                                />
+                               
+                            }
+                             
                             (Buyer/Tenant/Seller/Landlord) acknowledge receipt of a copy of this disclosure form:
                            </p> 
-                    </form>
-                    <div class="form-row pt-4 detail ">
-                        <div class="col-md-8 mb-3 d-flex">
-                            <label class="pt-2 input-head">Buyer/Tenant/Seller/Landlord Signature</label>
-                            <input type="text" class="form-control" />
-                          </div>
                     
-                          <div class="col-md-4 mb-3 d-flex">
-                            <label class="pt-2 input-head">Date:</label>
-                            <input type="text" class="form-control date-block" value={formItem.formItem.data[9]}/>
-                          </div>
-                    </div>
-                    <div class="form-row pt-4 detail ">
-                        <div class="col-md-8 mb-3 d-flex">
-                            <label class="pt-2 input-head">Buyer/Tenant/Seller/Landlord Signature</label>
-                            <input type="text" class="form-control"/>
-                          </div>
-                    
-                          <div class="col-md-4 mb-3 d-flex">
-                            <label class="pt-2  input-head">Date:</label>
-                            <input type="text" class="form-control date-block" value={formItem.formItem.data[11]}/>
-                          </div>
-                    </div>
-                    <p class="pt-4">
-                        Real Estate broker and real estate salespersons are required by New York State law to provide you with this Disclosure.
-                    </p>
-                  
+                            <div class="form-row pt-4 detail">
+                                {formItem.formData.status === "SIGNED" ?
+                                    <div class="col-md-8 mb-3 d-flex">
+                                        <label class="pt-2 input-head">Buyer/Tenant/Seller/Landlord Signature</label>
+                                        {formItem.formData.isSignatureTyped !== true ?
+                                            <div class="form-control">  
+                                                <img class="signature" src={formItem.formData.signature} /> 
+                                            </div>
+                                        :
+                                            <input type="text" class="form-control apply-font" value={formItem.formData.signature} disabled />
+                                        }
+                                    </div>
+                                :
+                                    <div class="col-md-8 mb-3 d-flex">
+                                        <label class="pt-2 input-head" onClick={handleShow}>Buyer/Tenant/Seller/Landlord Signature</label>
+                                        { signMethod === "draw" ?
+
+                                            <div class="form-control">  
+                                                <Image className="signature"  src={signImage}/> 
+                                            </div>
+                                        
+                                        :
+                                            <input type="text" class="form-control apply-font" value={signAsText}/>
+                                        }
+                                    </div>
+                                }
+                            
+                                <div class="col-md-4 mb-3 d-flex">
+                                    {formik.touched.firstDate && formik.errors.firstDate && (
+                                        <Form.Text className="text-error">{formik.errors.firstDate}</Form.Text>
+                                    )}
+                                    <label class="pt-2 input-head">Date:</label>
+                                    {formItem.formData.status !== "SIGNED" ?
+                                        <input 
+                                            class="form-control date-block"
+                                            type="text"  
+                                            id="firstDate"
+                                            name="firstDate"
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik.values.firstDate}
+                                        />
+                                        
+                                    :
+                                        <input 
+                                            class="form-control mb-2 mr-sm-2" 
+                                            value={formik.values.firstDate}
+                                            disabled
+                                        />
+                                        
+                                    }
+                                   
+                                </div>
+                            </div>
+                            <div class="form-row pt-4 detail">
+                                {formItem.formData.status === "SIGNED" ?
+                                    <div class="col-md-8 mb-3 d-flex">
+                                        <label class="pt-2 input-head">Buyer/Tenant/Seller/Landlord Signature</label>
+                                        {formItem.formData.isSignatureTyped !== true ?
+                                        
+                                            <div class="form-control">  
+                                                <img class="signature" src={formItem.formData.signature} /> 
+                                            </div>
+                                        
+                                        :
+                                            <input type="text" class="form-control apply-font" value={formItem.formData.signature} disabled />
+                                        }
+                                    </div>
+                                :
+                                    <div class="col-md-8 mb-3 d-flex">
+                                        <label class="pt-2 input-head">Buyer/Tenant/Seller/Landlord Signature</label>
+                                        { signMethod === "draw" ?
+                                        
+                                        <div class="form-control">  
+                                            <img class="signature" src={signImage} /> 
+                                        </div>
+                                        
+                                        :
+                                            <input type="text" class="form-control apply-font" value={signAsText} />
+                                        }
+                                    </div>
+                                }   
+                            
+                                <div class="col-md-4 mb-3 d-flex">
+                                    {formik.touched.firstDate && formik.errors.firstDate && (
+                                        <Form.Text className="text-error">{formik.errors.firstDate}</Form.Text>
+                                    )}
+                                    <label class="pt-2  input-head">Date:</label>
+                                    {formItem.formData.status !== "SIGNED" ?
+                                        <input 
+                                            class="form-control date-block" 
+                                            type="text" 
+                                            id="lastDate"
+                                            name="lastDate"
+                                            onChange={formik.handleChange}
+                                            onBlur={formik.handleBlur}
+                                            value={formik.values.lastDate}
+                                        />
+                                        
+                                    :
+                                        <input 
+                                            class="form-control mb-2 mr-sm-2" 
+                                            value={formik.values.lastDate}
+                                            disabled
+                                        />
+                                        
+                                    }
+                                </div>
+                            </div>
+                           
+                            <p class="pt-4">
+                                Real Estate broker and real estate salespersons are required by New York State law to provide you with this Disclosure.
+                            </p>
+                            {signImage !== "" && 
+                                <Row className="bottomBar">
+                                    <Col md={12} className="py-3 d-flex justify-content-center">
+                                        <button class="btn btn-secondary" type="submit">Submit</button>
+                                    </Col>
+                                </Row>
+                            }
+
+                            {signAsText !== "" && 
+                                <Row className="bottomBar">
+                                    <Col md={12} className="py-3 d-flex justify-content-center">
+                                        <button class="btn btn-secondary" type="submit">Submit</button>
+                                    </Col>
+                                </Row>
+                            }
+                            
+                        </form>
                 </Col>
             </Row>
+
+            <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <h5>Please Confirm Full name and Signature</h5>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="draw-modal">
+          <Nav fill variant="tabs" defaultActiveKey="link-1">
+            <Nav.Item>
+              <Nav.Link onClick={toggleMethod} eventKey="link-1">Draw</Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link onClick={toggleField} eventKey="link-2">Type</Nav.Link>
+            </Nav.Item>
+          </Nav>
+          {canvasShow && (
+            <>
+              <SignaturePad
+                canvasProps={{
+                  width: 400,
+                  height: "auto",
+                  className: "sigCanvas",
+                }}
+                ref={sigPad}
+              />
+                <p style={{paddingTop: 10, paddingLeft: 30}}>I am Chris Oliver and this is my legal representation of my Signature.</p>
+                <div className="d-flex justify-content-center">
+                <Button variant="secondary" onClick={clear} className="mr-3">
+                  Clear{" "}
+                </Button>
+                <Button variant="primary" onClick={genrateImage}>
+                Insert Signature
+                </Button>
+                </div>
+              
+              </>
+            )}
+            {fieldShow && (
+              <>
+              <div className="d-flex">
+               <Form.Control type="text" value={signAsText} onChange={(e)=> setSignAsText(e.target.value)} placeholder="Type your name here" className="toggle-field apply-font" />
+                 <FontPicker
+                    apiKey="AIzaSyBCM9e_yuN64gSRUQxGrmHTJtK1v2YKvL8"
+                    activeFontFamily={activeFontFamily}
+                    
+                    onChange={(nextFont) =>
+                        setActiveFontFamily(
+                          nextFont.family,
+                        )
+                    }
+                />
+                </div>
+               <p style={{paddingTop: 10, paddingLeft: 30}}>I am Chris Oliver and this is my legal representation of my Signature.</p>
+                <div className="d-flex justify-content-center">
+                <Button variant="secondary" onClick={clear} className="mr-3">
+                  Clear{" "}
+                </Button>
+                <Button variant="primary" onClick={handleSignAsText}>
+                Insert Signature
+                </Button>
+                </div>
+                
+                
+                </>
+           
+          )}
+        
+        </Modal.Body>
+       
+      </Modal>
             
         </Container>
      );

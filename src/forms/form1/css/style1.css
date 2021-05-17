@@ -141,6 +141,11 @@ width:100%;
   right: 0;
   z-index: 9;
 }
+.signature {
+  margin-top: -47px;
+  width: 244px;
+  text-align: center;
+}
 /* .sign-field1{
   border-bottom: solid 2px #5e5e5d;
   margin-top: 4%;
