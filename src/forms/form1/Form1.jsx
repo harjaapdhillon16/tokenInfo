@@ -489,7 +489,7 @@ const Form1 = ({formItem}) => {
         
         </Modal.Body>
        
-      {/* </Modal> */}
+      </Modal>
     </Container>
   );
 };
