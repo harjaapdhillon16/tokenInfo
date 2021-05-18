@@ -197,13 +197,21 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       data[0] = "name";
       data[1] = formData.name;
       data[2] = "date";
-      data[3] = "";
+      data[3] = newDate;
       data[4] = "property_address";
       data[5] = "";
       data[6] = "real_estate_name";
       data[7] = formData.companyName;
       data[8] = "name_of_brockerage_company";
       data[9] = "";
+      data[10] = "checkValueFirst";
+      data[11] = "";
+      data[12] = "checkValueSecond";
+      data[13] = "";
+      data[14] = "checkValueThird";
+      data[15] = "";
+      data[14] = "checkValueFourth";
+      data[15] = "";
     }
     return data;
   };

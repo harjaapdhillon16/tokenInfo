@@ -146,6 +146,14 @@ width:100%;
   width: 244px;
   text-align: center;
 }
+.form-inline {
+  padding-left: 0;
+  margin-bottom: 0;
+}
+.form-inline li {
+  display: inline;
+  margin-bottom: 20px;
+}
 /* .sign-field1{
   border-bottom: solid 2px #5e5e5d;
   margin-top: 4%;
