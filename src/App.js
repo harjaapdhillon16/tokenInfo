@@ -9,14 +9,13 @@ import FormController from './views/FormController';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 Hub.listen('auth', (data) => {
-	const { sub, email } = data.payload.data.attributes;
-	let attributes = { id: sub, email };
 	switch (data.payload.event) {
 		case 'signIn':
+			const { sub, email } = data.payload.data.attributes;
 			API.graphql(
 				graphqlOperation(createAgent, {
-					input: attributes,
-					condition: { id: { attribute_not_exists: attributes.id } }
+					input: { id: sub, email },
+					condition: { id: { attribute_not_exists: sub } }
 				})
 			).catch(() => {});
 			break;
