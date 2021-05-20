@@ -17,11 +17,14 @@ import { listFormDatas } from "../graphql/queries";
 import AppContext from '../../src/context/appContext';
 import * as emailjs from "emailjs-com";
 import Moment from 'react-moment';
+import { updateFormData } from "../graphql/mutations";
+import _ from 'lodash';
 
 const FormsScreen = () => {
-  const { user } = useContext(AppContext);
+  const { user, formItems, onFormItemsUpdate, onFormItemUnitUpdate } = useContext(AppContext);
   const [loading, setLoading] = useState(true);
-  const [formsData,setFormsData] = useState([])
+  const [formsData,setFormsData] = useState([]);
+  const [reminderStatus, setReminderStatus] = useState(false);
 
   useEffect(() => {
     handleFormsData();
@@ -32,9 +35,12 @@ const FormsScreen = () => {
       const newFormsData = await API.graphql(
         graphqlOperation(listFormDatas)
       );
-        
-      setFormsData(newFormsData.data.listFormDatas.items)
       console.log('listforms', newFormsData.data.listFormDatas.items );
+      const sortedForms = _.orderBy( newFormsData.data.listFormDatas.items, ['createdAt'],['desc']);
+      console.log('sortedForms', sortedForms);
+
+      onFormItemsUpdate(sortedForms);
+      setFormsData(newFormsData.data.listFormDatas.items);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -42,18 +48,18 @@ const FormsScreen = () => {
     }
   };
 
-  const handleReminderSent = async (receiverId, receiverName, receiverEmail ) => {
+  const handleReminderSent = async (itemData) => {
     let SERVICE_ID = "service_tjry678";
     let TEMPLATE_ID = "template_difn49p";
     let USER_ID = "user_xtMibwUvYsK5NraUVFG1J";
-    // let receiverId = userid;
+  
 
     let emailData = {
       from_name: user.username,
-      to_name: receiverName,
-      message:`http://localhost:3000/formSubmission/${receiverId}`,
+      to_name: itemData.receiverName,
+      message:`http://localhost:3000/formSubmission/${itemData.receiverId}`,
       reply_to: user.attributes.email,
-      to_email: receiverEmail,
+      to_email: itemData.receiverEmail,
     };
 
     console.log('emailData', emailData);
@@ -62,6 +68,7 @@ const FormsScreen = () => {
       function (response) {
         console.log(response);
         console.log(response.status, response.text);
+        handleReminderStatus(itemData);
       },
       function (err) {
         console.log(err);
@@ -69,8 +76,35 @@ const FormsScreen = () => {
     );
   }
 
+  const handleReminderStatus = async(contactUserData) =>{
+    if(!reminderStatus){
+      let data = {};
+      data.id = contactUserData.id;
+      data.status= "REMINDERSENT";
+      console.log(data);
+
+      try {
+        const checkReminderStatus = await API.graphql(
+          graphqlOperation(updateFormData, { input: data })
+        );
+        console.log("checkReminderStatus", checkReminderStatus.data.updateFormData);
+        if(data.id === checkReminderStatus.data.updateFormData.id){
+          const updateForm = [...formItems, checkReminderStatus.data.updateFormData];
+          console.log('updateForm', updateForm);
+          onFormItemUnitUpdate(updateForm);
+        }
+
+      } catch (err) {
+        console.log(err, "Error updating Form View status");
+      }
+    }
+  }
+
+
+
  
 var base_url = window.location.origin;
+console.log('formItems context', formItems);
 
   return (
     <Container fluid>
@@ -149,7 +183,7 @@ var base_url = window.location.origin;
             </div>
           </Col>
         </Row>
-        {formsData.map(item =>  <Row className="w-100 border-bottom pb-3 mt-5 ">
+        {formItems.map(item =>  <Row className="w-100 border-bottom pb-3 mt-5 ">
           <Col md={5}>
             <h6>{item.formName}</h6>
           
@@ -175,8 +209,63 @@ var base_url = window.location.origin;
             <p style={{ fontSize: 13 }}><Moment format="YYYY-MM-DD HH:mm">{item.updatedAt}</Moment></p>
           </Col>
           <Col md={4} className="text-right">
-            <Button variant="outline-secondary options"><a  target="_blank" href={`${base_url}/formSubmission/${item.id}`}>View Form</a></Button>
-            <Button variant="outline-secondary options" onClick={() => handleReminderSent(item.receiverId, item.receiverName, item.receiverEmail)}>Send Reminder</Button>
+            <Button variant="outline-secondary options">
+              <a  target="_blank" href={`${base_url}/formSubmission/${item.id}`}>View Form</a>
+            </Button>
+
+            {/* {item.status === "SENT" || item.status === "VIEWED" ?
+              <>
+                {!reminderStatus  ? (
+                  <Button variant="outline-secondary options" 
+                    onClick={() => handleReminderSent(item.receiverId, item.receiverName, item.receiverEmail)}
+                  >
+                    Reminder Sent!
+                  </Button>
+                ):(
+                  <Button variant="outline-secondary options" 
+                    onClick={() => handleReminderSent(item.receiverId, item.receiverName, item.receiverEmail)}
+                  >
+                    Send Reminder
+                  </Button>
+                )}
+              </>
+           
+            : null
+            
+            }  */}
+            {item.status === "SENT" &&
+             <Button variant="outline-secondary options" 
+                onClick={() => handleReminderSent(item)}
+              >
+                Send Reminder
+              </Button>
+            }
+
+            {item.status === "VIEWED" &&
+             <Button variant="outline-secondary options" 
+                onClick={() => handleReminderSent(item)}
+              >
+                Send Reminder
+              </Button>
+            }
+
+            {item.status === "SIGNED" &&
+             <Button variant="outline-secondary options">
+                Send Reminder
+              </Button>
+            }
+
+            {/* {item.status === "REMINDERSENT" ?
+              <Button variant="outline-secondary options">
+                Reminder Sent!
+              </Button>
+            :
+            <Button variant="outline-secondary options" 
+              onClick={() => handleReminderSent(item)}
+            >
+              Send Reminder
+            </Button>
+            } */}
           </Col>
         </Row>
         )}

@@ -16,6 +16,8 @@ import Logo from "../../assets/FormImages/rebny-logo.png";
 import { updateFormData } from "../../graphql/mutations";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 const Form1 = ({formData}) => {
@@ -31,6 +33,8 @@ const Form1 = ({formData}) => {
   const [activeFontFamily,setActiveFontFamily] = useState("Open Sans");
   const [signAsText,setSignAsText] = useState("");
   const [signMethod,setSignMethod]= useState("draw");
+  const [startDate, setStartDate] = useState(new Date());
+  const [formSubmitStatus, setFormSubmitStatus] = useState(false);
 
   useEffect(() => {
     sendViewStatus();
@@ -39,7 +43,7 @@ const Form1 = ({formData}) => {
 
   const sendViewStatus = async()=>{
 
-    setActiveFontFamily(formItem.signatureFont!== "" ? formItem.signatureFont : "Open Sans" );
+    // setActiveFontFamily(formItem.signatureFont!== "" ? formItem.signatureFont : "Open Sans" );
     if(formItem.status === "SENT"){
       let data = {};
       data.id = formItem.id;
@@ -93,11 +97,11 @@ const Form1 = ({formData}) => {
       setFieldShow(false);
     }
   }
-
+  // formItem.data[7]
   const formik = useFormik({
     initialValues: {
       fullName: formItem.data[1],
-      currentDate: formItem.data[7],
+      currentDate: "",
       realEstateName: formItem.data[3],
       realEstateBrokerageCompany: formItem.data[5]
     },
@@ -116,49 +120,54 @@ const Form1 = ({formData}) => {
   const submitForm = async(values) => {
     let updateData = [];
     let finalObject = {};
+    console.log(values.currentDate);
 
-    let data = [];
-    data[0] = "name";
-    data[1] = values.fullName;
-    data[2] = "name_of_real_estate";
-    data[3] = values.realEstateName;
-    data[4] = "real_estate_brockerage_company";
-    data[5] = values.realEstateBrokerageCompany;
-    data[6] = "date";
-    data[7] = values.currentDate;
+    let updateDate = JSON.stringify(values.currentDate);
+    updateDate = updateDate.slice(1,11);
+    console.log(updateDate);
 
-    if(signAsText !== ""){
-      finalObject.id = formItem.id;
-      finalObject.isSignatureTyped = true;
-      finalObject.signatureFont = activeFontFamily;
-      finalObject.signature = signAsText;
-      finalObject.status = "SIGNED";
-      finalObject.data = data;
-      updateData = finalObject;
-    }else if(signImage !== ""){
-      finalObject.id = formItem.id;
-      finalObject.isSignatureTyped = false;
-      finalObject.signature = signImage;
-      finalObject.status = "SIGNED";
-      finalObject.data = data;
-      updateData = finalObject;
-    }
+    // let data = [];
+    // data[0] = "name";
+    // data[1] = values.fullName;
+    // data[2] = "name_of_real_estate";
+    // data[3] = values.realEstateName;
+    // data[4] = "real_estate_brockerage_company";
+    // data[5] = values.realEstateBrokerageCompany;
+    // data[6] = "date";
+    // data[7] = updateDate;
+    // console.log(data);
 
-    console.log("updateData", updateData);
+    // if(signAsText !== ""){
+    //   finalObject.id = formItem.id;
+    //   finalObject.isSignatureTyped = true;
+    //   finalObject.signatureFont = activeFontFamily;
+    //   finalObject.signature = signAsText;
+    //   finalObject.status = "SIGNED";
+    //   finalObject.data = data;
+    //   updateData = finalObject;
+    // }else if(signImage !== ""){
+    //   finalObject.id = formItem.id;
+    //   finalObject.isSignatureTyped = false;
+    //   finalObject.signature = signImage;
+    //   finalObject.status = "SIGNED";
+    //   finalObject.data = data;
+    //   updateData = finalObject;
+    // }
 
-    try{
-      const editForm = await API.graphql(
-        graphqlOperation(updateFormData, { input: updateData })
-      );
-      console.log('editFormData', editForm);
-      console.log(editForm.data.updateFormData.status);
-      formItem.status = editForm.data.updateFormData.status;
-      setFormItem(formItem)
+    // console.log("updateData", updateData);
 
-    }catch (err) {
-      console.log(err, "Error updating Form data"); 
-    }
-   
+    // try{
+    //   const editForm = await API.graphql(
+    //     graphqlOperation(updateFormData, { input: updateData })
+    //   );
+    //   console.log('editFormData', editForm);
+    //   console.log(editForm.data.updateFormData.status);
+
+    // }catch (err) {
+    //   console.log(err, "Error updating Form data"); 
+    // }
+
+    // setFormSubmitStatus(true);
   }
 
   console.log("form opened", formItem);
@@ -277,21 +286,32 @@ const Form1 = ({formData}) => {
             )}
             <Form.Group controlId="formBasicSign">
               {formItem.status === "SIGNED" ?
-                <Form.Control
-                  className="mb-3"
-                  value={formik.values.currentDate}
-                  disabled
+                <DatePicker
+                  selected={formik.values.currentDate}
+                  
                 />
+                // <Form.Control
+                //   className="mb-3"
+                //   value={formik.values.currentDate}
+                //   disabled
+                // />
               :
-                <Form.Control
-                  className="mb-3"
+                <DatePicker
                   name="currentDate"
-                  value={formik.values.currentDate}
-                  type="text"
-                  placeholder=""
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
+                  selected={formik.values.currentDate}
+                  onChange={date => formik.setFieldValue("currentDate", date)}
+                  // dateFormat="Pp"
+                  // timeFormat="HH:mm"
                 />
+                // <Form.Control
+                //   className="mb-3"
+                //   name="currentDate"
+                //   value={formik.values.currentDate}
+                //   type="text"
+                //   placeholder=""
+                //   onBlur={formik.handleBlur}
+                //   onChange={formik.handleChange}
+                // />
               }
               <Form.Label>Date</Form.Label>
             </Form.Group>
@@ -357,8 +377,8 @@ const Form1 = ({formData}) => {
             </Form.Group>
           </Col>
         </Form.Row>
-      {formItem.status !== "SIGNED"  &&  <>
-        {signImage !== "" && 
+
+        {signImage !== "" &&  formSubmitStatus === false &&
         <Form.Row className="bottomBar">
           <Col md={12} className="py-3 d-flex justify-content-center">
             <Button 
@@ -373,7 +393,7 @@ const Form1 = ({formData}) => {
         </Form.Row>
         }
         
-        {signAsText !=="" && 
+        {signAsText !=="" && formSubmitStatus === false &&
           <Form.Row className="bottomBar">
             <Col md={12} className="py-3 d-flex justify-content-center">
               <Button 
@@ -388,9 +408,7 @@ const Form1 = ({formData}) => {
             </Col>
           </Form.Row>
         }
-        </>
-      
-      }
+     
      
       </Form>
       
