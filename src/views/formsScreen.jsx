@@ -14,10 +14,11 @@ import * as emailjs from 'emailjs-com';
 import Moment from 'react-moment';
 import { updateFormData } from "../graphql/mutations";
 import _ from 'lodash';
+import Loader from "../components/Loader/Loader";
 
 const FormsScreen = () => {
   const { user, formItems, onFormItemsUpdate, onFormItemUnitUpdate } = useContext(AppContext);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [formsData,setFormsData] = useState([]);
   const [reminderStatus, setReminderStatus] = useState(false);
 
@@ -26,16 +27,15 @@ const FormsScreen = () => {
   }, []);
 
   const handleFormsData = async () => {
+    setLoading(true);
     try {
       const newFormsData = await API.graphql(
         graphqlOperation(listFormDatas)
       );
       console.log('listforms', newFormsData.data.listFormDatas.items );
-      const sortedForms = _.orderBy( newFormsData.data.listFormDatas.items, ['createdAt'],['desc']);
-      console.log('sortedForms', sortedForms);
 
-      onFormItemsUpdate(sortedForms);
-      setFormsData(newFormsData.data.listFormDatas.items);
+      onFormItemsUpdate(newFormsData.data.listFormDatas.items);
+      // setFormsData(newFormsData.data.listFormDatas.items);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -100,7 +100,9 @@ const FormsScreen = () => {
  
 var base_url = window.location.origin;
 console.log('formItems context', formItems);
-
+const sortedForms = _.orderBy( formItems, ['createdAt'],['desc']);
+console.log('sortedForms', sortedForms);
+if (loading) return <Loader />;
   return (
     <Container fluid>
       <Header />
@@ -178,7 +180,7 @@ console.log('formItems context', formItems);
             </div>
           </Col>
         </Row>
-        {formItems.map(item =>  <Row className="w-100 border-bottom pb-3 mt-5 ">
+        {sortedForms.map(item =>  <Row className="w-100 border-bottom pb-3 mt-5 ">
           <Col md={5}>
             <h6>{item.formName}</h6>
           
