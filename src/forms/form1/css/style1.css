@@ -130,6 +130,29 @@ width:100%;
 .sign-field{
   border-bottom: solid 2px #5e5e5d;
   margin-top: 11%;
+  width: 86%;
+}
+.form1{ padding-bottom:100px ;}
+.bottomBar {
+  background: #eaebeb;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9;
+}
+.signature {
+  margin-top: -47px;
+  width: 244px;
+  text-align: center;
+}
+.form-inline {
+  padding-left: 0;
+  margin-bottom: 0;
+}
+.form-inline li {
+  display: inline;
+  margin-bottom: 20px;
 }
 /* .sign-field1{
   border-bottom: solid 2px #5e5e5d;

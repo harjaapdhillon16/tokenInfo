@@ -67,6 +67,7 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
       roleInCompany: values.values.roleInCompany,
       companyName: values.values.companyName,
     };
+    
     console.log('values', updateData);
 
 

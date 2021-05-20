@@ -11,6 +11,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import { listFormDatas } from '../graphql/queries';
 import AppContext from '../../src/context/appContext';
 import * as emailjs from 'emailjs-com';
+import Moment from 'react-moment';
 
 const FormsScreen = () => {
 	const { user } = useContext(AppContext);
@@ -34,19 +35,21 @@ const FormsScreen = () => {
 		}
 	};
 
-	const handleReminderSent = async (userid) => {
+	const handleReminderSent = async (receiverId, receiverName, receiverEmail) => {
 		let SERVICE_ID = 'service_eqgdpk5';
 		let TEMPLATE_ID = 'template_jbe48ur';
 		let USER_ID = 'user_8vM6h8mcNE6lwsmITnR6H';
-		let receiverId = userid;
+		// let receiverId = userid;
 
 		let emailData = {
 			from_name: user.username,
-			to_name: 'test',
+			to_name: receiverName,
 			message: `http://localhost:3000/formSubmission/${receiverId}`,
 			reply_to: user.attributes.email,
-			to_email: 'test@gmail.com'
+			to_email: receiverEmail
 		};
+
+		console.log('emailData', emailData);
 
 		emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
 			function (response) {
@@ -58,6 +61,8 @@ const FormsScreen = () => {
 			}
 		);
 	};
+
+	var base_url = window.location.origin;
 
 	return (
 		<Container fluid>
@@ -122,23 +127,44 @@ const FormsScreen = () => {
 					<Row className="w-100 border-bottom pb-3 mt-5 ">
 						<Col md={5}>
 							<h6>{item.formName}</h6>
-							{/* {item.data.map((key) => {
-              return(
-                <Link to="#">{key.name}</Link>
-              )
-            })} */}
+
+							<Link to="#">{item.receiverName}</Link>
 						</Col>
 						<Col md={3} className="text-center">
-							<Badge variant="secondary sent-option text-center">Sent</Badge>{' '}
-							<p style={{ fontSize: 13 }}>1 min ago</p>
+							{/* {item.emailStatus === null &&
+              // <Badge variant="secondary sent-option text-center">Sent</Badge>{" "}
+              <Badge variant="secondary sent-option text-center">Sent</Badge>
+            } */}
+							{item.status === 'SENT' && (
+								<Badge variant="secondary sent-option text-center">Sent</Badge>
+							)}
+
+							{item.status === 'VIEWED' && (
+								<Badge variant="secondary sent-option text-center">Viewed</Badge>
+							)}
+
+							{item.status === 'SIGNED' && (
+								<Badge variant="secondary sent-option text-center">Signed</Badge>
+							)}
+							<p style={{ fontSize: 13 }}>
+								<Moment format="YYYY-MM-DD HH:mm">{item.updatedAt}</Moment>
+							</p>
 						</Col>
 						<Col md={4} className="text-right">
 							<Button variant="outline-secondary options">
-								<a href={`http://localhost:3000/formSubmission/${item.id}`}>View Form</a>
+								<a target="_blank" href={`${base_url}/formSubmission/${item.id}`}>
+									View Form
+								</a>
 							</Button>
 							<Button
 								variant="outline-secondary options"
-								onClick={() => handleReminderSent(item.receiverId)}>
+								onClick={() =>
+									handleReminderSent(
+										item.receiverId,
+										item.receiverName,
+										item.receiverEmail
+									)
+								}>
 								Send Reminder
 							</Button>
 						</Col>

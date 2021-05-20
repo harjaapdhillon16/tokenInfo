@@ -162,16 +162,22 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
   };
 
   const handleMultipleFormsData = (formid, formData) => {
+
+    const date = new Date();
+    let newDate = JSON.stringify(date)
+    newDate = newDate.slice(1,11); 
+
     let data = [];
 
-    if (formid === 1) {
-      
+    if (formid === 1) {      
       data[0] = "name";
       data[1] = formData.name;
       data[2] = "name_of_real_estate";
       data[3] = formData.companyName;
       data[4] = "real_estate_brockerage_company";
       data[5] = formData.companyName;
+      data[6] = "date";
+      data[7] = newDate;
       
     } else if (formid === 2) {
 
@@ -181,37 +187,53 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       data[3] = formData.companyName;
       data[4] = "account_type";
       data[5] = "";
-      data[6] = "real_estate_brockerage_company";
-      data[7] = "";
-      data[8] = "firstdate";
-      data[9] = "";
-      data[10] = "lastdate";
-      data[11] = "";
+      data[6] = "firstdate";
+      data[7] = newDate;
+      data[8] = "lastdate";
+      data[9] = newDate;
 
     } else if (formid === 3) {
 
       data[0] = "name";
       data[1] = formData.name;
-      data[2] = "account_type";
-      data[3] = "";
+      data[2] = "date";
+      data[3] = newDate;
       data[4] = "property_address";
       data[5] = "";
-      data[4] = "real_estate_name";
-      data[5] = formData.companyName;
-      data[6] = "name_of_brockerage_company";
-      data[7] = "";
+      data[6] = "real_estate_name";
+      data[7] = formData.companyName;
+      data[8] = "name_of_brockerage_company";
+      data[9] = "";
+      data[10] = "checkValueFirst";
+      data[11] = "";
+      data[12] = "checkValueSecond";
+      data[13] = "";
+      data[14] = "checkValueThird";
+      data[15] = "";
+      data[14] = "checkValueFourth";
+      data[15] = "";
     }
     return data;
   };
 
   const handleSecondForm = () => {
-    //  handleCurrentState(currentState + 1)
+     handleCurrentState(currentState + 1)
     let selectedforms = updatedFormTypes.filter(
       (item) => item.isActive === true
     );
     let selectedcontacts = updatedContacts.filter(
       (item) => item.isActive === true
     );
+
+    // let today = Date.now();
+    let today = new Date();
+    console.log(today);
+
+    let time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+    console.log(time);
+
+    // let timestamp = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(today);
+    // console.log(timestamp);
 
     let finalData = [];
     
@@ -221,7 +243,10 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         let finalObject = {};
         finalObject.senderId = user.username;
         finalObject.receiverId = item.id;
+        finalObject.receiverName = item.name;
+        finalObject.receiverEmail = item.email;
         finalObject.formName = form.title;
+        finalObject.status = "SENT";
 
         finalObject.data = handleMultipleFormsData(form.id, item);
         finalData = [...finalData, finalObject];
@@ -255,12 +280,12 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       
       let emailData = {
         from_name: user.username,
-        to_name: data.data.name,
+        to_name: data.receiverName,
         message:`http://localhost:3000/formSubmission/${receiverId}`,
         reply_to: user.attributes.email,
-        to_email:"test@gmail.com",
+        to_email:data.receiverEmail
       };
-
+      
       emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
         function (response) {
           console.log(response);
@@ -271,12 +296,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         }
       );
 
-      // const newContacts = [...contacts, createdContact.data.createContact];
-      // onUpdateContacts(newContacts);
-      // console.log(createdContact.data.createContact);
-      // setShow(false);
     } catch (err) {
-      console.log(err, "Error creating Formdata");
+      console.log("Error creating Formdata", err);
     }
   };
 
@@ -348,20 +369,6 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
                 />
               ))}
             </div>
-           
-          {/* : */}
-            {/* <div className="contactsList">
-              {contactList.map((item) => (
-                <Form.Check
-                  id={item.id}
-                  label={item.name}
-                  type="checkbox"
-                  checked={item.isActive}
-                  onChange={() => onhandleContactMethod(item.id)}
-                />
-              ))}
-            </div> */}
-          {/* } */}
           
           <div className="d-flex ml-auto mr-auto justify-content-center add-client">
             {/* <IconPlus /> Add a new client */}
@@ -372,7 +379,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
             onClick={() => handleSecondForm()}
             variant="outline-secondary  pop-btn d-flex ml-auto mr-auto"
           >
-            Next contact submit
+            Next
           </Button>{" "}
         </Modal.Footer>
       </Modal>
