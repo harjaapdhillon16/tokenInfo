@@ -1,21 +1,16 @@
-import React, { useEffect, useState, useContext } from "react";
-import {
-  IconBuilding,
-  IconEmail,
-  IconSmartphone,
-  IconMenu,
-} from "../assets/icons/icons";
-import { Container, Row, Col, Button } from "react-bootstrap";
-import { Dropdown } from "react-bootstrap";
-import Badge from "react-bootstrap/Badge";
-import Header from "../components/header/header";
-import Breadcrumb from "react-bootstrap/Breadcrumb";
-import { Link } from "react-router-dom";
-import { useFormik } from "formik";
-import { API, graphqlOperation } from "aws-amplify";
-import { listFormDatas } from "../graphql/queries";
+import React, { useEffect, useState, useContext } from 'react';
+import { IconBuilding, IconEmail, IconSmartphone, IconMenu } from '../assets/icons/icons';
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
+import Badge from 'react-bootstrap/Badge';
+import Header from '../components/header/header';
+import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import { Link } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { API, graphqlOperation } from 'aws-amplify';
+import { listFormDatas } from '../graphql/queries';
 import AppContext from '../../src/context/appContext';
-import * as emailjs from "emailjs-com";
+import * as emailjs from 'emailjs-com';
 import Moment from 'react-moment';
 import { updateFormData } from "../graphql/mutations";
 import _ from 'lodash';
