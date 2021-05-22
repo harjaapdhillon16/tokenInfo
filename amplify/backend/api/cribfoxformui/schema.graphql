@@ -4,7 +4,7 @@ enum UserType {
 	SELLER
 }
 
-type Agent @model @key(name: "byId", fields: ["id"], queryField: "agentById") {
+type Agent @model {
 	id: ID!
 	name: String!
 	email: String!

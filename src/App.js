@@ -14,10 +14,11 @@ Hub.listen('auth', (data) => {
 			const { sub, email } = data.payload.data.attributes;
 			API.graphql(
 				graphqlOperation(createAgent, {
-					input: { id: sub, name: email.split('@')[0], email },
-					condition: { id: { attribute_not_exists: sub } }
+					input: { id: sub, name: email.split('@')[0], email }
 				})
-			).catch(() => {});
+			)
+				.then(console.log)
+				.catch(console.log);
 			break;
 		default:
 			break;

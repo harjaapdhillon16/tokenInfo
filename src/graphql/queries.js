@@ -122,34 +122,6 @@ export const listFormDatas = /* GraphQL */ `
     }
   }
 `;
-export const agentById = /* GraphQL */ `
-  query AgentById(
-    $id: ID
-    $sortDirection: ModelSortDirection
-    $filter: ModelAgentFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    agentById(
-      id: $id
-      sortDirection: $sortDirection
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        id
-        name
-        email
-        brokerageName
-        stateOfLicensure
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const contactByAgent = /* GraphQL */ `
   query ContactByAgent(
     $agentId: ID
