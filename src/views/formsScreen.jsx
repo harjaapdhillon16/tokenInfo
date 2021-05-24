@@ -104,7 +104,7 @@ const sortedForms = _.orderBy( formItems, ['createdAt'],['desc']);
 console.log('sortedForms', sortedForms);
 if (loading) return <Loader />;
   return (
-    <Container fluid>
+    <Container fluid className="p-0">
       <Header />
       <Container>
         <Breadcrumb className="title-bar">
@@ -188,25 +188,22 @@ if (loading) return <Loader />;
             
           </Col>
           <Col md={3} className="text-center">
-            {/* {item.emailStatus === null &&
-              // <Badge variant="secondary sent-option text-center">Sent</Badge>{" "}
-              <Badge variant="secondary sent-option text-center">Sent</Badge>
-            } */}
+          
             {item.status === "SENT" &&
-              <Badge variant="secondary sent-option text-center">Sent</Badge>
+              <Badge variant="danger sent-option text-center">Sent</Badge>
             }
 
             {item.status === "VIEWED" &&
-              <Badge variant="secondary sent-option text-center">Viewed</Badge>
+              <Badge variant="warning sent-option text-center">Viewed</Badge>
             }
 
             {item.status === "SIGNED" &&
-              <Badge variant="secondary sent-option text-center">Signed</Badge>
+              <Badge variant="success sent-option text-center">Signed</Badge>
             }
-            <p style={{ fontSize: 13 }}><Moment format="YYYY-MM-DD HH:mm">{item.updatedAt}</Moment></p>
+            <p style={{ fontSize: 13 }}><Moment fromNow>{item.updatedAt}</Moment></p>
           </Col>
           <Col md={4} className="text-right">
-            <Button variant="outline-secondary options">
+            <Button variant="outline-secondary invite view-form mr-3">
               <a  target="_blank" href={`${base_url}/formSubmission/${item.id}`}>View Form</a>
             </Button>
 
@@ -231,7 +228,7 @@ if (loading) return <Loader />;
             
             }  */}
             {item.status === "SENT" &&
-             <Button variant="outline-secondary options" 
+             <Button variant="outline-secondary cf-black" 
                 onClick={() => handleReminderSent(item)}
               >
                 Send Reminder
@@ -239,7 +236,7 @@ if (loading) return <Loader />;
             }
 
             {item.status === "VIEWED" &&
-             <Button variant="outline-secondary options" 
+             <Button variant="outline-secondary cf-black" 
                 onClick={() => handleReminderSent(item)}
               >
                 Send Reminder
@@ -247,8 +244,8 @@ if (loading) return <Loader />;
             }
 
             {item.status === "SIGNED" &&
-             <Button variant="outline-secondary options">
-                Send Reminder
+             <Button variant="outline-secondary cf-black">
+                Share
               </Button>
             }
 

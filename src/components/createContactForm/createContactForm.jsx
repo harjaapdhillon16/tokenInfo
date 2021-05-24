@@ -35,7 +35,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
       phoneNum: "",
       roleInCompany: "",
 
-      agentId: "",
+      // agentId: "",
       // type:''
     },
     validationSchema: Yup.object({
@@ -49,7 +49,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
         .min(10, "to short")
         .max(10, "to long"),
       roleInCompany: Yup.string().required("Your role in Company"),
-      agentId: Yup.string().required("Enter your valid agent id"),
+      // agentId: Yup.string().required("Enter your valid agent id"),
     }),
     onSubmit: (values) => {
       handleContactCreation(values);
@@ -58,7 +58,8 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
 
   const handleContactCreation = async (values) => {
     const data = {
-      agentId: values.agentId,
+      // agentId: values.agentId,
+      agentId: "1",
       name: values.name,
       email: values.email,
       phoneNum: values.phoneNum,
@@ -102,7 +103,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
             onChange={formik.handleChange}
           />
 
-          {formik.touched.agentId && formik.errors.agentId && (
+          {/* {formik.touched.agentId && formik.errors.agentId && (
             <Form.Text className="text-error">
               {formik.errors.agentId}
             </Form.Text>
@@ -115,7 +116,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
             placeholder="Enter agent id"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
-          />
+          /> */}
 
           {formik.touched.email && formik.errors.email && (
             <Form.Text className="text-error">{formik.errors.email}</Form.Text>

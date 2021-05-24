@@ -154,10 +154,20 @@ width:100%;
   display: inline;
   margin-bottom: 20px;
 }
-/* .sign-field1{
-  border-bottom: solid 2px #5e5e5d;
-  margin-top: 4%;
-} */
+.view-form a {
+  color: #000000;
+}
+.view-form:hover a{
+  color: #000000;
+}
+.cf-black:hover{
+  background-color: #ffffff;
+  color: #000000;
+}
+.cf-black {
+  border-color: #000000;
+  color: #000000;
+}
 
 @media (min-width: 1200px) {
   .form1.container {

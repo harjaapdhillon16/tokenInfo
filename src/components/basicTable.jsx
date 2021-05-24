@@ -51,19 +51,21 @@ const EditContact = async (item) => {
       <Table striped bordered hover>
   <thead>
     <tr>
-      <th>AgentID</th>
+      {/* <th>AgentID</th> */}
       <th>Name</th>
       <th>Email</th>
       <th>Phone Number</th>
       <th>Company Name</th>
       <th>Role in Company</th>
       <th>Type</th>
+      <th>Created</th>
+      <th>Last update</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     {tableData.map(item =>  <tr>
-      <td>{item.agentId}</td>
+      {/* <td>{item.agentId}</td> */}
       <td>
       <Link to={`./ContactDetail/${item.id}`}>{item.name}</Link>
       </td>
@@ -72,6 +74,8 @@ const EditContact = async (item) => {
       <td>{item.companyName}</td>
       <td>{item.roleInCompany}</td>
       <td>{item.type}</td>
+      <td><Moment format="DD-MM-YYYY">{item.createdAt}</Moment></td>
+      <td><Moment format="DD-MM-YYYY">{item.updatedAt}</Moment></td>
       <td className="d-flex">
       <Button variant="danger" className="mr-2" onClick={()=>onDeleteContact(item.id)}>Delete</Button>{' '}
       <Button

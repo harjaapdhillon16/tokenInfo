@@ -18,12 +18,14 @@ import { API, graphqlOperation } from "aws-amplify";
 import { listContacts } from "../../graphql/queries";
 import { createFormData } from "../../graphql/mutations";
 import * as emailjs from "emailjs-com";
+import CreateContactForm from "../../../src/components/createContactForm/createContactForm";
 
 const SendForm = ({ formModal, onHandleFormModal }) => {
   const { user } = useContext(AppContext);
   const [currentState, handleCurrentState] = useState(1);
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
   const [email, setEmail] = useState("sandalsimar@gmail.com");
   const [updatedFormTypes, setUpdatedFormTypes] = useState([]);
   const [updatedContacts, setUpdatedContacts] = useState([]);
@@ -322,7 +324,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           {/* {contactList === undefined  ? */}
 
             <div className="contactsList">
-              {updatedContacts.map((item) => (
+              {contacts.map((item) => (
                 <Form.Check
                   id={item.id}
                   label={item.name}
@@ -333,9 +335,14 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
               ))}
             </div>
           
-          <div className="d-flex ml-auto mr-auto justify-content-center add-client">
-            {/* <IconPlus /> Add a new client */}
+          <div className="d-flex ml-auto mr-auto justify-content-center add-client" onClick={handleShow}>
+            <IconPlus /> Add a new client
           </div>
+          <CreateContactForm
+            show={show}
+            handleClose={handleClose}
+            setShow={setShow}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button
