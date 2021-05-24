@@ -5,6 +5,7 @@ import { Container, Row, Col, Card, InputGroup, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Header from '../components/header/header';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import Loader from '../components/Loader/Loader';
 import appContext from '../context/appContext';
 import { updateAgent } from '../graphql/mutations';
 
@@ -21,7 +22,7 @@ const FormsScreen = () => {
 			.catch(() => {});
 	}
 
-	if (!agent) return <h5>Loading...</h5>;
+	if (!agent) return <Loader />;
 
 	return (
 		<Container fluid>
