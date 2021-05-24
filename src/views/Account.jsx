@@ -21,6 +21,8 @@ const FormsScreen = () => {
 			.catch(() => {});
 	}
 
+	if (!agent) return <h5>Loading...</h5>;
+
 	return (
 		<Container fluid>
 			<Header />

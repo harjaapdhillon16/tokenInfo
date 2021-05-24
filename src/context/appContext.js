@@ -67,7 +67,7 @@ export class AppContext extends Component {
 			<Context.Provider
 				value={{
 					...this.state,
-					onUserUpdate: this.handleUserUpdate,
+					setUser: this.handleUserUpdate,
 					onUpdateContacts: this.handleContactUpdates,
 					onDeleteContact: this.handleContactDelete,
 					onEditContact: this.handleUpdate,
