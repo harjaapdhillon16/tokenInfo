@@ -49,8 +49,6 @@ const FormsScreen = () => {
 			to_email: receiverEmail
 		};
 
-		console.log('emailData', emailData);
-
 		emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
 			function (response) {
 				console.log(response);

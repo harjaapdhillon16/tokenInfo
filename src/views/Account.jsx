@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import { IconChecked } from '../assets/icons/icons';
 import { Container, Row, Col, Card, InputGroup, Button } from 'react-bootstrap';
+import Editable from '../components/Editable';
 import { Link } from 'react-router-dom';
 import Header from '../components/header/header';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
@@ -10,16 +11,18 @@ import appContext from '../context/appContext';
 import { updateAgent } from '../graphql/mutations';
 
 const FormsScreen = () => {
-	const [loading, setLoading] = useState(true);
 	const { agent, setAgent } = useContext(appContext);
 
-	function editAgent(agentObj) {
-		setAgent(agentObj);
+	function editAgent(updatedValue) {
+		console.log(updatedValue, agent.id);
+		setAgent({ ...agent, ...updatedValue });
 		API.graphql(
-			graphqlOperation(updateAgent, { input: agentObj, condition: { id: agentObj.id } })
+			graphqlOperation(updateAgent, {
+				input: { id: agent.id, ...updatedValue }
+			})
 		)
 			.then(console.log)
-			.catch(() => {});
+			.catch(console.log);
 	}
 
 	if (!agent) return <Loader />;
@@ -41,50 +44,26 @@ const FormsScreen = () => {
 				</Row>
 				<Row>
 					<Col md={8}>
-						<Row className="border-bottom py-4">
-							<Col md={7}>
-								<h5>Your Name</h5>
-								{agent.name}
-							</Col>
-							<Col md={5} className="text-right">
-								<Link>
-									<h6>Edit</h6>
-								</Link>
-							</Col>
-						</Row>
-						<Row className="border-bottom py-4">
-							<Col md={7}>
-								<h5>Email address</h5>
-								{agent.email}
-							</Col>
-							<Col md={5} className="text-right">
-								<Link>
-									<h6>Edit</h6>
-								</Link>
-							</Col>
-						</Row>
-						<Row className="border-bottom py-4">
-							<Col md={7}>
-								<h5>Brokerage</h5>
-								{agent.brokerageName}
-							</Col>
-							<Col md={5} className="text-right">
-								<Link>
-									<h6>Edit</h6>
-								</Link>
-							</Col>
-						</Row>
-						<Row className="border-bottom py-4">
-							<Col md={7}>
-								<h5>State of licensure</h5>
-								{agent.stateOfLicensure}
-							</Col>
-							<Col md={5} className="text-right">
-								<Link>
-									<h6>Edit</h6>
-								</Link>
-							</Col>
-						</Row>
+						<Editable
+							label="Name"
+							value={agent.name}
+							onSave={(val) => editAgent({ name: val })}
+						/>
+						<Editable
+							label="Email"
+							value={agent.email}
+							onSave={(val) => editAgent({ email: val })}
+						/>
+						<Editable
+							label="Brokerage"
+							value={agent.brokerageName}
+							onSave={(val) => editAgent({ brokerageName: val })}
+						/>
+						<Editable
+							label="State of licensure"
+							value={agent.stateOfLicensure}
+							onSave={(val) => editAgent({ stateOfLicensure: val })}
+						/>
 					</Col>
 					<Col md={4} className="pt-4">
 						<Card>
