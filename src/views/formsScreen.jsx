@@ -15,12 +15,20 @@ import Moment from 'react-moment';
 import { updateFormData } from "../graphql/mutations";
 import _ from 'lodash';
 import Loader from "../components/Loader/Loader";
+import ShareForm from '../components/shareForm/shareForm';
+import SendReminder from '../components/sendReminder/sendReminder';
 
 const FormsScreen = () => {
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
   const { user, formItems, onFormItemsUpdate, onFormItemUnitUpdate } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
-  const [formsData,setFormsData] = useState([]);
-  const [reminderStatus, setReminderStatus] = useState(false);
+  const [formsData, setFormsData] = useState([]);
+  const [shareFormItem, setShareFormItem] = useState('');
+  const [statusValue, setStatusValue] = useState(null);
+  let base_url = window.location.origin;
+  
 
   useEffect(() => {
     handleFormsData();
@@ -43,66 +51,18 @@ const FormsScreen = () => {
     }
   };
 
-  const handleReminderSent = async (itemData) => {
-    let SERVICE_ID = "service_tjry678";
-    let TEMPLATE_ID = "template_difn49p";
-    let USER_ID = "user_xtMibwUvYsK5NraUVFG1J";
-  
-
-    let emailData = {
-      from_name: user.username,
-      to_name: itemData.receiverName,
-      message:`http://localhost:3000/formSubmission/${itemData.receiverId}`,
-      reply_to: user.attributes.email,
-      to_email: itemData.receiverEmail,
-    };
-
-    console.log('emailData', emailData);
-
-    emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
-      function (response) {
-        console.log(response);
-        console.log(response.status, response.text);
-        handleReminderStatus(itemData);
-      },
-      function (err) {
-        console.log(err);
-      }
-    );
+  const handleShared= (item)=>{
+    console.log(item);
+    setShareFormItem(item);
+    handleShow();
   }
-
-  const handleReminderStatus = async(contactUserData) =>{
-    if(!reminderStatus){
-      let data = {};
-      data.id = contactUserData.id;
-      data.status= "REMINDERSENT";
-      console.log(data);
-
-      try {
-        const checkReminderStatus = await API.graphql(
-          graphqlOperation(updateFormData, { input: data })
-        );
-        console.log("checkReminderStatus", checkReminderStatus.data.updateFormData);
-        if(data.id === checkReminderStatus.data.updateFormData.id){
-          const updateForm = [...formItems, checkReminderStatus.data.updateFormData];
-          console.log('updateForm', updateForm);
-          onFormItemUnitUpdate(updateForm);
-        }
-
-      } catch (err) {
-        console.log(err, "Error updating Form View status");
-      }
-    }
-  }
-
-
-
  
-var base_url = window.location.origin;
-console.log('formItems context', formItems);
-const sortedForms = _.orderBy( formItems, ['createdAt'],['desc']);
-console.log('sortedForms', sortedForms);
-if (loading) return <Loader />;
+  console.log('formItems context', formItems);
+  const sortedForms = _.orderBy( formItems, ['createdAt'],['desc']);
+  
+  const filtered = statusValue !==null ? _.filter(sortedForms, { 'status': statusValue}): sortedForms;
+  console.log('sortedForms', sortedForms);
+  if (loading) return <Loader />;
   return (
     <Container fluid className="p-0">
       <Header />
@@ -113,74 +73,64 @@ if (loading) return <Loader />;
           </Breadcrumb.Item>
           <Breadcrumb.Item>Form</Breadcrumb.Item>
         </Breadcrumb>
+
         <Row>
-          <Col md={12} className="dashboardCards pt-5">
-            <div className="d-flex">
-              <h5>Forms</h5>
-              <Dropdown>
-                <Dropdown.Toggle className="drop-btn pt-0 pl-5">
-                  All Statuses
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">
-                    Another action
-                  </Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">
-                    Something else
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-              <Dropdown>
-                <Dropdown.Toggle className="drop-btn pt-0 pl-5">
-                  All clients
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">
-                    Another action
-                  </Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">
-                    Something else
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-              <Dropdown>
-                <Dropdown.Toggle className="drop-btn pt-0 pl-5">
-                  All forms
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">
-                    Another action
-                  </Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">
-                    Something else
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-              <Dropdown>
-                <Dropdown.Toggle className="drop-btn pt-0 pl-5">
-                  Most recent
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">
-                    Another action
-                  </Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">
-                    Something else
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
+          <Col md={5} className="dashboardCards pt-5">
+            <h5>Forms</h5>
           </Col>
+
+          <Col md={2} className="dashboardCards pt-5 text-center pr-0">
+            <Dropdown>
+              <Dropdown.Toggle className="drop-btn pt-0 pl-5">
+                All Statuses
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={()=> setStatusValue("SENT")}>Sent</Dropdown.Item>
+                <Dropdown.Item onClick={()=> setStatusValue("VIEWED")}>Viewed</Dropdown.Item>
+                <Dropdown.Item onClick={()=> setStatusValue("SIGNED")}>Signed</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
+
+          <Col md={3} className="dashboardCards pt-5 d-flex justify-content-end">
+            <Dropdown>
+              <Dropdown.Toggle className="drop-btn pt-0 pl-5">
+                All forms
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                <Dropdown.Item href="#/action-2">
+                  Another action
+                </Dropdown.Item>
+                <Dropdown.Item href="#/action-3">
+                  Something else
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
+
+          <Col md={2} className="dashboardCards pt-5 d-flex justify-content-center pl-0">
+            <Dropdown>
+              <Dropdown.Toggle className="drop-btn pt-0 pl-0">
+                Most recent
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+                <Dropdown.Item href="#/action-2">
+                  Another action
+                </Dropdown.Item>
+                <Dropdown.Item href="#/action-3">
+                  Something else
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
+
         </Row>
-        {sortedForms.map(item =>  <Row className="w-100 border-bottom pb-3 mt-5 ">
+        {filtered.map(item =>  <Row className="w-100 border-bottom pb-3 mt-5 ">
           <Col md={5}>
             <h6>{item.formName}</h6>
           
@@ -206,63 +156,37 @@ if (loading) return <Loader />;
             <Button variant="outline-secondary invite view-form mr-3">
               <a  target="_blank" href={`${base_url}/formSubmission/${item.id}`}>View Form</a>
             </Button>
-
-            {/* {item.status === "SENT" || item.status === "VIEWED" ?
-              <>
-                {!reminderStatus  ? (
-                  <Button variant="outline-secondary options" 
-                    onClick={() => handleReminderSent(item.receiverId, item.receiverName, item.receiverEmail)}
-                  >
-                    Reminder Sent!
-                  </Button>
-                ):(
-                  <Button variant="outline-secondary options" 
-                    onClick={() => handleReminderSent(item.receiverId, item.receiverName, item.receiverEmail)}
-                  >
-                    Send Reminder
-                  </Button>
-                )}
-              </>
-           
-            : null
-            
-            }  */}
+          
             {item.status === "SENT" &&
-             <Button variant="outline-secondary cf-black" 
-                onClick={() => handleReminderSent(item)}
-              >
-                Send Reminder
-              </Button>
+              <SendReminder
+                itemData={item}
+              />  
             }
 
             {item.status === "VIEWED" &&
-             <Button variant="outline-secondary cf-black" 
-                onClick={() => handleReminderSent(item)}
-              >
-                Send Reminder
-              </Button>
+              <SendReminder
+                itemData={item}
+              />  
             }
 
             {item.status === "SIGNED" &&
-             <Button variant="outline-secondary cf-black">
+              <Button variant="outline-secondary cf-black px-5"
+                onClick={() => handleShared(item)}
+              >
                 Share
               </Button>
             }
-
-            {/* {item.status === "REMINDERSENT" ?
-              <Button variant="outline-secondary options">
-                Reminder Sent!
-              </Button>
-            :
-            <Button variant="outline-secondary options" 
-              onClick={() => handleReminderSent(item)}
-            >
-              Send Reminder
-            </Button>
-            } */}
+            
           </Col>
         </Row>
         )}
+
+        <ShareForm
+          show={show}
+          handleClose={handleClose}
+          setShow={setShow}
+          formData={shareFormItem}
+        />
       </Container>
     </Container>
   );

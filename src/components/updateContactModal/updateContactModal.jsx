@@ -34,7 +34,7 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
       companyName: data.companyName,
       phoneNum: data.phoneNum,
       roleInCompany: data.roleInCompany,
-      agentId: data.agentId,
+      // agentId: data.agentId,
     },
     enableReinitialize: true,
     validationSchema: Yup.object({
@@ -48,7 +48,7 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
       .min(10, "to short")
       .max(10, "to long"),
       roleInCompany: Yup.string().required("Your role in Company"),
-      agentId: Yup.string().required("Enter your valid agent id"),
+      // agentId: Yup.string().required("Enter your valid agent id"),
       
     }),
     onSubmit: (values) => {
@@ -60,7 +60,7 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
     
     const updateData = {
       id: data.id,
-      agentId: values.values.agentId,
+      agentId: "1",
       name: values.values.name,
       email: values.values.email,
       phoneNum: values.values.phoneNum,
@@ -112,7 +112,7 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
             )}
 
 
-          {formik.touched.agentId && formik.errors.agentId && (
+          {/* {formik.touched.agentId && formik.errors.agentId && (
             <Form.Text className="text-error">
               {formik.errors.agentId}
             </Form.Text>
@@ -125,7 +125,7 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
             placeholder="Enter agent id"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
-          />
+          /> */}
 
           <Form.Control
             className="mb-3"

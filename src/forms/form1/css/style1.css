@@ -157,16 +157,24 @@ width:100%;
 .view-form a {
   color: #000000;
 }
-.view-form:hover a{
-  color: #000000;
+.view-form:hover {
+  background-color: #bbbcbc !important;
+  border: 1px solid #8d8989 !important;
+}
+.view-form:hover a,
+.cf-black:hover a{
+  color: #ffffff !important;
 }
 .cf-black:hover{
-  background-color: #ffffff;
-  color: #000000;
+  background-color: #bbbcbc;
+  border: 1px solid #8d8989 !important;
 }
 .cf-black {
   border-color: #000000;
   color: #000000;
+}
+.dotaction .dropdown-toggle::after {
+  opacity: 0;
 }
 
 @media (min-width: 1200px) {

@@ -31,7 +31,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
   const [updatedContacts, setUpdatedContacts] = useState([]);
   const [input, setInput] = useState('');
   const [contactList, setContactList] = useState();
-  
+  let base_url = window.location.origin;
 
   const { formsTypes, contacts, onUpdateContacts, formItems, onFormItemsUpdate } = useContext(AppContext);
 
@@ -243,7 +243,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       let emailData = {
         from_name: user.username,
         to_name: data.receiverName,
-        message:`http://localhost:3000/formSubmission/${receiverId}`,
+        message:`${base_url}/formSubmission/${receiverId}`,
         reply_to: user.attributes.email,
         to_email:data.receiverEmail
       };
