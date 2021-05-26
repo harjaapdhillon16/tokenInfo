@@ -8,11 +8,10 @@ import ApplicationRouter from '../router/applicationRouter';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import AppContext from '../context/appContext';
 
-
 const MainWrapper = () => {
-	const { agent } = useContext(AppContext);
+	const { user } = useContext(AppContext);
 
-	if (!agent) return 'Loading...';
+	if (!user) return 'Loading...';
 
 	return (
 		<Container fluid>

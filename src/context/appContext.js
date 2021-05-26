@@ -45,49 +45,47 @@ export class AppContext extends Component {
 				]
 			}
 		],
-    formItems: [],
+		formItems: [],
 		contacts: []
 	};
 
+	handleUserUpdate = (user) => {
+		this.setState({ user });
+	};
+	handleContactUpdates = (contacts) => {
+		this.setState({ contacts });
+	};
+	handleContactDelete = (id) => {
+		this.setState({ contacts: this.state.contacts.filter((item) => item.id !== id && item) });
+	};
+	handleUpdate = (data) => {
+		this.setState({ data });
+	};
+	handleFormsUpdate = (formItems) => {
+		this.setState({ formItems });
+	};
+	handleFormsItemUpdate = (formItems) => {
+		this.setState({ formItems });
+	};
+	handleAgentUpdate = (agent) => this.setState({ agent });
 
-  handleUserUpdate = (user) => {
-    this.setState({ user });
-  };
-  handleContactUpdates = (contacts) => {
-    this.setState({ contacts });
-  };
-  handleContactDelete = (id) => {
-    this.setState({ contacts: this.state.contacts.filter( (item) =>  item.id !== id  && item  ) });
-  };
-  handleUpdate= (data) => {
-    this.setState({data});
-  }
-  handleFormsUpdate= (formItems) => {
-    this.setState({formItems});
-  }
-  handleFormsItemUpdate= (formItems) => {
-    this.setState({formItems});
-  }
-  handleAgentUpdate = (agent) => this.setState({ agent });
-
-  render() {
-    return (
-      <Context.Provider
-        value={{
-          ...this.state,
-          onUserUpdate: this.handleUserUpdate,
-          onUpdateContacts: this.handleContactUpdates,
-          onDeleteContact: this.handleContactDelete,
-          onEditContact: this.handleUpdate,
-          onFormItemsUpdate: this.handleFormsUpdate,
-          onFormItemUnitUpdate: this.handleFormsItemUpdate,
-          setAgent: this.handleAgentUpdate
-        }}
-      >
-        {this.props.children}
-      </Context.Provider>
-    );
-  }
+	render() {
+		return (
+			<Context.Provider
+				value={{
+					...this.state,
+					setUser: this.handleUserUpdate,
+					onUpdateContacts: this.handleContactUpdates,
+					onDeleteContact: this.handleContactDelete,
+					onEditContact: this.handleUpdate,
+					onFormItemsUpdate: this.handleFormsUpdate,
+					onFormItemUnitUpdate: this.handleFormsItemUpdate,
+					setAgent: this.handleAgentUpdate
+				}}>
+				{this.props.children}
+			</Context.Provider>
+		);
+	}
 }
 
 export default Context;
