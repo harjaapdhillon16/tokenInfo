@@ -1,53 +1,54 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 const Context = React.createContext();
 export class AppContext extends Component {
-  state = {
-    user: null,
-
-    formsTypes: [
-      {
-        id: 1,
-        title: "REBNY COVID Liability Form",
-        data:[
-          {
-            name:'',
-            date:'',
-            name_of_real_estate:'',
-            real_estate_brockerage_company:''
-          }
-        ]
-      },
-      {
-        id: 2,
-        title: "New York Agency Disclosure Form for Buyer and Seller",
-        data:[
-          {
-            name_of_broker:'',
-            name_of_real_estate_company:'',
-            account_type:'',
-            real_estate_brockerage_company:'',
-            firstdate:'',
-            lastdate:''
-          }
-        ]
-      },
-      {
-        id: 3,
-        title: "REBNY COVID Health Screening Form",
-        data:[
-          {
-            name:'',
-            date:'',
-            property_address:'',
-            real_estate_name:'',
-            name_of_brockerage_company:''
-          }
-        ]
-      },
-    ],
+	state = {
+		user: null,
+		agent: null,
+		formsTypes: [
+			{
+				id: 1,
+				title: 'REBNY COVID Liability Form',
+				data: [
+					{
+						name: '',
+						date: '',
+						name_of_real_estate: '',
+						real_estate_brockerage_company: ''
+					}
+				]
+			},
+			{
+				id: 2,
+				title: 'New York Agency Disclosure Form for Buyer and Seller',
+				data: [
+					{
+						name_of_broker: '',
+						name_of_real_estate_company: '',
+						account_type: '',
+						real_estate_brockerage_company: '',
+						firstdate: '',
+						lastdate: ''
+					}
+				]
+			},
+			{
+				id: 3,
+				title: 'REBNY COVID Health Screening Form',
+				data: [
+					{
+						name: '',
+						date: '',
+						property_address: '',
+						real_estate_name: '',
+						name_of_brockerage_company: ''
+					}
+				]
+			}
+		],
     formItems: [],
-    contacts: [],
-  };
+		contacts: []
+	};
+
 
   handleUserUpdate = (user) => {
     this.setState({ user });
@@ -64,10 +65,10 @@ export class AppContext extends Component {
   handleFormsUpdate= (formItems) => {
     this.setState({formItems});
   }
-
   handleFormsItemUpdate= (formItems) => {
     this.setState({formItems});
   }
+  handleAgentUpdate = (agent) => this.setState({ agent });
 
   render() {
     return (
@@ -79,7 +80,8 @@ export class AppContext extends Component {
           onDeleteContact: this.handleContactDelete,
           onEditContact: this.handleUpdate,
           onFormItemsUpdate: this.handleFormsUpdate,
-          onFormItemUnitUpdate: this.handleFormsItemUpdate
+          onFormItemUnitUpdate: this.handleFormsItemUpdate,
+          setAgent: this.handleAgentUpdate
         }}
       >
         {this.props.children}
