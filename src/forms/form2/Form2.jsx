@@ -26,7 +26,7 @@ import * as Yup from "yup";
 
 const Form2 = (formItem) => {
   console.log("formItem", formItem);
-  console.log("formItem", formItem.formData.isSignatureTyped);
+  console.log("formItem",formItem.formData.signature);
 
   const [show, setShow] = useState(false);
   const [canvasShow, setCanvasShow] = useState(true);
@@ -38,6 +38,7 @@ const Form2 = (formItem) => {
   const [signAsText, setSignAsText] = useState("");
   const [signMethod, setSignMethod] = useState("draw");
   const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");
+  const [formSubmitStatus, setFormSubmitStatus] = useState(false);
 
   useEffect(() => {
     sendViewStatus();
@@ -159,10 +160,12 @@ const Form2 = (formItem) => {
       );
       console.log("editFormData", editForm);
       console.log(editForm.data.updateFormData.status);
-      formItem.status = editForm.data.updateFormData.status;
+      
     } catch (err) {
       console.log(err, "Error updating Form data");
     }
+
+    setFormSubmitStatus(true);
   };
 
   return (
@@ -338,7 +341,7 @@ const Form2 = (formItem) => {
           <form class="form-inline submit-form" onSubmit={formik.handleSubmit}>
             <ul class="form-inline">
               <li>
-                <p>This form was provided to me by</p>
+                <p className="apply-font">This form was provided to me by</p>
               </li>
               <li>
                 {formItem.formData.status !== "SIGNED" ? (
@@ -442,16 +445,17 @@ const Form2 = (formItem) => {
               {formItem.formData.status === "SIGNED" ? (
                 <div class="col-md-8 mb-3 d-flex">
                   <label class="pt-2 input-head">
-                    Buyer/Tenant/Seller/Landlord Signature
+                    Buyer/Tenant/Seller/Landlord Signature dadad
                   </label>
-                  {formItem.formData.isSignatureTyped !== true ? (
+                  {formItem.formData.isSignatureTyped === false && (
                     <div class="form-control">
                       <img
                         class="signature"
                         src={formItem.formData.signature}
                       />
                     </div>
-                  ) : (
+                  )}
+                  {formItem.formData.isSignatureTyped === true && (
                     <input
                       type="text"
                       class="form-control apply-font"
@@ -577,7 +581,8 @@ const Form2 = (formItem) => {
               Real Estate broker and real estate salespersons are required by
               New York State law to provide you with this Disclosure.
             </p>
-            {signImage !== "" && (
+
+            {signImage !== "" && formSubmitStatus === false && (
               <Row className="bottomBar">
                 <Col md={12} className="py-3 d-flex justify-content-center">
                   <button class="btn btn-secondary" type="submit">
@@ -587,7 +592,7 @@ const Form2 = (formItem) => {
               </Row>
             )}
 
-            {signAsText !== "" && (
+            {signAsText !== "" && formSubmitStatus === false && (
               <Row className="bottomBar">
                 <Col md={12} className="py-3 d-flex justify-content-center">
                   <button class="btn btn-secondary" type="submit">

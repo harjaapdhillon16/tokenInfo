@@ -45,6 +45,7 @@ export class AppContext extends Component {
         ]
       },
     ],
+    formItems: [],
     contacts: [],
   };
 
@@ -55,13 +56,19 @@ export class AppContext extends Component {
     this.setState({ contacts });
   };
   handleContactDelete = (id) => {
-    
-      this.setState({ contacts: this.state.contacts.filter( (item) =>  item.id !== id  && item  ) });
+    this.setState({ contacts: this.state.contacts.filter( (item) =>  item.id !== id  && item  ) });
   };
   handleUpdate= (data) => {
     this.setState({data});
-
   }
+  handleFormsUpdate= (formItems) => {
+    this.setState({formItems});
+  }
+
+  handleFormsItemUpdate= (formItems) => {
+    this.setState({formItems});
+  }
+
   render() {
     return (
       <Context.Provider
@@ -71,6 +78,8 @@ export class AppContext extends Component {
           onUpdateContacts: this.handleContactUpdates,
           onDeleteContact: this.handleContactDelete,
           onEditContact: this.handleUpdate,
+          onFormItemsUpdate: this.handleFormsUpdate,
+          onFormItemUnitUpdate: this.handleFormsItemUpdate
         }}
       >
         {this.props.children}

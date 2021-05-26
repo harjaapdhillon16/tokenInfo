@@ -78,7 +78,7 @@ code {
 .sent-option{
   padding: 9px 30px 9px !important;
   border-radius: 50px !important;
-  background-color: #307AFE !important;
+  /* background-color: #307AFE !important; */
   display: inline-block !important;
   font-size: .9em !important;
   color: #ffffff !important;

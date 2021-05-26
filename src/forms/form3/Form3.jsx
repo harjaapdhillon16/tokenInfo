@@ -20,6 +20,18 @@ import * as Yup from "yup";
 const Form3 = (formItem) => {
   console.log('formItem', formItem);
 
+  const [show, setShow] = useState(false);
+  const [canvasShow, setCanvasShow] = useState(true);
+  const [fieldShow, setFieldShow] = useState(false);
+  const sigPad = useRef({});
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  const [signImage, setSignImage] = useState("");
+  const [signAsText, setSignAsText] = useState("");
+  const [signMethod, setSignMethod] = useState("draw");
+  const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");
+  const [formSubmitStatus, setFormSubmitStatus] = useState(false);
+
   useEffect(() => {
     sendViewStatus();
   }, []);
@@ -41,17 +53,6 @@ const Form3 = (formItem) => {
       }
     }
   };
-
-  const [show, setShow] = useState(false);
-  const [canvasShow, setCanvasShow] = useState(true);
-  const [fieldShow, setFieldShow] = useState(false);
-  const sigPad = useRef({});
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
-  const [signImage, setSignImage] = useState("");
-  const [signAsText, setSignAsText] = useState("");
-  const [signMethod, setSignMethod] = useState("draw");
-  const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");
 
   const genrateImage = () => {
     setShow(false);
@@ -141,7 +142,6 @@ const Form3 = (formItem) => {
     data[15] = values.checkValueThird;
     data[16] = "checkValueFourth";
     data[17] = values.checkValueFourth;
-    data[18] = "";
 
     if (signAsText !== "") {
       finalObject.id = formItem.formData.id;
@@ -172,6 +172,7 @@ const Form3 = (formItem) => {
     } catch (err) {
       console.log(err, "Error updating Form data");
     }
+    setFormSubmitStatus(true);
   }
 
   return (
@@ -785,9 +786,9 @@ const Form3 = (formItem) => {
             </div>
           </div>
         </Col>
-      </Row>
+      </Row> 
 
-      {signImage !== "" && (
+      {signImage !== "" && formSubmitStatus === false && (
         <Row className="bottomBar">
           <Col md={12} className="py-3 d-flex justify-content-center">
               <button class="btn btn-secondary" type="submit">Submit</button>
@@ -795,7 +796,7 @@ const Form3 = (formItem) => {
         </Row>
       )}
 
-      {signAsText !== "" && (
+      {signAsText !== "" && formSubmitStatus === false && (
         <Row className="bottomBar">
           <Col md={12} className="py-3 d-flex justify-content-center">
               <button class="btn btn-secondary" type="submit">Submit</button>

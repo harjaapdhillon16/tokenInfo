@@ -8,7 +8,7 @@ import {
 } from "react-table";
 import MOCK_DATA from "./MOCK_DATA.json";
 import { COLUMNS } from "./columns/column";
-import { Container, Table, Button, Modal, Form } from "react-bootstrap";
+import { Container, Table, Button, Modal, Form, Dropdown } from "react-bootstrap";
 import { handleContactCreation, dr } from "../views/Contact";
 import "./table.css";
 import Moment from "react-moment";
@@ -17,6 +17,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import UpdateContactForm from "../components/updateContactModal/updateContactModal";
 import AppContext from "../context/appContext";
 import { Link} from "react-router-dom"
+import {ContactActions} from '../assets/icons/icons';
 
 export const BasicTable = ({tableData,onDeleteContact,data}) => {
 
@@ -51,36 +52,46 @@ const EditContact = async (item) => {
       <Table striped bordered hover>
   <thead>
     <tr>
-      <th>AgentID</th>
+      {/* <th>AgentID</th> */}
       <th>Name</th>
       <th>Email</th>
-      <th>Phone Number</th>
-      <th>Company Name</th>
-      <th>Role in Company</th>
-      <th>Type</th>
-      <th>Actions</th>
+      <th>Phone</th>
+      <th>Company</th>
+      <th>Title</th>
+      <th>Role</th>
+      <th>Created</th>
+      <th>Last update</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     {tableData.map(item =>  <tr>
-      <td>{item.agentId}</td>
+      {/* <td>{item.agentId}</td> */}
       <td>
       <Link to={`./ContactDetail/${item.id}`}>{item.name}</Link>
       </td>
       <td>{item.email}</td>
       <td>{item.phoneNum}</td>
       <td>{item.companyName}</td>
+      <td></td>
       <td>{item.roleInCompany}</td>
-      <td>{item.type}</td>
-      <td className="d-flex">
-      <Button variant="danger" className="mr-2" onClick={()=>onDeleteContact(item.id)}>Delete</Button>{' '}
-      <Button
-        variant="outline-secondary"
-        onClick={()=>setOnEditContact(item)}
-      >
-        Edit
-      </Button>
+      <td><Moment format="DD-MM-YYYY">{item.createdAt}</Moment></td>
+      <td><Moment format="DD-MM-YYYY">{item.updatedAt}</Moment></td>
+      <td className="dotaction  d-flex justify-content-end">
+        <Dropdown>
+          <Dropdown.Toggle className="drop-btn">
+            {<ContactActions/>}
+          </Dropdown.Toggle>
+         
+          <Dropdown.Menu>
+            <Dropdown.Item  onClick={()=>setOnEditContact(item)}>Edit</Dropdown.Item>
+
+            <Dropdown.Item onClick={()=>onDeleteContact(item.id)}>Delete</Dropdown.Item>
+
+          </Dropdown.Menu>
+        </Dropdown>
       </td>
+
     </tr> )}
   </tbody>
 </Table>

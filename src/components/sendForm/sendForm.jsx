@@ -18,20 +18,22 @@ import { API, graphqlOperation } from "aws-amplify";
 import { listContacts } from "../../graphql/queries";
 import { createFormData } from "../../graphql/mutations";
 import * as emailjs from "emailjs-com";
+import CreateContactForm from "../../../src/components/createContactForm/createContactForm";
 
 const SendForm = ({ formModal, onHandleFormModal }) => {
   const { user } = useContext(AppContext);
   const [currentState, handleCurrentState] = useState(1);
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
   const [email, setEmail] = useState("sandalsimar@gmail.com");
   const [updatedFormTypes, setUpdatedFormTypes] = useState([]);
   const [updatedContacts, setUpdatedContacts] = useState([]);
   const [input, setInput] = useState('');
   const [contactList, setContactList] = useState();
-  
+  let base_url = window.location.origin;
 
-  const { formsTypes, contacts, onUpdateContacts } = useContext(AppContext);
+  const { formsTypes, contacts, onUpdateContacts, formItems, onFormItemsUpdate } = useContext(AppContext);
 
   useEffect(() => {
     handleCurrentState(1);
@@ -41,6 +43,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
   }, [formModal]);
 
   const handleFormTypes = () => {
+    console.log(formItems);
     const updatedTypes = formsTypes.map((item) => {
       item.isActive = false;
       return item;
@@ -117,48 +120,6 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 
   const hanldeContactSelection = () => {
     handleCurrentState(currentState + 1);
-    // let SERVICE_ID = "service_tjry678";
-    // let TEMPLATE_ID = "template_difn49p";
-    // let USER_ID = "user_xtMibwUvYsK5NraUVFG1J";
-
-    // let data = {
-    //   from_name: "Simarjot",
-    //   to_name: "Simarjot",
-    //   message: "http://localhost:3000/formSubmission/1/user_xtMibwUvYsK5NraUVFG1J",
-    //   reply_to: "asdasd",
-    //   to_email:email,
-    // };
-
-    // var data = {
-    //   service_id: SERVICE_ID,
-    //   template_id: TEMPLATE_ID,
-    //   user_id: USER_ID,
-    //   template_params: {
-    //       'username': 'James',
-    //       to_email:email,
-    //   }
-    // };
-
-    // fetch('https://api.emailjs.com/api/v1.0/email/send', {
-    //   type: 'POST',
-    //   data: JSON.stringify(data),
-    //   contentType: 'application/json'
-    // }).then(function() {
-    //     alert('Your mail is sent!');
-    // }).catch(function(error) {
-    //     alert('Oops... ' + JSON.stringify(error));
-    // });
-
-    // handleFormData();
-    // emailjs.send(SERVICE_ID, TEMPLATE_ID, data, USER_ID).then(
-    //   function (response) {
-    //     console.log(response);
-    //     console.log(response.status, response.text);
-    //   },
-    //   function (err) {
-    //     console.log(err);
-    //   }
-    // );
   };
 
   const handleMultipleFormsData = (formid, formData) => {
@@ -270,7 +231,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         graphqlOperation(createFormData, { input: data })
       );
 
-      console.log(createdContact);
+      console.log(createdContact.data.createFormData);
+
 
       let SERVICE_ID = "service_tjry678";
       let TEMPLATE_ID = "template_difn49p";
@@ -281,7 +243,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       let emailData = {
         from_name: user.username,
         to_name: data.receiverName,
-        message:`http://localhost:3000/formSubmission/${receiverId}`,
+        message:`${base_url}/formSubmission/${receiverId}`,
         reply_to: user.attributes.email,
         to_email:data.receiverEmail
       };
@@ -290,6 +252,9 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         function (response) {
           console.log(response);
           console.log(response.status, response.text);
+          const forms = [...formItems, createdContact.data.createFormData];
+          console.log('new form added', forms);
+          onFormItemsUpdate(forms);
         },
         function (err) {
           console.log(err);
@@ -359,7 +324,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           {/* {contactList === undefined  ? */}
 
             <div className="contactsList">
-              {updatedContacts.map((item) => (
+              {contacts.map((item) => (
                 <Form.Check
                   id={item.id}
                   label={item.name}
@@ -370,9 +335,14 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
               ))}
             </div>
           
-          <div className="d-flex ml-auto mr-auto justify-content-center add-client">
-            {/* <IconPlus /> Add a new client */}
+          <div className="d-flex ml-auto mr-auto justify-content-center add-client" onClick={handleShow}>
+            <IconPlus /> Add a new client
           </div>
+          <CreateContactForm
+            show={show}
+            handleClose={handleClose}
+            setShow={setShow}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button
