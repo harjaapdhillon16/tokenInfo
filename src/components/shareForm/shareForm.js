@@ -1,6 +1,4 @@
 import React, { useEffect, useState, useContext } from "react";
-
-import { IconPlus } from "../../assets/icons/icons";
 import {
   Container,
   Modal,
@@ -11,21 +9,17 @@ import {
   Button,
   FormControl
 } from "react-bootstrap";
-import { Dropdown } from "react-bootstrap";
-import AppCard from "../card/card";
-import Header from "../header/header";
 import AppContext from "../../context/appContext";
-import * as emailjs from 'emailjs-com';
-import { API, graphqlOperation } from "aws-amplify";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 import { ReactMultiEmail, isEmail } from 'react-multi-email';
+import * as emailjs from "emailjs-com";
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 import 'react-multi-email/style.css';
+
 const ShareForm = ({ show, handleClose, setShow, formData }) => {
  console.log(formData);
  let base_url = window.location.origin;
-
- const [emails,setEmails] = useState([]);
+ const [emails, setEmails] = useState([]);
+ const [copied, setCopied] = useState(false);
  const { user} = useContext(AppContext);
 
  const sharedWithEmails=()=>{
@@ -53,6 +47,7 @@ const ShareForm = ({ show, handleClose, setShow, formData }) => {
         }
     );
  }
+ console.log(copied);
   return (
     <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -63,15 +58,18 @@ const ShareForm = ({ show, handleClose, setShow, formData }) => {
             <h4>Share a link to the signed form</h4>
             <p>Convenient web link you can share via messaging. No registration required to view.</p>
 
-            <InputGroup className="mb-2">
+            <InputGroup className="mb-2 mr-4">
                 <FormControl 
-                    id="inlineFormInputGroup" 
+                    id="inlineFormInputGroup " 
                     placeholder="agent.cribfox.com/invite/chris_oliver" 
                     value={`${base_url}/formSubmission/${formData.id}`}
-                />
-                <InputGroup.Prepend>
-                    <InputGroup.Text><a href={`${base_url}/formSubmission/${formData.id}`}>Copy</a></InputGroup.Text>
-                </InputGroup.Prepend>
+                /> 
+                
+                <CopyToClipboard className="mt-1 pl-2 clipboard" text={`${base_url}/formSubmission/${formData.id}`}
+                    onCopy={() => setCopied(true)}>
+                    <div>Copy</div>
+                </CopyToClipboard>
+
             </InputGroup>
 
             <div className="border-top mt-4 pt-3">
@@ -80,6 +78,7 @@ const ShareForm = ({ show, handleClose, setShow, formData }) => {
                 <Form>
                     <InputGroup className="mb-2">
                         <ReactMultiEmail
+                            className="mr-2"
                             placeholder="placeholder"
                             emails={emails}
                             onChange={(_emails) => {
@@ -107,17 +106,18 @@ const ShareForm = ({ show, handleClose, setShow, formData }) => {
                         {/* <div>
                             <label>react-multi-email value</label>
                             {emails.join(', ') || 'empty'}
-                        </div> */}
+                        </div>
                     
                         {/* <FormControl id="inlineFormInputGroup" placeholder="Email address(es), separated by commas" /> */}
                         <InputGroup.Prepend>
-                        <Button
-                            variant="primary"
-                            className="m-auto px-5"
-                            onClick={()=> sharedWithEmails()}
-                        >
-                            Send
-                        </Button>
+                            <Button
+                                variant="outline-secondary"
+                                className="m-auto px-2"
+                                disabled={emails.length <= 0}
+                                onClick={()=> sharedWithEmails()}
+                            >
+                                Send
+                            </Button>
                             {/* <InputGroup.Text><a href="#" onClick={() => sharedWithEmails()}>Send</a></InputGroup.Text> */}
                         </InputGroup.Prepend>
                     </InputGroup>

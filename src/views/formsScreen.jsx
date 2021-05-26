@@ -27,6 +27,9 @@ const FormsScreen = () => {
   const [formsData, setFormsData] = useState([]);
   const [shareFormItem, setShareFormItem] = useState('');
   const [statusValue, setStatusValue] = useState(null);
+  const [filterKey, setFilterKey] = useState(null);
+  const [filterValue, setFilterValue] = useState(null);
+  const [currentSorted, setCurrentSorted] = useState(null);
   let base_url = window.location.origin;
   
 
@@ -56,12 +59,18 @@ const FormsScreen = () => {
     setShareFormItem(item);
     handleShow();
   }
+  const handleFilter = (key, value) =>{
+    console.log(key, value);
+    setFilterKey(key);
+    setFilterValue(value);
+  }
  
   console.log('formItems context', formItems);
-  const sortedForms = _.orderBy( formItems, ['createdAt'],['desc']);
+  const sortedForms = _.orderBy( formItems, ['createdAt'],[currentSorted]);
   
-  const filtered = statusValue !==null ? _.filter(sortedForms, { 'status': statusValue}): sortedForms;
-  console.log('sortedForms', sortedForms);
+  const filtered = filterKey !==null && filterValue !==null ? sortedForms.filter(function (item) {if(item[filterKey] === filterValue){return item;}}): sortedForms;
+
+  console.log('filteredForms', filtered);
   if (loading) return <Loader />;
   return (
     <Container fluid className="p-0">
@@ -86,9 +95,9 @@ const FormsScreen = () => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item onClick={()=> setStatusValue("SENT")}>Sent</Dropdown.Item>
-                <Dropdown.Item onClick={()=> setStatusValue("VIEWED")}>Viewed</Dropdown.Item>
-                <Dropdown.Item onClick={()=> setStatusValue("SIGNED")}>Signed</Dropdown.Item>
+                <Dropdown.Item onClick={()=> handleFilter("status", "SENT")}>Sent</Dropdown.Item>
+                <Dropdown.Item onClick={()=> handleFilter("status", "VIEWED")}>Viewed</Dropdown.Item>
+                <Dropdown.Item onClick={()=> handleFilter("status", "SIGNED")}>Signed</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Col>
@@ -100,13 +109,9 @@ const FormsScreen = () => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">
-                  Another action
-                </Dropdown.Item>
-                <Dropdown.Item href="#/action-3">
-                  Something else
-                </Dropdown.Item>
+                <Dropdown.Item onClick={()=> handleFilter("formName", "REBNY COVID Liability Form")}>REBNY COVID Liability Form</Dropdown.Item>
+                <Dropdown.Item onClick={()=> handleFilter("formName", "New York Agency Disclosure Form for Buyer and Seller")}>New York Agency Disclosure Form for Buyer and Seller</Dropdown.Item>
+                <Dropdown.Item onClick={()=> handleFilter("formName", "REBNY COVID Health Screening Form")}>REBNY COVID Health Screening Form</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Col>
@@ -118,13 +123,8 @@ const FormsScreen = () => {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">
-                  Another action
-                </Dropdown.Item>
-                <Dropdown.Item href="#/action-3">
-                  Something else
-                </Dropdown.Item>
+                <Dropdown.Item onClick={()=> setCurrentSorted('desc')}>Most recent</Dropdown.Item>
+                <Dropdown.Item onClick={()=> setCurrentSorted('asc')}>Most dated</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Col>

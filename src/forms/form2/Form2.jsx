@@ -23,6 +23,9 @@ import { API, graphqlOperation } from "aws-amplify";
 import { updateFormData } from "../../graphql/mutations";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import ReactToPdf from 'react-to-pdf';
+import { Auth } from 'aws-amplify';
+
 
 const Form2 = (formItem) => {
   console.log("formItem", formItem);
@@ -39,10 +42,30 @@ const Form2 = (formItem) => {
   const [signMethod, setSignMethod] = useState("draw");
   const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");
   const [formSubmitStatus, setFormSubmitStatus] = useState(false);
+  const [viewedStatus, setViewedStatus] = useState(false);
+  const ref = React.createRef();
+  const options = {
+    orientation: 'portrait',
+    unit: 'in',
+    format: [9,16]
+  };
 
   useEffect(() => {
     sendViewStatus();
+    checkaAuthentication();
   }, []);
+
+  const checkaAuthentication = () => {
+    Auth.currentAuthenticatedUser()
+    .then(userData => {
+      console.log('userData', userData);
+      if(userData !== ""){
+        setViewedStatus(true)
+      }
+    })
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+  }
 
   const sendViewStatus = async () => {
     if (formItem.formData.status === "SENT") {
@@ -168,8 +191,9 @@ const Form2 = (formItem) => {
     setFormSubmitStatus(true);
   };
 
+  console.log('viewedStatus', viewedStatus);
   return (
-    <Container className="form2">
+    <Container className="form2" ref={ref} >
       <Row className="pt-4">
         <Col md={2} sm={12} xs={12}>
           <img src={Logo} alt="logo" className=" img-fluid logo" />
@@ -343,24 +367,36 @@ const Form2 = (formItem) => {
               <li>
                 <p className="apply-font">This form was provided to me by</p>
               </li>
+
               <li>
                 {formItem.formData.status !== "SIGNED" ? (
                   <span>
-                    <input
-                      class="form-control mb-2 mr-sm-2"
-                      id="fullName"
-                      name="fullName"
-                      type="text"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
+                    {viewedStatus ?
+                      <input
+                      class="form-control ml-2 mr-sm-2"
                       value={formik.values.fullName}
-                    />
+                      disabled
+                      />
+                    :
+                      <>
+                      <input
+                        class="form-control mb-2 mr-sm-2"
+                        id="fullName"
+                        name="fullName"
+                        type="text"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.fullName}
+                      />
+                    
 
-                    {formik.touched.fullName && formik.errors.fullName && (
-                      <Form.Text className="text-error mx-3">
-                        {formik.errors.fullName}
-                      </Form.Text>
-                    )}
+                      {formik.touched.fullName && formik.errors.fullName && (
+                        <Form.Text className="text-error mx-3">
+                          {formik.errors.fullName}
+                        </Form.Text>
+                      )}
+                      </>
+                    }
                   </span>
                 ) : (
                   <input
@@ -370,6 +406,7 @@ const Form2 = (formItem) => {
                   />
                 )}
               </li>
+
               <li>
                 <p>(print name of Real Estate Salesperson/Broker) of</p>
               </li>
@@ -377,21 +414,31 @@ const Form2 = (formItem) => {
               <li>
                 {formItem.formData.status !== "SIGNED" ? (
                   <span>
-                    <input
-                      class="form-control mb-2 mr-sm-2"
-                      type="text"
-                      id="realEstateCompany"
-                      name="realEstateCompany"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.realEstateCompany}
-                    />
-                    {formik.touched.realEstateCompany &&
-                      formik.errors.realEstateCompany && (
-                        <Form.Text className="text-error  mx-3">
-                          {formik.errors.realEstateCompany}
-                        </Form.Text>
+                    {viewedStatus ?
+                      <input
+                        class="form-control ml-2 mr-sm-2"
+                        value={formik.values.realEstateCompany}
+                        disabled
+                      />  
+                    :
+                      <>
+                      <input
+                        class="form-control mb-2 mr-sm-2"
+                        type="text"
+                        id="realEstateCompany"
+                        name="realEstateCompany"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.realEstateCompany}
+                      />
+                      {formik.touched.realEstateCompany &&
+                        formik.errors.realEstateCompany && (
+                          <Form.Text className="text-error  mx-3">
+                            {formik.errors.realEstateCompany}
+                          </Form.Text>
                       )}
+                      </>
+                    }
                   </span>
                 ) : (
                   <input
@@ -408,21 +455,32 @@ const Form2 = (formItem) => {
                 (I)(We)
                 {formItem.formData.status !== "SIGNED" ? (
                   <span>
-                    <input
-                      class="form-control mb-2 mr-sm-2"
-                      type="text"
-                      id="accountType"
-                      name="accountType"
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      value={formik.values.accountType}
-                    />
-                    {formik.touched.accountType &&
-                      formik.errors.accountType && (
+                    {viewedStatus ?
+                      <input
+                        class="form-control mb-2 mr-sm-2"
+                        value={formik.values.accountType}
+                        disabled
+                      />
+                    :
+                      <>
+                      <input
+                        class="form-control mb-2 mr-sm-2"
+                        type="text"
+                        id="accountType"
+                        name="accountType"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.accountType}
+                      />
+                      
+                      {formik.touched.accountType &&
+                        formik.errors.accountType && (
                         <Form.Text className="text-error ml-2 pl-5">
                           {formik.errors.accountType}
                         </Form.Text>
                       )}
+                      </>
+                    }
                   </span>
                 ) : (
                   <input
@@ -465,10 +523,18 @@ const Form2 = (formItem) => {
                   )}
                 </div>
               ) : (
+
                 <div class="col-md-8 mb-3 d-flex">
+                  {viewedStatus ?
+                    <label class="pt-2 input-head">
+                      Buyer/Tenant/Seller/Landlord Signature
+                    </label>
+                  :
                   <label class="pt-2 input-head" onClick={handleShow}>
                     Buyer/Tenant/Seller/Landlord Signature
                   </label>
+                  }
+
                   {signMethod === "draw" ? (
                     <div class="form-control">
                       <Image className="signature" src={signImage} />
@@ -490,23 +556,35 @@ const Form2 = (formItem) => {
                   </Form.Text>
                 )}
                 <label class="pt-2 input-head">Date:</label>
-                {formItem.formData.status !== "SIGNED" ? (
-                  <input
-                    class="form-control date-block"
-                    type="text"
-                    id="firstDate"
-                    name="firstDate"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.firstDate}
-                  />
-                ) : (
-                  <input
-                    class="form-control mb-2 mr-sm-2"
-                    value={formik.values.firstDate}
-                    disabled
-                  />
-                )}
+            
+                  {formItem.formData.status !== "SIGNED" ? (
+                    <>
+                    {viewedStatus ?
+                      <input
+                        class="form-control mb-2 mr-sm-2"
+                        value={formik.values.firstDate}
+                        disabled
+                      />
+                    :
+                      <input
+                        class="form-control date-block"
+                        type="text"
+                        id="firstDate"
+                        name="firstDate"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.firstDate}
+                      />
+                    }
+                    </>
+                  ) : (
+                    <input
+                      class="form-control mb-2 mr-sm-2"
+                      value={formik.values.firstDate}
+                      disabled
+                    />
+                  )}
+                
               </div>
             </div>
             <div class="form-row pt-4 detail">
@@ -551,29 +629,40 @@ const Form2 = (formItem) => {
               )}
 
               <div class="col-md-4 mb-3 d-flex">
-                {formik.touched.firstDate && formik.errors.firstDate && (
+                {formik.touched.lastDate && formik.errors.lastDate && (
                   <Form.Text className="text-error">
-                    {formik.errors.firstDate}
+                    {formik.errors.lastDate}
                   </Form.Text>
                 )}
                 <label class="pt-2  input-head">Date:</label>
-                {formItem.formData.status !== "SIGNED" ? (
-                  <input
-                    class="form-control date-block"
-                    type="text"
-                    id="lastDate"
-                    name="lastDate"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.lastDate}
-                  />
-                ) : (
-                  <input
-                    class="form-control mb-2 mr-sm-2"
-                    value={formik.values.lastDate}
-                    disabled
-                  />
-                )}
+            
+                  {formItem.formData.status !== "SIGNED" ? (
+                    <>
+                    {viewedStatus ?
+                      <input
+                        class="form-control mb-2 mr-sm-2"
+                        value={formik.values.lastDate}
+                        disabled
+                      />
+                    :
+                      <input
+                        class="form-control date-block"
+                        type="text"
+                        id="lastDate"
+                        name="lastDate"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.lastDate}
+                      />
+                    }
+                    </>
+                  ) : (
+                    <input
+                      class="form-control mb-2 mr-sm-2"
+                      value={formik.values.lastDate}
+                      disabled
+                    />
+                  )}
               </div>
             </div>
 
@@ -601,7 +690,21 @@ const Form2 = (formItem) => {
                 </Col>
               </Row>
             )}
-          </form>
+          </form> 
+
+          {formItem.formData.status === "SIGNED" &&
+            <ReactToPdf targetRef={ref} filename={`${formItem.formData.formName}.pdf`} options={options} x={.2} y={.5} scale={0.8}>
+              {({toPdf}) => (
+                <Row className="downloadBar">
+                  <Col md={12} className="py-3 d-flex justify-content-end">
+                    <button class="btn btn-secondary mx-5" onClick={toPdf}>
+                      Download
+                    </button>
+                  </Col>
+                </Row>
+              )}
+            </ReactToPdf>
+          }
         </Col>
       </Row>
 

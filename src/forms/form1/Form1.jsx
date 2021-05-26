@@ -18,6 +18,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Auth } from 'aws-amplify';
+import ReactToPdf from 'react-to-pdf';
 
 
 const Form1 = ({formData}) => {
@@ -35,11 +37,30 @@ const Form1 = ({formData}) => {
   const [signMethod,setSignMethod]= useState("draw");
   const [startDate, setStartDate] = useState(new Date());
   const [formSubmitStatus, setFormSubmitStatus] = useState(false);
+  const [viewedStatus, setViewedStatus] = useState(false);
+  const ref = React.createRef();
+  const options = {
+    orientation: 'portrait',
+    unit: 'in',
+    format: [9,10.3]
+  };
 
   useEffect(() => {
     sendViewStatus();
-    //setFormItem
+    checkaAuthentication();
   }, []);
+
+  const checkaAuthentication = () => {
+    Auth.currentAuthenticatedUser()
+    .then(userData => {
+      console.log('userData', userData);
+      if(userData !== ""){
+        setViewedStatus(true)
+      }
+    })
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+  }
 
   const sendViewStatus = async()=>{
 
@@ -173,7 +194,7 @@ const Form1 = ({formData}) => {
   console.log("form opened", formItem);
   console.log(activeFontFamily);
   return (
-    <Container className="form1">
+    <Container className="form1" ref={ref}>
       <Row>
         <Col md={6} className="pt-5">
           <h4 class="resource-title font-weight-light">REBNY Resources</h4>
@@ -242,7 +263,7 @@ const Form1 = ({formData}) => {
             </Form.Group>
 
           :
-            <Form.Group onClick={handleShow} controlId="formBasicSign">
+            <Form.Group controlId="formBasicSign">
               { signMethod === "draw" ?
                 <div className="sign-field">  
                 <img src={signImage} /> 
@@ -250,7 +271,12 @@ const Form1 = ({formData}) => {
               :
                 <Form.Control  className="apply-font" type="text" value={signAsText}/>
               }   
-              <Form.Label>Signature</Form.Label>
+
+              {!viewedStatus ?
+                <Form.Label onClick={handleShow}>Signature</Form.Label>
+              :
+                <Form.Label>Signature</Form.Label>
+              }
             </Form.Group>
           }
           </Col>
@@ -265,16 +291,26 @@ const Form1 = ({formData}) => {
                   value={formik.values.fullName}
                   disabled
                 />
-              :
-                <Form.Control
-                  className="mb-3"
-                  name="fullName"
-                  value={formik.values.fullName}
-                  type="text"
-                  placeholder=""
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                />
+              : 
+                <>
+                {!viewedStatus ?
+                  <Form.Control
+                    className="mb-3"
+                    name="fullName"
+                    value={formik.values.fullName}
+                    type="text"
+                    placeholder=""
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                  />
+                :
+                  <Form.Control
+                    className="mb-3"
+                    value={formik.values.fullName}
+                    disabled
+                  />
+                }
+                </>
               }
 
               <Form.Label>Full Name</Form.Label>
@@ -296,13 +332,24 @@ const Form1 = ({formData}) => {
                 //   disabled
                 // />
               :
-                <DatePicker
-                  name="currentDate"
-                  selected={formik.values.currentDate}
-                  onChange={date => formik.setFieldValue("currentDate", date)}
-                  // dateFormat="Pp"
-                  // timeFormat="HH:mm"
-                />
+                <>
+                {!viewedStatus ?
+                  <DatePicker
+                    name="currentDate"
+                    selected={formik.values.currentDate}
+                    onChange={date => formik.setFieldValue("currentDate", date)}
+                    // dateFormat="Pp"
+                    // timeFormat="HH:mm"
+                  />
+                :
+                  <DatePicker
+                    name="currentDate"
+                    selected={formik.values.currentDate}
+                    onChange={date => formik.setFieldValue("currentDate", date)}
+                    disabled
+                  />
+                }
+                </>
                 // <Form.Control
                 //   className="mb-3"
                 //   name="currentDate"
@@ -335,15 +382,25 @@ const Form1 = ({formData}) => {
                   disabled
                 />
               :
-                <Form.Control
-                  className="mb-3"
-                  name="realEstateName"
-                  value={formik.values.realEstateName}
-                  type="text"
-                  placeholder=""
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                />
+                <>
+                {!viewedStatus ?
+                  <Form.Control
+                    className="mb-3"
+                    name="realEstateName"
+                    value={formik.values.realEstateName}
+                    type="text"
+                    placeholder=""
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                  />
+                :
+                  <Form.Control
+                    className="mb-3"
+                    value={formik.values.realEstateName}
+                    disabled
+                  />
+                }
+                </>
               }
               <Form.Label>Name of Real Estate License</Form.Label>
             </Form.Group>
@@ -363,15 +420,25 @@ const Form1 = ({formData}) => {
                   disabled
                 />
               :
-                <Form.Control
-                  className="mb-3"
-                  name="realEstateBrokerageCompany"
-                  value={formik.values.realEstateBrokerageCompany}
-                  type="text"
-                  placeholder=""
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                />
+                <>
+                {!viewedStatus ?
+                  <Form.Control
+                    className="mb-3"
+                    name="realEstateBrokerageCompany"
+                    value={formik.values.realEstateBrokerageCompany}
+                    type="text"
+                    placeholder=""
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange}
+                  />
+                :
+                  <Form.Control
+                    className="mb-3"
+                    value={formik.values.realEstateBrokerageCompany}
+                    disabled
+                  />
+                }
+                </>
               }
               <Form.Label>Real Estate Brokerage Company</Form.Label>
             </Form.Group>
@@ -408,6 +475,20 @@ const Form1 = ({formData}) => {
             </Col>
           </Form.Row>
         }
+
+      {formItem.status === "SIGNED" &&
+        <ReactToPdf targetRef={ref} filename={`${formItem.formName}.pdf`} options={options} x={.2} y={.5} scale={0.8}>
+          {({toPdf}) => (
+            <Row className="downloadBar">
+              <Col md={12} className="py-3 d-flex justify-content-end">
+                <button class="btn btn-secondary mx-5" onClick={toPdf}>
+                  Download
+                </button>
+              </Col>
+            </Row>
+          )}
+        </ReactToPdf>
+      }
      
      
       </Form>
