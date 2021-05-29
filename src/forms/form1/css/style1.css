@@ -141,6 +141,19 @@ width:100%;
   right: 0;
   z-index: 9;
 }
+.downloadBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9;
+}
+.send-btn{
+  background-color: transparent;
+}
+.clipboard{
+  cursor: pointer;
+}
 .signature {
   margin-top: -47px;
   width: 244px;

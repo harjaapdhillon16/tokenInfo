@@ -8,6 +8,7 @@ import {
   IconLinkedin,
   IconInstagram,
 } from "../../assets/icons/icons";
+import { Auth } from 'aws-amplify';
 import SignaturePad from "react-signature-canvas";
 import Logo from "../../assets/FormImages/rebny-logo.png";
 import FontPicker from "font-picker-react";
@@ -15,6 +16,7 @@ import { API, graphqlOperation } from "aws-amplify";
 import { updateFormData } from "../../graphql/mutations";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import ReactToPdf from 'react-to-pdf';
 
 
 const Form3 = (formItem) => {
@@ -31,10 +33,30 @@ const Form3 = (formItem) => {
   const [signMethod, setSignMethod] = useState("draw");
   const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");
   const [formSubmitStatus, setFormSubmitStatus] = useState(false);
+  const [viewedStatus, setViewedStatus] = useState(false);
+  const ref = React.createRef();
+  const options = {
+    orientation: 'portrait',
+    unit: 'in',
+    format: [9,16]
+  };
 
   useEffect(() => {
     sendViewStatus();
+    checkaAuthentication();
   }, []);
+
+  const checkaAuthentication = () => {
+    Auth.currentAuthenticatedUser()
+    .then(userData => {
+      console.log('userData', userData);
+      if(userData !== ""){
+        setViewedStatus(true)
+      }
+    })
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+  }
 
   const sendViewStatus = async () => {
     if (formItem.formData.status === "SENT") {
@@ -175,8 +197,9 @@ const Form3 = (formItem) => {
     setFormSubmitStatus(true);
   }
 
+  console.log('viewedStatus', viewedStatus);
   return (
-    <Container className="form3">
+    <Container className="form3" ref={ref}>
       <Form onSubmit={formik.handleSubmit}>
       <Row>
         <Col md={6} className="pt-5">
@@ -266,31 +289,46 @@ const Form3 = (formItem) => {
               {formItem.formData.status !== "SIGNED" ? (
                 <div>
                 <div class="form-check form-check-inline">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  id="checkValueFirst"
-                  name="checkValueFirst"
-                  value="true"
-                  checked={formik.values.checkValueFirst === "true"}
-                  onChange={() => formik.setFieldValue("checkValueFirst", "true")}
-                />
+                {viewedStatus ?
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    checked=""
+                  />
+                :
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id="checkValueFirst"
+                    name="checkValueFirst"
+                    value="true"
+                    checked={formik.values.checkValueFirst === "true"}
+                    onChange={() => formik.setFieldValue("checkValueFirst", "true")}
+                  />
+                }
                 <label class="form-check-label" for="inlineCheckbox1">
                   Yes
                 </label>
               </div>
 
               <div class="form-check form-check-inline">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  id="checkValueFirst"
-                  name="checkValueFirst"
-                  value="false"
-                  checked={formik.values.checkValueFirst === "false"}
-                  onChange={() => formik.setFieldValue("checkValueFirst", "false")}
-                />
-
+                {viewedStatus ?
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    checked=""
+                  />
+                :
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    id="checkValueFirst"
+                    name="checkValueFirst"
+                    value="false"
+                    checked={formik.values.checkValueFirst === "false"}
+                    onChange={() => formik.setFieldValue("checkValueFirst", "false")}
+                  />
+                }
                 <label class="form-check-label" for="inlineCheckbox2">
                   No
                 </label>
@@ -352,30 +390,46 @@ const Form3 = (formItem) => {
             {formItem.formData.status !== "SIGNED" ?
               <div>
                 <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    id="checkValueSecond"
-                    name="checkValueSecond"
-                    value="true"
-                    checked={formik.values.checkValueSecond === "true"}
-                    onChange={() => formik.setFieldValue("checkValueSecond", "true")}
-                  />
+                  {viewedStatus ?
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      checked=""
+                    />
+                  :
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="checkValueSecond"
+                      name="checkValueSecond"
+                      value="true"
+                      checked={formik.values.checkValueSecond === "true"}
+                      onChange={() => formik.setFieldValue("checkValueSecond", "true")}
+                    />
+                  }
                   <label class="form-check-label" for="inlineCheckbox3">
                     Yes
                   </label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    id="checkValueSecond"
-                    name="checkValueSecond"
-                    value="false"
-                    checked={formik.values.checkValueSecond === "false"}
-                    onChange={() => formik.setFieldValue("checkValueSecond", "false")}
-                  />
+                  {viewedStatus ?
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      checked=""
+                    />
+                  :
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="checkValueSecond"
+                      name="checkValueSecond"
+                      value="false"
+                      checked={formik.values.checkValueSecond === "false"}
+                      onChange={() => formik.setFieldValue("checkValueSecond", "false")}
+                    />
+                  }
                   <label class="form-check-label" for="inlineCheckbox4">
                     No
                   </label>
@@ -438,29 +492,45 @@ const Form3 = (formItem) => {
             {formItem.formData.status !== "SIGNED" ?
               <div>
                 <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    id="checkValueThird"
-                    name="checkValueThird"
-                    value="true"
-                    checked={formik.values.checkValueThird === "true"}
-                    onChange={() => formik.setFieldValue("checkValueThird", "true")}
-                  />
+                  {viewedStatus ?
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      checked=""
+                    />
+                  :
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="checkValueThird"
+                      name="checkValueThird"
+                      value="true"
+                      checked={formik.values.checkValueThird === "true"}
+                      onChange={() => formik.setFieldValue("checkValueThird", "true")}
+                    />
+                  }
                   <label class="form-check-label" for="inlineCheckbox5">
                     Yes
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    id="checkValueThird"
-                    name="checkValueThird"
-                    value="false"
-                    checked={formik.values.checkValueThird === "false"}
-                    onChange={() => formik.setFieldValue("checkValueThird", "false")}
-                  />
+                  {viewedStatus ?
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      checked=""
+                    />
+                  :
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="checkValueThird"
+                      name="checkValueThird"
+                      value="false"
+                      checked={formik.values.checkValueThird === "false"}
+                      onChange={() => formik.setFieldValue("checkValueThird", "false")}
+                    />
+                  }
                   <label class="form-check-label" for="inlineCheckbox6">
                     No
                   </label>
@@ -523,29 +593,45 @@ const Form3 = (formItem) => {
             {formItem.formData.status !== "SIGNED" ?
               <div>
                 <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    id="checkValueFourth"
-                    name="checkValueFourth"
-                    value="true"
-                    checked={formik.values.checkValueFourth === "true"}
-                    onChange={() => formik.setFieldValue("checkValueFourth", "true")}
-                  />
+                  {viewedStatus ?
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      checked=""
+                    />
+                  :
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="checkValueFourth"
+                      name="checkValueFourth"
+                      value="true"
+                      checked={formik.values.checkValueFourth === "true"}
+                      onChange={() => formik.setFieldValue("checkValueFourth", "true")}
+                    />
+                  }
                   <label class="form-check-label" for="inlineCheckbox7">
                     Yes
                   </label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input
-                    class="form-check-input"
-                    type="radio"
-                    id="checkValueFourth"
-                    name="checkValueFourth"
-                    value="false"
-                    checked={formik.values.checkValueFourth === "false"}
-                    onChange={() => formik.setFieldValue("checkValueFourth", "false")}
-                  />
+                  {viewedStatus ?
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      checked=""
+                    />
+                  :
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="checkValueFourth"
+                      name="checkValueFourth"
+                      value="false"
+                      checked={formik.values.checkValueFourth === "false"}
+                      onChange={() => formik.setFieldValue("checkValueFourth", "false")}
+                    />
+                  }
                   <label class="form-check-label" for="inlineCheckbox8">
                     No
                   </label>
@@ -628,22 +714,32 @@ const Form3 = (formItem) => {
                 <Form.Text className="text-error mx-3">{formik.errors.fullName}</Form.Text>
               )}
 
-              {formItem.formData.status !== "SIGNED" ? 
-                <input 
-                  class="form-control" 
-                  id="fullName"
-                  name="fullName"
-                  type="text" 
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.fullName}
-                />
-              :
+              {viewedStatus ?
                 <input 
                   class="form-control" 
                   value={formik.values.fullName}
                   disabled
                 />
+              :
+                <>
+                {formItem.formData.status !== "SIGNED" ? 
+                  <input 
+                    class="form-control" 
+                    id="fullName"
+                    name="fullName"
+                    type="text" 
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.fullName}
+                  />
+                :
+                  <input 
+                    class="form-control" 
+                    value={formik.values.fullName}
+                    disabled
+                  />
+                }
+                </>
               }
               <label class="pt-2 pl-3 input-head">Print Name</label>
             </div>
@@ -660,7 +756,12 @@ const Form3 = (formItem) => {
                   value={signAsText} 
                 />
                 )}
-                <label class="pt-2  pl-3 input-head" onClick={handleShow}>Signature</label>
+
+                {viewedStatus ?
+                  <label class="pt-2  pl-3 input-head">Signature</label>
+                :
+                  <label class="pt-2  pl-3 input-head" onClick={handleShow}>Signature</label>
+                }
               </div>
 
             :
@@ -687,15 +788,25 @@ const Form3 = (formItem) => {
               )}
 
               {formItem.formData.status !== "SIGNED" ? 
-                <input 
-                  class="form-control"  
-                  id="currentdate"
-                  name="currentdate"
-                  type="text" 
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.currentdate}
-                />
+                <>
+                {viewedStatus ?
+                  <input 
+                    class="form-control"  
+                    value={formik.values.currentdate}
+                    disabled
+                  />
+                :
+                  <input 
+                    class="form-control"  
+                    id="currentdate"
+                    name="currentdate"
+                    type="text" 
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.currentdate}
+                  />
+                }
+                </>
               :
 
                 <input 
@@ -704,8 +815,8 @@ const Form3 = (formItem) => {
                   disabled
                 />
               }
-              <label class="pt-2  pl-3 input-head">Date</label>
-            </div>
+              <label class="pt-2  pl-3 inputhead">Date</label>
+            </div>-
           </div>
           <div class="form-row detail pt-">
             <div class="col-md-4 mb-3">
@@ -713,16 +824,27 @@ const Form3 = (formItem) => {
                 <Form.Text className="text-error mx-3">{formik.errors.propertyAddress}</Form.Text>
               )}
 
+              
               {formItem.formData.status !== "SIGNED" ? 
-                <input 
-                  class="form-control" 
-                  id="propertyAddress"
-                  name="propertyAddress"
-                  type="text" 
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.propertyAddress}
-                />
+                <>
+                {viewedStatus ?
+                  <input 
+                    class="form-control" 
+                    value={formik.values.propertyAddress}
+                    disabled
+                  />
+                  :
+                  <input 
+                    class="form-control" 
+                    id="propertyAddress"
+                    name="propertyAddress"
+                    type="text" 
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.propertyAddress}
+                  />
+                }
+                </>
               :
                 <input 
                   class="form-control" 
@@ -738,15 +860,25 @@ const Form3 = (formItem) => {
               )}
 
               {formItem.formData.status !== "SIGNED" ? 
-                <input 
-                  class="form-control" 
-                  id="realEstateName"
-                  name="realEstateName"
-                  type="text" 
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.realEstateName}
-                />
+                <>
+                {viewedStatus ?
+                  <input 
+                    class="form-control" 
+                    value={formik.values.realEstateName}
+                    disabled
+                  />
+                :
+                  <input 
+                    class="form-control" 
+                    id="realEstateName"
+                    name="realEstateName"
+                    type="text" 
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.realEstateName}
+                  />
+                }
+                </>
               :
                 <input 
                   class="form-control" 
@@ -764,15 +896,25 @@ const Form3 = (formItem) => {
               )}
 
             {formItem.formData.status !== "SIGNED" ? 
-              <input  
-                class="form-control" 
-                id="realEstateBrokerageCompany"
-                name="realEstateBrokerageCompany"
-                type="text" 
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.realEstateBrokerageCompany}
-              />
+              <>  
+              {viewedStatus ?
+                <input  
+                  class="form-control" 
+                  value={formik.values.realEstateBrokerageCompany}
+                  disabled
+                />
+              : 
+                <input  
+                  class="form-control" 
+                  id="realEstateBrokerageCompany"
+                  name="realEstateBrokerageCompany"
+                  type="text" 
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  value={formik.values.realEstateBrokerageCompany}
+                />
+              }
+              </>
             :
               <input  
                 class="form-control" 
@@ -803,6 +945,20 @@ const Form3 = (formItem) => {
           </Col>
         </Row>
       )}
+
+      {formItem.formData.status === "SIGNED" &&
+        <ReactToPdf targetRef={ref} filename={`${formItem.formData.formName}.pdf`} options={options} x={.2} y={.5} scale={0.8}>
+          {({toPdf}) => (
+            <Row className="downloadBar">
+              <Col md={12} className="py-3 d-flex justify-content-end">
+                <button class="btn btn-secondary mx-5" onClick={toPdf}>
+                  Download
+                </button>
+              </Col>
+            </Row>
+          )}
+        </ReactToPdf>
+      }
       
       
 
