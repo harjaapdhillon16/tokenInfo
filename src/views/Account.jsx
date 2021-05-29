@@ -28,7 +28,7 @@ const FormsScreen = () => {
 	if (!agent) return <Loader />;
 
 	return (
-		<Container fluid>
+		<Container fluid  className="p-0">
 			<Header />
 			<Container>
 				<Breadcrumb className="title-bar">

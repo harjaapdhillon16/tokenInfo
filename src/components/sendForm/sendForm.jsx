@@ -306,7 +306,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 						onClick={handleShow}>
 						<IconPlus /> Add a new client
 					</div>
-					<CreateContactForm show={show} handleClose={handleClose} setShow={setShow} />
+				<CreateContactForm className ="py-5" show={show} handleClose={handleClose} setShow={setShow} />
 				</Modal.Body>
 				<Modal.Footer>
 					<Button
