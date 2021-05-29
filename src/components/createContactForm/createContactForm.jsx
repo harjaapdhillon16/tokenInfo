@@ -82,7 +82,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={handleClose} className="my-1">
       <Modal.Header closeButton>
         <Modal.Title className="text-center m-auto">
           Add New Contact
@@ -173,10 +173,12 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
               <option>Buyer</option>
               <option>Agent</option>
               <option>Seller</option>
+              <option>Landlord</option>
+              <option>Tenant</option>
             </Form.Control>
           </Form.Group>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="my-4">
           <Button
             variant="primary"
             className="m-auto px-5"

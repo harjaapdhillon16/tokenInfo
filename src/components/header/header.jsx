@@ -30,7 +30,7 @@ const Header = () => {
       </Col>
       <Col md={6} className="account">
         <div class=" d-flex ml-auto pt-3 p-2">
-          <Button variant="outline-secondary invite mr-3" onClick={handleShow}>
+          <Button className="send mr-3" onClick={handleShow}>
             Invite
           </Button>
           <Modal show={show} onHide={handleClose}>

@@ -75,13 +75,12 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
     const editContacts = await API.graphql(
       graphqlOperation(updateContact, { input: updateData })
     );
-    console.log('editContacts', editContacts.data.updateContact);
-
-    if(updateData.id === editContacts.data.updateContact.id){
-      const updateContacts = [...contacts, editContacts.data.updateContact];
-      console.log('updateContacts', updateContacts);
-      onEditContact(updateContacts)
-    }
+    onEditContact(editContacts.data.updateContact)
+    // if(updateData.id === editContacts.data.updateContact.id){
+    //   const updateContacts = [...contacts, editContacts.data.updateContact];
+    //   console.log('updateContacts', updateContacts);
+      
+    // }
     
     setShow(false);
   } catch (err) {
@@ -93,7 +92,7 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title className="text-center m-auto">
-          Add New Contact
+          Edit Contact
         </Modal.Title>
       </Modal.Header>
       <Form onSubmit={formik.handleSubmit}>
@@ -177,6 +176,8 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
               <option>Buyer</option>
               <option>Agent</option>
               <option>Seller</option>
+              <option>Landlord</option>
+              <option>Tenant</option>
             </Form.Control>
           </Form.Group>
           {formik.touched.roleInCompany && formik.errors.roleInCompany && (
