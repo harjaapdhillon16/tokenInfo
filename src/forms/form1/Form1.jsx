@@ -240,7 +240,7 @@ const Form1 = ({formData}) => {
           </p>
           <p className="acknowledge">
             The undersigned hereby acknowledges receipt of this Coronavirus
-            (COVID-19) Limitation of Liability Form andunderstands that the
+            (COVID-19) Limitation of Liability Form and understands that the
             refusal to sign this form may result in the cancellation of any
             scheduled in-person meeting or showing.
           </p>
