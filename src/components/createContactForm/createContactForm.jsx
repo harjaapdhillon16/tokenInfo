@@ -33,7 +33,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
       email: "",
       companyName: "",
       phoneNum: "",
-      roleInCompany: "",
+      roleInCompany: "Buyer",
 
       // agentId: "",
       // type:''
@@ -48,7 +48,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
         .matches(phoneRegExp, 'Phone number is not valid')
         .min(10, "to short")
         .max(10, "to long"),
-      roleInCompany: Yup.string().required("Your role in Company"),
+     // roleInCompany: Yup.string().required("Your role in Company"),
       // agentId: Yup.string().required("Enter your valid agent id"),
     }),
     onSubmit: (values) => {
