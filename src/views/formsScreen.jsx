@@ -82,17 +82,39 @@ const FormsScreen = () => {
           </Breadcrumb.Item>
           <Breadcrumb.Item>Form</Breadcrumb.Item>
         </Breadcrumb>
-
         <Row>
-          <Col md={5} className="dashboardCards pt-5">
-            <h5>Forms</h5>
+        <Col>
+        <h5>Forms</h5>
+        </Col>
+        </Row>
+        <Row>
+          <Col md={6} className="dashboardCards pt-5">
+           
+            
+            <Dropdown>
+              <Dropdown.Toggle className="drop-btn pt-0 pl-0">
+              {/* {filterValue !== null ? filterValue: <> All forms</>} */}
+              {filterKey === 'formName' && filterValue != null ? filterValue: " All Forms" }
+             
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+              <Dropdown.Item onClick={()=> handleFilter("formName", null)}>All Forms</Dropdown.Item>
+                <Dropdown.Item onClick={()=> handleFilter("formName", "REBNY COVID Liability Form")}>REBNY COVID Liability Form</Dropdown.Item>
+                <Dropdown.Item onClick={()=> handleFilter("formName", "New York Agency Disclosure Form for Buyer and Seller")}>New York Agency Disclosure Form for Buyer and Seller</Dropdown.Item>
+                <Dropdown.Item onClick={()=> handleFilter("formName", "REBNY COVID Health Screening Form")}>REBNY COVID Health Screening Form</Dropdown.Item>
+                <Dropdown.Item onClick={()=> handleFilter("formName", "New York State Disclosure form for Landlord and Tenant")}>New York State Disclosure form for Landlord and Tenant</Dropdown.Item>
+                <Dropdown.Item onClick={()=> handleFilter("formName", "New York State Housing Discrimination Disclosure Form")}>New York State Housing Discrimination Disclosure Form</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          
           </Col>
 
           <Col md={2} className="dashboardCards pt-5 text-center pr-0">
             <Dropdown>
-              <Dropdown.Toggle className="drop-btn pt-0 pl-5">
+              <Dropdown.Toggle className="drop-btn pt-0 pl-0">
                 {filterKey === 'status' && filterValue != null ? filterValue: "All Statuses" }
-                {/* {filterValue !== null ? filterValue: <> All Statuses </>} */}
+          
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
@@ -104,47 +126,29 @@ const FormsScreen = () => {
             </Dropdown>
           </Col>
 
-          <Col md={3} className="dashboardCards pt-5 d-flex justify-content-end">
-            <Dropdown>
-              <Dropdown.Toggle className="drop-btn pt-0 pl-5">
-              {/* {filterValue !== null ? filterValue: <> All forms</>} */}
-              {filterKey === 'formName' && filterValue != null ? filterValue: " All Forms" }
-             
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                <Dropdown.Item onClick={()=> handleFilter("formName", "REBNY COVID Liability Form")}>REBNY COVID Liability Form</Dropdown.Item>
-                <Dropdown.Item onClick={()=> handleFilter("formName", "New York Agency Disclosure Form for Buyer and Seller")}>New York Agency Disclosure Form for Buyer and Seller</Dropdown.Item>
-                <Dropdown.Item onClick={()=> handleFilter("formName", "REBNY COVID Health Screening Form")}>REBNY COVID Health Screening Form</Dropdown.Item>
-                <Dropdown.Item onClick={()=> handleFilter("formName", "New York State Disclosure form for Landlord and Tenant")}>New York State Disclosure form for Landlord and Tenant</Dropdown.Item>
-                <Dropdown.Item onClick={()=> handleFilter("formName", "New York State Housing Discrimination Disclosure Form")}>New York State Housing Discrimination Disclosure Form</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-          </Col>
-
-          <Col md={2} className="dashboardCards pt-5 d-flex justify-content-center pl-0">
+           <Col md={4} className="dashboardCards pt-5 d-flex justify-content-end pl-0">
             <Dropdown>
               <Dropdown.Toggle className="drop-btn pt-0 pl-0">
-              Most Recent
-    
-              </Dropdown.Toggle>
+              
+             {currentSorted === "desc" ? "Most Recent" : "Most Dated" } 
+            </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item onClick={()=> setCurrentSorted('desc')}>Most recent</Dropdown.Item>
-                <Dropdown.Item onClick={()=> setCurrentSorted('asc')}>Most dated</Dropdown.Item>
+                <Dropdown.Item onClick={()=> setCurrentSorted('desc')}>Most Recent</Dropdown.Item>
+                <Dropdown.Item onClick={()=> setCurrentSorted('asc')}>Most Dated</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </Col>
 
         </Row>
-        {filtered.map(item =>  <Row className="w-100 border-bottom pb-3 mt-5 ">
-          <Col md={5}>
+        {filtered.map(item =>  <Row className=" border-bottom pb-3 mt-5 ">
+          <Col md={6}>
             <h6>{item.formName}</h6>
           
              <Link to="#">{item.receiverName}</Link>
             
           </Col>
-          <Col md={3} className="text-center">
+          <Col md={2} className="text-center">
             {/* {item.status === "ALL" && "SENT",  "VIEWED", "SIGNED" 
             <Badge variant="danger sent-option text-center">Sent</Badge>
             <Badge variant="warning sent-option text-center">Viewed</Badge>
