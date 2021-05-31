@@ -20,12 +20,12 @@ import { createContact } from "../../graphql/mutations";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
-
 const CreateContactForm = ({ show, handleClose, setShow }) => {
   // const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
   const { contacts, onUpdateContacts } = useContext(AppContext);
-  const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+  const phoneRegExp =
+    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   const formik = useFormik({
     initialValues: {
@@ -45,10 +45,10 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
         .required("Please enter valid email!"),
       phoneNum: Yup.string()
         .required("Enter your valid phone number!")
-        .matches(phoneRegExp, 'Phone number is not valid')
+        .matches(phoneRegExp, "Phone number is not valid")
         .min(10, "to short")
         .max(10, "to long"),
-     // roleInCompany: Yup.string().required("Your role in Company"),
+      // roleInCompany: Yup.string().required("Your role in Company"),
       // agentId: Yup.string().required("Enter your valid agent id"),
     }),
     onSubmit: (values) => {
@@ -74,7 +74,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
       console.log(createdContact);
       const newContacts = [...contacts, createdContact.data.createContact];
       onUpdateContacts(newContacts);
-      console.log(createdContact.data.createContact);
+      //console.log(createdContact.data.createContact);
       setShow(false);
     } catch (err) {
       console.log(err, "Error creating contact");
@@ -102,21 +102,6 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
-
-          {/* {formik.touched.agentId && formik.errors.agentId && (
-            <Form.Text className="text-error">
-              {formik.errors.agentId}
-            </Form.Text>
-          )}
-          <Form.Control
-            className="mb-3"
-            name="agentId"
-            value={formik.values.agentId}
-            type="text"
-            placeholder="Enter agent id"
-            onBlur={formik.handleBlur}
-            onChange={formik.handleChange}
-          /> */}
 
           {formik.touched.email && formik.errors.email && (
             <Form.Text className="text-error">{formik.errors.email}</Form.Text>
