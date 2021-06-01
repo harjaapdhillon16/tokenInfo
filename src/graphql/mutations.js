@@ -178,3 +178,54 @@ export const deleteFormData = /* GraphQL */ `
     }
   }
 `;
+export const createFormEvent = /* GraphQL */ `
+  mutation CreateFormEvent(
+    $input: CreateFormEventInput!
+    $condition: ModelFormEventConditionInput
+  ) {
+    createFormEvent(input: $input, condition: $condition) {
+      id
+      formDataId
+      type
+      subjects
+      subjectEmails
+      ip
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateFormEvent = /* GraphQL */ `
+  mutation UpdateFormEvent(
+    $input: UpdateFormEventInput!
+    $condition: ModelFormEventConditionInput
+  ) {
+    updateFormEvent(input: $input, condition: $condition) {
+      id
+      formDataId
+      type
+      subjects
+      subjectEmails
+      ip
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteFormEvent = /* GraphQL */ `
+  mutation DeleteFormEvent(
+    $input: DeleteFormEventInput!
+    $condition: ModelFormEventConditionInput
+  ) {
+    deleteFormEvent(input: $input, condition: $condition) {
+      id
+      formDataId
+      type
+      subjects
+      subjectEmails
+      ip
+      createdAt
+      updatedAt
+    }
+  }
+`;

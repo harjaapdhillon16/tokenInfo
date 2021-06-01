@@ -2,6 +2,14 @@ enum UserType {
 	AGENT
 	BUYER
 	SELLER
+	LANDLORD
+}
+
+enum EventType {
+	SENT
+	VIEWED
+	SIGNED
+	SIGNED_BY_ALL
 }
 
 type Agent @model {
@@ -37,6 +45,16 @@ type FormData @model @key(name: "byAgent", fields: ["senderId"], queryField: "fo
 	signature: String
 	signatureFont: String
 	isSignatureTyped: Boolean
+}
+
+type FormEvent
+	@model
+	@key(name: "byFormData", fields: ["formDataId"], queryField: "formEventsByFormData") {
+	formDataId: ID!
+	type: EventType!
+	subjects: [String]!
+	subjectEmails: [String]!
+	ip: String!
 }
 
 # type ContactHistory {

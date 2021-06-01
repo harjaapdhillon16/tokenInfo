@@ -151,3 +151,45 @@ export const onDeleteFormData = /* GraphQL */ `
     }
   }
 `;
+export const onCreateFormEvent = /* GraphQL */ `
+  subscription OnCreateFormEvent {
+    onCreateFormEvent {
+      id
+      formDataId
+      type
+      subjects
+      subjectEmails
+      ip
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateFormEvent = /* GraphQL */ `
+  subscription OnUpdateFormEvent {
+    onUpdateFormEvent {
+      id
+      formDataId
+      type
+      subjects
+      subjectEmails
+      ip
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteFormEvent = /* GraphQL */ `
+  subscription OnDeleteFormEvent {
+    onDeleteFormEvent {
+      id
+      formDataId
+      type
+      subjects
+      subjectEmails
+      ip
+      createdAt
+      updatedAt
+    }
+  }
+`;

@@ -8,6 +8,7 @@ import FormController from './views/FormController';
 import { Switch, Route } from 'react-router-dom';
 import appContext from './context/appContext';
 import { getAgent } from './graphql/queries';
+import AuthRouter from './router/authRouter';
 
 function App() {
 	const { setAgent, setUser } = useContext(appContext);
@@ -55,6 +56,7 @@ function App() {
 	return (
 		<>
 			<MainWrapper />
+			<AuthRouter />
 			<Switch>
 				<Route path="/formSubmission/:id" component={FormController} />
 				{/* <Route exact path="/" component={MainWrapper} /> */}

@@ -122,6 +122,41 @@ export const listFormDatas = /* GraphQL */ `
     }
   }
 `;
+export const getFormEvent = /* GraphQL */ `
+  query GetFormEvent($id: ID!) {
+    getFormEvent(id: $id) {
+      id
+      formDataId
+      type
+      subjects
+      subjectEmails
+      ip
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listFormEvents = /* GraphQL */ `
+  query ListFormEvents(
+    $filter: ModelFormEventFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listFormEvents(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        formDataId
+        type
+        subjects
+        subjectEmails
+        ip
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const contactByAgent = /* GraphQL */ `
   query ContactByAgent(
     $agentId: ID
@@ -182,6 +217,35 @@ export const formsByAgent = /* GraphQL */ `
         signature
         signatureFont
         isSignatureTyped
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const formEventsByFormData = /* GraphQL */ `
+  query FormEventsByFormData(
+    $formDataId: ID
+    $sortDirection: ModelSortDirection
+    $filter: ModelFormEventFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    formEventsByFormData(
+      formDataId: $formDataId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        formDataId
+        type
+        subjects
+        subjectEmails
+        ip
         createdAt
         updatedAt
       }
