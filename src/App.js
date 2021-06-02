@@ -1,45 +1,43 @@
 import './App.css';
-import React, { useContext, useEffect } from 'react';
-import { Hub, API, graphqlOperation, Auth } from 'aws-amplify';
-import { createAgent } from './graphql/mutations';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import MainWrapper from './wrappers/MainWrapper';
-import FormController from './views/FormController';
-import { Switch, Route } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { Hub, API, graphqlOperation, Auth } from 'aws-amplify';
+import { Route, Redirect, useHistory } from 'react-router-dom';
 import appContext from './context/appContext';
 import { getAgent } from './graphql/queries';
 import AuthRouter from './router/authRouter';
+import AppRouter from './router/applicationRouter';
+import Loader from './components/Loader/Loader';
 
 function App() {
-	const { setAgent, setUser } = useContext(appContext);
+	const { setAgent, setUser, agent, user } = useContext(appContext);
+	const [loading, setLoading] = useState(true);
+	const history = useHistory();
 
 	function authHandler() {
 		Auth.currentAuthenticatedUser()
 			.then((user) => {
 				setUser(user);
-				const { sub, email } = user.attributes;
-				API.graphql(
-					graphqlOperation(createAgent, {
-						input: { id: sub, name: email.split('@')[0], email }
+				API.graphql(graphqlOperation(getAgent, { id: user.attributes.sub }))
+					.then((res) => {
+						setAgent(res.data.getAgent);
+						setLoading(false);
 					})
-				)
-					.catch(() => {})
-					.finally(() =>
-						API.graphql(graphqlOperation(getAgent, { id: sub }))
-							.then((res) => setAgent(res.data.getAgent))
-							.catch(() => {})
-					);
+					.catch(() => {});
 			})
-			.catch(() => {});
+			.catch(() => setLoading(false));
 	}
 
 	useEffect(() => {
 		authHandler();
 	}, []);
 
+	console.log(history.location.pathname);
+
 	useEffect(() => {
 		Hub.listen('auth', (data) => {
 			switch (data.payload.event) {
+				case 'signUp':
 				case 'signIn':
 					authHandler();
 					break;
@@ -53,14 +51,14 @@ function App() {
 		});
 	}, []);
 
+	if (loading) return <Loader />;
+
 	return (
 		<>
-			<MainWrapper />
+			{agent && <Redirect exact to="/" />}
+			{!user && <Redirect exact to="/login" />}
 			<AuthRouter />
-			<Switch>
-				<Route path="/formSubmission/:id" component={FormController} />
-				{/* <Route exact path="/" component={MainWrapper} /> */}
-			</Switch>
+			<AppRouter />
 		</>
 	);
 }
