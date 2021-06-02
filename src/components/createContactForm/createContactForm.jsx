@@ -33,29 +33,28 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
       email: "",
       companyName: "",
       phoneNum: "",
-      roleInCompany: "Buyer",
+      roleInCompany: "",
 
       // agentId: "",
       // type:''
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Please enter valid name!"),
+      name: Yup.string().required("Please enter your contacts full name!"),
       email: Yup.string()
-        .email("Please enter valid email!")
-        .required("Please enter valid email!"),
-      phoneNum: Yup.string()
-        .required("Enter your valid phone number!")
-        .matches(phoneRegExp, "Phone number is not valid")
-        .min(10, "to short")
-        .max(10, "to long"),
+        .email("Please enter your contacts email address!")
+        .required("Please enter your contacts email address!"),
+      // phoneNum: Yup.string()
+      //   .required("Enter your valid phone number!")
+      //   .matches(phoneRegExp, "Phone number is not valid")
+      //   .min(10, "to short")
+      //   .max(10, "to long"),
       // roleInCompany: Yup.string().required("Your role in Company"),
       // agentId: Yup.string().required("Enter your valid agent id"),
     }),
     onSubmit: (values) => {
       handleContactCreation(values);
     },
-  });
-
+  }); 
   const handleContactCreation = async (values) => {
     const data = {
       // agentId: values.agentId,
@@ -80,7 +79,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
       console.log(err, "Error creating contact");
     }
   };
-
+  
   return (
     <Modal show={show} onHide={handleClose} className="my-1">
       <Modal.Header closeButton>
@@ -98,7 +97,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
             name="name"
             value={formik.values.name}
             type="text"
-            placeholder="Enter your name"
+            placeholder="Full name"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
@@ -111,7 +110,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
             name="email"
             value={formik.values.email}
             type="text"
-            placeholder="Enter your valid email"
+            placeholder="Email address"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
@@ -120,7 +119,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
             <Form.Control
               className="mb-3"
               name="companyName"
-              value={formik.values.companyName}
+              // value={formik.values.companyName}
               type="text"
               placeholder="Company name (optional)"
               onChange={formik.handleChange}
@@ -135,17 +134,17 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
           <Form.Control
             className="mb-3"
             name="phoneNum"
-            value={formik.values.phoneNum}
+            // value={formik.values.phoneNum}
             type="number"
-            placeholder="Enter your valid phone number"
+            placeholder="Phone Number (optional)"
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
-          {formik.touched.roleInCompany && formik.errors.roleInCompany && (
+          {/* {formik.touched.roleInCompany && formik.errors.roleInCompany && (
             <Form.Text className="text-error">
               {formik.errors.roleInCompany}
             </Form.Text>
-          )}
+          )} */}
 
           <Form.Group controlId="exampleForm.ControlSelect1">
             <Form.Control
@@ -153,8 +152,10 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
               name="roleInCompany"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              value={formik.values.roleInCompany}
+              // value={formik.values.roleInCompany}
             >
+              <option value="" disabled selected hidden >Role options & orders:</option>
+              <option></option>
               <option>Buyer</option>
               <option>Agent</option>
               <option>Seller</option>
