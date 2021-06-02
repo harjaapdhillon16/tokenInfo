@@ -32,7 +32,7 @@ function App() {
 		authHandler();
 	}, []);
 
-	console.log(history.location.pathname);
+	// console.log(history.location.pathname);
 
 	useEffect(() => {
 		Hub.listen('auth', (data) => {
