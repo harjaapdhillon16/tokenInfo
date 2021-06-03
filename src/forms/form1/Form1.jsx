@@ -240,7 +240,7 @@ const Form1 = ({formData}) => {
           </p>
           <p className="acknowledge">
             The undersigned hereby acknowledges receipt of this Coronavirus
-            (COVID-19) Limitation of Liability Form andunderstands that the
+            (COVID-19) Limitation of Liability Form and understands that the
             refusal to sign this form may result in the cancellation of any
             scheduled in-person meeting or showing.
           </p>
@@ -316,7 +316,7 @@ const Form1 = ({formData}) => {
               <Form.Label>Full Name</Form.Label>
             </Form.Group>
           </Col>
-          <Col md={4}>
+          <Col md={4} className="mt-2">
             {formik.touched.currentDate && formik.errors.currentDate && (
               <Form.Text className="text-error">{formik.errors.currentDate}</Form.Text>
             )}
@@ -360,8 +360,8 @@ const Form1 = ({formData}) => {
                 //   onChange={formik.handleChange}
                 // />
               }
-              <Form.Label>Date</Form.Label>
             </Form.Group>
+            <Form.Label>Date</Form.Label>
           </Col>
         </Form.Row>
       

@@ -59,7 +59,8 @@ export class AppContext extends Component {
 		this.setState({ contacts: this.state.contacts.filter((item) => item.id !== id && item) });
 	};
 	handleUpdate = (data) => {
-		this.setState({ data });
+		// this.setState({ data });
+		console.log(data);
 	};
 	handleFormsUpdate = (formItems) => {
 		this.setState({ formItems });
