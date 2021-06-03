@@ -1,7 +1,8 @@
-import React, { Suspense, lazy, useContext } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { Switch, Redirect } from 'react-router-dom';
 // import Header from "../components/header/header";
 import Loader from '../components/Loader/Loader';
+import PrivateRoute from '../wrappers/PrivateRoute';
 
 const Dashboard = lazy(() => import('../views/Dashboard'));
 const FormsScreen = lazy(() => import('../views/formsScreen'));
@@ -22,13 +23,27 @@ const ApplicationRouter = () => {
 							<Loader />
 						</div>
 					}>
-					<Route path="/ContactDetail/:id" component={ContactDetail} />
-					<Route exact path="/feedback" component={FeedbackScreen} />
-					<Route exact path="/contacts" component={Contact} />
-					<Route exact path="/deals" component={DealScreen} />
-					<Route exact path="/forms" component={FormsScreen} />
-					<Route exact path="/account" component={Account} />
-					<Route exact path="/" component={Dashboard} />
+					<PrivateRoute path="/ContactDetail/:id">
+						<ContactDetail />
+					</PrivateRoute>
+					<PrivateRoute exact path="/feedback">
+						<FeedbackScreen />
+					</PrivateRoute>
+					<PrivateRoute exact path="/contacts">
+						<Contact />
+					</PrivateRoute>
+					<PrivateRoute exact path="/deals">
+						<DealScreen />
+					</PrivateRoute>
+					<PrivateRoute exact path="/forms">
+						<FormsScreen />
+					</PrivateRoute>
+					<PrivateRoute exact path="/account">
+						<Account />
+					</PrivateRoute>
+					<PrivateRoute exact path="/">
+						<Dashboard />
+					</PrivateRoute>
 				</Suspense>
 
 				<Redirect to="not-found" />
