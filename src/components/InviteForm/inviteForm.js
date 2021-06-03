@@ -56,8 +56,8 @@ const InviteForm = ({ show, handleClose, setShow}) => {
         </Modal.Header>
 
         <Modal.Body className="px-4">
-            <h4>Share a link to the signed form</h4>
-            <p>Convenient web link you can share via messaging. No registration required to view.</p>
+            <h4>Share an invite link to use Cribfox</h4>
+            <p>Convenient web link you can share via messaging.</p>
 
             <InputGroup className="mb-2 mr-4">
                 <FormControl 
@@ -74,13 +74,13 @@ const InviteForm = ({ show, handleClose, setShow}) => {
             </InputGroup>
 
             <div className="border-top mt-4 pt-3">
-                <h4>Email a copy of the signed form</h4>
-                <p>The recipient will be able to view the online document without needing to register</p>
+                <h4>Invite a fellow agent by email</h4>
+                <p>Save inbox space by having your counterparts use Cribfox with their clients</p>
                 <Form>
                     <InputGroup className="mb-2">
                         <ReactMultiEmail
                             className="mr-2"
-                            placeholder="placeholder"
+                            placeholder="Email address(es), separated by commas"
                             emails={emails}
                             onChange={(_emails) => {
                                 setEmails(_emails);
