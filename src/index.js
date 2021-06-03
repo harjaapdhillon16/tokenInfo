@@ -6,8 +6,6 @@ import Amplify from 'aws-amplify';
 import awsconfig from './aws-exports';
 import { BrowserRouter } from 'react-router-dom';
 import { AppContext } from './context/appContext';
-import FormController from './views/FormController';
-import { Route } from 'react-router-dom';
 
 Amplify.configure(awsconfig);
 
@@ -16,7 +14,6 @@ ReactDOM.render(
 		<BrowserRouter>
 			<AppContext>
 				<App />
-				<Route path="/formSubmission/:id" component={FormController} />
 			</AppContext>
 		</BrowserRouter>
 	</React.StrictMode>,

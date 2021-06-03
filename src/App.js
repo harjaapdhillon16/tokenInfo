@@ -2,15 +2,16 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useContext, useEffect, useState } from 'react';
 import { Hub, API, graphqlOperation, Auth } from 'aws-amplify';
-import { Route, Redirect, useHistory } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
 import appContext from './context/appContext';
 import { getAgent } from './graphql/queries';
 import AuthRouter from './router/authRouter';
 import AppRouter from './router/applicationRouter';
 import Loader from './components/Loader/Loader';
+import FormController from './views/FormController';
 
 function App() {
-	const { setAgent, setUser, agent, user } = useContext(appContext);
+	const { setAgent, setUser } = useContext(appContext);
 	const [loading, setLoading] = useState(true);
 	const history = useHistory();
 
@@ -32,8 +33,6 @@ function App() {
 		authHandler();
 	}, []);
 
-	// console.log(history.location.pathname);
-
 	useEffect(() => {
 		Hub.listen('auth', (data) => {
 			switch (data.payload.event) {
@@ -42,7 +41,7 @@ function App() {
 					authHandler();
 					break;
 				case 'signOut':
-					setUser(null);
+					history.push('/login');
 					setAgent(null);
 					break;
 				default:
@@ -55,10 +54,9 @@ function App() {
 
 	return (
 		<>
-			{agent && <Redirect exact to="/" />}
-			{!user && <Redirect exact to="/login" />}
 			<AuthRouter />
 			<AppRouter />
+			<Route path="/formSubmission/:id" component={FormController} />
 		</>
 	);
 }

@@ -1,11 +1,10 @@
 import React, { useState, useContext } from 'react';
 import { Auth } from 'aws-amplify';
-import { Row, Col, Button, Modal, Form, InputGroup, FormControl } from 'react-bootstrap';
+import { Row, Col, Button, Modal, InputGroup, FormControl } from 'react-bootstrap';
 import { Navbar } from 'react-bootstrap';
 import { IconMenu } from '../../assets/icons/icons';
 import UserIcon from '../../assets/icons/images/user-icon.png';
 import { Dropdown } from 'react-bootstrap';
-import { AmplifySignOut } from '@aws-amplify/ui-react';
 import SendForm from '../sendForm/sendForm';
 import AppContext from '../../context/appContext';
 
@@ -79,14 +78,14 @@ const Header = () => {
 					</Button>
 					<Dropdown>
 						<Dropdown.Toggle className="drop-btn">
-							<span>{user.attributes.email}</span>
+							<span>{user?.attributes?.email}</span>
 						</Dropdown.Toggle>
 						<Dropdown.Menu>
 							<Dropdown.Item href="#/action-1">Action</Dropdown.Item>
 							<Dropdown.Item href="#/action-2">{user.username}</Dropdown.Item>
 							<Dropdown.Item>
 								<div className="signout-btn">
-									<Button>Logout</Button>
+									<Button onClick={() => Auth.signOut()}>Logout</Button>
 								</div>
 							</Dropdown.Item>
 						</Dropdown.Menu>
