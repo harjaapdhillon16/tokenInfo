@@ -57,9 +57,7 @@ type FormEvent
 	ip: String!
 }
 
-# type ContactHistory {
-
-# }
+# type ContactHistory { # }
 
 # type Deal {}
 

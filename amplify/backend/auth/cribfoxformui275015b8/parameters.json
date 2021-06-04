@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "cribfoxformuiaa250364_identitypool_aa250364",
+    "identityPoolName": "cribfoxformui275015b8_identitypool_275015b8",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "cribfoaa250364",
-    "userPoolName": "cribfoxformuiaa250364_userpool_aa250364",
+    "resourceNameTruncated": "cribfo275015b8",
+    "userPoolName": "cribfoxformui275015b8_userpool_275015b8",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,10 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "cribfoaa250364_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "cribfo275015b8_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "aa250364",
-    "resourceName": "cribfoxformuiaa250364",
+    "sharedId": "275015b8",
+    "resourceName": "cribfoxformui275015b8",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -50,15 +50,14 @@
     "usernameAttributes": [
         "email"
     ],
-    "hostedUIDomainName": "cribfoxformuiaa250364-aa250364",
+    "hostedUIDomainName": "cribfoxformui275015b8-275015b8",
     "authProvidersUserPool": [
-        "Facebook",
         "Google"
     ],
-    "hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
+    "hostedUIProviderMeta": "[{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,
-    "dependsOn": [],
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:3000/\"],\"LogoutURLs\":[\"http://localhost:3000/\"]}"
+    "dependsOn": []
 }

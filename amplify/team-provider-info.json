@@ -1,19 +1,19 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-cribfoxformui-dev-194510-authRole",
-      "UnauthRoleArn": "arn:aws:iam::709032463030:role/amplify-cribfoxformui-dev-194510-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::709032463030:role/amplify-cribfoxformui-dev-194510-authRole",
+      "AuthRoleName": "amplify-cribfoxformui-dev-235219-authRole",
+      "UnauthRoleArn": "arn:aws:iam::709032463030:role/amplify-cribfoxformui-dev-235219-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::709032463030:role/amplify-cribfoxformui-dev-235219-authRole",
       "Region": "us-east-2",
-      "DeploymentBucketName": "amplify-cribfoxformui-dev-194510-deployment",
-      "UnauthRoleName": "amplify-cribfoxformui-dev-194510-unauthRole",
-      "StackName": "amplify-cribfoxformui-dev-194510",
-      "StackId": "arn:aws:cloudformation:us-east-2:709032463030:stack/amplify-cribfoxformui-dev-194510/62750ff0-8be6-11eb-bc76-02f4fb1d662e",
-      "AmplifyAppId": "dbu94aroqt6oc"
+      "DeploymentBucketName": "amplify-cribfoxformui-dev-235219-deployment",
+      "UnauthRoleName": "amplify-cribfoxformui-dev-235219-unauthRole",
+      "StackName": "amplify-cribfoxformui-dev-235219",
+      "StackId": "arn:aws:cloudformation:us-east-2:709032463030:stack/amplify-cribfoxformui-dev-235219/069e5d30-c566-11eb-a455-0a30b5a1ab58",
+      "AmplifyAppId": "ddsmp4aqcyyoz"
     },
     "categories": {
       "auth": {
-        "cribfoxformuiaa250364": {}
+        "cribfoxformui275015b8": {}
       }
     }
   }

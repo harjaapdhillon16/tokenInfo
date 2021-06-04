@@ -1,6 +1,6 @@
 {
   "auth": {
-    "cribfoxformuiaa250364": {
+    "cribfoxformui275015b8": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -14,9 +14,10 @@
       "output": {
         "authConfig": {
           "defaultAuthentication": {
-            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-            "userPoolConfig": {
-              "userPoolId": "authcribfoxformuiaa250364"
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 360,
+              "description": "primary key"
             }
           },
           "additionalAuthenticationProviders": []
