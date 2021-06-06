@@ -3,6 +3,7 @@ import * as Yup from 'yup';
 import { FormikProvider, Form, useFormik } from 'formik';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { Container, Col, Row, Form as TextInput, FormLabel, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
 import { createAgent } from '../../graphql/mutations';
 
@@ -101,8 +102,11 @@ export default function SignUp() {
 							)}
 						</Col>
 					</Row>
-					<Row className="justify-content-md-center mt-4">
+					<Row
+						className="align-items-md-center mt-5"
+						style={{ justifyContent: 'space-evenly' }}>
 						<Button type="submit">Register</Button>
+						<Link to="/login">Already have an account?</Link>
 					</Row>
 				</Container>
 			</Form>

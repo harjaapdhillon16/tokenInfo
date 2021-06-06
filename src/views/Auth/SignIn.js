@@ -2,6 +2,7 @@ import React from 'react';
 import * as Yup from 'yup';
 import { FormikProvider, Form, useFormik } from 'formik';
 import { Auth } from 'aws-amplify';
+import { Link } from 'react-router-dom';
 import { Container, Col, Row, Form as TextInput, FormLabel, Button } from 'react-bootstrap';
 import Loader from '../../components/Loader/Loader';
 
@@ -61,8 +62,11 @@ export default function SignUp() {
 							)}
 						</Col>
 					</Row>
-					<Row className="justify-content-md-center mt-4">
+					<Row
+						className="align-items-md-center mt-5"
+						style={{ justifyContent: 'space-evenly' }}>
 						<Button type="submit">Login</Button>
+						<Link to="/register">Don't have an account yet?</Link>
 					</Row>
 				</Container>
 			</Form>
