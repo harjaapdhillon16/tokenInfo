@@ -237,9 +237,12 @@ width:100%;
 }
 /* Additional css  */
 .send:hover{
-  background-color: #bbbcbc !important;
+  background-color: #6c757d !important;
   border: 1px solid #8d8989 !important;
   color:#fff !important;
+}
+.add-contact{
+  color:#000;
 }
 @media (min-width: 420px) and (max-width: 576px) {
   .form1 .form-title h1 {
