@@ -5,6 +5,7 @@ import Form1 from '../forms/form1/Form1';
 import Form2 from '../forms/form2/Form2';
 import Form3 from '../forms/form3/Form3';
 import Loader from '../components/Loader/Loader';
+import AuditTrail from '../components/AuditTrail';
 
 const FormController = (props) => {
 	const [loading, setLoading] = useState(true);
@@ -46,6 +47,11 @@ const FormController = (props) => {
 	};
 	// console.log(props.match.params.id);
 	if (loading) return <Loader />;
-	return renderFormType(formData.formName);
+	return (
+		<>
+			{renderFormType(formData.formName)}
+			<AuditTrail formDataId={props.match.params.id} />
+		</>
+	);
 };
 export default FormController;

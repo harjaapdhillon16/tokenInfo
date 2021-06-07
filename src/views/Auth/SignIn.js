@@ -4,6 +4,7 @@ import { FormikProvider, Form, useFormik } from 'formik';
 import { Auth } from 'aws-amplify';
 import { Link } from 'react-router-dom';
 import { Container, Col, Row, Form as TextInput, FormLabel, Button } from 'react-bootstrap';
+import { useSnackbar } from 'notistack';
 import Loader from '../../components/Loader/Loader';
 
 const signUpSchema = Yup.object().shape({
@@ -12,6 +13,7 @@ const signUpSchema = Yup.object().shape({
 });
 
 export default function SignUp() {
+	const { enqueueSnackbar } = useSnackbar();
 	const formik = useFormik({
 		initialValues: {
 			email: '',

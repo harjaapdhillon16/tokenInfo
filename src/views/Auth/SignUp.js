@@ -4,6 +4,7 @@ import { FormikProvider, Form, useFormik } from 'formik';
 import { Auth, API, graphqlOperation } from 'aws-amplify';
 import { Container, Col, Row, Form as TextInput, FormLabel, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import Loader from '../../components/Loader/Loader';
 import { createAgent } from '../../graphql/mutations';
 
@@ -15,6 +16,7 @@ const signUpSchema = Yup.object().shape({
 });
 
 export default function SignUp() {
+	const { enqueueSnackbar } = useSnackbar();
 	const formik = useFormik({
 		initialValues: {
 			firstName: '',

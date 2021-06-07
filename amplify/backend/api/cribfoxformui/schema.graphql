@@ -39,6 +39,7 @@ type FormData @model @key(name: "byAgent", fields: ["senderId"], queryField: "fo
 	receiverEmail: String
 	formName: String!
 	data: [String]
+	numberOfSignees: Int
 	status: String
 	emailStatus: String
 	emailTimestamp: String
@@ -52,7 +53,7 @@ type FormEvent
 	@key(name: "byFormData", fields: ["formDataId"], queryField: "formEventsByFormData") {
 	formDataId: ID!
 	type: EventType!
-	subjects: [String]!
+	body: String!
 	subjectEmails: [String]!
 	ip: String!
 }
