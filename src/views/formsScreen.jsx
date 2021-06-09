@@ -113,7 +113,7 @@ const FormsScreen = () => {
           <Col md={2} className="dashboardCards pt-5 text-center pr-0">
             <Dropdown>
               <Dropdown.Toggle className="drop-btn pt-0 pl-0">
-                {filterKey === 'status' && filterValue != null ? filterValue: "All Statuses" }
+                {filterKey === 'status' && filterValue != null ? filterValue: "ALL" }
           
               </Dropdown.Toggle>
 
@@ -126,7 +126,7 @@ const FormsScreen = () => {
             </Dropdown>
           </Col>
 
-           <Col md={4} className="dashboardCards pt-5 d-flex justify-content-end pl-0">
+           <Col md={4} className="dashboardCards pt-5 d-flex justify-content-end pl-0 pr-5">
             <Dropdown>
               <Dropdown.Toggle className="drop-btn pt-0 pl-0">
               
@@ -149,11 +149,6 @@ const FormsScreen = () => {
             
           </Col>
           <Col md={2} className="text-center">
-            {/* {item.status === "ALL" && "SENT",  "VIEWED", "SIGNED" 
-            <Badge variant="danger sent-option text-center">Sent</Badge>
-            <Badge variant="warning sent-option text-center">Viewed</Badge>
-            <Badge variant="success sent-option text-center">Signed</Badge>
-            } */}
             {item.status === "SENT" &&
               <Badge variant="danger sent-option text-center">Sent</Badge>
             }
@@ -190,9 +185,8 @@ const FormsScreen = () => {
               >
                 Share
               </Button>
-            }
-            
-          </Col>
+        }
+      </Col>
         </Row>
         )}
 

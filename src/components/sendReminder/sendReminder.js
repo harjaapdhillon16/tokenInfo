@@ -17,6 +17,7 @@ import Header from "../header/header";
 import AppContext from "../../context/appContext";
 import * as emailjs from 'emailjs-com';
 import { API, graphqlOperation } from "aws-amplify";
+import { ContactActions }  from "../../assets/icons/icons";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ReactMultiEmail, isEmail } from 'react-multi-email';
@@ -75,6 +76,18 @@ const SendReminder = ({itemData}) => {
             Reminder Sent!
         </Button>
         }
+         <Dropdown className="dotaction d-inline-block">
+          <Dropdown.Toggle className="drop-btn">
+            <ContactActions/>
+          </Dropdown.Toggle>
+         
+          <Dropdown.Menu>
+            <Dropdown.Item>Download</Dropdown.Item>
+
+            <Dropdown.Item>Delete</Dropdown.Item>
+
+          </Dropdown.Menu>
+        </Dropdown>
         </>
 
   );
