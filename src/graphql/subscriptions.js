@@ -98,6 +98,7 @@ export const onCreateFormData = /* GraphQL */ `
       receiverEmail
       formName
       data
+      numberOfSignees
       status
       emailStatus
       emailTimestamp
@@ -119,6 +120,7 @@ export const onUpdateFormData = /* GraphQL */ `
       receiverEmail
       formName
       data
+      numberOfSignees
       status
       emailStatus
       emailTimestamp
@@ -140,6 +142,7 @@ export const onDeleteFormData = /* GraphQL */ `
       receiverEmail
       formName
       data
+      numberOfSignees
       status
       emailStatus
       emailTimestamp
@@ -157,8 +160,7 @@ export const onCreateFormEvent = /* GraphQL */ `
       id
       formDataId
       type
-      subjects
-      subjectEmails
+      body
       ip
       createdAt
       updatedAt
@@ -171,8 +173,7 @@ export const onUpdateFormEvent = /* GraphQL */ `
       id
       formDataId
       type
-      subjects
-      subjectEmails
+      body
       ip
       createdAt
       updatedAt
@@ -185,8 +186,7 @@ export const onDeleteFormEvent = /* GraphQL */ `
       id
       formDataId
       type
-      subjects
-      subjectEmails
+      body
       ip
       createdAt
       updatedAt

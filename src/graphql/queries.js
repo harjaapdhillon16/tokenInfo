@@ -83,6 +83,7 @@ export const getFormData = /* GraphQL */ `
       receiverEmail
       formName
       data
+      numberOfSignees
       status
       emailStatus
       emailTimestamp
@@ -109,6 +110,7 @@ export const listFormDatas = /* GraphQL */ `
         receiverEmail
         formName
         data
+        numberOfSignees
         status
         emailStatus
         emailTimestamp
@@ -128,8 +130,7 @@ export const getFormEvent = /* GraphQL */ `
       id
       formDataId
       type
-      subjects
-      subjectEmails
+      body
       ip
       createdAt
       updatedAt
@@ -147,8 +148,7 @@ export const listFormEvents = /* GraphQL */ `
         id
         formDataId
         type
-        subjects
-        subjectEmails
+        body
         ip
         createdAt
         updatedAt
@@ -211,6 +211,7 @@ export const formsByAgent = /* GraphQL */ `
         receiverEmail
         formName
         data
+        numberOfSignees
         status
         emailStatus
         emailTimestamp
@@ -243,8 +244,7 @@ export const formEventsByFormData = /* GraphQL */ `
         id
         formDataId
         type
-        subjects
-        subjectEmails
+        body
         ip
         createdAt
         updatedAt
