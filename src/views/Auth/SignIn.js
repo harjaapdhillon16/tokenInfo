@@ -38,9 +38,9 @@ export default function SignUp() {
 	return (
 		<FormikProvider value={formik}>
 			<Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-				<Container fluid="sm">
-					<Row className="justify-content-md-center my-5">
-						<Col xs={6}>
+				<Container fluid="sm" className="py-5">
+					<Row className="justify-content-md-center mt-5 mb-2">
+						<Col xs={4}>
 							<FormLabel>Email</FormLabel>
 							<TextInput.Control
 								placeholder="Enter your email"
@@ -52,7 +52,7 @@ export default function SignUp() {
 						</Col>
 					</Row>
 					<Row className="justify-content-md-center">
-						<Col xs={6}>
+						<Col xs={4} >
 							<FormLabel>Password</FormLabel>
 							<TextInput.Control
 								placeholder="Enter your password"
@@ -65,11 +65,14 @@ export default function SignUp() {
 						</Col>
 					</Row>
 					<Row
-						className="align-items-md-center mt-5"
+						className="align-items-md-center mt-3 justify-content-md-center"
 						style={{ justifyContent: 'space-evenly' }}>
-						<Button type="submit">Login</Button>
-						<Link to="/register">Don't have an account yet?</Link>
+						<Button type="submit" className="px-4 mb-2">Login</Button>
+					</Row >
+					<Row className="align-items-md-center  justify-content-md-center">
+					<Link to="/register">Don't have an account yet?</Link>
 					</Row>
+					
 				</Container>
 			</Form>
 		</FormikProvider>

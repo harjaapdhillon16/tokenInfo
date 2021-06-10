@@ -116,7 +116,6 @@ const FormsScreen = () => {
                 {filterKey === 'status' && filterValue != null ? filterValue: "ALL" }
           
               </Dropdown.Toggle>
-
               <Dropdown.Menu>
                 <Dropdown.Item onClick={()=> handleFilter("status", null)}>ALL</Dropdown.Item>
                 <Dropdown.Item onClick={()=> handleFilter("status", "SENT")}>Sent</Dropdown.Item>
@@ -141,7 +140,7 @@ const FormsScreen = () => {
           </Col>
 
         </Row>
-        {filtered.map(item =>  <Row className=" border-bottom pb-3 mt-5 ">
+        {filtered.length == null ? <h3 className="d-flex justify-content-center mt-5">No Forms Data Here</h3> :  filtered.map(item =>  <Row className=" border-bottom pb-3 mt-5 ">
           <Col md={6}>
             <h6>{item.formName}</h6>
           

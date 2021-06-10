@@ -26,6 +26,7 @@ export default function SignUp() {
 		},
 		validationSchema: signUpSchema,
 		onSubmit: async ({ firstName, lastName, email, password }, { setSubmitting }) => {
+
 			try {
 				const user = await Auth.signUp({
 					username: email,
@@ -56,9 +57,9 @@ export default function SignUp() {
 	return (
 		<FormikProvider value={formik}>
 			<Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-				<Container fluid="sm">
+				<Container fluid="sm" className="py-5">
 					<Row className="justify-content-md-center mt-5">
-						<Col xs={3}>
+						<Col xs={4}>
 							<FormLabel>First name</FormLabel>
 							<TextInput.Control
 								placeholder="Enter your first name"
@@ -67,8 +68,10 @@ export default function SignUp() {
 							{touched.firstName && errors.firstName && (
 								<TextInput.Text className="text-error">{errors.firstName}</TextInput.Text>
 							)}
-						</Col>
-						<Col xs={3}>
+						</Col>						
+					</Row>
+					<Row className="justify-content-md-center mt-2">
+						<Col xs={4}>
 							<FormLabel>Last name</FormLabel>
 							<TextInput.Control
 								placeholder="Enter your last name"
@@ -79,8 +82,8 @@ export default function SignUp() {
 							)}
 						</Col>
 					</Row>
-					<Row className="justify-content-md-center my-5">
-						<Col xs={6}>
+					<Row className="justify-content-md-center my-2">
+						<Col xs={4}>
 							<FormLabel>Email</FormLabel>
 							<TextInput.Control
 								placeholder="Enter your email"
@@ -92,7 +95,7 @@ export default function SignUp() {
 						</Col>
 					</Row>
 					<Row className="justify-content-md-center">
-						<Col xs={6}>
+						<Col xs={4}>
 							<FormLabel>Password</FormLabel>
 							<TextInput.Control
 								placeholder="Enter your password"
@@ -105,9 +108,12 @@ export default function SignUp() {
 						</Col>
 					</Row>
 					<Row
-						className="align-items-md-center mt-5"
+						className="align-items-md-center justify-content-md-center mt-3"
 						style={{ justifyContent: 'space-evenly' }}>
 						<Button type="submit">Register</Button>
+						
+					</Row>
+					<Row className="align-items-md-center  justify-content-md-center mt-1">
 						<Link to="/login">Already have an account?</Link>
 					</Row>
 				</Container>
