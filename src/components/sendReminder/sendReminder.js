@@ -17,6 +17,8 @@ import Header from "../header/header";
 import AppContext from "../../context/appContext";
 import * as emailjs from 'emailjs-com';
 import { API, graphqlOperation } from "aws-amplify";
+import { ContactActions }  from "../../assets/icons/icons";
+import { deleteFormData } from "../../graphql/mutations";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { ReactMultiEmail, isEmail } from 'react-multi-email';
@@ -25,7 +27,7 @@ import 'react-multi-email/style.css';
 const SendReminder = ({itemData}) => {
 //  console.log(itemData);
  let base_url = window.location.origin;
- const { user} = useContext(AppContext);
+ const { user ,onDeleteForm} = useContext(AppContext);
  const [reminderStatus, setReminderStatus] = useState(false);
 
  const handleReminderSent = async (item) => {
@@ -62,6 +64,24 @@ const SendReminder = ({itemData}) => {
     );
   }
 
+ const handleDeleteForm = async formid => {
+    const data = {
+          id: formid,
+        };
+        try{
+
+          const deleteFormDataRes = await API.graphql(
+            graphqlOperation(deleteFormData, { input: data })
+          );
+          onDeleteForm(deleteFormDataRes.data.deleteFormData['id']);
+          
+        }
+       catch (err) {
+          console.log(err);
+        }
+        
+  }
+
   return ( 
         <>
         {!reminderStatus ?
@@ -75,6 +95,18 @@ const SendReminder = ({itemData}) => {
             Reminder Sent!
         </Button>
         }
+         <Dropdown className="dotaction d-inline-block">
+          <Dropdown.Toggle className="drop-btn">
+            <ContactActions/>
+          </Dropdown.Toggle>
+         
+          <Dropdown.Menu>
+            <Dropdown.Item>Download</Dropdown.Item>
+
+            <Dropdown.Item onClick={()=> handleDeleteForm(itemData.id)}>Delete</Dropdown.Item>
+
+          </Dropdown.Menu>
+        </Dropdown>
         </>
 
   );

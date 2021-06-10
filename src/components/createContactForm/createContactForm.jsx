@@ -125,6 +125,16 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
               onChange={formik.handleChange}
             />
           </div>
+          <div>
+            <Form.Control
+              className="mb-3"
+              name="title"
+              // value={formik.values.companyName}
+              type="text"
+              placeholder="title (optional)"
+              onChange={formik.handleChange}
+            />
+          </div>
 
           {formik.touched.phoneNum && formik.errors.phoneNum && (
             <Form.Text className="text-error">
@@ -154,7 +164,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
               onChange={formik.handleChange}
               // value={formik.values.roleInCompany}
             >
-              <option value="" disabled selected hidden >Role options & orders:</option>
+              <option value="" disabled selected hidden >Role</option>
               <option></option>
               <option>Buyer</option>
               <option>Agent</option>

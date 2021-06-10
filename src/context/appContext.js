@@ -65,6 +65,10 @@ export class AppContext extends Component {
 	handleFormsUpdate = (formItems) => {
 		this.setState({ formItems });
 	};
+	handleFormsDelete = id =>{
+		this.setState({ formItems: this.state.formItems.filter((item) => item.id !== id && item) });	
+	}
+
 	handleFormsItemUpdate = (formItems) => {
 		this.setState({ formItems });
 	};
@@ -78,6 +82,7 @@ export class AppContext extends Component {
 					setUser: this.handleUserUpdate,
 					onUpdateContacts: this.handleContactUpdates,
 					onDeleteContact: this.handleContactDelete,
+					onDeleteForm:this.handleFormsDelete,
 					onEditContact: this.handleUpdate,
 					onFormItemsUpdate: this.handleFormsUpdate,
 					onFormItemUnitUpdate: this.handleFormsItemUpdate,
