@@ -503,7 +503,7 @@ const Form2 = (formItem) => {
               {formItem.formData.status === "SIGNED" ? (
                 <div class="col-md-8 mb-3 d-flex">
                   <label class="pt-2 input-head">
-                    Buyer/Tenant/Seller/Landlord Signature dadad
+                    Buyer/Tenant/Seller/Landlord Signature
                   </label>
                   {formItem.formData.isSignatureTyped === false && (
                     <div class="form-control">
@@ -693,6 +693,7 @@ const Form2 = (formItem) => {
           </form> 
 
           {formItem.formData.status === "SIGNED" &&
+          <>
             <ReactToPdf targetRef={ref} filename={`${formItem.formData.formName}.pdf`} options={options} x={.2} y={.5} scale={0.8}>
               {({toPdf}) => (
                 <Row className="downloadBar">
@@ -704,6 +705,9 @@ const Form2 = (formItem) => {
                 </Row>
               )}
             </ReactToPdf>
+                <Button variant="success" className="d-flex m-auto my-lg-3">Submit</Button>
+            
+            </>
           }
         </Col>
       </Row>
@@ -738,7 +742,7 @@ const Form2 = (formItem) => {
                 ref={sigPad}
               />
               <p style={{ paddingTop: 10, paddingLeft: 30 }}>
-                I am Chris Oliver and this is my legal representation of my
+                I am {formik.values.accountType} and this is my legal representation of my
                 Signature.
               </p>
               <div className="d-flex justify-content-center">
@@ -768,7 +772,7 @@ const Form2 = (formItem) => {
                 />
               </div>
               <p style={{ paddingTop: 10, paddingLeft: 30 }}>
-                I am Chris Oliver and this is my legal representation of my
+                I am {formik.values.accountType} and this is my legal representation of my
                 Signature.
               </p>
               <div className="d-flex justify-content-center">
