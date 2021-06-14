@@ -6,6 +6,7 @@ import Form2 from '../forms/form2/Form2';
 import Form3 from '../forms/form3/Form3';
 import Loader from '../components/Loader/Loader';
 import AuditTrail from '../components/AuditTrail';
+import formEventsHandler from '../utils/formEventsHandler';
 
 const FormController = (props) => {
 	const [loading, setLoading] = useState(true);
@@ -22,9 +23,10 @@ const FormController = (props) => {
 					id: props.match.params.id
 				})
 			);
+			formEventsHandler(getFormsData.data.getFormData.formId);
 
 			setFormData(getFormsData.data.getFormData);
-			console.log('getFormsData', getFormsData.data.getFormData);
+			// console.log('getFormsData', getFormsData.data.getFormData);
 			setLoading(false);
 		} catch (err) {
 			console.log(err);
@@ -32,7 +34,7 @@ const FormController = (props) => {
 	};
 
 	const renderFormType = (formtype) => {
-		console.log('formtype:', formtype);
+		// console.log('formtype:', formtype);
 		switch (formtype) {
 			case 'REBNY COVID Liability Form':
 				return <Form1 formData={formData} />;
@@ -42,7 +44,7 @@ const FormController = (props) => {
 				return <Form3 formData={formData} />;
 
 			default:
-				return 'NOt Found!';
+				return 'Not Found!';
 		}
 	};
 	// console.log(props.match.params.id);

@@ -54,7 +54,6 @@ type FormEvent
 	formDataId: ID!
 	type: EventType!
 	body: String!
-	subjectEmails: [String]!
 	ip: String!
 }
 
