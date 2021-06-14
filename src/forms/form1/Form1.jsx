@@ -274,9 +274,9 @@ const Form1 = ({formData}) => {
 
               {!viewedStatus ?
                 <Form.Label onClick={handleShow}>Signature</Form.Label>
-              :
+            :
                 <Form.Label>Signature</Form.Label>
-              }
+              } 
             </Form.Group>
           }
           </Col>
@@ -549,7 +549,7 @@ const Form1 = ({formData}) => {
                 }}
                 ref={sigPad}
               />
-                <p style={{paddingTop: 10, paddingLeft: 30}}>I am Chris Oliver and this is my legal representation of my Signature.</p>
+                <p style={{paddingTop: 10, paddingLeft: 30}}>I am {formik.values.fullName} and this is my legal representation of my Signature.</p>
                 <div className="d-flex justify-content-center">
                 <Button variant="secondary" onClick={clear} className="mr-3">
                   Clear{" "}
@@ -576,7 +576,7 @@ const Form1 = ({formData}) => {
                     }
                 />
                 </div>
-               <p style={{paddingTop: 10, paddingLeft: 30}}>I am Chris Oliver and this is my legal representation of my Signature.</p>
+               <p style={{paddingTop: 10, paddingLeft: 30}}>I am {formik.values.fullName} and this is my legal representation of my Signature.</p>
                 <div className="d-flex justify-content-center">
                 <Button variant="secondary" onClick={clear} className="mr-3">
                   Clear{" "}

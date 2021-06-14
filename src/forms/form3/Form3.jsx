@@ -1026,7 +1026,7 @@ const Form3 = (formItem) => {
                 ref={sigPad}
               />
               <p style={{ paddingTop: 10, paddingLeft: 30 }}>
-                I am Chris Oliver and this is my legal representation of my
+                I am { formik.values.fullName }and this is my legal representation of my
                 Signature.
               </p>
               <div className="d-flex justify-content-center">
@@ -1057,7 +1057,7 @@ const Form3 = (formItem) => {
                 />
               </div>
               <p style={{ paddingTop: 10, paddingLeft: 30 }}>
-                I am Chris Oliver and this is my legal representation of my
+                I am {formik.values.fullName} and this is my legal representation of my
                 Signature.
               </p>
               <div className="d-flex justify-content-center">

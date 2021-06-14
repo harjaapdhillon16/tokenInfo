@@ -7,6 +7,7 @@ import Header from '../components/header/header';
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
+import ShareButton from '../components/ShareButton/shareButton';
 import { API, graphqlOperation } from 'aws-amplify';
 import { listFormDatas } from '../graphql/queries';
 import AppContext from '../../src/context/appContext';
@@ -29,7 +30,7 @@ const FormsScreen = () => {
   const [statusValue, setStatusValue] = useState(null);
   const [filterKey, setFilterKey] = useState(null);
   const [filterValue, setFilterValue] = useState(null);
-  const [currentSorted, setCurrentSorted] = useState(null);
+  const [currentSorted, setCurrentSorted] = useState("desc");
   let base_url = window.location.origin;
   
 
@@ -94,7 +95,7 @@ const FormsScreen = () => {
             <Dropdown>
               <Dropdown.Toggle className="drop-btn pt-0 pl-0">
               {/* {filterValue !== null ? filterValue: <> All forms</>} */}
-              {filterKey === 'formName' && filterValue != null ? filterValue: " All Forms" }
+              {filterKey === 'formName' && filterValue != null ? filterValue: " All forms" }
              
               </Dropdown.Toggle>
 
@@ -113,11 +114,11 @@ const FormsScreen = () => {
           <Col md={2} className="dashboardCards pt-5 text-center pr-0">
             <Dropdown>
               <Dropdown.Toggle className="drop-btn pt-0 pl-0">
-                {filterKey === 'status' && filterValue != null ? filterValue: "ALL" }
+                {filterKey === 'status' && filterValue != null ? filterValue: "All" }
           
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item onClick={()=> handleFilter("status", null)}>ALL</Dropdown.Item>
+                <Dropdown.Item onClick={()=> handleFilter("status", null)}>All</Dropdown.Item>
                 <Dropdown.Item onClick={()=> handleFilter("status", "SENT")}>Sent</Dropdown.Item>
                 <Dropdown.Item onClick={()=> handleFilter("status", "VIEWED")}>Viewed</Dropdown.Item>
                 <Dropdown.Item onClick={()=> handleFilter("status", "SIGNED")}>Signed</Dropdown.Item>
@@ -143,7 +144,6 @@ const FormsScreen = () => {
         {filtered.length == null ? <h3 className="d-flex justify-content-center mt-5">No Forms Data Here</h3> :  filtered.map(item =>  <Row className=" border-bottom pb-3 mt-5 ">
           <Col md={6}>
             <h6>{item.formName}</h6>
-          
              <Link to="#">{item.receiverName}</Link>
             
           </Col>
@@ -161,7 +161,7 @@ const FormsScreen = () => {
             }
             <p style={{ fontSize: 13 }}><Moment fromNow>{item.updatedAt}</Moment></p>
           </Col>
-          <Col md={4} className="text-right">
+          <Col md={4} className="text-right pr-0">
             <Button variant="outline-secondary invite view-form mr-3">
               <a  target="_blank" href={`${base_url}/formSubmission/${item.id}`}>View Form</a>
             </Button>
@@ -179,11 +179,7 @@ const FormsScreen = () => {
             }
 
             {item.status === "SIGNED" &&
-              <Button variant="outline-secondary cf-black px-5"
-                onClick={() => handleShared(item)}
-              >
-                Share
-              </Button>
+              <ShareButton/>
         }
       </Col>
         </Row>
