@@ -6,7 +6,6 @@ import Form2 from '../forms/form2/Form2';
 import Form3 from '../forms/form3/Form3';
 import Loader from '../components/Loader/Loader';
 import AuditTrail from '../components/AuditTrail';
-import formEventsHandler from '../utils/formEventsHandler';
 
 const FormController = (props) => {
 	const [loading, setLoading] = useState(true);
@@ -23,8 +22,6 @@ const FormController = (props) => {
 					id: props.match.params.id
 				})
 			);
-
-			// formEventsHandler(getFormsData.data.getFormData.id);
 
 			setFormData(getFormsData.data.getFormData);
 			setLoading(false);
