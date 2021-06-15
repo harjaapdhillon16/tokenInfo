@@ -125,6 +125,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 
   const handleMultipleFormsData = (formid, formData, agent) => {
     console.log(formData);
+    console.log(agent);
     const date = new Date();
     let newDate = JSON.stringify(date);
     newDate = newDate.slice(1, 11);

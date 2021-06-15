@@ -52,7 +52,7 @@ const FormController = (props) => {
 	return (
 		<>
 			{renderFormType(formData.formName)}
-			<AuditTrail formDataId={props.match.params.id} />
+			{/* <AuditTrail formDataId={props.match.params.id} /> */}
 		</>
 	);
 };

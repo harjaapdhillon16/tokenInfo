@@ -26,6 +26,7 @@ import * as Yup from "yup";
 import ReactToPdf from "react-to-pdf";
 import { Auth } from "aws-amplify";
 import { Redirect } from "react-router-dom";
+import AuditTrail from './../../components/AuditTrail'
 
 const Form2 = (formItem) => {
   console.log("formItem", formItem);
@@ -52,7 +53,7 @@ const Form2 = (formItem) => {
   const options = {
     orientation: "portrait",
     unit: "in",
-    format: [9, 16],
+    format: [9, 18],
   };
 
   useEffect(() => {
@@ -818,6 +819,7 @@ const Form2 = (formItem) => {
           )}
         </Modal.Body>
       </Modal>
+      <AuditTrail formDataId={formItem.formData.id} />
     </Container>
   );
 };

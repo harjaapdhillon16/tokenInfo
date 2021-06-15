@@ -32,6 +32,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
       name: "",
       email: "",
       companyName: "",
+      title:"",      
       phoneNum: "",
       roleInCompany: "",
 
@@ -129,10 +130,12 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
             <Form.Control
               className="mb-3"
               name="title"
-              // value={formik.values.companyName}
+              value={formik.values.companyName}
               type="text"
-              placeholder="title (optional)"
+              placeholder="Title (optional)"
+              onBlur={formik.handleBlur}
               onChange={formik.handleChange}
+              
             />
           </div>
 

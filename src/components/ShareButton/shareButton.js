@@ -106,7 +106,7 @@ const ShareButton = ({ itemData, item }) => {
       </Button>
       <Dropdown className="dotaction d-inline-block">
         <Dropdown.Toggle className="drop-btn">
-          <ContactActions />
+          <ContactActions/>
         </Dropdown.Toggle>
 
         <Dropdown.Menu>

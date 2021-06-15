@@ -17,7 +17,7 @@ import { updateFormData } from "../../graphql/mutations";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import ReactToPdf from 'react-to-pdf';
-
+import AuditTrail from './../../components/AuditTrail'
 
 const Form3 = (formItem) => {
   console.log('formItem', formItem);
@@ -38,7 +38,7 @@ const Form3 = (formItem) => {
   const options = {
     orientation: 'portrait',
     unit: 'in',
-    format: [9,16]
+    format: [9,22]
   };
 
   useEffect(() => {
@@ -1072,6 +1072,7 @@ const Form3 = (formItem) => {
           )}
         </Modal.Body>
       </Modal>
+      <AuditTrail formDataId={formItem.formData.id} />
     </Container>
   );
 };
