@@ -160,7 +160,10 @@ export const onCreateFormEvent = /* GraphQL */ `
       id
       formDataId
       type
-      body
+      subjects {
+        name
+        email
+      }
       ip
       createdAt
       updatedAt
@@ -173,7 +176,10 @@ export const onUpdateFormEvent = /* GraphQL */ `
       id
       formDataId
       type
-      body
+      subjects {
+        name
+        email
+      }
       ip
       createdAt
       updatedAt
@@ -186,7 +192,10 @@ export const onDeleteFormEvent = /* GraphQL */ `
       id
       formDataId
       type
-      body
+      subjects {
+        name
+        email
+      }
       ip
       createdAt
       updatedAt

@@ -130,7 +130,10 @@ export const getFormEvent = /* GraphQL */ `
       id
       formDataId
       type
-      body
+      subjects {
+        name
+        email
+      }
       ip
       createdAt
       updatedAt
@@ -148,7 +151,10 @@ export const listFormEvents = /* GraphQL */ `
         id
         formDataId
         type
-        body
+        subjects {
+          name
+          email
+        }
         ip
         createdAt
         updatedAt
@@ -244,7 +250,10 @@ export const formEventsByFormData = /* GraphQL */ `
         id
         formDataId
         type
-        body
+        subjects {
+          name
+          email
+        }
         ip
         createdAt
         updatedAt

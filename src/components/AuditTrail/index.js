@@ -53,8 +53,8 @@ export default function AuditTrail(props) {
 					</h6>
 				</Col>
 			</Row>
-			{EVENTS.map((event) => (
-				<EventItem {...event} />
+			{EVENTS.map((event, i) => (
+				<EventItem {...event} key={i} />
 			))}
 		</Container>
 	);

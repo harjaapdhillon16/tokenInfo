@@ -23,10 +23,10 @@ const FormController = (props) => {
 					id: props.match.params.id
 				})
 			);
-			formEventsHandler(getFormsData.data.getFormData.formId);
+
+			formEventsHandler(getFormsData.data.getFormData.id);
 
 			setFormData(getFormsData.data.getFormData);
-			// console.log('getFormsData', getFormsData.data.getFormData);
 			setLoading(false);
 		} catch (err) {
 			console.log(err);
