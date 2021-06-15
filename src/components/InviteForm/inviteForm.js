@@ -77,7 +77,9 @@ const InviteForm = ({ show, handleClose, setShow}) => {
                     
                     <div>Copy</div>
                 </CopyToClipboard>
-                {copied  && <span style={{color: 'red'}}>Copied</span>}
+                {copied  && <span style={{
+                    color: '#ff0000', fontWeight: 600, fontSize:14, marginTop:7, paddingLeft:10}}>
+                    Copied!</span>}
 
             </InputGroup>
 

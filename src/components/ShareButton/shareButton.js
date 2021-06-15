@@ -32,7 +32,11 @@ const ShareButton = ({ itemData, item }) => {
   const [shareFormItem, setShareFormItem] = useState("");
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
+  const handleClose = value => {
+    console.log(value);
+    setShow(!value);
+    //setShow(value)
+  }
   const [reminderStatus, setReminderStatus] = useState(false);
 
   const handleShared = (item) => {
@@ -96,7 +100,7 @@ const ShareButton = ({ itemData, item }) => {
         <ShareForm
           show={show}
           handleClose={handleClose}
-          setShow={setShow}
+          
           formData={shareFormItem}
         />
       </Button>

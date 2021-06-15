@@ -366,9 +366,9 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           <h4 className="d-flex ml-auto mr-auto justify-content-center">
             Your form has been sent !
           </h4>
-          <Button variant="outline-secondary mt-4 d-flex ml-auto mr-auto">
+          {/* <Button variant="outline-secondary mt-4 d-flex ml-auto mr-auto">
             View REBNY COVID Liability Form
-          </Button>{" "}
+          </Button>{" "} */}
         </Modal.Body>
         <Modal.Footer>
           <Button
