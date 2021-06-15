@@ -8,7 +8,7 @@ import { IconFacebook, IconTwitter, IconLinkedin, IconInstagram } from '../../as
 import Nav from 'react-bootstrap/Nav';
 import Accordion from 'react-bootstrap/Accordion';
 import Logo from '../../assets/FormImages/rebny-logo.png';
-import { updateFormData, createFormEvent } from '../../graphql/mutations';
+import { updateFormData } from '../../graphql/mutations';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import DatePicker from 'react-datepicker';
@@ -46,11 +46,12 @@ const Form1 = ({ formData }) => {
 	const checkaAuthentication = () => {
 		Auth.currentAuthenticatedUser()
 			.then((userData) => {
-				// console.log('userData', userData);
-				if (userData) {
+				console.log('userData', userData);
+				if (userData !== '') {
 					setViewedStatus(true);
 				}
 			})
+			.then((data) => console.log(data))
 			.catch((err) => console.log(err));
 	};
 
@@ -66,7 +67,6 @@ const Form1 = ({ formData }) => {
 				const checkFormStatus = await API.graphql(
 					graphqlOperation(updateFormData, { input: data })
 				);
-				// await API.graphql(graphqlOperation(createFormEvent, ))
 				console.log('checkFormStatus', checkFormStatus);
 			} catch (err) {
 				console.log(err, 'Error updating Form View status');
@@ -181,8 +181,8 @@ const Form1 = ({ formData }) => {
 		// setFormSubmitStatus(true);
 	};
 
-	// console.log("form opened", formItem);
-	// console.log(activeFontFamily);
+	console.log('form opened', formItem);
+	console.log(activeFontFamily);
 	return (
 		<Container className="form1" ref={ref}>
 			<Row>
@@ -543,7 +543,8 @@ const Form1 = ({ formData }) => {
 								ref={sigPad}
 							/>
 							<p style={{ paddingTop: 10, paddingLeft: 30 }}>
-								I am Chris Oliver and this is my legal representation of my Signature.
+								I am {formik.values.fullName} and this is my legal representation of my
+								Signature.
 							</p>
 							<div className="d-flex justify-content-center">
 								<Button variant="secondary" onClick={clear} className="mr-3">
@@ -572,7 +573,8 @@ const Form1 = ({ formData }) => {
 								/>
 							</div>
 							<p style={{ paddingTop: 10, paddingLeft: 30 }}>
-								I am Chris Oliver and this is my legal representation of my Signature.
+								I am {formik.values.fullName} and this is my legal representation of my
+								Signature.
 							</p>
 							<div className="d-flex justify-content-center">
 								<Button variant="secondary" onClick={clear} className="mr-3">

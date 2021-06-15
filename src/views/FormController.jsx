@@ -24,7 +24,7 @@ const FormController = (props) => {
 				})
 			);
 
-			formEventsHandler(getFormsData.data.getFormData.id);
+			// formEventsHandler(getFormsData.data.getFormData.id);
 
 			setFormData(getFormsData.data.getFormData);
 			setLoading(false);

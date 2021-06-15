@@ -48,6 +48,12 @@ const InviteForm = ({ show, handleClose, setShow}) => {
         }
     );
  }
+ const onCopyText = () => {
+    setCopied(true);
+    setTimeout(() => {
+        setCopied(false);
+    }, 500);
+  };
  console.log(copied);
   return (
     <Modal show={show} onHide={handleClose}>
@@ -67,9 +73,11 @@ const InviteForm = ({ show, handleClose, setShow}) => {
                 /> 
                 
                 <CopyToClipboard className="mt-1 pl-2 clipboard" text="www.cribfox.com"
-                    onCopy={() => setCopied(true)}>
+                    onCopy={onCopyText}>
+                    
                     <div>Copy</div>
                 </CopyToClipboard>
+                {copied  && <span style={{color: 'red'}}>Copied</span>}
 
             </InputGroup>
 

@@ -47,10 +47,16 @@ const ShareForm = ({ show, handleClose, setShow, formData }) => {
         }
     );
  }
+ const onCopyText = () => {
+    setCopied(true);
+    setTimeout(() => {
+        setCopied(false);
+    }, 500);
+  };
  console.log(copied);
   return (
     <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+           <Modal.Header closeButton>
             <Modal.Title></Modal.Title>
         </Modal.Header>
 
@@ -63,13 +69,14 @@ const ShareForm = ({ show, handleClose, setShow, formData }) => {
                     id="inlineFormInputGroup " 
                     placeholder="agent.cribfox.com/invite/chris_oliver" 
                     value={`${base_url}/formSubmission/${formData.id}`}
+
                 /> 
                 
                 <CopyToClipboard className="mt-1 pl-2 clipboard" text={`${base_url}/formSubmission/${formData.id}`}
-                    onCopy={() => setCopied(true)}>
+                    onCopy={onCopyText}>
                     <div>Copy</div>
                 </CopyToClipboard>
-
+                {copied  && <span style={{color: 'red'}}>Copied</span>}
             </InputGroup>
 
             <div className="border-top mt-4 pt-3">
