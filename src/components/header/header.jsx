@@ -46,7 +46,7 @@ const Header = () => {
 					</Button>
 					<Dropdown>
 						<Dropdown.Toggle className="drop-btn">
-							<span>{user.attributes.email}</span>
+							<span>{user.attributes.given_name}</span>
 						</Dropdown.Toggle>
 						<Dropdown.Menu>
 							<Dropdown.Item href="#/action-1">Action</Dropdown.Item>

@@ -97,6 +97,9 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
       </Modal.Header>
       <Form onSubmit={formik.handleSubmit}>
         <Modal.Body>
+            {formik.touched.name && formik.errors.name && (
+              <Form.Text className="text-error">{formik.errors.name}</Form.Text>
+            )}
             <Form.Control
               className="mb-3"
               name="name"
@@ -106,9 +109,7 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
             />
-            {formik.touched.name && formik.errors.name && (
-              <Form.Text className="text-error">{formik.errors.name}</Form.Text>
-            )}
+            
 
 
           {/* {formik.touched.agentId && formik.errors.agentId && (
@@ -125,7 +126,9 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           /> */}
-
+          {formik.touched.email && formik.errors.email && (
+            <Form.Text className="text-error">{formik.errors.email}</Form.Text>
+          )}
           <Form.Control
             className="mb-3"
             name="email"
@@ -135,9 +138,6 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
-          {formik.touched.email && formik.errors.email && (
-            <Form.Text className="text-error">{formik.errors.email}</Form.Text>
-          )}
 
           <div>
             <Form.Control
@@ -149,7 +149,11 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
               onChange={formik.handleChange}
             />
           </div>
-
+          {formik.touched.phoneNum && formik.errors.phoneNum && (
+            <Form.Text className="text-error">
+              {formik.errors.phoneNum}
+            </Form.Text>
+          )}
           <Form.Control
             className="mb-3"
             name="phoneNum"
@@ -159,11 +163,7 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
             onBlur={formik.handleBlur}
             onChange={formik.handleChange}
           />
-          {formik.touched.phoneNum && formik.errors.phoneNum && (
-            <Form.Text className="text-error">
-              {formik.errors.phoneNum}
-            </Form.Text>
-          )}
+          
 
           <Form.Group controlId="exampleForm.ControlSelect1">
             <Form.Control

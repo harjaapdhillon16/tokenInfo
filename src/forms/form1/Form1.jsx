@@ -253,10 +253,16 @@ const Form1 = ({formData}) => {
           {formItem.status === "SIGNED" ?
             <Form.Group controlId="formBasicSign">
               {formItem.isSignatureTyped === true ?
-                <Form.Control  className="apply-font" type="text" value={formItem.signature} 
+                <Form.Control  
+                className="apply-font" 
+                type="text" 
+                onClick={handleShow}
+                value={formItem.signature}
                 disabled/>
               :
-                <div className="sign-field">  
+                <div className="sign-field"
+                onClick={handleShow}
+                >  
                   <img src={formItem.signature} /> 
                 </div>
               }
@@ -266,11 +272,18 @@ const Form1 = ({formData}) => {
           :
             <Form.Group controlId="formBasicSign">
               { signMethod === "draw" ?
-                <div className="sign-field">  
-                <img src={signImage} /> 
+                <div className="sign-field"
+                >  
+                <img src={signImage}
+                onClick={handleShow} /> 
                 </div>
               :
-                <Form.Control  className="apply-font" type="text" value={signAsText}/>
+                <Form.Control  
+                className="apply-font" 
+                type="text" 
+                value={signAsText}
+                onClick={handleShow}
+                />
               }   
 
               {!viewedStatus ?

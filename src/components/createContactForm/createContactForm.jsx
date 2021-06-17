@@ -40,10 +40,10 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
       // type:''
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Please enter your contacts full name!"),
+      name: Yup.string().required("Please enter your contact's full name!"),
       email: Yup.string()
-        .email("Please enter your contacts email address!")
-        .required("Please enter your contacts email address!"),
+        .email("Please enter your contact's email address!")
+        .required("Please enter your contact's email address!"),
       // phoneNum: Yup.string()
       //   .required("Enter your valid phone number!")
       //   .matches(phoneRegExp, "Phone number is not valid")

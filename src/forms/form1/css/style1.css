@@ -194,6 +194,9 @@ width:100%;
   max-width: 86% !important;  
   width:100%;
 }
+.cf-label{
+  display:inline-block;
+}
 @media (min-width: 1200px) {
   .form1.container {
     max-width: 1024px;

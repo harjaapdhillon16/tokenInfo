@@ -520,7 +520,8 @@ const Form2 = (formItem) => {
                     Buyer/Tenant/Seller/Landlord Signature
                   </label>
                   {formItem.formData.isSignatureTyped === false && (
-                    <div class="form-control">
+                    <div class="form-control"
+                    >
                       <img
                         class="signature"
                         src={formItem.formData.signature}
@@ -546,10 +547,13 @@ const Form2 = (formItem) => {
                     <label class="pt-2 input-head" onClick={handleShow}>
                       Buyer/Tenant/Seller/Landlord Signature
                     </label>
-                  )}
+                    )}
+                    
 
                   {signMethod === "draw" ? (
-                    <div class="form-control">
+                    <div class="form-control"
+                    onClick={handleShow}
+                    >
                       <Image className="signature" src={signImage} />
                     </div>
                   ) : (
@@ -557,8 +561,9 @@ const Form2 = (formItem) => {
                       type="text"
                       class="form-control apply-font"
                       value={signAsText}
+                      onClick={handleShow}
                     />
-                  )}
+                   )}
                 </div>
               )}
 
