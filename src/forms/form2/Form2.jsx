@@ -548,9 +548,43 @@ const Form2 = (formItem) => {
                       Buyer/Tenant/Seller/Landlord Signature
                     </label>
                     )}
-                    
 
-                  {signMethod === "draw" ? (
+
+                    {viewedStatus ? (
+                      <>
+                    {signMethod === "draw" ? (
+                      <div class="form-control"
+                      >
+                        <Image className="signature" src={signImage} />
+                      </div>
+                    ) : (
+                      <input
+                        type="text"
+                        class="form-control apply-font"
+                        value={signAsText}
+                      />
+                     )}
+                     </>
+                  ) : (
+                    <>
+                    {signMethod === "draw" ? (
+                      <div class="form-control"
+                      onClick={handleShow}
+                      >
+                        <Image className="signature" src={signImage} />
+                      </div>
+                    ) : (
+                      <input
+                        type="text"
+                        class="form-control apply-font"
+                        value={signAsText}
+                        onClick={handleShow}
+                      />
+                     )}
+                     </>
+                    )}
+
+                  {/* {signMethod === "draw" ? (
                     <div class="form-control"
                     onClick={handleShow}
                     >
@@ -563,7 +597,7 @@ const Form2 = (formItem) => {
                       value={signAsText}
                       onClick={handleShow}
                     />
-                   )}
+                   )} */}
                 </div>
               )}
 

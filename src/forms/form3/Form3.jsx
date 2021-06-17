@@ -745,8 +745,43 @@ const Form3 = (formItem) => {
             </div>
             {formItem.formData.status !== "SIGNED" ? 
               <div class="col-md-4 mb-3">
-                {signMethod === "draw" ? (
-                  <div class="form-control">
+                {viewedStatus ? (
+                      <>
+                    {signMethod === "draw" ? (
+                      <div class="form-control"
+                      >
+                        <Image className="signature" src={signImage} />
+                      </div>
+                    ) : (
+                      <input
+                        type="text"
+                        class="form-control apply-font"
+                        value={signAsText}
+                      />
+                     )}
+                     </>
+                  ) : (
+                    <>
+                    {signMethod === "draw" ? (
+                      <div class="form-control"
+                      onClick={handleShow}
+                      >
+                        <Image className="signature" src={signImage} />
+                      </div>
+                    ) : (
+                      <input
+                        type="text"
+                        class="form-control apply-font"
+                        value={signAsText}
+                        onClick={handleShow}
+                      />
+                     )}
+                     </>
+                    )}
+                {/* {signMethod === "draw" ? (
+                  <div class="form-control"
+                  onClick={handleShow}
+                  >
                     <Image className="signature" src={signImage} />
                   </div>
                 ) : (
@@ -754,8 +789,9 @@ const Form3 = (formItem) => {
                   type="text" 
                   class="form-control apply-font"
                   value={signAsText} 
+                  onClick={handleShow}
                 />
-                )}
+                )} */}
 
                 {viewedStatus ?
                   <label class="pt-2  pl-3 input-head">Signature</label>
