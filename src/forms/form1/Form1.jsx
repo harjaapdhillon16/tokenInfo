@@ -251,7 +251,7 @@ const Form1 = ({formData}) => {
       <Form onSubmit={formik.handleSubmit}>
         <Form.Row className="detail pt-5">
           
-          <Col md={4} >
+          <Col md={4}  onClick={(viewedStatus == false && formItem.status !== "SIGNED") ? handleShow : undefined} >
           {formItem.status === "SIGNED" ?
             <Form.Group controlId="formBasicSign"
             >
@@ -272,7 +272,7 @@ const Form1 = ({formData}) => {
             </Form.Group>
 
           :
-            <Form.Group  controlId="formBasicSign" >
+            <Form.Group  controlId="formBasicSign">
               { signMethod === "draw" ?
                 <div className="sign-field">  
                 <img src={signImage}
