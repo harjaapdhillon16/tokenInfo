@@ -66,7 +66,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 
   const handleSearch = (val) => {
     let filtered = [];
-    console.log(val);
+    //console.log(val);
+    //console.log(updatedContacts);
     if (val !== "") {
       filtered = updatedContacts.filter((item) => {
         return item.name.toLowerCase().includes(val.toLowerCase());
@@ -317,7 +318,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           {/* {contactList === undefined  ? */}
 
           <div className="contactsList">
-            {contacts.map((item) => (
+            {updatedContacts.map((item) => (
               <Form.Check
                 id={item.id}
                 label={item.name}

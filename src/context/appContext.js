@@ -53,6 +53,7 @@ export class AppContext extends Component {
 		this.setState({ user });
 	};
 	handleContactUpdates = (contacts) => {
+		console.log("filtervalue",contacts);
 		this.setState({ contacts });
 	};
 	handleContactDelete = (id) => {

@@ -40,6 +40,7 @@ const Form1 = ({formData}) => {
   const [formSubmitStatus, setFormSubmitStatus] = useState(false);
   const [viewedStatus, setViewedStatus] = useState(false);
   const ref = React.createRef();
+  
   const options = {
     orientation: 'portrait',
     unit: 'in',
@@ -198,7 +199,7 @@ const Form1 = ({formData}) => {
     <Container className="form1" ref={ref}>
       <Row>
         <Col md={6} className="pt-5">
-          <h4 class="resource-title font-weight-light">REBNY Resources</h4>
+          <h4 class="resource-title font-weight-light">REBNY Resources </h4>
         </Col>
         <Col md={6} className="pt-5">
           <img src={Logo} alt="logo" className="form1-logo" />
@@ -249,7 +250,8 @@ const Form1 = ({formData}) => {
       </Row>
       <Form onSubmit={formik.handleSubmit}>
         <Form.Row className="detail pt-5">
-          <Col md={4}>
+          
+          <Col md={4} >
           {formItem.status === "SIGNED" ?
             <Form.Group controlId="formBasicSign"
             >
@@ -258,6 +260,7 @@ const Form1 = ({formData}) => {
                 className="apply-font" 
                 type="text" 
                 value={formItem.signature}
+                
                 disabled/>
               :
                 <div className="sign-field">  
@@ -269,11 +272,11 @@ const Form1 = ({formData}) => {
             </Form.Group>
 
           :
-            <Form.Group controlId="formBasicSign">
+            <Form.Group  controlId="formBasicSign" >
               { signMethod === "draw" ?
                 <div className="sign-field">  
                 <img src={signImage}
-                onClick={handleShow} 
+               
                 /> 
                 </div>
               :
@@ -281,7 +284,7 @@ const Form1 = ({formData}) => {
                 className="apply-font" 
                 type="text" 
                 value={signAsText}
-                onClick={handleShow}
+               
                 />
               }   
 
