@@ -43,25 +43,27 @@ Helper function to get a audit trail string from an event.
 event: object - an event item fetched from aws
 agentEmail: string - email of the agent that sent the form (only required in case of a SENT event)
 */
-export function getStringFromEvent(event, agentEmail) {
+export function getEventBody(event, agentEmail) {
 	switch (event.type) {
 		case 'SENT':
-			return `Sent for signature to ${getSubjectsAsString(
-				event.subjects
-			)} from ${agentEmail} - IP: ${event.ip}`;
+			return `Sent for signature to ${getSubjectAsString(
+				event.subjects[0]
+			)} from ${getSubjectAsString(event.subjects[1])} - IP: ${event.ip}`;
 		case 'VIEWED':
-			return `Viewed by ${getSubjectsAsString(event.subjects)} - IP: ${event.ip}`;
+			return `Viewed by ${getSubjectAsString(event.subjects[0])} - IP: ${event.ip}`;
 		case 'SIGNED':
-			return `Signed by ${getSubjectsAsString(event.subjects)} - IP: ${event.ip}`;
+			return `Signed by ${getSubjectAsString(event.subjects[0])} - IP: ${event.ip}`;
 		default:
 			break;
 	}
 }
 
-function getSubjectsAsString(subjects) {
-	subjects = subjects.map((val, i) => `${val.name} (${val.email})`).join('');
-	const last = subjects.pop();
-	return `${subjects.join(', ')} and ${last}`;
+function getSubjectAsString(subject) {
+	// subjects = subjects.map((val) => `${val.name} (${val.email})`);
+	// return subjects[0];
+	return `${subject.name} (${subject.email})`;
+	// const last = subjects.pop();
+	// return `${subjects.join(', ')} and ${last}`;
 }
 
 function canCreateViewEvent(sortedTrail, subjects) {
