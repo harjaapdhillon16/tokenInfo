@@ -43,7 +43,7 @@ Helper function to get a audit trail string from an event.
 event: object - an event item fetched from aws
 agentEmail: string - email of the agent that sent the form (only required in case of a SENT event)
 */
-export function getEventBody(event, agentEmail) {
+export function getEventBody(event) {
 	switch (event.type) {
 		case 'SENT':
 			return `Sent for signature to ${getSubjectAsString(

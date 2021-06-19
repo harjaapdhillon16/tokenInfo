@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Container } from 'react-bootstrap';
 import { API, graphqlOperation } from 'aws-amplify';
 import EventItem from './EventItem';
 import { listFormEvents } from '../../graphql/queries';
-import appContext from '../../context/appContext';
 import { getEventBody } from '../../utils/formEventsHelpers';
 
 AuditTrail.propTypes = {
@@ -13,8 +12,6 @@ AuditTrail.propTypes = {
 
 export default function AuditTrail(props) {
 	const [events, setEvents] = useState([]);
-
-	const { agent } = useContext(appContext);
 
 	useEffect(() => {
 		API.graphql(
@@ -50,7 +47,7 @@ export default function AuditTrail(props) {
 			{events.map((event, i) => (
 				<EventItem
 					timestamp={new Date(event.createdAt).toUTCString()}
-					body={getEventBody(event, agent.email)}
+					body={getEventBody(event)}
 					key={i}
 				/>
 			))}
