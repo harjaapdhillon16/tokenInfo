@@ -14,8 +14,7 @@ import * as Yup from 'yup';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Auth } from 'aws-amplify';
-import ReactToPdf from 'react-to-pdf';
-import AuditTrail from './../../components/AuditTrail'
+import ReactToPdf from 'react-to-pdf'; 
 
 const Form1 = ({ formData }) => {
 	const [formItem, setFormItem] = useState(formData);
@@ -139,52 +138,10 @@ const Form1 = ({ formData }) => {
 		updateDate = updateDate.slice(1, 11);
 		console.log(updateDate);
 
-		// let data = [];
-		// data[0] = "name";
-		// data[1] = values.fullName;
-		// data[2] = "name_of_real_estate";
-		// data[3] = values.realEstateName;
-		// data[4] = "real_estate_brockerage_company";
-		// data[5] = values.realEstateBrokerageCompany;
-		// data[6] = "date";
-		// data[7] = updateDate;
-		// console.log(data);
-
-		// if(signAsText !== ""){
-		//   finalObject.id = formItem.id;
-		//   finalObject.isSignatureTyped = true;
-		//   finalObject.signatureFont = activeFontFamily;
-		//   finalObject.signature = signAsText;
-		//   finalObject.status = "SIGNED";
-		//   finalObject.data = data;
-		//   updateData = finalObject;
-		// }else if(signImage !== ""){
-		//   finalObject.id = formItem.id;
-		//   finalObject.isSignatureTyped = false;
-		//   finalObject.signature = signImage;
-		//   finalObject.status = "SIGNED";
-		//   finalObject.data = data;
-		//   updateData = finalObject;
-		// }
-
-		// console.log("updateData", updateData);
-
-		// try{
-		//   const editForm = await API.graphql(
-		//     graphqlOperation(updateFormData, { input: updateData })
-		//   );
-		//   console.log('editFormData', editForm);
-		//   console.log(editForm.data.updateFormData.status);
-
-		// }catch (err) {
-		//   console.log(err, "Error updating Form data");
-		// }
-
-		// setFormSubmitStatus(true);
+	 
 	};
 
-	console.log('form opened', formItem);
-	console.log(activeFontFamily);
+ 
 	return (
 		<Container className="form1" ref={ref}>
 			<Row>
