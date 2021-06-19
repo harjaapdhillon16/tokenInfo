@@ -46,7 +46,7 @@ export default function AuditTrail(props) {
 			</Row>
 			{events.map((event, i) => (
 				<EventItem
-					timestamp={new Date(event.createdAt).toUTCString()}
+					timestamp={new Date(event.createdAt).toUTCString().replace('GMT', 'UTC')}
 					body={getEventBody(event)}
 					key={i}
 				/>
