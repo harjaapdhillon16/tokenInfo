@@ -5,10 +5,10 @@ import { Dropdown } from "react-bootstrap";
 import AppCard from "../components/card/card";
 import Header from "../components/header/header";
 import AppContext from "../context/appContext";
-
 const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const { user }= useContext(AppContext);
+  const { agent, setAgent } = useContext(AppContext);
 
   useEffect(() => {
 
@@ -47,7 +47,7 @@ const Dashboard = () => {
        },
   ]
 
-
+console.log(user,"value")
   return (
     <Container fluid className="p-0"> 
       <Header/>
@@ -55,21 +55,11 @@ const Dashboard = () => {
       <Row>
         <Col md={12} className="dashboardCards pt-5">
           <h1>
-          {user.attributes.email}
+          {user.attributes.given_name}
           </h1>
           <div className="d-flex">
-            <h6 className="pt-1">HomeDax Real Estate</h6>
-            <Dropdown>
-              <Dropdown.Toggle className="drop-btn pt-0 pl-5">
-                New York
-          </Dropdown.Toggle>
-
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+            <h6 className="pt-1">{agent.brokerageName}</h6>
+            <h6 className="pt-1 pl-5">{agent.stateOfLicensure}</h6>
           </div>
         </Col>
       </Row>

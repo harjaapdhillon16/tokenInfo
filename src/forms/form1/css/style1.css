@@ -190,7 +190,13 @@ width:100%;
 .dotaction .dropdown-toggle::after {
   opacity: 0;
 }
-
+.react-multi-email{
+  max-width: 86% !important;  
+  width:100%;
+}
+.cf-label{
+  display:inline-block;
+}
 @media (min-width: 1200px) {
   .form1.container {
     max-width: 1024px;

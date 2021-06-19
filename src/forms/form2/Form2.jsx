@@ -23,18 +23,22 @@ import { API, graphqlOperation } from "aws-amplify";
 import { updateFormData } from "../../graphql/mutations";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import ReactToPdf from 'react-to-pdf';
-import { Auth } from 'aws-amplify';
-
+import ReactToPdf from "react-to-pdf";
+import { Auth } from "aws-amplify";
+import { Redirect } from "react-router-dom";
+import AuditTrail from './../../components/AuditTrail'
 
 const Form2 = (formItem) => {
   console.log("formItem", formItem);
-  console.log("formItem",formItem.formData.signature);
+  console.log("formItem", formItem.formData.signature);
 
   const [show, setShow] = useState(false);
+  const [isShow, setIsShow] = useState(false);
   const [canvasShow, setCanvasShow] = useState(true);
   const [fieldShow, setFieldShow] = useState(false);
   const sigPad = useRef({});
+  const isHandleShow = () => setIsShow(true);
+  const isHandleClose = () => setIsShow(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
   const [signImage, setSignImage] = useState("");
@@ -43,11 +47,13 @@ const Form2 = (formItem) => {
   const [activeFontFamily, setActiveFontFamily] = useState("Open Sans");
   const [formSubmitStatus, setFormSubmitStatus] = useState(false);
   const [viewedStatus, setViewedStatus] = useState(false);
+  const [count, setCount] = useState(0);
+  const [countInTimeout, setCountInTimeout] = useState(0);
   const ref = React.createRef();
   const options = {
-    orientation: 'portrait',
-    unit: 'in',
-    format: [9,16]
+    orientation: "portrait",
+    unit: "in",
+    format: [9, 18],
   };
 
   useEffect(() => {
@@ -57,15 +63,15 @@ const Form2 = (formItem) => {
 
   const checkaAuthentication = () => {
     Auth.currentAuthenticatedUser()
-    .then(userData => {
-      console.log('userData', userData);
-      if(userData !== ""){
-        setViewedStatus(true)
-      }
-    })
-    .then(data => console.log(data))
-    .catch(err => console.log(err));
-  }
+      .then((userData) => {
+        console.log("userData", userData);
+        if (userData !== "") {
+          setViewedStatus(true);
+        }
+      })
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err));
+  };
 
   const sendViewStatus = async () => {
     if (formItem.formData.status === "SENT") {
@@ -84,6 +90,16 @@ const Form2 = (formItem) => {
       }
     }
   };
+
+    const redirectToUrl  = () =>{
+      setIsShow(true);
+      if(isHandleShow){
+        setTimeout(() => {
+          setIsShow(false);  
+          window.open("http://www.cribfox.com", "_blank");
+        }, 2000);
+      }
+    }
 
   const genrateImage = () => {
     setShow(false);
@@ -183,7 +199,6 @@ const Form2 = (formItem) => {
       );
       console.log("editFormData", editForm);
       console.log(editForm.data.updateFormData.status);
-      
     } catch (err) {
       console.log(err, "Error updating Form data");
     }
@@ -191,9 +206,9 @@ const Form2 = (formItem) => {
     setFormSubmitStatus(true);
   };
 
-  console.log('viewedStatus', viewedStatus);
+  console.log("viewedStatus", viewedStatus);
   return (
-    <Container className="form2" ref={ref} >
+    <Container className="form2" ref={ref}>
       <Row className="pt-4">
         <Col md={2} sm={12} xs={12}>
           <img src={Logo} alt="logo" className=" img-fluid logo" />
@@ -371,32 +386,31 @@ const Form2 = (formItem) => {
               <li>
                 {formItem.formData.status !== "SIGNED" ? (
                   <span>
-                    {viewedStatus ?
+                    {viewedStatus ? (
                       <input
-                      class="form-control ml-2 mr-sm-2"
-                      value={formik.values.fullName}
-                      disabled
-                      />
-                    :
-                      <>
-                      <input
-                        class="form-control mb-2 mr-sm-2"
-                        id="fullName"
-                        name="fullName"
-                        type="text"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
+                        class="form-control ml-2 mr-sm-2"
                         value={formik.values.fullName}
+                        disabled
                       />
-                    
+                    ) : (
+                      <>
+                        <input
+                          class="form-control mb-2 mr-sm-2"
+                          id="fullName"
+                          name="fullName"
+                          type="text"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.fullName}
+                        />
 
-                      {formik.touched.fullName && formik.errors.fullName && (
-                        <Form.Text className="text-error mx-3">
-                          {formik.errors.fullName}
-                        </Form.Text>
-                      )}
+                        {formik.touched.fullName && formik.errors.fullName && (
+                          <Form.Text className="text-error mx-3">
+                            {formik.errors.fullName}
+                          </Form.Text>
+                        )}
                       </>
-                    }
+                    )}
                   </span>
                 ) : (
                   <input
@@ -414,31 +428,31 @@ const Form2 = (formItem) => {
               <li>
                 {formItem.formData.status !== "SIGNED" ? (
                   <span>
-                    {viewedStatus ?
+                    {viewedStatus ? (
                       <input
                         class="form-control ml-2 mr-sm-2"
                         value={formik.values.realEstateCompany}
                         disabled
-                      />  
-                    :
-                      <>
-                      <input
-                        class="form-control mb-2 mr-sm-2"
-                        type="text"
-                        id="realEstateCompany"
-                        name="realEstateCompany"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.realEstateCompany}
                       />
-                      {formik.touched.realEstateCompany &&
-                        formik.errors.realEstateCompany && (
-                          <Form.Text className="text-error  mx-3">
-                            {formik.errors.realEstateCompany}
-                          </Form.Text>
-                      )}
+                    ) : (
+                      <>
+                        <input
+                          class="form-control mb-2 mr-sm-2"
+                          type="text"
+                          id="realEstateCompany"
+                          name="realEstateCompany"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.realEstateCompany}
+                        />
+                        {formik.touched.realEstateCompany &&
+                          formik.errors.realEstateCompany && (
+                            <Form.Text className="text-error  mx-3">
+                              {formik.errors.realEstateCompany}
+                            </Form.Text>
+                          )}
                       </>
-                    }
+                    )}
                   </span>
                 ) : (
                   <input
@@ -455,32 +469,32 @@ const Form2 = (formItem) => {
                 (I)(We)
                 {formItem.formData.status !== "SIGNED" ? (
                   <span>
-                    {viewedStatus ?
+                    {viewedStatus ? (
                       <input
                         class="form-control mb-2 mr-sm-2"
                         value={formik.values.accountType}
                         disabled
                       />
-                    :
+                    ) : (
                       <>
-                      <input
-                        class="form-control mb-2 mr-sm-2"
-                        type="text"
-                        id="accountType"
-                        name="accountType"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.accountType}
-                      />
-                      
-                      {formik.touched.accountType &&
-                        formik.errors.accountType && (
-                        <Form.Text className="text-error ml-2 pl-5">
-                          {formik.errors.accountType}
-                        </Form.Text>
-                      )}
+                        <input
+                          class="form-control mb-2 mr-sm-2"
+                          type="text"
+                          id="accountType"
+                          name="accountType"
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
+                          value={formik.values.accountType}
+                        />
+
+                        {formik.touched.accountType &&
+                          formik.errors.accountType && (
+                            <Form.Text className="text-error ml-2 pl-5">
+                              {formik.errors.accountType}
+                            </Form.Text>
+                          )}
                       </>
-                    }
+                    )}
                   </span>
                 ) : (
                   <input
@@ -506,7 +520,8 @@ const Form2 = (formItem) => {
                     Buyer/Tenant/Seller/Landlord Signature
                   </label>
                   {formItem.formData.isSignatureTyped === false && (
-                    <div class="form-control">
+                    <div class="form-control"
+                    >
                       <img
                         class="signature"
                         src={formItem.formData.signature}
@@ -523,20 +538,56 @@ const Form2 = (formItem) => {
                   )}
                 </div>
               ) : (
-
                 <div class="col-md-8 mb-3 d-flex">
-                  {viewedStatus ?
+                  {viewedStatus ? (
                     <label class="pt-2 input-head">
                       Buyer/Tenant/Seller/Landlord Signature
                     </label>
-                  :
-                  <label class="pt-2 input-head" onClick={handleShow}>
-                    Buyer/Tenant/Seller/Landlord Signature
-                  </label>
-                  }
+                  ) : (
+                    <label class="pt-2 input-head" onClick={handleShow}>
+                      Buyer/Tenant/Seller/Landlord Signature
+                    </label>
+                    )}
 
-                  {signMethod === "draw" ? (
-                    <div class="form-control">
+
+                    {viewedStatus ? (
+                      <>
+                    {signMethod === "draw" ? (
+                      <div class="form-control"
+                      >
+                        <Image className="signature" src={signImage} />
+                      </div>
+                    ) : (
+                      <input
+                        type="text"
+                        class="form-control apply-font"
+                        value={signAsText}
+                      />
+                     )}
+                     </>
+                  ) : (
+                    <>
+                    {signMethod === "draw" ? (
+                      <div class="form-control"
+                      onClick={handleShow}
+                      >
+                        <Image className="signature" src={signImage} />
+                      </div>
+                    ) : (
+                      <input
+                        type="text"
+                        class="form-control apply-font"
+                        value={signAsText}
+                        onClick={handleShow}
+                      />
+                     )}
+                     </>
+                    )}
+
+                  {/* {signMethod === "draw" ? (
+                    <div class="form-control"
+                    onClick={handleShow}
+                    >
                       <Image className="signature" src={signImage} />
                     </div>
                   ) : (
@@ -544,8 +595,9 @@ const Form2 = (formItem) => {
                       type="text"
                       class="form-control apply-font"
                       value={signAsText}
+                      onClick={handleShow}
                     />
-                  )}
+                   )} */}
                 </div>
               )}
 
@@ -556,16 +608,16 @@ const Form2 = (formItem) => {
                   </Form.Text>
                 )}
                 <label class="pt-2 input-head">Date:</label>
-            
-                  {formItem.formData.status !== "SIGNED" ? (
-                    <>
-                    {viewedStatus ?
+
+                {formItem.formData.status !== "SIGNED" ? (
+                  <>
+                    {viewedStatus ? (
                       <input
                         class="form-control mb-2 mr-sm-2"
                         value={formik.values.firstDate}
                         disabled
                       />
-                    :
+                    ) : (
                       <input
                         class="form-control date-block"
                         type="text"
@@ -575,19 +627,18 @@ const Form2 = (formItem) => {
                         onBlur={formik.handleBlur}
                         value={formik.values.firstDate}
                       />
-                    }
-                    </>
-                  ) : (
-                    <input
-                      class="form-control mb-2 mr-sm-2"
-                      value={formik.values.firstDate}
-                      disabled
-                    />
-                  )}
-                
+                    )}
+                  </>
+                ) : (
+                  <input
+                    class="form-control mb-2 mr-sm-2"
+                    value={formik.values.firstDate}
+                    disabled
+                  />
+                )}
               </div>
             </div>
-            <div class="form-row pt-4 detail">
+            {/* <div class="form-row pt-4 detail">
               {formItem.formData.status === "SIGNED" ? (
                 <div class="col-md-8 mb-3 d-flex">
                   <label class="pt-2 input-head">
@@ -635,16 +686,16 @@ const Form2 = (formItem) => {
                   </Form.Text>
                 )}
                 <label class="pt-2  input-head">Date:</label>
-            
-                  {formItem.formData.status !== "SIGNED" ? (
-                    <>
-                    {viewedStatus ?
+
+                {formItem.formData.status !== "SIGNED" ? (
+                  <>
+                    {viewedStatus ? (
                       <input
                         class="form-control mb-2 mr-sm-2"
                         value={formik.values.lastDate}
                         disabled
                       />
-                    :
+                    ) : (
                       <input
                         class="form-control date-block"
                         type="text"
@@ -654,17 +705,17 @@ const Form2 = (formItem) => {
                         onBlur={formik.handleBlur}
                         value={formik.values.lastDate}
                       />
-                    }
-                    </>
-                  ) : (
-                    <input
-                      class="form-control mb-2 mr-sm-2"
-                      value={formik.values.lastDate}
-                      disabled
-                    />
-                  )}
+                    )}
+                  </>
+                ) : (
+                  <input
+                    class="form-control mb-2 mr-sm-2"
+                    value={formik.values.lastDate}
+                    disabled
+                  />
+                )}
               </div>
-            </div>
+            </div> */}
 
             <p class="pt-4">
               Real Estate broker and real estate salespersons are required by
@@ -690,25 +741,45 @@ const Form2 = (formItem) => {
                 </Col>
               </Row>
             )}
-          </form> 
+          </form>
 
-          {formItem.formData.status === "SIGNED" &&
-          <>
-            <ReactToPdf targetRef={ref} filename={`${formItem.formData.formName}.pdf`} options={options} x={.2} y={.5} scale={0.8}>
-              {({toPdf}) => (
-                <Row className="downloadBar">
-                  <Col md={12} className="py-3 d-flex justify-content-end">
-                    <button class="btn btn-secondary mx-5" onClick={toPdf}>
-                      Download
-                    </button>
-                  </Col>
-                </Row>
-              )}
-            </ReactToPdf>
-                <Button variant="success" className="d-flex m-auto my-lg-3">Submit</Button>
-            
+          {formItem.formData.status === "SIGNED" && (
+            <>
+              <ReactToPdf
+                targetRef={ref}
+                filename={`${formItem.formData.formName}.pdf`}
+                options={options}
+                x={0.2}
+                y={0.5}
+                scale={0.8}
+              >
+                {({ toPdf }) => (
+                  <Row className="downloadBar">
+                    <Col md={12} className="py-3 d-flex justify-content-end">
+                      <button class="btn btn-secondary mx-5" onClick={toPdf}>
+                        Download
+                      </button>
+                    </Col>
+                  </Row>
+                )}
+              </ReactToPdf>
+              <Button
+                variant="success"
+                className="d-flex m-auto my-lg-3"
+                onClick ={redirectToUrl}
+              >
+                Submit
+              </Button>
+              <Modal show={isShow}>
+                {/* <Modal.Header closeButton>
+                  <Modal.Title></Modal.Title>
+                </Modal.Header> */}
+                <Modal.Body className="text-center my-4">
+                  Your Form has been sent!
+                </Modal.Body>
+              </Modal>
             </>
-          }
+          )}
         </Col>
       </Row>
 
@@ -742,8 +813,8 @@ const Form2 = (formItem) => {
                 ref={sigPad}
               />
               <p style={{ paddingTop: 10, paddingLeft: 30 }}>
-                I am {formik.values.accountType} and this is my legal representation of my
-                Signature.
+                I am {formik.values.accountType} and this is my legal
+                representation of my Signature.
               </p>
               <div className="d-flex justify-content-center">
                 <Button variant="secondary" onClick={clear} className="mr-3">
@@ -772,8 +843,8 @@ const Form2 = (formItem) => {
                 />
               </div>
               <p style={{ paddingTop: 10, paddingLeft: 30 }}>
-                I am {formik.values.accountType} and this is my legal representation of my
-                Signature.
+                I am {formik.values.accountType} and this is my legal
+                representation of my Signature.
               </p>
               <div className="d-flex justify-content-center">
                 <Button variant="secondary" onClick={clear} className="mr-3">
@@ -787,6 +858,7 @@ const Form2 = (formItem) => {
           )}
         </Modal.Body>
       </Modal>
+      <AuditTrail formDataId={formItem.formData.id} />
     </Container>
   );
 };

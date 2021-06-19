@@ -66,7 +66,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 
   const handleSearch = (val) => {
     let filtered = [];
-    console.log(val);
+    //console.log(val);
+    //console.log(updatedContacts);
     if (val !== "") {
       filtered = updatedContacts.filter((item) => {
         return item.name.toLowerCase().includes(val.toLowerCase());
@@ -125,6 +126,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 
   const handleMultipleFormsData = (formid, formData, agent) => {
     console.log(formData);
+    console.log(agent);
     const date = new Date();
     let newDate = JSON.stringify(date);
     newDate = newDate.slice(1, 11);
@@ -316,7 +318,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           {/* {contactList === undefined  ? */}
 
           <div className="contactsList">
-            {contacts.map((item) => (
+            {updatedContacts.map((item) => (
               <Form.Check
                 id={item.id}
                 label={item.name}
@@ -366,9 +368,9 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           <h4 className="d-flex ml-auto mr-auto justify-content-center">
             Your form has been sent !
           </h4>
-          <Button variant="outline-secondary mt-4 d-flex ml-auto mr-auto">
+          {/* <Button variant="outline-secondary mt-4 d-flex ml-auto mr-auto">
             View REBNY COVID Liability Form
-          </Button>{" "}
+          </Button>{" "} */}
         </Modal.Body>
         <Modal.Footer>
           <Button

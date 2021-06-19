@@ -32,6 +32,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
       name: "",
       email: "",
       companyName: "",
+      title:"",      
       phoneNum: "",
       roleInCompany: "",
 
@@ -39,10 +40,10 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
       // type:''
     },
     validationSchema: Yup.object({
-      name: Yup.string().required("Please enter your contacts full name!"),
+      name: Yup.string().required("Please enter your contact's full name!"),
       email: Yup.string()
-        .email("Please enter your contacts email address!")
-        .required("Please enter your contacts email address!"),
+        .email("Please enter your contact's email address!")
+        .required("Please enter your contact's email address!"),
       // phoneNum: Yup.string()
       //   .required("Enter your valid phone number!")
       //   .matches(phoneRegExp, "Phone number is not valid")
@@ -129,10 +130,12 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
             <Form.Control
               className="mb-3"
               name="title"
-              // value={formik.values.companyName}
+              value={formik.values.companyName}
               type="text"
-              placeholder="title (optional)"
+              placeholder="Title (optional)"
+              onBlur={formik.handleBlur}
               onChange={formik.handleChange}
+              
             />
           </div>
 

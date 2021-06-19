@@ -72,6 +72,13 @@ const FormsScreen = () => {
   const filtered = filterKey !==null && filterValue !==null ? sortedForms.filter(function (item) {if(item[filterKey] === filterValue){return item;}}): sortedForms;
 
   console.log('filteredForms', filtered);
+
+  const labels = {
+    SENT: "Sent",
+    VIEWED: "Viewed",
+    SIGNED: "Signed",
+    
+  }
   if (loading) return <Loader />;
   return (
     <Container fluid className="p-0">
@@ -114,7 +121,12 @@ const FormsScreen = () => {
           <Col md={2} className="dashboardCards pt-5 text-center pr-0">
             <Dropdown>
               <Dropdown.Toggle className="drop-btn pt-0 pl-0">
-                {filterKey === 'status' && filterValue != null ? filterValue: "All" }
+                {filterKey === 'status' && filterValue != null ? 
+                  <p className="cf-label">{labels[filterValue]}</p>
+                  
+                : 
+                  "All" 
+                }
           
               </Dropdown.Toggle>
               <Dropdown.Menu>

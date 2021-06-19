@@ -51,11 +51,13 @@ const ShareForm = ({ show, handleClose, setShow, formData }) => {
     setCopied(true);
     setTimeout(() => {
         setCopied(false);
-    }, 500);
+    }, 100000);
   };
  console.log(copied);
+ console.log(setShow);
+
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={()=> handleClose(show)} >
            <Modal.Header closeButton>
             <Modal.Title></Modal.Title>
         </Modal.Header>
@@ -76,7 +78,9 @@ const ShareForm = ({ show, handleClose, setShow, formData }) => {
                     onCopy={onCopyText}>
                     <div>Copy</div>
                 </CopyToClipboard>
-                {copied  && <span style={{color: 'red'}}>Copied</span>}
+                {copied  && <span style={{
+                    color: '#ff0000', fontWeight: 600, fontSize:14, marginTop:7, paddingLeft:10}}>
+                        Copied!</span>}
             </InputGroup>
 
             <div className="border-top mt-4 pt-3">

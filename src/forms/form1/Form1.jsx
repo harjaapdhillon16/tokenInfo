@@ -15,6 +15,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Auth } from 'aws-amplify';
 import ReactToPdf from 'react-to-pdf';
+import AuditTrail from './../../components/AuditTrail'
 
 const Form1 = ({ formData }) => {
 	const [formItem, setFormItem] = useState(formData);
@@ -43,6 +44,7 @@ const Form1 = ({ formData }) => {
 		checkaAuthentication();
 	}, []);
 
+ 
 	const checkaAuthentication = () => {
 		Auth.currentAuthenticatedUser()
 			.then((userData) => {
