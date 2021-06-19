@@ -28,6 +28,7 @@ type Contact @model @key(name: "byAgent", fields: ["agentId"], queryField: "cont
 	id: ID!
 	agentId: ID!
 	name: String
+	title: String
 	email: String
 	phoneNum: String
 	companyName: String
