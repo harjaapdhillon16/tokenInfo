@@ -23,7 +23,7 @@ const FormsScreen = () => {
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-  const { user, formItems, onFormItemsUpdate, onFormItemUnitUpdate } = useContext(AppContext);
+  const { user, agent, formItems, onFormItemsUpdate, onFormItemUnitUpdate } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
   const [formsData, setFormsData] = useState([]);
   const [shareFormItem, setShareFormItem] = useState('');
@@ -40,11 +40,12 @@ const FormsScreen = () => {
 
   const handleFormsData = async () => {
     setLoading(true);
+    
     try {
       const newFormsData = await API.graphql(
-        graphqlOperation(listFormDatas)
+        graphqlOperation(listFormDatas,{ filter: { senderId: { eq: agent.id } } })
       );
-      console.log('listforms', newFormsData.data.listFormDatas.items );
+     
 
       onFormItemsUpdate(newFormsData.data.listFormDatas.items);
       // setFormsData(newFormsData.data.listFormDatas.items);
@@ -153,7 +154,7 @@ const FormsScreen = () => {
           </Col>
 
         </Row>
-        {filtered.length == null ? <h3 className="d-flex justify-content-center mt-5">No Forms Data Here</h3> :  filtered.map(item =>  <Row className=" border-bottom pb-3 mt-5 ">
+        {filtered.length === 0  ? <h3 className="d-flex justify-content-center mt-5">No Forms Data Here</h3> :  filtered.map(item =>  <Row className=" border-bottom pb-3 mt-5 ">
           <Col md={6}>
             <h6>{item.formName}</h6>
              <Link to="#">{item.receiverName}</Link>

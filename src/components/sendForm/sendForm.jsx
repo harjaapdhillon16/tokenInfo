@@ -19,6 +19,7 @@ import { listContacts } from "../../graphql/queries";
 import { createFormData } from "../../graphql/mutations";
 import * as emailjs from "emailjs-com";
 import CreateContactForm from "../../../src/components/createContactForm/createContactForm";
+import formEventsHandler from "../../utils/formEventsHelpers"
 
 const SendForm = ({ formModal, onHandleFormModal }) => {
   const [currentState, handleCurrentState] = useState(1);
@@ -66,8 +67,6 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 
   const handleSearch = (val) => {
     let filtered = [];
-    //console.log(val);
-    //console.log(updatedContacts);
     if (val !== "") {
       filtered = updatedContacts.filter((item) => {
         return item.name.toLowerCase().includes(val.toLowerCase());
@@ -201,7 +200,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
     selectedcontacts.map((item) => {
       selectedforms.map(function (form) {
         let finalObject = {};
-        finalObject.senderId = agent.email;
+        finalObject.senderId = agent.id;
         finalObject.receiverId = item.id;
         finalObject.receiverName = item.name;
         finalObject.receiverEmail = item.email;
@@ -212,7 +211,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         finalData = [...finalData, finalObject];
       });
     });
-    console.log("finalData", finalData);
+    
 
     if (finalData.length > 0) {
       finalData.map((item) => {
@@ -222,28 +221,34 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
   };
 
   const handleFormData = async (data) => {
-    console.log("handleformdata", data);
+   
+    
 
     try {
       const createdContact = await API.graphql(
         graphqlOperation(createFormData, { input: data })
       );
 
-      console.log(createdContact.data.createFormData);
+    
 
       let SERVICE_ID = "service_eqgdpk5";
-      let TEMPLATE_ID = "template_jbe48ur";
+      let TEMPLATE_ID = "template_u3u0ysu";
       let USER_ID = "user_8vM6h8mcNE6lwsmITnR6H";
       let receiverId = createdContact.data.createFormData.id;
       console.log(createdContact.data.createFormData.formName);
 
+
+        
+
+
       let emailData = {
-        from_name: user.username,
+        from_name: agent.name,
         to_name: data.receiverName,
         message: `${base_url}/formSubmission/${receiverId}`,
-        reply_to: user.attributes.email,
+        reply_to: agent.email,
         to_email: data.receiverEmail,
       };
+      formEventsHandler(receiverId,"SENT",[{name:data.receiverName,email: data.receiverEmail},{name:agent.name,email:agent.email} ]) 
 
       emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
         function (response) {

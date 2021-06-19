@@ -25,7 +25,7 @@ import { BasicTable } from "../components/basicTable";
 import ContactDetail from "./ContactDetail";
 import Loader from "../components/Loader/Loader";
 
-const FormsScreen = () => {
+const Contacts = () => {
   const [loading, setLoading] = useState(true);
   const [tableData, setTableData] = useState({});
   const [show, setShow] = useState(false);
@@ -33,7 +33,7 @@ const FormsScreen = () => {
   const [error, setError] = useState(false);
   const handleShow = () => setShow(true);
 
-  const { contacts, onUpdateContacts, onDeleteContact } = useContext(AppContext);
+  const { contacts, agent, onUpdateContacts, onDeleteContact } = useContext(AppContext);
 
   const formik = useFormik({
     initialValues: {
@@ -57,7 +57,7 @@ const FormsScreen = () => {
 
   const handleContactCreation = async (values) => {
     const data = {
-      agentId: "1",
+      agentId: agent.id,
       name: values.name,
       email: values.email,
     };
@@ -85,7 +85,7 @@ const FormsScreen = () => {
   const handleContact = async () => {
     try {
       const listContactsData = await API.graphql(
-        graphqlOperation(listContacts)
+        graphqlOperation(listContacts,{ filter: { agentId: { eq: agent.id } } })
       );
 
       // onUpdateContacts(listContactsData.data.listContacts.items);
@@ -160,4 +160,4 @@ const FormsScreen = () => {
   );
 };
 
-export default FormsScreen;
+export default Contacts;

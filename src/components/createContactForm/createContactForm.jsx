@@ -23,7 +23,7 @@ import * as Yup from "yup";
 const CreateContactForm = ({ show, handleClose, setShow }) => {
   // const [show, setShow] = useState(false);
   // const handleClose = () => setShow(false);
-  const { contacts, onUpdateContacts } = useContext(AppContext);
+  const { contacts, agent, onUpdateContacts } = useContext(AppContext);
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
@@ -59,7 +59,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
   const handleContactCreation = async (values) => {
     const data = {
       // agentId: values.agentId,
-      agentId: "1",
+      agentId: agent.id,
       name: values.name,
       email: values.email,
       phoneNum: values.phoneNum,
