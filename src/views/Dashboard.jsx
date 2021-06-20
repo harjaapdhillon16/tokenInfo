@@ -55,7 +55,7 @@ console.log(user,"value")
       <Row>
         <Col md={12} className="dashboardCards pt-5">
           <h1>
-          {user.attributes.given_name}
+          {agent.name}
           </h1>
           <div className="d-flex">
             <h6 className="pt-1">{agent.brokerageName}</h6>
