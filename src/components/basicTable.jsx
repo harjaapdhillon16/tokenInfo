@@ -73,7 +73,7 @@ const EditContact = async (item) => {
       <td>{item.email}</td>
       <td>{item.phoneNum}</td>
       <td>{item.companyName}</td>
-      <td></td>
+      <td>{item.title}</td>
       <td>{item.roleInCompany}</td>
       <td><Moment format="DD-MM-YYYY">{item.createdAt}</Moment></td>
       <td><Moment format="DD-MM-YYYY">{item.updatedAt}</Moment></td>

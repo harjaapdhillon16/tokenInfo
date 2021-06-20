@@ -24,6 +24,7 @@ import CreateContactForm from "../components/createContactForm/createContactForm
 import { BasicTable } from "../components/basicTable";
 import ContactDetail from "./ContactDetail";
 import Loader from "../components/Loader/Loader";
+import { toast } from "react-toastify";
 
 const Contacts = () => {
   const [loading, setLoading] = useState(true);
@@ -109,9 +110,11 @@ const Contacts = () => {
       console.log('deleteContactData', deleteContactData.data.deleteContact);
       onDeleteContact(deleteContactData.data.deleteContact.id);
       setLoading(false);
+      toast.success("Contact Deleted Successfully!");
     } catch (err) {
       console.log(err);
       setLoading(false);
+      toast.error("Please try again!");
     }
   };
   

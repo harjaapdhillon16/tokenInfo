@@ -19,6 +19,7 @@ import { listContacts } from "../../graphql/queries";
 import { createContact } from "../../graphql/mutations";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { toast } from "react-toastify";
 
 const CreateContactForm = ({ show, handleClose, setShow }) => {
   // const [show, setShow] = useState(false);
@@ -65,6 +66,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
       phoneNum: values.phoneNum,
       roleInCompany: values.roleInCompany,
       companyName: values.companyName,
+      title:values.title
     };
 
     try {
@@ -76,8 +78,10 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
       onUpdateContacts(newContacts);
       //console.log(createdContact.data.createContact);
       setShow(false);
+      toast.success("Contact Created Successfully!")
     } catch (err) {
       console.log(err, "Error creating contact");
+      toast.error("Please try again!")
     }
   };
   
