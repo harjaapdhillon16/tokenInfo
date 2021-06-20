@@ -69,7 +69,7 @@ function getSubjectAsString(subject) {
 function canCreateViewEvent(sortedTrail, subjects) {
 	return (
 		sortedTrail.findIndex(
-			(item) => item.type === 'VIEWED' && item.subject[0].email === subjects[0].email
+			(item) => item.type === 'VIEWED' && item.subjects[0].email === subjects[0].email
 		) === -1
 	);
 }
