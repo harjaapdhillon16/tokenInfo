@@ -12,13 +12,9 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import ReactToPdf from 'react-to-pdf';
 import { Auth } from 'aws-amplify';
-import { Redirect } from 'react-router-dom';
-import AuditTrail from './../../components/AuditTrail';
 
-const Form2 = (formItem) => {
-	console.log('formItem', formItem);
-	console.log('formItem', formItem.formData.signature);
-
+const Form2 = ( {formData, viewMode, onFormSubmission}) => {
+	 
 	const [show, setShow] = useState(false);
 	const [isShow, setIsShow] = useState(false);
 	const [canvasShow, setCanvasShow] = useState(true);
@@ -36,48 +32,9 @@ const Form2 = (formItem) => {
 	const [viewedStatus, setViewedStatus] = useState(false);
 	const [count, setCount] = useState(0);
 	const [countInTimeout, setCountInTimeout] = useState(0);
-	const ref = React.createRef();
-	const options = {
-		orientation: 'portrait',
-		unit: 'in',
-		format: [9, 18]
-	};
-
-	useEffect(() => {
-		sendViewStatus();
-		checkaAuthentication();
-	}, []);
-
-	const checkaAuthentication = () => {
-		Auth.currentAuthenticatedUser()
-			.then((userData) => {
-				console.log('userData', userData);
-				if (userData !== '') {
-					setViewedStatus(true);
-				}
-			})
-			.then((data) => console.log(data))
-			.catch((err) => console.log(err));
-	};
-
-	const sendViewStatus = async () => {
-		if (formItem.formData.status === 'SENT') {
-			let data = {};
-			data.id = formItem.formData.id;
-			data.status = 'VIEWED';
-			console.log(data);
-
-			try {
-				const checkFormStatus = await API.graphql(
-					graphqlOperation(updateFormData, { input: data })
-				);
-				console.log('checkFormStatus', checkFormStatus);
-			} catch (err) {
-				console.log(err, 'Error updating Form View status');
-			}
-		}
-	};
-
+	 
+ 
+ 
 	const redirectToUrl = () => {
 		setIsShow(true);
 		if (isHandleShow) {
@@ -123,19 +80,17 @@ const Form2 = (formItem) => {
 
 	const formik = useFormik({
 		initialValues: {
-			fullName: formItem.formData.data[1],
-			realEstateCompany: formItem.formData.data[3],
-			accountType: formItem.formData.data[5],
-			firstDate: formItem.formData.data[7],
-			lastDate: formItem.formData.data[9]
+			senderName: formData.data[1],
+			senderCompany: formData.data[3],
+			signerName: formData.data[5],
+		
 		},
 		enableReinitialize: true,
 		validationSchema: Yup.object({
-			fullName: Yup.string().required('Please enter the name'),
-			realEstateCompany: Yup.string().required('Please enter the Real Estate Company Name'),
-			accountType: Yup.string().required('Required accountype'),
-			firstDate: Yup.string().required('Please enter the date'),
-			lastDate: Yup.string().required('Please enter the date')
+			senderName: Yup.string().required('Please enter the name'),
+			senderCompany: Yup.string().required('Please enter the Real Estate Company Name'),
+			signerName: Yup.string().required('Required accountype'),
+			 
 		}),
 		onSubmit: (values) => {
 			console.log('values', values);
@@ -149,51 +104,39 @@ const Form2 = (formItem) => {
 
 		let data = [];
 		data[0] = 'name';
-		data[1] = values.fullName;
+		data[1] = values.senderName;
 		data[2] = 'name_of_real_estate_company';
-		data[3] = values.realEstateCompany;
+		data[3] = values.senderCompany;
 		data[4] = 'account_type';
-		data[5] = values.accountType;
-		data[6] = 'firstdate';
+		data[5] = values.signerName;
+		data[6] = 'date';
 		data[7] = values.firstDate;
-		data[8] = 'lastdate';
-		data[9] = values.lastDate;
+		 
+
+		finalObject.id = formData.id;
+		finalObject.data = data;
+
 
 		if (signAsText !== '') {
-			finalObject.id = formItem.formData.id;
+			
 			finalObject.isSignatureTyped = true;
 			finalObject.signatureFont = activeFontFamily;
 			finalObject.signature = signAsText;
 			finalObject.status = 'SIGNED';
-			finalObject.data = data;
-			updateData = finalObject;
+			 
 		} else if (signImage !== '') {
-			finalObject.id = formItem.formData.id;
 			finalObject.isSignatureTyped = false;
 			finalObject.signature = signImage;
-			finalObject.status = 'SIGNED';
-			finalObject.data = data;
-			updateData = finalObject;
+			finalObject.status = 'SIGNED';			 
 		}
 
-		console.log('updateData', updateData);
-
-		try {
-			const editForm = await API.graphql(
-				graphqlOperation(updateFormData, { input: updateData })
-			);
-			console.log('editFormData', editForm);
-			console.log(editForm.data.updateFormData.status);
-		} catch (err) {
-			console.log(err, 'Error updating Form data');
-		}
-
-		setFormSubmitStatus(true);
+		onFormSubmission(finalObject,"SIGNED")
+ 
 	};
 
 	console.log('viewedStatus', viewedStatus);
 	return (
-		<Container className="form2" ref={ref}>
+		<Container className="form2"  >
 			<Row className="pt-4">
 				<Col md={2} sm={12} xs={12}>
 					<img src={Logo} alt="logo" className=" img-fluid logo" />
@@ -354,41 +297,26 @@ const Form2 = (formItem) => {
 							</li>
 
 							<li>
-								{formItem.formData.status !== 'SIGNED' ? (
-									<span>
-										{viewedStatus ? (
-											<input
-												class="form-control ml-2 mr-sm-2"
-												value={formik.values.fullName}
-												disabled
-											/>
-										) : (
-											<>
-												<input
-													class="form-control mb-2 mr-sm-2"
-													id="fullName"
-													name="fullName"
-													type="text"
-													onChange={formik.handleChange}
-													onBlur={formik.handleBlur}
-													value={formik.values.fullName}
-												/>
+							<span>
+										 
+										 <input
+											 class="form-control mb-2 mr-sm-2"
+											 id="senderName"
+											 name="senderName"
+											 type="text"
+											 onChange={formik.handleChange}
+											 onBlur={formik.handleBlur}
+											 value={formik.values.senderName}
+											 disabled={viewMode}
+										 />
 
-												{formik.touched.fullName && formik.errors.fullName && (
-													<Form.Text className="text-error mx-3">
-														{formik.errors.fullName}
-													</Form.Text>
-												)}
-											</>
-										)}
-									</span>
-								) : (
-									<input
-										class="form-control ml-2 mr-sm-2"
-										value={formik.values.fullName}
-										disabled
-									/>
-								)}
+										 {formik.touched.senderName && formik.errors.senderName && (
+											 <Form.Text className="text-error mx-3">
+												 {formik.errors.senderName}
+											 </Form.Text>
+										 )}
+									  
+							 </span>
 							</li>
 
 							<li>
@@ -396,82 +324,52 @@ const Form2 = (formItem) => {
 							</li>
 
 							<li>
-								{formItem.formData.status !== 'SIGNED' ? (
-									<span>
-										{viewedStatus ? (
-											<input
-												class="form-control ml-2 mr-sm-2"
-												value={formik.values.realEstateCompany}
-												disabled
-											/>
-										) : (
-											<>
-												<input
-													class="form-control mb-2 mr-sm-2"
-													type="text"
-													id="realEstateCompany"
-													name="realEstateCompany"
-													onChange={formik.handleChange}
-													onBlur={formik.handleBlur}
-													value={formik.values.realEstateCompany}
-												/>
-												{formik.touched.realEstateCompany &&
-													formik.errors.realEstateCompany && (
-														<Form.Text className="text-error  mx-3">
-															{formik.errors.realEstateCompany}
-														</Form.Text>
-													)}
-											</>
-										)}
-									</span>
-								) : (
-									<input
-										class="form-control ml-2 mr-sm-2"
-										value={formik.values.realEstateCompany}
-										disabled
-									/>
-								)}
+							<span>
+								 
+								 <input
+									 class="form-control mb-2 mr-sm-2"
+									 type="text"
+									 id="senderCompany"
+									 name="senderCompany"
+									 onChange={formik.handleChange}
+									 onBlur={formik.handleBlur}
+									 value={formik.values.senderCompany}
+									 disabled={viewMode}
+								 />
+								 {formik.touched.senderCompany &&
+									 formik.errors.senderCompany && (
+										 <Form.Text className="text-error  mx-3">
+											 {formik.errors.senderCompany}
+										 </Form.Text>
+									 )}
+						  
+					 </span>
 							</li>
 
 							<li>(print name of Real Estate company, firm or brokerage)</li>
 
 							<li>
 								(I)(We)
-								{formItem.formData.status !== 'SIGNED' ? (
-									<span>
-										{viewedStatus ? (
-											<input
-												class="form-control mb-2 mr-sm-2"
-												value={formik.values.accountType}
-												disabled
-											/>
-										) : (
-											<>
+								<span>
+										 <>
 												<input
 													class="form-control mb-2 mr-sm-2"
 													type="text"
-													id="accountType"
-													name="accountType"
+													id="signerName"
+													name="signerName"
 													onChange={formik.handleChange}
 													onBlur={formik.handleBlur}
-													value={formik.values.accountType}
+													value={formik.values.signerName}
+													disabled={viewMode}
 												/>
 
-												{formik.touched.accountType && formik.errors.accountType && (
+												{formik.touched.signerName && formik.errors.signerName && (
 													<Form.Text className="text-error ml-2 pl-5">
-														{formik.errors.accountType}
+														{formik.errors.signerName}
 													</Form.Text>
 												)}
 											</>
-										)}
 									</span>
-								) : (
-									<input
-										class="form-control mb-2 mr-sm-2"
-										value={formik.values.accountType}
-										disabled
-									/>
-								)}
 							</li>
 
 							<li>(Buyer/Tenant/Seller/Landlord) acknowledge receipt of a copy of this</li>
@@ -480,21 +378,21 @@ const Form2 = (formItem) => {
 						</ul>
 
 						<div class="form-row pt-4 detail">
-							{formItem.formData.status === 'SIGNED' ? (
+							{formData.status === 'SIGNED' ? (
 								<div class="col-md-8 mb-3 d-flex">
 									<label class="pt-2 input-head">
 										Buyer/Tenant/Seller/Landlord Signature
 									</label>
-									{formItem.formData.isSignatureTyped === false && (
+									{formData.isSignatureTyped === false && (
 										<div class="form-control">
-											<img class="signature" src={formItem.formData.signature} />
+											<img class="signature" src={formData.signature} />
 										</div>
 									)}
-									{formItem.formData.isSignatureTyped === true && (
+									{formData.isSignatureTyped === true && (
 										<input
 											type="text"
 											class="form-control apply-font"
-											value={formItem.formData.signature}
+											value={formData.signature}
 											disabled
 										/>
 									)}
@@ -542,20 +440,7 @@ const Form2 = (formItem) => {
 										</>
 									)}
 
-									{/* {signMethod === "draw" ? (
-                    <div class="form-control"
-                    onClick={handleShow}
-                    >
-                      <Image className="signature" src={signImage} />
-                    </div>
-                  ) : (
-                    <input
-                      type="text"
-                      class="form-control apply-font"
-                      value={signAsText}
-                      onClick={handleShow}
-                    />
-                   )} */}
+									 
 								</div>
 							)}
 
@@ -565,16 +450,7 @@ const Form2 = (formItem) => {
 								)}
 								<label class="pt-2 input-head">Date:</label>
 
-								{formItem.formData.status !== 'SIGNED' ? (
-									<>
-										{viewedStatus ? (
-											<input
-												class="form-control mb-2 mr-sm-2"
-												value={formik.values.firstDate}
-												disabled
-											/>
-										) : (
-											<input
+								 <input
 												class="form-control date-block"
 												type="text"
 												id="firstDate"
@@ -582,103 +458,18 @@ const Form2 = (formItem) => {
 												onChange={formik.handleChange}
 												onBlur={formik.handleBlur}
 												value={formik.values.firstDate}
+												disabled={viewMode}
 											/>
-										)}
-									</>
-								) : (
-									<input
-										class="form-control mb-2 mr-sm-2"
-										value={formik.values.firstDate}
-										disabled
-									/>
-								)}
 							</div>
 						</div>
-						{/* <div class="form-row pt-4 detail">
-              {formItem.formData.status === "SIGNED" ? (
-                <div class="col-md-8 mb-3 d-flex">
-                  <label class="pt-2 input-head">
-                    Buyer/Tenant/Seller/Landlord Signature
-                  </label>
-                  {formItem.formData.isSignatureTyped !== true ? (
-                    <div class="form-control">
-                      <img
-                        class="signature"
-                        src={formItem.formData.signature}
-                      />
-                    </div>
-                  ) : (
-                    <input
-                      type="text"
-                      class="form-control apply-font"
-                      value={formItem.formData.signature}
-                      disabled
-                    />
-                  )}
-                </div>
-              ) : (
-                <div class="col-md-8 mb-3 d-flex">
-                  <label class="pt-2 input-head">
-                    Buyer/Tenant/Seller/Landlord Signature
-                  </label>
-                  {signMethod === "draw" ? (
-                    <div class="form-control">
-                      <img class="signature" src={signImage} />
-                    </div>
-                  ) : (
-                    <input
-                      type="text"
-                      class="form-control apply-font"
-                      value={signAsText}
-                    />
-                  )}
-                </div>
-              )}
-
-              <div class="col-md-4 mb-3 d-flex">
-                {formik.touched.lastDate && formik.errors.lastDate && (
-                  <Form.Text className="text-error">
-                    {formik.errors.lastDate}
-                  </Form.Text>
-                )}
-                <label class="pt-2  input-head">Date:</label>
-
-                {formItem.formData.status !== "SIGNED" ? (
-                  <>
-                    {viewedStatus ? (
-                      <input
-                        class="form-control mb-2 mr-sm-2"
-                        value={formik.values.lastDate}
-                        disabled
-                      />
-                    ) : (
-                      <input
-                        class="form-control date-block"
-                        type="text"
-                        id="lastDate"
-                        name="lastDate"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.lastDate}
-                      />
-                    )}
-                  </>
-                ) : (
-                  <input
-                    class="form-control mb-2 mr-sm-2"
-                    value={formik.values.lastDate}
-                    disabled
-                  />
-                )}
-              </div>
-            </div> */}
+						 
 
 						<p class="pt-4">
 							Real Estate broker and real estate salespersons are required by New York State
 							law to provide you with this Disclosure.
 						</p>
 
-						{signImage !== '' && formSubmitStatus === false && (
+						{(signImage !== ''|| signAsText !== '') && formSubmitStatus === false && (
 							<Row className="bottomBar">
 								<Col md={12} className="py-3 d-flex justify-content-center">
 									<button class="btn btn-secondary" type="submit">
@@ -688,42 +479,12 @@ const Form2 = (formItem) => {
 							</Row>
 						)}
 
-						{signAsText !== '' && formSubmitStatus === false && (
-							<Row className="bottomBar">
-								<Col md={12} className="py-3 d-flex justify-content-center">
-									<button class="btn btn-secondary" type="submit">
-										Submit
-									</button>
-								</Col>
-							</Row>
-						)}
+						 
 					</form>
 
-					{formItem.formData.status === 'SIGNED' && (
+					{formData.status === 'SIGNED' && (
 						<>
-							<ReactToPdf
-								targetRef={ref}
-								filename={`${formItem.formData.formName}.pdf`}
-								options={options}
-								x={0.2}
-								y={0.5}
-								scale={0.8}>
-								{({ toPdf }) => (
-									<Row className="downloadBar">
-										<Col md={12} className="py-3 d-flex justify-content-end">
-											<button class="btn btn-secondary mx-5" onClick={toPdf}>
-												Download
-											</button>
-										</Col>
-									</Row>
-								)}
-							</ReactToPdf>
-							<Button
-								variant="success"
-								className="d-flex m-auto my-lg-3"
-								onClick={redirectToUrl}>
-								Submit
-							</Button>
+						  
 							<Modal show={isShow}>
 								{/* <Modal.Header closeButton>
                   <Modal.Title></Modal.Title>
@@ -767,7 +528,7 @@ const Form2 = (formItem) => {
 								ref={sigPad}
 							/>
 							<p style={{ paddingTop: 10, paddingLeft: 30 }}>
-								I am {formik.values.accountType} and this is my legal representation of my
+								I am {formik.values.signerName} and this is my legal representation of my
 								Signature.
 							</p>
 							<div className="d-flex justify-content-center">
@@ -797,7 +558,7 @@ const Form2 = (formItem) => {
 								/>
 							</div>
 							<p style={{ paddingTop: 10, paddingLeft: 30 }}>
-								I am {formik.values.accountType} and this is my legal representation of my
+								I am {formik.values.signerName} and this is my legal representation of my
 								Signature.
 							</p>
 							<div className="d-flex justify-content-center">
@@ -812,7 +573,7 @@ const Form2 = (formItem) => {
 					)}
 				</Modal.Body>
 			</Modal>
-			{/* <AuditTrail formDataId={formItem.formData.id} /> */}
+			{/* <AuditTrail formDataId={formData.id} /> */}
 		</Container>
 	);
 };

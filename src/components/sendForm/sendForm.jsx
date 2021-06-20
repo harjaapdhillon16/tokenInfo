@@ -142,16 +142,13 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       data[6] = "date";
       data[7] = newDate;
     } else if (formid === 2) {
-      data[0] = "name";
-      data[1] = formData.name;
-      data[2] = "name_of_real_estate_company";
-      data[3] = formData.companyName;
-      data[4] = "account_type";
-      data[5] = "";
-      data[6] = "firstdate";
-      data[7] = newDate;
-      data[8] = "lastdate";
-      data[9] = newDate;
+      data[0] = "senderName";
+      data[1] = agent.name;
+      data[2] = "senderCompany";
+      data[3] = agent.brokerageName;
+      data[4] = "signerName";
+      data[5] = formData.name;
+      
     } else if (formid === 3) {
       data[0] = "name";
       data[1] = formData.name;
@@ -221,8 +218,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
   };
 
   const handleFormData = async (data) => {
-   
-    
+
 
     try {
       const createdContact = await API.graphql(
@@ -236,9 +232,6 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       let USER_ID = "user_8vM6h8mcNE6lwsmITnR6H";
       let receiverId = createdContact.data.createFormData.id;
       console.log(createdContact.data.createFormData.formName);
-
-
-        
 
 
       let emailData = {
