@@ -58,6 +58,7 @@ export const createContact = /* GraphQL */ `
       id
       agentId
       name
+      title
       email
       phoneNum
       companyName
@@ -77,6 +78,7 @@ export const updateContact = /* GraphQL */ `
       id
       agentId
       name
+      title
       email
       phoneNum
       companyName
@@ -96,6 +98,7 @@ export const deleteContact = /* GraphQL */ `
       id
       agentId
       name
+      title
       email
       phoneNum
       companyName
