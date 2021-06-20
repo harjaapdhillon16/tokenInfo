@@ -1013,7 +1013,7 @@ const Form3 = (formItem) => {
 							</p>
 							<div className="d-flex justify-content-center">
 								<Button variant="secondary" onClick={clear} className="mr-3">
-									Clear{' '}
+									Clear
 								</Button>
 								<Button variant="primary" onClick={genrateImage}>
 									Insert Signature
