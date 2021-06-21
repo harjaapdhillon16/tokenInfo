@@ -209,8 +209,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 			let SERVICE_ID = 'service_eqgdpk5';
 			let TEMPLATE_ID = 'template_u3u0ysu';
 			let USER_ID = 'user_8vM6h8mcNE6lwsmITnR6H';
-			let receiverId = createdContact.data.createFormData.id;
-			console.log(createdContact.data.createFormData.formName);
+			let receiverId = createdContact.data.createFormData.id; 
 
 			let emailData = {
 				from_name: agent.name,
