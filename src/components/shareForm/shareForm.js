@@ -6,7 +6,7 @@ import * as emailjs from 'emailjs-com';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import 'react-multi-email/style.css';
 
-const ShareForm = ({ show, handleClose, setShow, formData }) => {
+const ShareForm = ({ show, handleClose, setShow, formData}) => {
 	console.log(formData);
 	let base_url = window.location.origin;
 	const [emails, setEmails] = useState([]);
@@ -22,7 +22,7 @@ const ShareForm = ({ show, handleClose, setShow, formData }) => {
 		let emailData = {
 			from_name: user.username,
 			to_name: formData.receiverName,
-			message: `${base_url}/formSubmission/${formData.receiverId}`,
+			message: `Form has been Shared ${base_url}/formSubmission/${formData.id}`,
 			reply_to: user.attributes.email,
 			to_email: emails
 		};
@@ -115,13 +115,7 @@ const ShareForm = ({ show, handleClose, setShow, formData }) => {
 								}}
 							/>
 
-							{/* <div>
-                            <label>react-multi-email value</label>
-                            {emails.join(', ') || 'empty'}
-                        </div>
-                    
-                        {/* <FormControl id="inlineFormInputGroup" placeholder="Email address(es), separated by commas" /> */}
-							<InputGroup.Prepend>
+						 <InputGroup.Prepend>
 								<Button
 									variant="outline-secondary"
 									className="m-auto px-2"

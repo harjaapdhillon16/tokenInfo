@@ -125,6 +125,9 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
    
   };
 
+
+ 
+
   return (
     <Container className="form1">
       <Row>
@@ -310,7 +313,7 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
           </Col>
         </Form.Row>
 
-        {signImage !== "" && formSubmitStatus === false && (
+        {(signImage !== "" || signAsText !== "") && !viewMode && (
           <Form.Row className="bottomBar">
             <Col md={12} className="py-3 d-flex justify-content-center">
               <Button
@@ -325,21 +328,7 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
           </Form.Row>
         )}
 
-        {signAsText !== "" && formSubmitStatus === false && (
-          <Form.Row className="bottomBar">
-            <Col md={12} className="py-3 d-flex justify-content-center">
-              <Button
-                variant="secondary"
-                // onClick={submitForm}
-                className="m-auto px-5"
-                type="submit"
-                disabled={!formik.isValid}
-              >
-                Submit
-              </Button>
-            </Col>
-          </Form.Row>
-        )}
+        
       </Form>
 
       <div className="footer pl-0">

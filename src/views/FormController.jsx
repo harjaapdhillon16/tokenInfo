@@ -108,6 +108,7 @@ const FormController = (props) => {
 					console.log('Error creating Formdata', err);
 				}
 				setFormData(updateData);
+				setViewMode(true);
 			}
 		} catch (err) {
 			if (type === 'SIGNED') {
@@ -153,7 +154,7 @@ const FormController = (props) => {
 	if (loading) return <Loader />;
 	return (
 		<>
-			<div className="" ref={ref}>
+			<div className="container" ref={ref}>
 				{renderFormType(formData.formName)}
 				<AuditTrail formDataId={props.match.params.id} />
 			</div>

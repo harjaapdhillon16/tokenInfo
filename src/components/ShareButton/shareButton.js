@@ -25,7 +25,7 @@ import * as Yup from "yup";
 import { ReactMultiEmail, isEmail } from "react-multi-email";
 import "react-multi-email/style.css";
 
-const ShareButton = ({ itemData, item }) => {
+const ShareButton = ({ itemData, item, itemUrl }) => {
   //  console.log(itemData);
   let base_url = window.location.origin;
   const { user, onDeleteForm } = useContext(AppContext);
@@ -97,16 +97,11 @@ const ShareButton = ({ itemData, item }) => {
         onClick={() => handleShow()}
       >
         Share
-        <ShareForm
-          show={show}
-          handleClose={handleClose}
-          
-          formData={shareFormItem}
-        />
+
       </Button>
       <Dropdown className="dotaction d-inline-block">
         <Dropdown.Toggle className="drop-btn">
-          <ContactActions/>
+          <ContactActions />
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
@@ -117,6 +112,13 @@ const ShareButton = ({ itemData, item }) => {
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
+      <ShareForm
+        show={show}
+        handleClose={handleClose}
+        
+
+        formData={shareFormItem}
+      />
     </>
   );
 };

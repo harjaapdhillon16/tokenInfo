@@ -469,7 +469,7 @@ const Form2 = ( {formData, viewMode, onFormSubmission}) => {
 							law to provide you with this Disclosure.
 						</p>
 
-						{(signImage !== ''|| signAsText !== '') && formSubmitStatus === false && (
+						{(signImage !== ''|| signAsText !== '') && !viewMode && (
 							<Row className="bottomBar">
 								<Col md={12} className="py-3 d-flex justify-content-center">
 									<button class="btn btn-secondary" type="submit">

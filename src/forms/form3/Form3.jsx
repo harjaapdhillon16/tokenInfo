@@ -267,7 +267,7 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
                     class="form-check-input"
                     type="radio"
 					name="checkValueFirst"
-				 	checked={formik.values.checkValueFirst==="false" && false}
+				 	checked={formik.values.checkValueFirst==="false" && true}
                     disabled={viewMode}
                     onChange={() =>
                       formik.setFieldValue("checkValueFirst", "false")
@@ -318,7 +318,7 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
                     id="checkValueSecond"
                     name="checkValueSecond"
                     value="false"
-                    checked={formik.values.checkValueSecond==="false" && false}
+                    checked={formik.values.checkValueSecond==="false" && true}
                     onChange={() =>
                       formik.setFieldValue("checkValueSecond", "false")
                     }
@@ -640,7 +640,7 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
           </Col>
         </Row>
 
-        { (signImage !== "" || signAsText !== "") && formSubmitStatus === false && (
+        { (signImage !== "" || signAsText !== "") && !viewMode && (
             <Row className="bottomBar">
               <Col md={12} className="py-3 d-flex justify-content-center">
                 <button class="btn btn-secondary" type="submit">

@@ -264,18 +264,13 @@ const FormsScreen = () => {
 
                 {item.status === "VIEWED" && <SendReminder itemData={item} />}
 
-                {item.status === "SIGNED" && <ShareButton itemData={item} />}
+                {item.status === "SIGNED" && <ShareButton   itemData={item} />}
               </Col>
             </Row>
           ))
         )}
 
-        <ShareForm
-          show={show}
-          handleClose={handleClose}
-          setShow={setShow}
-          formData={shareFormItem}
-        />
+      
       </Container>
     </Container>
   );
