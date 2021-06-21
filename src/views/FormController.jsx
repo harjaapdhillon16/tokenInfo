@@ -21,10 +21,15 @@ const FormController = (props) => {
 	const [viewMode, setViewMode] = useState(false);
 	const { agent } = useContext(AppContext);
 	let base_url = window.location.origin;
+	const { innerWidth: width, innerHeight: height } = window;
+	console.log(width,height);
+	 
+	let x =  width;
+	let y = height ;
 	const options = {
 		orientation: 'portrait',
-		unit: 'in',
-		format: [9, 10.3]
+		unit: 'px',
+		format: [x,y]
 	};
 	const ref = React.createRef();
 	useEffect(() => {
@@ -44,6 +49,7 @@ const FormController = (props) => {
 			);
 
 			setFormData(getFormsData.data.getFormData);
+			console.log("new form data fetch",formData);
 
 			checkAuthentication(getFormsData.data.getFormData);
 			setLoading(false);
@@ -53,26 +59,31 @@ const FormController = (props) => {
 	};
 
 	const checkAuthentication = (data) => {
+
 		if (agent !== null || data.status === 'SIGNED') {
-			setViewMode(true);
+			setViewMode(true);			
 		} else {
 			setViewMode(false);
-			sendViewStatus();
+			console.log("auth else part");
+			sendViewStatus(data);
 		}
 	};
 
-	const sendViewStatus = async () => {
-		if (formData.status === 'SENT') {
+	const sendViewStatus = async (newdata) => {				
+		if (newdata.status === 'SENT') {
 			let data = {};
-			data.id = formData.id;
+			data.id = newdata.id;
 			data.status = 'VIEWED';
+			console.log("status changing");
 			handleFormSubmission(data, 'VIEWED');
 		}
 	};
 
 	const handleFormSubmission = async (data, type) => {
+		console.log("checking",data,type)
 		try {
 			const editForm = await API.graphql(graphqlOperation(updateFormData, { input: data }));
+			console.log("editForm",editForm);
 
 			formEventsHandler(formData.id, type, [
 				{ name: formData.receiverName, email: formData.receiverEmail }
@@ -92,6 +103,7 @@ const FormController = (props) => {
 					to_name: formData.receiverName,
 					message: `Form has been signed ${base_url}/formSubmission/${receiverId}`,
 					reply_to: 'simarjots9@gmail.com',
+					
 					to_email: formData.receiverEmail
 				};
 
@@ -104,6 +116,14 @@ const FormController = (props) => {
 							console.log(err);
 						}
 					);
+					// emailjs.sendForm(SERVICE_ID, TEMPLATE_ID,'' , USER_ID).then(
+					// 	function (response) {
+					// 		console.log(response);
+					// 	},
+					// 	function (err) {
+					// 		console.log(err);
+					// 	}
+					// );
 				} catch (err) {
 					console.log('Error creating Formdata', err);
 				}
@@ -166,9 +186,9 @@ const FormController = (props) => {
 					options={options}
 					x={0.2}
 					y={0.5}
-					scale={0.8}>
+					scale={1}>
 					{({ toPdf }) => (
-						<Row className="downloadBar">
+						<Row className="downloadBar" id="#down">
 							<Col md={12} className="py-3 d-flex justify-content-end">
 								<button class="btn btn-secondary mx-5" onClick={toPdf}>
 									Download
