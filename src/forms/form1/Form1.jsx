@@ -283,7 +283,7 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
 					  disabled={viewMode}
                     />
 
-              <Form.Label>Name of Real Estate License</Form.Label>
+              <Form.Label>Name of Real Estate Licensee</Form.Label>
             </Form.Group>
           </Col>
           <Col md={1} className="text-center mb-3 pl-lg-5 pl-md-5">
