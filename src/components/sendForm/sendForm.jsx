@@ -128,11 +128,11 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 			data[0] = 'name';
 			data[1] = formData.name;
 			data[2] = 'name_of_real_estate';
-			data[3] = agent.stateOfLicensure;
+			data[3] = agent.brokerageName;
 			data[4] = 'real_estate_brockerage_company';
-			data[5] = agent.brokerageName;
+			data[5] = agent.stateOfLicensure;
 			data[6] = 'date';
-			data[7] = newDate;
+			data[7] = '';
 		} else if (formid === 2) {
 			data[0] = 'senderName';
 			data[1] = agent.name;
@@ -144,7 +144,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 			data[0] = 'name';
 			data[1] = formData.name;
 			data[2] = 'date';
-			data[3] = newDate;
+			data[3] = '';
 			data[4] = 'property_address';
 			data[5] = '';
 			data[6] = 'real_estate_name';
