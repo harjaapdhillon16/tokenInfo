@@ -66,19 +66,13 @@ const FormController = (props) => {
 			let data = {};
 			data.id = formData.id;
 			data.status = 'VIEWED';
-			console.log('yems');
 			handleFormSubmission(data, 'VIEWED');
 		}
 	};
 
 	const handleFormSubmission = async (data, type) => {
-		console.log('hello');
 		try {
-			console.log('HEY THERE', { formData, type });
-
 			const editForm = await API.graphql(graphqlOperation(updateFormData, { input: data }));
-
-			console.log('HEY THERE', { formData, type });
 
 			formEventsHandler(formData.id, type, [
 				{ name: formData.receiverName, email: formData.receiverEmail }
