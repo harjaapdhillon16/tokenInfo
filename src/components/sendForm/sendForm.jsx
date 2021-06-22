@@ -190,14 +190,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       (item) => item.isActive === true
     );
 
-    // let today = Date.now();
-    // let today = new Date();
-
-    // let time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
-
-    // let timestamp = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(today);
-    // console.log(timestamp);
-
+     
     let finalData = [];
 
     selectedcontacts.map((item) => {
@@ -281,6 +274,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
   };
 
   const handleFormData = async (data) => {
+	  console.log(data);
+
     try {
       const createdContact = await API.graphql(
         graphqlOperation(createFormData, { input: data })
@@ -298,7 +293,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         html: getTemplate(
           agent.name,
           agent.email,
-          "docTitle",
+         data.formName,
           docLink,
           receiverId
         ),
