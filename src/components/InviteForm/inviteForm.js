@@ -17,8 +17,6 @@ import 'react-multi-email/style.css';
 
 const InviteForm = ({ show, handleClose, setShow}) => {
  const { user } = useContext(AppContext);
- console.log(user);
- console.log(user.attributes.email)
  let base_url = window.location.origin;
  const [emails, setEmails] = useState([]);
  const [copied, setCopied] = useState(false);

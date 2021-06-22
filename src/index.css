@@ -207,7 +207,7 @@ a:hover{
 }
 
 .table-bordered td, .table-bordered th{
-  border: none !important;
+ 
  
 }
 .fixedWidth{ min-width: 150px;}
