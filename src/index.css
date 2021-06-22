@@ -206,7 +206,11 @@ a:hover{
   box-shadow:none;
 }
 
-
+.table-bordered td, .table-bordered th{
+  border: none !important;
+ 
+}
+.fixedWidth{ min-width: 150px;}
 
 
 /* media queries start */

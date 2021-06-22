@@ -49,7 +49,7 @@ const EditContact = async (item) => {
  
   return (
     <Container className="p-0">
-      <Table striped bordered hover>
+      <Table striped bordered hover responsive>
   <thead>
     <tr>
       {/* <th>AgentID</th> */}
@@ -59,8 +59,8 @@ const EditContact = async (item) => {
       <th>Company</th>
       <th>Title</th>
       <th>Role</th>
-      <th>Created</th>
-      <th>Last update</th>
+      <th  className="fixedWidth">Created</th>
+      <th className="fixedWidth">Last update</th>
       <th></th>
     </tr>
   </thead>
