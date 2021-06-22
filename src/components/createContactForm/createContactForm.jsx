@@ -53,11 +53,11 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
       // roleInCompany: Yup.string().required("Your role in Company"),
       // agentId: Yup.string().required("Enter your valid agent id"),
     }),
-    onSubmit: (values) => {
-      handleContactCreation(values);
+    onSubmit: (values,{resetForm}) => {
+      handleContactCreation(values,resetForm);
     },
   }); 
-  const handleContactCreation = async (values) => {
+  const handleContactCreation = async (values, resetForm) => {
     const data = {
       // agentId: values.agentId,
       agentId: agent.id,
@@ -77,8 +77,10 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
       const newContacts = [...contacts, createdContact.data.createContact];
       onUpdateContacts(newContacts);
       //console.log(createdContact.data.createContact);
+      resetForm({})
       setShow(false);
       toast.success("Contact Created Successfully!")
+
     } catch (err) {
       console.log(err, "Error creating contact");
       toast.error("Please try again!")

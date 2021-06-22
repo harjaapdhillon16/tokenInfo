@@ -264,7 +264,7 @@ const FormsScreen = () => {
 
                 {item.status === "VIEWED" && <SendReminder itemData={item} />}
 
-                {item.status === "SIGNED" && <ShareButton   itemData={item} />}
+                {item.status === "SIGNED" && <ShareButton   itemData={item} item={item}  itemUrl={item.id} />}
               </Col>
             </Row>
           ))

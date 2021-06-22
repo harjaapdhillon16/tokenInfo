@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
+import moment from 'moment';
+import { format } from 'date-fns';
 import {
   Container,
   Row,
@@ -26,6 +28,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import ReactToPdf from "react-to-pdf";
 import AuditTrail from "./../../components/AuditTrail";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Form3 = ({ formData, viewMode, onFormSubmission }) => {
   const [show, setShow] = useState(false);
@@ -45,6 +49,8 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
     unit: "in",
     format: [9, 22],
   };
+
+  console.log("form 3 ",formData);
 
   const genrateImage = () => {
     setShow(false);
@@ -78,6 +84,14 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
       setFieldShow(false);
     }
   };
+  const date = new Date();	
+	let today = format(date, "MM/dd/yyyy");
+	today = moment(
+		today,
+		'MM-DD-YYYY'
+	).toDate()
+
+  
 
   const formik = useFormik({
     initialValues: {
@@ -86,7 +100,7 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
       checkValueThird: formData.data[15],
       checkValueFourth: formData.data[17],
       fullName: formData.data[1],
-      currentdate: formData.data[3],
+      currentdate: formData.data[3] ? new Date(formData.data[3]):today,
       propertyAddress: formData.data[5],
       realEstateName: formData.data[7],
       realEstateBrokerageCompany: formData.data[9],
@@ -113,7 +127,9 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
     },
   });
 
+
   const submitForm = async (values) => {
+    console.log(values);
     let updateData = [];
     let finalObject = {};
 
@@ -549,14 +565,23 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
                   <label class="pt-2  pl-3 input-head">Signature</label>
                 </div>
               )}
-              <div class="col-md-4 mb-3">
+              <div className="col-md-4 mb-3 date-picker-set">
                 {formik.touched.currentdate && formik.errors.currentdate && (
                   <Form.Text className="text-error mx-3">
                     {formik.errors.currentdate}
                   </Form.Text>
                 )}
+                <DatePicker
+									className="form-control"
+									name="currentDate"
+									selected={formik.values.currentdate}
+									onChange={(date) =>
+										formik.setFieldValue("currentdate", date)
+									}
+									disabled={viewMode}
+								/>
 
-                <input
+                {/* <input
                   class="form-control"
                   id="currentdate"
                   name="currentdate"
@@ -565,8 +590,8 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
                   onBlur={formik.handleBlur}
                   value={formik.values.currentdate}
                   disabled={viewMode}
-                />
-                <label class="pt-2  pl-3 inputhead">Date</label>
+                /> */}
+                <label class="pt-2  pl-3 d-block inputhead">Date</label>
               </div>
               -
             </div>

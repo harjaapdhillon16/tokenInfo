@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { format } from 'date-fns';
 import { Container, Row, Col, Form, Modal, Button, Image } from 'react-bootstrap';
 import Nav from 'react-bootstrap/Nav';
 import SignaturePad from 'react-signature-canvas';
@@ -12,9 +13,12 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import ReactToPdf from 'react-to-pdf';
 import { Auth } from 'aws-amplify';
+import moment from 'moment';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-const Form2 = ( {formData, viewMode, onFormSubmission}) => {
-	 
+const Form2 = ({ formData, viewMode, onFormSubmission }) => {
+
 	const [show, setShow] = useState(false);
 	const [isShow, setIsShow] = useState(false);
 	const [canvasShow, setCanvasShow] = useState(true);
@@ -32,9 +36,9 @@ const Form2 = ( {formData, viewMode, onFormSubmission}) => {
 	const [viewedStatus, setViewedStatus] = useState(false);
 	const [count, setCount] = useState(0);
 	const [countInTimeout, setCountInTimeout] = useState(0);
-	 
- 
- 
+
+	console.log("form2 ",formData);
+
 	const redirectToUrl = () => {
 		setIsShow(true);
 		if (isHandleShow) {
@@ -44,6 +48,21 @@ const Form2 = ( {formData, viewMode, onFormSubmission}) => {
 			}, 2000);
 		}
 	};
+
+	const date = new Date();	
+	let today = format(date, "MM/dd/yyyy");
+	today = moment(
+		today,
+		'MM-DD-YYYY'
+	).toDate()
+	
+
+	//  moment(
+	// 				newDate,
+	// 				'DD-MM-YYYY'
+	// 			).toDate();
+
+
 
 	const genrateImage = () => {
 		setShow(false);
@@ -83,14 +102,16 @@ const Form2 = ( {formData, viewMode, onFormSubmission}) => {
 			senderName: formData.data[1],
 			senderCompany: formData.data[3],
 			signerName: formData.data[5],
-		
+			currentDate: formData.data[7] ? new Date(formData.data[7]) :today
+
 		},
 		enableReinitialize: true,
 		validationSchema: Yup.object({
 			senderName: Yup.string().required('Please enter the name'),
 			senderCompany: Yup.string().required('Please enter the Real Estate Company Name'),
 			signerName: Yup.string().required('Required accountype'),
-			 
+			currentDate: Yup.string().required('Please enter Date')
+
 		}),
 		onSubmit: (values) => {
 			console.log('values', values);
@@ -99,9 +120,10 @@ const Form2 = ( {formData, viewMode, onFormSubmission}) => {
 	});
 
 	const submitForm = async (values) => {
+		console.log(values);
 		let updateData = [];
 		let finalObject = {};
-
+		console.log("submit", values);
 		let data = [];
 		data[0] = 'name';
 		data[1] = values.senderName;
@@ -110,28 +132,28 @@ const Form2 = ( {formData, viewMode, onFormSubmission}) => {
 		data[4] = 'account_type';
 		data[5] = values.signerName;
 		data[6] = 'date';
-		data[7] = values.firstDate;
-		 
+		data[7] = values.currentDate;
+
 
 		finalObject.id = formData.id;
 		finalObject.data = data;
 
 
 		if (signAsText !== '') {
-			
+
 			finalObject.isSignatureTyped = true;
 			finalObject.signatureFont = activeFontFamily;
 			finalObject.signature = signAsText;
 			finalObject.status = 'SIGNED';
-			 
+
 		} else if (signImage !== '') {
 			finalObject.isSignatureTyped = false;
 			finalObject.signature = signImage;
-			finalObject.status = 'SIGNED';			 
+			finalObject.status = 'SIGNED';
 		}
 
-		onFormSubmission(finalObject,"SIGNED")
- 
+		onFormSubmission(finalObject, "SIGNED")
+
 	};
 
 	console.log('viewedStatus', viewedStatus);
@@ -297,26 +319,26 @@ const Form2 = ( {formData, viewMode, onFormSubmission}) => {
 							</li>
 
 							<li>
-							<span>
-										 
-										 <input
-											 class="form-control mb-2 mr-sm-2"
-											 id="senderName"
-											 name="senderName"
-											 type="text"
-											 onChange={formik.handleChange}
-											 onBlur={formik.handleBlur}
-											 value={formik.values.senderName}
-											 disabled={viewMode}
-										 />
+								<span>
 
-										 {formik.touched.senderName && formik.errors.senderName && (
-											 <Form.Text className="text-error mx-3">
-												 {formik.errors.senderName}
-											 </Form.Text>
-										 )}
-									  
-							 </span>
+									<input
+										class="form-control mb-2 mr-sm-2"
+										id="senderName"
+										name="senderName"
+										type="text"
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+										value={formik.values.senderName}
+										disabled={viewMode}
+									/>
+
+									{formik.touched.senderName && formik.errors.senderName && (
+										<Form.Text className="text-error mx-3">
+											{formik.errors.senderName}
+										</Form.Text>
+									)}
+
+								</span>
 							</li>
 
 							<li>
@@ -324,26 +346,26 @@ const Form2 = ( {formData, viewMode, onFormSubmission}) => {
 							</li>
 
 							<li>
-							<span>
-								 
-								 <input
-									 class="form-control mb-2 mr-sm-2"
-									 type="text"
-									 id="senderCompany"
-									 name="senderCompany"
-									 onChange={formik.handleChange}
-									 onBlur={formik.handleBlur}
-									 value={formik.values.senderCompany}
-									 disabled={viewMode}
-								 />
-								 {formik.touched.senderCompany &&
-									 formik.errors.senderCompany && (
-										 <Form.Text className="text-error  mx-3">
-											 {formik.errors.senderCompany}
-										 </Form.Text>
-									 )}
-						  
-					 </span>
+								<span>
+
+									<input
+										class="form-control mb-2 mr-sm-2"
+										type="text"
+										id="senderCompany"
+										name="senderCompany"
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+										value={formik.values.senderCompany}
+										disabled={viewMode}
+									/>
+									{formik.touched.senderCompany &&
+										formik.errors.senderCompany && (
+											<Form.Text className="text-error  mx-3">
+												{formik.errors.senderCompany}
+											</Form.Text>
+										)}
+
+								</span>
 							</li>
 
 							<li>(print name of Real Estate company, firm or brokerage)</li>
@@ -351,25 +373,25 @@ const Form2 = ( {formData, viewMode, onFormSubmission}) => {
 							<li>
 								(I)(We)
 								<span>
-										 <>
-												<input
-													class="form-control mb-2 mr-sm-2"
-													type="text"
-													id="signerName"
-													name="signerName"
-													onChange={formik.handleChange}
-													onBlur={formik.handleBlur}
-													value={formik.values.signerName}
-													disabled={viewMode}
-												/>
+									<>
+										<input
+											class="form-control mb-2 mr-sm-2"
+											type="text"
+											id="signerName"
+											name="signerName"
+											onChange={formik.handleChange}
+											onBlur={formik.handleBlur}
+											value={formik.values.signerName}
+											disabled={viewMode}
+										/>
 
-												{formik.touched.signerName && formik.errors.signerName && (
-													<Form.Text className="text-error ml-2 pl-5">
-														{formik.errors.signerName}
-													</Form.Text>
-												)}
-											</>
-									</span>
+										{formik.touched.signerName && formik.errors.signerName && (
+											<Form.Text className="text-error ml-2 pl-5">
+												{formik.errors.signerName}
+											</Form.Text>
+										)}
+									</>
+								</span>
 							</li>
 
 							<li>(Buyer/Tenant/Seller/Landlord) acknowledge receipt of a copy of this</li>
@@ -440,36 +462,45 @@ const Form2 = ( {formData, viewMode, onFormSubmission}) => {
 										</>
 									)}
 
-									 
+
 								</div>
 							)}
 
 							<div class="col-md-4 mb-3 d-flex">
-								{formik.touched.firstDate && formik.errors.firstDate && (
-									<Form.Text className="text-error">{formik.errors.firstDate}</Form.Text>
+								{formik.touched.currentDate && formik.errors.currentDate && (
+									<Form.Text className="text-error">{formik.errors.currentDate}</Form.Text>
 								)}
 								<label class="pt-2 input-head">Date:</label>
+								<DatePicker
+									className="form-control date-block"
+									name="currentDate"
+									selected={formik.values.currentDate}
+									onChange={(date) =>
+										formik.setFieldValue("currentDate", date)
+									}
+									disabled={viewMode}
+								/>
 
-								 <input
+								{/* <input
 												class="form-control date-block"
-												type="text"
+												type="date"
 												id="firstDate"
 												name="firstDate"
 												onChange={formik.handleChange}
 												onBlur={formik.handleBlur}
 												value={formik.values.firstDate}
 												disabled={viewMode}
-											/>
+											/> */}
 							</div>
 						</div>
-						 
+
 
 						<p class="pt-4">
 							Real Estate broker and real estate salespersons are required by New York State
 							law to provide you with this Disclosure.
 						</p>
 
-						{(signImage !== ''|| signAsText !== '') && !viewMode && (
+						{(signImage !== '' || signAsText !== '') && !viewMode && (
 							<Row className="bottomBar">
 								<Col md={12} className="py-3 d-flex justify-content-center">
 									<button class="btn btn-secondary" type="submit">
@@ -479,12 +510,12 @@ const Form2 = ( {formData, viewMode, onFormSubmission}) => {
 							</Row>
 						)}
 
-						 
+
 					</form>
 
 					{formData.status === 'SIGNED' && (
 						<>
-						  
+
 							<Modal show={isShow}>
 								{/* <Modal.Header closeButton>
                   <Modal.Title></Modal.Title>

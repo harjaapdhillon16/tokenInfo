@@ -5,9 +5,10 @@ import { ReactMultiEmail, isEmail } from 'react-multi-email';
 import * as emailjs from 'emailjs-com';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import 'react-multi-email/style.css';
+import { toast } from 'react-toastify';
 
-const ShareForm = ({ show, handleClose, setShow, formData}) => {
-	console.log(formData);
+const ShareForm = ({ show, handleClose, setShow, formData,url}) => {
+	console.log("shareForm data",formData);
 	let base_url = window.location.origin;
 	const [emails, setEmails] = useState([]);
 	const [copied, setCopied] = useState(false);
@@ -22,7 +23,7 @@ const ShareForm = ({ show, handleClose, setShow, formData}) => {
 		let emailData = {
 			from_name: user.username,
 			to_name: formData.receiverName,
-			message: `Form has been Shared ${base_url}/formSubmission/${formData.id}`,
+			message: `Form has been Shared ${base_url}/formSubmission/${url}`,
 			reply_to: user.attributes.email,
 			to_email: emails
 		};
@@ -32,9 +33,11 @@ const ShareForm = ({ show, handleClose, setShow, formData}) => {
 			function (response) {
 				console.log(response);
 				console.log(response.status, response.text);
+				toast.success('Email Send Successfully!');
 			},
 			function (err) {
 				console.log(err);
+				toast.warning('Email not Send Successfully!');
 			}
 		);
 	};
@@ -63,12 +66,12 @@ const ShareForm = ({ show, handleClose, setShow, formData}) => {
 					<FormControl
 						id="inlineFormInputGroup "
 						placeholder="agent.cribfox.com/invite/chris_oliver"
-						value={`${base_url}/formSubmission/${formData.id}`}
+						value={`${base_url}/formSubmission/${url}`}
 					/>
 
 					<CopyToClipboard
 						className="mt-1 pl-2 clipboard"
-						text={`${base_url}/formSubmission/${formData.id}`}
+						text={`${base_url}/formSubmission/${url}`}
 						onCopy={onCopyText}>
 						<div>Copy</div>
 					</CopyToClipboard>
