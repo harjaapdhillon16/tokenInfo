@@ -37,10 +37,14 @@ const ShareButton = ({ itemData, item, itemUrl }) => {
     setShow(!value);
     //setShow(value)
   }
+
+  console.log("itemData",itemData);
+  console.log("item",item);
+  console.log("itemUrl",itemUrl);
   const [reminderStatus, setReminderStatus] = useState(false);
 
   const handleShared = (item) => {
-    console.log(item);
+    console.log("handleshare function",item);
     setShareFormItem(item);
     handleShow();
   };
@@ -89,6 +93,7 @@ const ShareButton = ({ itemData, item, itemUrl }) => {
       console.log(err);
     }
   };
+  
 
   return (
     <>
@@ -105,7 +110,16 @@ const ShareButton = ({ itemData, item, itemUrl }) => {
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-          <Dropdown.Item>Download</Dropdown.Item>
+          {/* <Dropdown.Item >
+          <a
+            className="dropdown-item p-0"
+                    target="_blank"
+                    href={`${base_url}/formSubmission/${itemUrl}&download=true`}
+                  >
+                  Download
+                  </a>
+           
+            </Dropdown.Item> */}
 
           <Dropdown.Item onClick={() => handleDeleteForm(itemData.id)}>
             Delete
@@ -115,8 +129,7 @@ const ShareButton = ({ itemData, item, itemUrl }) => {
       <ShareForm
         show={show}
         handleClose={handleClose}
-        
-
+        url={itemUrl}
         formData={shareFormItem}
       />
     </>

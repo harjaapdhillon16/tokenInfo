@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useContext } from 'react';
-
 import { IconPlus } from '../../assets/icons/icons';
 import { Container, Modal, InputGroup, Form, Row, Col, Button } from 'react-bootstrap';
 import { Dropdown } from 'react-bootstrap';
@@ -12,6 +11,7 @@ import { createFormData } from '../../graphql/mutations';
 import * as emailjs from 'emailjs-com';
 import CreateContactForm from '../../../src/components/createContactForm/createContactForm';
 import formEventsHandler from '../../utils/formEventsHelpers';
+
 
 const SendForm = ({ formModal, onHandleFormModal }) => {
 	const [currentState, handleCurrentState] = useState(1);
@@ -41,6 +41,13 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 		handleFormTypes();
 		handleContactTypes();
 	}, [formModal]);
+
+	useEffect(() => {
+		// handleCurrentState(1);
+		 handleContact();
+		// handleFormTypes();
+		handleContactTypes();
+	}, [contacts]);
 
 	const handleFormTypes = () => {
 		console.log(formItems);
@@ -122,15 +129,16 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 		let newDate = JSON.stringify(date);
 		newDate = newDate.slice(1, 11);
 
+
 		let data = [];
 
 		if (formid === 1) {
 			data[0] = 'name';
 			data[1] = formData.name;
 			data[2] = 'name_of_real_estate';
-			data[3] = agent.brokerageName;
+			data[3] = agent.name;
 			data[4] = 'real_estate_brockerage_company';
-			data[5] = agent.stateOfLicensure;
+			data[5] = agent.brokerageName;
 			data[6] = 'date';
 			data[7] = '';
 		} else if (formid === 2) {
@@ -140,6 +148,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 			data[3] = agent.brokerageName;
 			data[4] = 'signerName';
 			data[5] = formData.name;
+			data[6] = 'date';
+			data[7] = '';
 		} else if (formid === 3) {
 			data[0] = 'name';
 			data[1] = formData.name;
@@ -148,9 +158,9 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 			data[4] = 'property_address';
 			data[5] = '';
 			data[6] = 'real_estate_name';
-			data[7] = formData.companyName;
+			data[7] = formData.name;
 			data[8] = 'name_of_brockerage_company';
-			data[9] = '';
+			data[9] = formData.companyName;
 			data[10] = 'checkValueFirst';
 			data[11] = '';
 			data[12] = 'checkValueSecond';

@@ -111,6 +111,7 @@ const FormController = (props) => {
 					emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
 						function (response) {
 							console.log(response);
+
 						},
 						function (err) {
 							console.log(err);
@@ -127,8 +128,14 @@ const FormController = (props) => {
 				} catch (err) {
 					console.log('Error creating Formdata', err);
 				}
-				setFormData(updateData);
+				console.warn("dataupdate");
+				//setFormData(updateData);
+				console.warn("dataupdate success" );
 				setViewMode(true);
+				setTimeout(() => {
+					window.location.reload();	
+				}, 2000);
+				
 			}
 		} catch (err) {
 			if (type === 'SIGNED') {

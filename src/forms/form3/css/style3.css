@@ -64,6 +64,9 @@
     border-radius: 0px;
     max-width: 300px;
 }
+.react-datepicker-wrapper{
+    display: block !important;
+}
 /* Responsive design with media queries */
 
 @media (max-width:1200px){}

@@ -17,6 +17,8 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import moment from 'moment';
+import { format } from 'date-fns';
 
 
 const Form1 = ({ formData, viewMode, onFormSubmission }) => {
@@ -34,6 +36,14 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
   const [startDate, setStartDate] = useState(new Date());
   const [formSubmitStatus, setFormSubmitStatus] = useState(false);
   const [viewedStatus, setViewedStatus] = useState(false);
+
+  console.log("formitem",formItem);
+  const date = new Date();	
+	let today = format(date, "MM/dd/yyyy");
+	today = moment(
+		today,
+		'MM-DD-YYYY'
+	).toDate()
 
   function clear() {
     sigPad.current.clear();
@@ -68,10 +78,12 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
     }
   };
   // formItem.data[7]
+
+
   const formik = useFormik({
     initialValues: {
       fullName: formItem.data[1],
-      currentDate: "",
+      currentDate:formItem.data[7] ? new Date(formItem.data[7]) :today,
       realEstateName: formItem.data[3],
       realEstateBrokerageCompany: formItem.data[5],
     },
@@ -94,7 +106,7 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
   const submitForm = async (values) => {
     let updateData = [];
     let finalObject = {};
-    console.log(values.currentDate);
+    console.log("submit form value".values);
 
 	let data = [];
 		data[0] = 'name';
@@ -120,7 +132,7 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
 			finalObject.signature = signImage;		 
 		}
 		onFormSubmission(finalObject,"SIGNED")
-
+  
 
    
   };

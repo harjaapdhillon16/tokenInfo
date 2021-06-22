@@ -75,8 +75,8 @@ const EditContact = async (item) => {
       <td>{item.companyName}</td>
       <td>{item.title}</td>
       <td>{item.roleInCompany}</td>
-      <td><Moment format="DD-MM-YYYY">{item.createdAt}</Moment></td>
-      <td><Moment format="DD-MM-YYYY">{item.updatedAt}</Moment></td>
+      <td><Moment format="MM-DD-YYYY">{item.createdAt}</Moment></td>
+      <td><Moment format="MM-DD-YYYY">{item.updatedAt}</Moment></td>
       <td className="dotaction  d-flex justify-content-end">
         <Dropdown>
           <Dropdown.Toggle className="drop-btn">
