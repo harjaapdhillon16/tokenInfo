@@ -49,7 +49,7 @@ const EditContact = async (item) => {
  
   return (
     <Container className="p-0">
-      <Table striped bordered hover responsive>
+      <Table striped bordered hover>
   <thead>
     <tr>
       {/* <th>AgentID</th> */}
