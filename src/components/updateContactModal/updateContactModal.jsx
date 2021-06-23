@@ -23,7 +23,7 @@ import * as Yup from "yup";
 
 const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
   console.log('editdata:', data);
-  const { contacts, onEditContact } = useContext(AppContext);
+  const { contacts,agent, onEditContact } = useContext(AppContext);
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
   const formik = useFormik({
@@ -43,11 +43,10 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
         .email("Please enter valid email!")
         .required("Please enter valid email!"),
       phoneNum: Yup.string()
-      .required("Enter your valid phone number!")
       .matches(phoneRegExp, 'Phone number is not valid')
       .min(10, "to short")
       .max(10, "to long"),
-      roleInCompany: Yup.string().required("Your role in Company"),
+      // roleInCompany: Yup.string().required("Your role in Company"),
       // agentId: Yup.string().required("Enter your valid agent id"),
       
     }),
@@ -57,10 +56,13 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
   });
 
   const handleContactCreation = async (values) => {
+
+
+    console.log("edit values",values);
     
     const updateData = {
       id: data.id,
-      agentId: "1",
+      agentId: agent.id,
       name: values.values.name,
       email: values.values.email,
       phoneNum: values.values.phoneNum,
@@ -69,15 +71,34 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
     };
     
     console.log('values', updateData);
+    
 
 
   try {
     const editContacts = await API.graphql(
       graphqlOperation(updateContact, { input: updateData })
     );
-    onEditContact(editContacts.data.updateContact)
+    console.log("editContacts afte hit",editContacts);
+       let listcontacts = [...contacts];
+       const index = listcontacts.findIndex(function (item){
+      if(item.id === editContacts.data.updateContact.id){
+        return item;
+      }
+    })
+    listcontacts[index] = editContacts.data.updateContact;
+    // console.log("after update the ",listcontacts);
+    onEditContact(listcontacts);
+
+    // let i =  contacts.findIndex(contact => contact.id = editContacts.data.updateContact.id);
+    // console.log(i);
+    // console.log(console[i]);
+
+    //  onEditContact(editContacts.data.updateContact)
+
+
+
     // if(updateData.id === editContacts.data.updateContact.id){
-    //   const updateContacts = [...contacts, editContacts.data.updateContact];
+    // const updateContacts = [...contacts, editContacts.data.updateContact];
     //   console.log('updateContacts', updateContacts);
       
     // }
@@ -173,6 +194,7 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
               onChange={formik.handleChange}
               value={formik.values.roleInCompany}
             >
+              <option>Select</option>
               <option>Buyer</option>
               <option>Agent</option>
               <option>Seller</option>
