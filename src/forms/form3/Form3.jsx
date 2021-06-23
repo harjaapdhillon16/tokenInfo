@@ -103,32 +103,32 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
 	});
 
 	const submitForm = async (values) => {
-		let updateData = [];
-		let finalObject = {};
+		let data = [
+			'name',
+			values.fullName,
+			'date',
+			values.currentdate,
+			'property_address',
+			values.propertyAddress,
+			'real_estate_name',
+			values.realEstateName,
+			'name_of_brockerage_company',
+			values.realEstateBrokerageCompany,
+			'checkValueFirst',
+			values.checkValueFirst,
+			'checkValueSecond',
+			values.checkValueSecond,
+			'checkValueThird',
+			values.checkValueThird,
+			'checkValueFourth',
+			values.checkValueFourth
+		];
 
-		let data = [];
-		data[0] = 'name';
-		data[1] = values.fullName;
-		data[2] = 'date';
-		data[3] = values.currentdate;
-		data[4] = 'property_address';
-		data[5] = values.propertyAddress;
-		data[6] = 'real_estate_name';
-		data[7] = values.realEstateName;
-		data[8] = 'name_of_brockerage_company';
-		data[9] = values.realEstateBrokerageCompany;
-		data[10] = 'checkValueFirst';
-		data[11] = values.checkValueFirst;
-		data[12] = 'checkValueSecond';
-		data[13] = values.checkValueSecond;
-		data[14] = 'checkValueThird';
-		data[15] = values.checkValueThird;
-		data[16] = 'checkValueFourth';
-		data[17] = values.checkValueFourth;
-
-		finalObject.id = formData.id;
-		finalObject.data = data;
-		finalObject.status = 'SIGNED';
+		let finalObject = {
+			id: formData.id,
+			data,
+			status: 'SIGNED'
+		};
 
 		if (signAsText !== '') {
 			finalObject.isSignatureTyped = true;

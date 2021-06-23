@@ -50,11 +50,6 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 	let today = format(date, 'MM/dd/yyyy');
 	today = moment(today, 'MM-DD-YYYY').toDate();
 
-	//  moment(
-	// 				newDate,
-	// 				'DD-MM-YYYY'
-	// 			).toDate();
-
 	const genrateImage = () => {
 		setShow(false);
 		setSignMethod('draw');
@@ -108,21 +103,21 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 	});
 
 	const submitForm = async (values) => {
-		let updateData = [];
-		let finalObject = {};
-		let data = [];
-		data[0] = 'name';
-		data[1] = values.senderName;
-		data[2] = 'name_of_real_estate_company';
-		data[3] = values.senderCompany;
-		data[4] = 'account_type';
-		data[5] = values.signerName;
-		data[6] = 'date';
-		data[7] = values.currentDate;
+		let data = [
+			'name',
+			values.senderName,
+			'name_of_real_estate_company',
+			values.senderCompany,
+			'account_type',
+			values.signerName,
+			'date',
+			values.currentDate
+		];
 
-		finalObject.id = formData.id;
-		finalObject.data = data;
-
+		let finalObject = {
+			id: formData.id,
+			data
+		};
 		if (signAsText !== '') {
 			finalObject.isSignatureTyped = true;
 			finalObject.signatureFont = activeFontFamily;

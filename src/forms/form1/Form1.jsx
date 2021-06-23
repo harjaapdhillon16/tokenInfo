@@ -91,22 +91,23 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
 	});
 
 	const submitForm = async (values) => {
-		let updateData = [];
-		let finalObject = {};
+		let data = [
+			'name',
+			values.fullName,
+			'name_of_real_estate',
+			values.realEstateName,
+			'real_estate_brockerage_company',
+			values.realEstateBrokerageCompany,
+			'date',
+			values.currentDate
+		];
 
-		let data = [];
-		data[0] = 'name';
-		data[1] = values.fullName;
-		data[2] = 'name_of_real_estate';
-		data[3] = values.realEstateName;
-		data[4] = 'real_estate_brockerage_company';
-		data[5] = values.realEstateBrokerageCompany;
-		data[6] = 'date';
-		data[7] = values.currentDate;
+		let finalObject = {
+			id: formData.id,
+			status: 'SIGNED',
+			data
+		};
 
-		finalObject.id = formData.id;
-		finalObject.status = 'SIGNED';
-		finalObject.data = data;
 		if (signAsText !== '') {
 			finalObject.isSignatureTyped = true;
 			finalObject.signatureFont = activeFontFamily;
