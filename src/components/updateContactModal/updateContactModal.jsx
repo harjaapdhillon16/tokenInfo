@@ -194,7 +194,7 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
               onChange={formik.handleChange}
               value={formik.values.roleInCompany}
             >
-              <option>Select</option>
+              <option></option>
               <option>Buyer</option>
               <option>Agent</option>
               <option>Seller</option>

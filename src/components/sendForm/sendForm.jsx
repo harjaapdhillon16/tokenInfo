@@ -298,10 +298,16 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           receiverId
         ),
       };
-      formEventsHandler(receiverId, "SENT", [
-        { name: data.receiverName, email: data.receiverEmail },
-        { name: agent.name, email: agent.email },
-      ]);
+      try{
+        formEventsHandler(receiverId, "SENT", [
+          { name: data.receiverName, email: data.receiverEmail },
+          { name: agent.name, email: agent.email },
+        ]);
+      }
+      catch(err){
+        console.log("audit trail error",err);
+      }
+     
 
       emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
         function (response) {
