@@ -14,11 +14,10 @@ import * as Yup from 'yup';
 import ReactToPdf from 'react-to-pdf';
 import { Auth } from 'aws-amplify';
 import moment from 'moment';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const Form2 = ({ formData, viewMode, onFormSubmission }) => {
-
 	const [show, setShow] = useState(false);
 	const [isShow, setIsShow] = useState(false);
 	const [canvasShow, setCanvasShow] = useState(true);
@@ -37,8 +36,6 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 	const [count, setCount] = useState(0);
 	const [countInTimeout, setCountInTimeout] = useState(0);
 
-	console.log("form2 ",formData);
-
 	const redirectToUrl = () => {
 		setIsShow(true);
 		if (isHandleShow) {
@@ -49,20 +46,14 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 		}
 	};
 
-	const date = new Date();	
-	let today = format(date, "MM/dd/yyyy");
-	today = moment(
-		today,
-		'MM-DD-YYYY'
-	).toDate()
-	
+	const date = new Date();
+	let today = format(date, 'MM/dd/yyyy');
+	today = moment(today, 'MM-DD-YYYY').toDate();
 
 	//  moment(
 	// 				newDate,
 	// 				'DD-MM-YYYY'
 	// 			).toDate();
-
-
 
 	const genrateImage = () => {
 		setShow(false);
@@ -102,8 +93,7 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 			senderName: formData.data[1],
 			senderCompany: formData.data[3],
 			signerName: formData.data[5],
-			currentDate: formData.data[7] ? new Date(formData.data[7]) :today
-
+			currentDate: formData.data[7] ? new Date(formData.data[7]) : today
 		},
 		enableReinitialize: true,
 		validationSchema: Yup.object({
@@ -111,19 +101,15 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 			senderCompany: Yup.string().required('Please enter the Real Estate Company Name'),
 			signerName: Yup.string().required('Required accountype'),
 			currentDate: Yup.string().required('Please enter Date')
-
 		}),
 		onSubmit: (values) => {
-			console.log('values', values);
 			submitForm(values);
 		}
 	});
 
 	const submitForm = async (values) => {
-		console.log(values);
 		let updateData = [];
 		let finalObject = {};
-		console.log("submit", values);
 		let data = [];
 		data[0] = 'name';
 		data[1] = values.senderName;
@@ -134,31 +120,25 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 		data[6] = 'date';
 		data[7] = values.currentDate;
 
-
 		finalObject.id = formData.id;
 		finalObject.data = data;
 
-
 		if (signAsText !== '') {
-
 			finalObject.isSignatureTyped = true;
 			finalObject.signatureFont = activeFontFamily;
 			finalObject.signature = signAsText;
 			finalObject.status = 'SIGNED';
-
 		} else if (signImage !== '') {
 			finalObject.isSignatureTyped = false;
 			finalObject.signature = signImage;
 			finalObject.status = 'SIGNED';
 		}
 
-		onFormSubmission(finalObject, "SIGNED")
-
+		onFormSubmission(finalObject, 'SIGNED');
 	};
 
-	console.log('viewedStatus', viewedStatus);
 	return (
-		<Container className="form2"  >
+		<Container className="form2">
 			<Row className="pt-4">
 				<Col md={2} sm={12} xs={12}>
 					<img src={Logo} alt="logo" className=" img-fluid logo" />
@@ -320,7 +300,6 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 
 							<li>
 								<span>
-
 									<input
 										class="form-control mb-2 mr-sm-2"
 										id="senderName"
@@ -337,7 +316,6 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 											{formik.errors.senderName}
 										</Form.Text>
 									)}
-
 								</span>
 							</li>
 
@@ -347,7 +325,6 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 
 							<li>
 								<span>
-
 									<input
 										class="form-control mb-2 mr-sm-2"
 										type="text"
@@ -358,13 +335,11 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 										value={formik.values.senderCompany}
 										disabled={viewMode}
 									/>
-									{formik.touched.senderCompany &&
-										formik.errors.senderCompany && (
-											<Form.Text className="text-error  mx-3">
-												{formik.errors.senderCompany}
-											</Form.Text>
-										)}
-
+									{formik.touched.senderCompany && formik.errors.senderCompany && (
+										<Form.Text className="text-error  mx-3">
+											{formik.errors.senderCompany}
+										</Form.Text>
+									)}
 								</span>
 							</li>
 
@@ -461,8 +436,6 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 											)}
 										</>
 									)}
-
-
 								</div>
 							)}
 
@@ -475,9 +448,7 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 									className="form-control date-block"
 									name="currentDate"
 									selected={formik.values.currentDate}
-									onChange={(date) =>
-										formik.setFieldValue("currentDate", date)
-									}
+									onChange={(date) => formik.setFieldValue('currentDate', date)}
 									disabled={viewMode}
 								/>
 
@@ -494,7 +465,6 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 							</div>
 						</div>
 
-
 						<p class="pt-4">
 							Real Estate broker and real estate salespersons are required by New York State
 							law to provide you with this Disclosure.
@@ -509,13 +479,10 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 								</Col>
 							</Row>
 						)}
-
-
 					</form>
 
 					{formData.status === 'SIGNED' && (
 						<>
-
 							<Modal show={isShow}>
 								{/* <Modal.Header closeButton>
                   <Modal.Title></Modal.Title>

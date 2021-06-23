@@ -57,12 +57,9 @@ const Contacts = () => {
 
 		try {
 			const createdContact = await API.graphql(graphqlOperation(createContact, { input: data }));
-			console.log('createdContact', createdContact);
 			const newContacts = [...contacts, createdContact.data.createContact];
 			onUpdateContacts(newContacts);
-			console.log('updated records', createdContact.data.createContact);
 			setTableData(newContacts);
-			console.log('tableData', tableData);
 			setShow(false);
 		} catch (err) {
 			console.log(err, 'Error creating contact');
@@ -96,7 +93,6 @@ const Contacts = () => {
 				graphqlOperation(deleteContact, { input: data })
 			);
 
-			console.log('deleteContactData', deleteContactData.data.deleteContact);
 			onDeleteContact(deleteContactData.data.deleteContact.id);
 			setLoading(false);
 			toast.success('Contact Deleted Successfully!');
@@ -107,8 +103,7 @@ const Contacts = () => {
 		}
 	};
 
-	const sorted = _.orderBy(contacts, [(user) => user.name.toLowerCase()], ['asc']);
-	console.log(sorted, contacts);
+	// const sorted = _.orderBy(contacts, [(user) => user.name.toLowerCase()], ['asc']);
 	if (loading) return <Loader />;
 	return (
 		<Container fluid className="p-0">

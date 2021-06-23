@@ -7,19 +7,13 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import 'react-multi-email/style.css';
 import { toast } from 'react-toastify';
 
-const ShareForm = ({ show, handleClose, setShow, formData,url}) => {
-	console.log("shareForm data",formData);
-	console.log(url);
+const ShareForm = ({ show, handleClose, setShow, formData, url }) => {
 	let base_url = window.location.origin;
-	console.log("base",base_url);
 	const [emails, setEmails] = useState([]);
 	const [copied, setCopied] = useState(false);
-	const { user,agent } = useContext(AppContext);
+	const { user, agent } = useContext(AppContext);
 
-	
-	
-	const getTemplate = (formName,signUser,signUserEmail,docurl) => {
-		console.log("document url ",docurl)
+	const getTemplate = (formName, signUser, signUserEmail, docurl) => {
 		return `<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
 			<tbody>
 				<tr>
@@ -73,39 +67,30 @@ const ShareForm = ({ show, handleClose, setShow, formData,url}) => {
 					</td>
 				</tr>
 			</tbody>
-		</table>`.replaceAll("\n", "");
-	  };
+		</table>`.replaceAll('\n', '');
+	};
 
 	const sharedWithEmails = () => {
-		console.log(emails);
 		let updateData = formData;
-		
+
 		// let SERVICE_ID = 'service_tjry678';
 		// let TEMPLATE_ID = 'template_difn49p';
 		// let USER_ID = 'user_xtMibwUvYsK5NraUVFG1J';
-		let SERVICE_ID = "service_vaq8uod";
-				let TEMPLATE_ID = "template_u5kdsd6";
-				let USER_ID = "user_KwfqxwXe6qZrqhnRmjiJ6";
-				let docLink = `${base_url}/formSubmission/${url}`;
-				console.log("view document url",docLink);
+		let SERVICE_ID = 'service_vaq8uod';
+		let TEMPLATE_ID = 'template_u5kdsd6';
+		let USER_ID = 'user_KwfqxwXe6qZrqhnRmjiJ6';
+		let docLink = `${base_url}/formSubmission/${url}`;
+		console.log('view document url', docLink);
 		let emailData = {
 			from_name: user.username,
 			to_name: formData.receiverName,
 			reply_to: user.attributes.email,
 			to_email: emails,
-			html: getTemplate(
-				updateData.formName,
-				agent.name,
-				agent.email,
-				docLink
-			  ),
+			html: getTemplate(updateData.formName, agent.name, agent.email, docLink)
 		};
-		console.log(emailData);
 
 		emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
 			function (response) {
-				console.log(response);
-				console.log(response.status, response.text);
 				toast.success('Email Send Successfully!');
 			},
 			function (err) {
@@ -120,8 +105,6 @@ const ShareForm = ({ show, handleClose, setShow, formData,url}) => {
 			setCopied(false);
 		}, 100000);
 	};
-	console.log(copied);
-	console.log(setShow);
 
 	return (
 		<Modal show={show} onHide={() => handleClose(show)}>
@@ -191,7 +174,7 @@ const ShareForm = ({ show, handleClose, setShow, formData,url}) => {
 								}}
 							/>
 
-						 <InputGroup.Prepend>
+							<InputGroup.Prepend>
 								<Button
 									variant="outline-secondary"
 									className="m-auto px-2"

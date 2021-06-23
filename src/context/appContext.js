@@ -53,29 +53,24 @@ export class AppContext extends Component {
 		this.setState({ user });
 	};
 	handleContactUpdates = (contacts) => {
-		console.log("filtervalue",contacts);
 		this.setState({ contacts });
 	};
 	handleContactDelete = (id) => {
 		this.setState({ contacts: this.state.contacts.filter((item) => item.id !== id && item) });
 	};
 	handleUpdate = (data) => {
-		console.log(data);
-
 		// this.setState({ data });
 
 		this.setState({
-			contacts:data
-		})
-		
-		
+			contacts: data
+		});
 	};
 	handleFormsUpdate = (formItems) => {
 		this.setState({ formItems });
 	};
-	handleFormsDelete = id =>{
-		this.setState({ formItems: this.state.formItems.filter((item) => item.id !== id && item) });	
-	}
+	handleFormsDelete = (id) => {
+		this.setState({ formItems: this.state.formItems.filter((item) => item.id !== id && item) });
+	};
 
 	handleFormsItemUpdate = (formItems) => {
 		this.setState({ formItems });
@@ -90,7 +85,7 @@ export class AppContext extends Component {
 					setUser: this.handleUserUpdate,
 					onUpdateContacts: this.handleContactUpdates,
 					onDeleteContact: this.handleContactDelete,
-					onDeleteForm:this.handleFormsDelete,
+					onDeleteForm: this.handleFormsDelete,
 					onEditContact: this.handleUpdate,
 					onFormItemsUpdate: this.handleFormsUpdate,
 					onFormItemUnitUpdate: this.handleFormsItemUpdate,

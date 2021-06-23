@@ -3,46 +3,44 @@ import { listFormEvents } from '../graphql/queries';
 import { createFormEvent } from '../graphql/mutations';
 import { v4 as getIp } from 'public-ip';
 
-/* call this function whenever you need to create an event. It only creates VIEWED event if it's the user's first time viewing the form.
-PARAMS:
-formDataId: string - id of the formData that the event will be associated with
-eventType: string - type of the event. could be any of 'VIEWED', 'SENT' or 'SIGNED'
-subjects: array of objects - name and email of the contacts that triggered the event
-e.g. [{name: 'contact1', email: 'contact1@gmail.com'}]
-*/
 export default async function formEventsHandler(formDataId, eventType, subjects) {
-	const response = await API.graphql(
-		graphqlOperation(listFormEvents, {
-			filter: { formDataId: { eq: formDataId } }
-		})
-	);
+	try {
+		const response = await API.graphql(
+			graphqlOperation(listFormEvents, {
+				filter: { formDataId: { eq: formDataId } }
+			})
+		);
 
-	const trail = response.data.listFormEvents.items
-		.map((item) => ({
-			...item,
-			createdAt: new Date(item.createdAt).getTime()
-		}))
-		.sort((a, b) => a.createdAt - b.createdAt);
+		const trail = response.data.listFormEvents.items
+			.map((item) => ({
+				...item,
+				createdAt: new Date(item.createdAt).getTime()
+			}))
+			.sort((a, b) => a.createdAt - b.createdAt);
 
-	const currentIp = await getIp();
+		let currentIp;
 
-	const eventBody = {
-		formDataId,
-		type: eventType,
-		subjects,
-		ip: currentIp
-	};
+		try {
+			currentIp = await getIp();
+		} catch (e) {
+			currentIp = '127.0.0.1';
+		}
 
-	if (eventType === 'VIEWED' && !canCreateViewEvent(trail, subjects)) return;
+		const eventBody = {
+			formDataId,
+			type: eventType,
+			subjects,
+			ip: currentIp
+		};
 
-	await API.graphql(graphqlOperation(createFormEvent, { input: eventBody }));
+		if (!canCreateEvent(trail, subjects, eventType)) return;
+
+		API.graphql(graphqlOperation(createFormEvent, { input: eventBody }));
+	} catch (e) {
+		console.error(e);
+	}
 }
 
-/*
-Helper function to get a audit trail string from an event.
-event: object - an event item fetched from aws
-agentEmail: string - email of the agent that sent the form (only required in case of a SENT event)
-*/
 export function getEventBody(event) {
 	switch (event.type) {
 		case 'SENT':
@@ -59,17 +57,13 @@ export function getEventBody(event) {
 }
 
 function getSubjectAsString(subject) {
-	// subjects = subjects.map((val) => `${val.name} (${val.email})`);
-	// return subjects[0];
 	return `${subject.name} (${subject.email})`;
-	// const last = subjects.pop();
-	// return `${subjects.join(', ')} and ${last}`;
 }
 
-function canCreateViewEvent(sortedTrail, subjects) {
+function canCreateEvent(sortedTrail, subjects, type) {
 	return (
 		sortedTrail.findIndex(
-			(item) => item.type === 'VIEWED' && item.subjects[0].email === subjects[0].email
+			(item) => item.type === type && item.subjects[0].email === subjects[0].email
 		) === -1
 	);
 }

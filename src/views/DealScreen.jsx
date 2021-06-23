@@ -53,7 +53,6 @@ const FormsScreen = () => {
 			const createdContact = await API.graphql(graphqlOperation(createContact, { input: data }));
 			const newContacts = [...contacts, createdContact.data.createContact];
 			onUpdateContacts(newContacts);
-			console.log(createdContact.data.createContact);
 		} catch (err) {
 			console.log(err, 'Error creating contact');
 		}
@@ -68,7 +67,6 @@ const FormsScreen = () => {
 			const listContactsData = await API.graphql(
 				graphqlOperation(listContacts, { filter: { agentId: { eq: agent.id } } })
 			);
-			console.log(listContactsData.data.listContacts.items);
 			onUpdateContacts(listContactsData.data.listContacts.items);
 		} catch (err) {
 			console.log(err);

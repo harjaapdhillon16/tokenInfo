@@ -14,21 +14,26 @@ export default function AuditTrail(props) {
 	const [events, setEvents] = useState([]);
 
 	useEffect(() => {
-		API.graphql(
-			graphqlOperation(listFormEvents, { filter: { formDataId: { eq: props.formDataId } } })
-		)
-			.then((res) => {
-				setEvents(
-					res.data.listFormEvents.items
-						.map((item) => ({
-							...item,
-							createdAt: new Date(item.createdAt).getTime()
-						}))
-						.sort((a, b) => a.createdAt - b.createdAt)
-				);
-			})
-			.catch(() => {});
-	}, []);
+		if (props.formDataId) {
+			API.graphql(
+				graphqlOperation(listFormEvents, {
+					filter: { formDataId: { eq: props.formDataId } },
+					limit: 99999999
+				})
+			)
+				.then((res) => {
+					setEvents(
+						res.data.listFormEvents.items
+							.map((item) => ({
+								...item,
+								createdAt: new Date(item.createdAt).getTime()
+							}))
+							.sort((a, b) => a.createdAt - b.createdAt)
+					);
+				})
+				.catch(console.error);
+		}
+	}, [props.formDataId]);
 
 	return events.length !== 0 ? (
 		<Container fluid="sm" style={{ borderTop: '1px solid #e2e2e2', padding: '3em 0' }}>
