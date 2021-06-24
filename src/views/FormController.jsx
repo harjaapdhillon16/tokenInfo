@@ -74,13 +74,53 @@ const FormController = (props) => {
 		}
 	};
 
-	const handleFormSubmission = async (data, type) => {
-	  
+	const handleFormSubmission =   (data, type) => {
+	    
 		try {
-			const editForm = await API.graphql(graphqlOperation(updateFormData, { input: data }));
-			formEventsHandler(editForm.data.updateFormData.id, type, [
-			 		{ name: editForm.data.updateFormData.receiverName, email: editForm.data.updateFormData.receiverEmail }
-				 	]);
+			 API.graphql(graphqlOperation(updateFormData, { input: data })).then( (editForm) =>{
+				formEventsHandler(editForm.data.updateFormData.id, type, [
+					{ name: editForm.data.updateFormData.receiverName, email: editForm.data.updateFormData.receiverEmail }
+					]).then( () => {
+						if (type === 'SIGNED') {
+							toast.success('Form Signed Successfully!');
+							
+							let SERVICE_ID = 'service_eqgdpk5';
+							let TEMPLATE_ID = 'template_u3u0ysu';
+							let USER_ID = 'user_8vM6h8mcNE6lwsmITnR6H';
+							let receiverId = formData.id;
+							setViewMode(true);
+							console.log(data);
+							setFormData(data)
+							
+			 
+							let emailData = {
+								from_name: 'cribfox',
+								to_name: formData.receiverName,
+								message: `Form has been signed ${base_url}/formSubmission/${receiverId}`,
+								reply_to: 'simarjots9@gmail.com',
+								to_email: formData.receiverEmail
+							};
+			
+							try {
+								emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
+									 
+									function (response) {},
+									function (err) {
+										console.log(err);
+									}
+								);
+							} catch (err) {
+								console.log('Error creating Formdata', err);
+							}
+						
+						}
+					}
+						
+					)
+			}
+				  
+			);
+			
 			// if (formDataArg) {
 			// 	formEventsHandler(formDataArg.id, type, [
 			// 		{ name: formDataArg.receiverName, email: formDataArg.receiverEmail }
@@ -91,39 +131,7 @@ const FormController = (props) => {
 			// 	]);
 			// }
 
-			if (type === 'SIGNED') {
-				toast.success('Form Signed Successfully!');
-				let updateData = formData;
-				updateData.status = 'SIGNED';
-				let SERVICE_ID = 'service_eqgdpk5';
-				let TEMPLATE_ID = 'template_u3u0ysu';
-				let USER_ID = 'user_8vM6h8mcNE6lwsmITnR6H';
-				let receiverId = formData.id;
-				setViewMode(true);
-				console.log(data);
-				setFormData(data)
-				window.location.reload()
- 
-				let emailData = {
-					from_name: 'cribfox',
-					to_name: formData.receiverName,
-					message: `Form has been signed ${base_url}/formSubmission/${receiverId}`,
-					reply_to: 'simarjots9@gmail.com',
-					to_email: formData.receiverEmail
-				};
-
-				try {
-					emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
-						function (response) {},
-						function (err) {
-							console.log(err);
-						}
-					);
-				} catch (err) {
-					console.log('Error creating Formdata', err);
-				}
 			
-			}
 		} catch (err) {
 			if (type === 'SIGNED') {
 				toast.error('Please try again!');

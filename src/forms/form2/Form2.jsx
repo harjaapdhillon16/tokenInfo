@@ -22,10 +22,10 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 	const [isShow, setIsShow] = useState(false);
 	const [canvasShow, setCanvasShow] = useState(true);
 	const [fieldShow, setFieldShow] = useState(false);
-	const sigPad = useRef({});
+	const signPad = useRef({});
 	const isHandleShow = () => setIsShow(true);
 	const isHandleClose = () => setIsShow(false);
-	const handleShow = () => setShow(true);
+	
 	const handleClose = () => setShow(false);
 	const [signImage, setSignImage] = useState('');
 	const [signAsText, setSignAsText] = useState('');
@@ -37,8 +37,14 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 	const [countInTimeout, setCountInTimeout] = useState(0);
 
 
-	console.log("form data check on update",formData);
+	 
 
+	const handleShow = () => { 
+		if(signPad.current?.fromDataURL){
+			signPad.current.fromDataURL(signImage)
+		} 
+		
+		setShow(true) };
 
 	const redirectToUrl = () => {
 		setIsShow(true);
@@ -59,7 +65,7 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 	const genrateImage = () => {
 		setShow(false);
 		setSignMethod('draw');
-		setSignImage(sigPad.current.toDataURL());
+		setSignImage(signPad.current.toDataURL());
 	};
 
 	const handleSignAsText = () => {
@@ -69,7 +75,7 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 
 	function clear() {
 	
-		sigPad.current.clear();
+		signPad.current.clear();
 		
 
 	}
@@ -537,7 +543,7 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 									height: 'auto',
 									className: 'sigCanvas'
 								}}
-								ref={sigPad}
+								ref={ref => {signPad.current = ref}}
 							/>
 							<p style={{ paddingTop: 10, paddingLeft: 30 }}>
 								I am {formik.values.signerName} and this is my legal representation of my

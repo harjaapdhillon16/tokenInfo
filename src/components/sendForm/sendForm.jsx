@@ -203,7 +203,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 							<tbody>
 								<tr align="center">
 									<td class="logo">
-									<span style="padding:40px 0 30px;margin: 0;font-size: 50px;font-weight: 300;line-height: 28px;"> CribFox</span>
+									<span style="padding:40px 0 30px;margin: 0;font-size: 50px;font-weight: 300;line-height: 28px;"> <img src="https://cribfox.com/wp-content/uploads/2021/04/CRIBFOX-text-logo-300x124.png" /></span>
 									</td>
 								</tr>
 								 
@@ -234,10 +234,10 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 								</tr>
 								<tr>
 									<td align="center">
-										<div style="margin-top:40px;padding:0 0 50px;border-bottom:1px #E2E8F0 solid;display: flex;justify-content: center;">
+										<div style="margin-top:40px;display: flex;justify-content: center;">
 											 
-											<div class="notifications" style="width:350px;vertical-align:top;padding-left: 5px;text-align: left;"><p style="font-size: 12px;margin: 0;font-weight: 500;line-height: 15px;">Warning</p>
-												<p style="margin: 0;font-size: 12px;font-weight: 300;line-height: 15px;">To prevent unauthorized users from accessing this document, please do not forward this email.</p>
+											<div class="notifications" style="vertical-align:top;padding-left: 5px;text-align: center;">
+												<p style="margin: 0;font-size: 12px;font-weight: 300;line-height: 15px;">Warning: To prevent unauthorized users from accessing this document, please do not forward this email.</p>
 											</div>
 										<div>
 									</td>
@@ -257,6 +257,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 			const createdContact = await API.graphql(
 				graphqlOperation(createFormData, { input: data })
 			);
+
 			let SERVICE_ID = 'service_vaq8uod';
 			let TEMPLATE_ID = 'template_u5kdsd6';
 			let USER_ID = 'user_KwfqxwXe6qZrqhnRmjiJ6';
