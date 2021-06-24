@@ -7,7 +7,8 @@ export default async function formEventsHandler(formDataId, eventType, subjects)
 	try {
 		const response = await API.graphql(
 			graphqlOperation(listFormEvents, {
-				filter: { formDataId: { eq: formDataId } }
+				filter: { formDataId: { eq: formDataId } },
+				limit: 99999999
 			})
 		);
 
