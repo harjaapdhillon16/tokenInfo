@@ -6,6 +6,7 @@ import * as emailjs from 'emailjs-com';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import 'react-multi-email/style.css';
 import { toast } from 'react-toastify';
+import { globalConstants } from '../../globalVariables';
 
 const ShareForm = ({ show, handleClose, setShow, formData, url }) => {
 	let base_url = window.location.origin;
@@ -69,12 +70,8 @@ const ShareForm = ({ show, handleClose, setShow, formData, url }) => {
 	const sharedWithEmails = () => {
 		let updateData = formData;
 
-		// let SERVICE_ID = 'service_tjry678';
-		// let TEMPLATE_ID = 'template_difn49p';
-		// let USER_ID = 'user_xtMibwUvYsK5NraUVFG1J';
-		let SERVICE_ID = 'service_vaq8uod';
-		let TEMPLATE_ID = 'template_u5kdsd6';
-		let USER_ID = 'user_KwfqxwXe6qZrqhnRmjiJ6';
+		 
+		const { SERVICE_ID,TEMPLATE_ID,USER_ID} = globalConstants;
 		let docLink = `${base_url}/formSubmission/${url}`;
 		console.log('view document url', docLink);
 		let emailData = {

@@ -14,6 +14,7 @@ import formEventsHandler from '../utils/formEventsHelpers';
 import AppContext from '../context/appContext';
 import { toast } from 'react-toastify';
 import * as emailjs from 'emailjs-com';
+import {globalConstants} from "../globalVariables"
 
 const FormController = (props) => {
 	const [loading, setLoading] = useState(true);
@@ -84,10 +85,8 @@ const FormController = (props) => {
 						if (type === 'SIGNED') {
 							toast.success('Form Signed Successfully!');
 							
-							let SERVICE_ID = 'service_eqgdpk5';
-							let TEMPLATE_ID = 'template_u3u0ysu';
-							let USER_ID = 'user_8vM6h8mcNE6lwsmITnR6H';
-							let receiverId = formData.id;
+							const { SERVICE_ID,TEMPLATE_ID,USER_ID} = globalConstants;
+						 	let receiverId = formData.id;
 							setViewMode(true);
 							console.log(data);
 							setFormData(data)
@@ -174,7 +173,7 @@ const FormController = (props) => {
 	};
 
 	if (loading) return <Loader />;
-
+  console.log(globalConstants)
 	return (
 		<>
 			<div className="" ref={ref}>
