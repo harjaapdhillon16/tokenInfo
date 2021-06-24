@@ -125,20 +125,9 @@ const InviteForm = ({ show, handleClose, setShow }) => {
 						className="mt-1 pl-2 clipboard"
 						text="www.cribfox.com"
 						onCopy={onCopyText}>
-						<div>Copy</div>
+						<div>{copied ? "Copied!" : "Copy" }</div>
 					</CopyToClipboard>
-					{copied && (
-						<span
-							style={{
-								color: '#ff0000',
-								fontWeight: 600,
-								fontSize: 14,
-								marginTop: 7,
-								paddingLeft: 10
-							}}>
-							Copied!
-						</span>
-					)}
+					
 				</InputGroup>
 
 				<div className="border-top mt-4 pt-3">

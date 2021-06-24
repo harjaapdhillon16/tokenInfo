@@ -78,7 +78,7 @@ const SendReminder = ({ itemData }) => {
 				</Dropdown.Toggle>
 
 				<Dropdown.Menu>
-					<Dropdown.Item>Download</Dropdown.Item>
+					{/* <Dropdown.Item>Download</Dropdown.Item> */}
 
 					<Dropdown.Item onClick={() => handleDeleteForm(itemData.id)}>Delete</Dropdown.Item>
 				</Dropdown.Menu>

@@ -19,7 +19,7 @@ export class AppContext extends Component {
 			},
 			{
 				id: 2,
-				title: 'New York Agency Disclosure Form for Buyer and Seller',
+				title: 'New York State Housing and Anti-Discrimination Disclosure',
 				data: [
 					{
 						name_of_broker: '',

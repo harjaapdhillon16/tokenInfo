@@ -21,10 +21,14 @@ const FormController = (props) => {
 	const [viewMode, setViewMode] = useState(false);
 	const { agent } = useContext(AppContext);
 	let base_url = window.location.origin;
+
+	const {innerWidth:width,innerHeight:height} = window;
+	let x  = width;
+	let y = height;
 	const options = {
 		orientation: 'portrait',
-		unit: 'in',
-		format: [9, 10.3]
+		unit: 'px',
+		format: [x, y]
 	};
 	const ref = React.createRef();
 	useEffect(() => {
@@ -39,7 +43,12 @@ const FormController = (props) => {
 				})
 			);
 
-			setFormData(getFormsData.data.getFormData);
+			let formData = getFormsData.data.getFormData;
+			delete formData.createdAt;
+			delete formData.updatedAt;
+
+
+			setFormData(formData);
 
 			checkAuthentication(getFormsData.data.getFormData);
 			setLoading(false);
@@ -59,26 +68,28 @@ const FormController = (props) => {
 
 	const sendViewStatus = async (formDataArg) => {
 		if (formDataArg.status === 'SENT') {
-			let data = {};
-			data.id = formDataArg.id;
+			let data = {...formDataArg};
 			data.status = 'VIEWED';
-			handleFormSubmission(data, 'VIEWED', formDataArg);
+			handleFormSubmission(data, 'VIEWED');
 		}
 	};
 
-	const handleFormSubmission = async (data, type, formDataArg) => {
+	const handleFormSubmission = async (data, type) => {
+	  
 		try {
 			const editForm = await API.graphql(graphqlOperation(updateFormData, { input: data }));
-
-			if (formDataArg) {
-				formEventsHandler(formDataArg.id, type, [
-					{ name: formDataArg.receiverName, email: formDataArg.receiverEmail }
-				]);
-			} else {
-				formEventsHandler(formData.id, type, [
-					{ name: formData.receiverName, email: formData.receiverEmail }
-				]);
-			}
+			formEventsHandler(editForm.data.updateFormData.id, type, [
+			 		{ name: editForm.data.updateFormData.receiverName, email: editForm.data.updateFormData.receiverEmail }
+				 	]);
+			// if (formDataArg) {
+			// 	formEventsHandler(formDataArg.id, type, [
+			// 		{ name: formDataArg.receiverName, email: formDataArg.receiverEmail }
+			// 	]);
+			// } else {
+			// 	formEventsHandler(formData.id, type, [
+			// 		{ name: formData.receiverName, email: formData.receiverEmail }
+			// 	]);
+			// }
 
 			if (type === 'SIGNED') {
 				toast.success('Form Signed Successfully!');
@@ -88,7 +99,11 @@ const FormController = (props) => {
 				let TEMPLATE_ID = 'template_u3u0ysu';
 				let USER_ID = 'user_8vM6h8mcNE6lwsmITnR6H';
 				let receiverId = formData.id;
-
+				setViewMode(true);
+				console.log(data);
+				setFormData(data)
+				window.location.reload()
+ 
 				let emailData = {
 					from_name: 'cribfox',
 					to_name: formData.receiverName,
@@ -107,7 +122,7 @@ const FormController = (props) => {
 				} catch (err) {
 					console.log('Error creating Formdata', err);
 				}
-				setFormData(updateData);
+			
 			}
 		} catch (err) {
 			if (type === 'SIGNED') {
@@ -118,6 +133,7 @@ const FormController = (props) => {
 	};
 
 	const renderFormType = (formtype) => {
+		console.log(formtype)
 		switch (formtype) {
 			case 'REBNY COVID Liability Form':
 				return (
@@ -127,7 +143,7 @@ const FormController = (props) => {
 						onFormSubmission={handleFormSubmission}
 					/>
 				);
-			case 'New York Agency Disclosure Form for Buyer and Seller':
+			case 'New York State Housing and Anti-Discrimination Disclosure':
 				return (
 					<Form2
 						formData={formData}

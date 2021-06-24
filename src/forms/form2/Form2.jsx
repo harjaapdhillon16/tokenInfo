@@ -36,6 +36,10 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 	const [count, setCount] = useState(0);
 	const [countInTimeout, setCountInTimeout] = useState(0);
 
+
+	console.log("form data check on update",formData);
+
+
 	const redirectToUrl = () => {
 		setIsShow(true);
 		if (isHandleShow) {
@@ -45,6 +49,8 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 			}, 2000);
 		}
 	};
+
+	
 
 	const date = new Date();
 	let today = format(date, 'MM/dd/yyyy');
@@ -62,7 +68,10 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 	};
 
 	function clear() {
+	
 		sigPad.current.clear();
+		
+
 	}
 
 	const toggleMethod = () => {
@@ -114,10 +123,15 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 			values.currentDate
 		];
 
-		let finalObject = {
-			id: formData.id,
-			data
-		};
+		// let finalObject = {
+		// 	id: formData.id,
+		// 	data
+		// };
+		let finalObject = { ...formData}
+		
+		finalObject.status = 'SIGNED';
+		finalObject.data = data;
+
 		if (signAsText !== '') {
 			finalObject.isSignatureTyped = true;
 			finalObject.signatureFont = activeFontFamily;
@@ -131,6 +145,8 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 
 		onFormSubmission(finalObject, 'SIGNED');
 	};
+
+	
 
 	return (
 		<Container className="form2">
@@ -375,18 +391,21 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 									<label class="pt-2 input-head">
 										Buyer/Tenant/Seller/Landlord Signature
 									</label>
-									{formData.isSignatureTyped === false && (
+									{formData.isSignatureTyped === null && (
 										<div class="form-control">
 											<img class="signature" src={formData.signature} />
 										</div>
 									)}
-									{formData.isSignatureTyped === true && (
-										<input
-											type="text"
-											class="form-control apply-font"
-											value={formData.signature}
-											disabled
-										/>
+									{formData.isSignatureTyped === false && (
+										// <input
+										// 	type="text"
+										// 	class="form-control apply-font"
+										// 	value={formData.signature}
+										// 	disabled
+										// />
+										<div class="form-control">
+											<img class="signature" src={formData.signature} />
+										</div>
 									)}
 								</div>
 							) : (
@@ -525,7 +544,7 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 								Signature.
 							</p>
 							<div className="d-flex justify-content-center">
-								<Button variant="secondary" onClick={clear} className="mr-3">
+								<Button variant="secondary" onClick={ clear} className="mr-3">
 									Clear{' '}
 								</Button>
 								<Button variant="primary" onClick={genrateImage}>

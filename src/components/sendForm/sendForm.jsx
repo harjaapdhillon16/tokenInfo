@@ -263,6 +263,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 			let receiverId = createdContact.data.createFormData.id;
 			let docLink = `${base_url}/formSubmission/${receiverId}`;
 			let emailData = {
+				subject: `${data.formName} has been sent for e-signature`,
 				from_name: agent.name,
 				to_name: data.receiverName,
 				reply_to: agent.email,
@@ -290,6 +291,17 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 		} catch (err) {
 			console.log('Error creating Formdata', err);
 		}
+
+
+		let updateContactId = updatedContacts.filter(function (item) {
+			if (item.id) {
+				item.isActive = false;
+			}
+			return item;
+		});
+
+		setUpdatedContacts(updateContactId);
+
 	};
 
 	const formSelection = () => {

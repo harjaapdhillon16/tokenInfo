@@ -123,10 +123,10 @@ const FormsScreen = () => {
 									onClick={() =>
 										handleFilter(
 											'formName',
-											'New York Agency Disclosure Form for Buyer and Seller'
+											'New York State Housing and Anti-Discrimination Disclosure'
 										)
 									}>
-									New York Agency Disclosure Form for Buyer and Seller
+									New York State Housing and Anti-Discrimination Disclosure
 								</Dropdown.Item>
 								<Dropdown.Item
 									onClick={() =>
@@ -134,7 +134,7 @@ const FormsScreen = () => {
 									}>
 									REBNY COVID Health Screening Form
 								</Dropdown.Item>
-								<Dropdown.Item
+								{/* <Dropdown.Item
 									onClick={() =>
 										handleFilter(
 											'formName',
@@ -151,7 +151,7 @@ const FormsScreen = () => {
 										)
 									}>
 									New York State Housing Discrimination Disclosure Form
-								</Dropdown.Item>
+								</Dropdown.Item> */}
 							</Dropdown.Menu>
 						</Dropdown>
 					</Col>
@@ -225,12 +225,11 @@ const FormsScreen = () => {
 								</p>
 							</Col>
 							<Col md={4} className="text-right pr-0">
-								<Button variant="outline-secondary invite view-form mr-3">
-									<a target="_blank" href={`${base_url}/formSubmission/${item.id}`}>
+							 
+									<a target="_blank"  className="btn btn-outline-secondary cf-black mr-3" href={`${base_url}/formSubmission/${item.id}`}>
 										View Form
 									</a>
-								</Button>
-
+							
 								{item.status === 'SENT' && <SendReminder itemData={item} />}
 
 								{item.status === 'VIEWED' && <SendReminder itemData={item} />}

@@ -124,11 +124,17 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
 			values.checkValueFourth
 		];
 
-		let finalObject = {
-			id: formData.id,
-			data,
-			status: 'SIGNED'
-		};
+		// let finalObject = {
+		// 	id: formData.id,
+		// 	data,
+		// 	status: 'SIGNED'
+		// };
+
+		let finalObject = { ...formData}
+		
+		finalObject.status = 'SIGNED';
+		finalObject.data = data;
+		
 
 		if (signAsText !== '') {
 			finalObject.isSignatureTyped = true;
@@ -671,7 +677,7 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
 								ref={sigPad}
 							/>
 							<p style={{ paddingTop: 10, paddingLeft: 30 }}>
-								I am {formik.values.fullName}and this is my legal representation of my
+								I am {formik.values.fullName} and this is my legal representation of my
 								Signature.
 							</p>
 							<div className="d-flex justify-content-center">
