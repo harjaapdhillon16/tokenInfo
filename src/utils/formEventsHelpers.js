@@ -36,7 +36,7 @@ export default async function formEventsHandler(formDataId, eventType, subjects)
 
 		if (!canCreateEvent(trail, subjects, eventType)) return;
 
-		API.graphql(graphqlOperation(createFormEvent, { input: eventBody }));
+		await API.graphql(graphqlOperation(createFormEvent, { input: eventBody }));
 	} catch (e) {
 		console.error(e);
 	}
