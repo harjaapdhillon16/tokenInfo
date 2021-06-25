@@ -7,6 +7,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import 'react-multi-email/style.css';
 import { toast } from 'react-toastify';
 import { globalConstants } from '../../globalVariables';
+import {shareFormEmail} from '../emailTemplates/formSentEmail'
 
 const ShareForm = ({ show, handleClose, setShow, formData, url }) => {
 	let base_url = window.location.origin;
@@ -14,58 +15,58 @@ const ShareForm = ({ show, handleClose, setShow, formData, url }) => {
 	const [copied, setCopied] = useState(false);
 	const { user, agent } = useContext(AppContext);
 
-	const getTemplate = (formName, signUser, signUserEmail, docurl) => {
-		return `<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
-			<tbody>
-				<tr>
-					<td>
-						<div class="wrapper" style="max-width: 600px;margin: 20px auto;padding: 28px 42px 48px;background-color: #fff;box-shadow: 0px 4px 15px rgba(40, 43, 45, 0.05);">
-							<table class="body-wrapper" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
-								<tbody>
-									<tr align="center">
-										<td class="logo">
-										<span style="padding:40px 0 30px;margin: 0;font-size: 50px;font-weight: 300;line-height: 28px;"> CribFox</span>
-										</td>
-									</tr>
+	// const getTemplate = (formName, signUser, signUserEmail, docurl) => {
+	// 	return `<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+	// 		<tbody>
+	// 			<tr>
+	// 				<td>
+	// 					<div class="wrapper" style="max-width: 600px;margin: 20px auto;padding: 28px 42px 48px;background-color: #fff;box-shadow: 0px 4px 15px rgba(40, 43, 45, 0.05);">
+	// 						<table class="body-wrapper" align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+	// 							<tbody>
+	// 								<tr align="center">
+	// 									<td class="logo">
+	// 									<span style="padding:40px 0 30px;margin: 0;font-size: 50px;font-weight: 300;line-height: 28px;"> CribFox</span>
+	// 									</td>
+	// 								</tr>
 									 
-									<tr>
-										<td align="center">
-											<p style="padding:40px 0 30px;margin: 0;font-size: 18px;font-weight: 300;line-height: 25px;"> ${signUser} (${signUserEmail}) has sent you a document 
-											</p>
-										</td>
-									</tr>
+	// 								<tr>
+	// 									<td align="center">
+	// 										<p style="padding:40px 0 30px;margin: 0;font-size: 18px;font-weight: 300;line-height: 25px;"> ${signUser} (${signUserEmail}) has sent you a document 
+	// 										</p>
+	// 									</td>
+	// 								</tr>
 									
 									 
 									  
-									<tr>
-										<td align="center">
-										<h4>${formName}<h4>
-											<a href="${docurl}" style="width: 139px;height: 48px;margin: 20px auto 0;background: #002C59;color: #fff;font-size: 14px;font-weight: 500;display: flex;align-items: center;text-decoration: none;justify-content: center;border-radius:6px;">
+	// 								<tr>
+	// 									<td align="center">
+	// 									<h4>${formName}<h4>
+	// 										<a href="${docurl}" style="width: 139px;height: 48px;margin: 20px auto 0;background: #002C59;color: #fff;font-size: 14px;font-weight: 500;display: flex;align-items: center;text-decoration: none;justify-content: center;border-radius:6px;">
 												 
-												<span style="display:block;line-height:48px; text-align:center;width: 139px;">View document</span>
-											</a>
-										</td>
-									</tr>
+	// 											<span style="display:block;line-height:48px; text-align:center;width: 139px;">View document</span>
+	// 										</a>
+	// 									</td>
+	// 								</tr>
 									
-									<tr>
-										<td align="center">
-											<div style="margin-top:40px;padding:0 0 50px;border-bottom:1px #E2E8F0 solid;display: flex;justify-content: center;">
+	// 								<tr>
+	// 									<td align="center">
+	// 										<div style="margin-top:40px;padding:0 0 50px;border-bottom:1px #E2E8F0 solid;display: flex;justify-content: center;">
 												 
-												<div class="notifications" style="width:350px;vertical-align:top;padding-left: 5px;text-align: left;"><p style="font-size: 12px;margin: 0;font-weight: 500;line-height: 15px;">Warning</p>
-													<p style="margin: 0;font-size: 12px;font-weight: 300;line-height: 15px;">To prevent unauthorized users from accessing this document, please do not forward this email.</p>
-												</div>
-											<div>
-										</td>
-									</tr>
-								</tbody>
+	// 											<div class="notifications" style="width:350px;vertical-align:top;padding-left: 5px;text-align: left;"><p style="font-size: 12px;margin: 0;font-weight: 500;line-height: 15px;">Warning</p>
+	// 												<p style="margin: 0;font-size: 12px;font-weight: 300;line-height: 15px;">To prevent unauthorized users from accessing this document, please do not forward this email.</p>
+	// 											</div>
+	// 										<div>
+	// 									</td>
+	// 								</tr>
+	// 							</tbody>
 								 
-							</table>
-						</div>
-					</td>
-				</tr>
-			</tbody>
-		</table>`.replaceAll('\n', '');
-	};
+	// 						</table>
+	// 					</div>
+	// 				</td>
+	// 			</tr>
+	// 		</tbody>
+	// 	</table>`.replaceAll('\n', '');
+	// };
 
 	const sharedWithEmails = () => {
 		let updateData = formData;
@@ -74,13 +75,15 @@ const ShareForm = ({ show, handleClose, setShow, formData, url }) => {
 		const { SERVICE_ID,TEMPLATE_ID,USER_ID} = globalConstants;
 		let docLink = `${base_url}/formSubmission/${url}`;
 		console.log('view document url', docLink);
+		let emailSubject = `You have received a document through Cribfox`;
+		
 		let emailData = {
-			subject: `You have received a document through Cribfox`,
+			subject: emailSubject,
 			from_name: user.username,
 			to_name: formData.receiverName,
 			reply_to: user.attributes.email,
 			to_email: emails,
-			html: getTemplate(updateData.formName, agent.name, agent.email, docLink)
+			html: shareFormEmail(updateData.formName, agent.name, agent.email, docLink)
 		};
 
 		emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(

@@ -218,7 +218,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 				to_name: agent.name,
 				reply_to: "info@cribfox.com",
 				to_email: agent.email,
-				html: sendTemplateToSender(data.formName,data.receiverName,data.receiverEmail,docLink )
+				html: sendTemplateToSender(data.formName,data.receiverName,data.receiverEmail,docLink,receiverId  )
 			};
 			try {
 				formEventsHandler(receiverId, 'SENT', [

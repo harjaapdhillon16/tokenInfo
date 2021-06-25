@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
-import { getFormData } from '../graphql/queries';
+import { getFormData ,getAgent} from '../graphql/queries';
 import Form1 from '../forms/form1/Form1';
 import Form2 from '../forms/form2/Form2';
 import Form3 from '../forms/form3/Form3';
@@ -15,12 +15,14 @@ import AppContext from '../context/appContext';
 import { toast } from 'react-toastify';
 import * as emailjs from 'emailjs-com';
 import {globalConstants} from "../globalVariables"
+import {signedEmail} from '../components/emailTemplates/formSentEmail'
 
 const FormController = (props) => {
 	const [loading, setLoading] = useState(true);
 	const [formData, setFormData] = useState([]);
 	const [viewMode, setViewMode] = useState(false);
 	const { agent } = useContext(AppContext);
+	const [agentInfo, setAgentInfo] = useState('');
 	let base_url = window.location.origin;
 
 	const {innerWidth:width,innerHeight:height} = window;
@@ -48,7 +50,7 @@ const FormController = (props) => {
 			delete formData.createdAt;
 			delete formData.updatedAt;
 
-
+     
 			setFormData(formData);
 
 			checkAuthentication(getFormsData.data.getFormData);
@@ -58,12 +60,36 @@ const FormController = (props) => {
 		}
 	};
 
+	const getAgentDetail = async id => {
+		 
+		try{
+			const agentinfo = await API.graphql(
+				graphqlOperation(getAgent, {
+					id:id
+				})
+			);
+		 
+			if(agentinfo.data.getAgent !== ""){
+				console.log("yes we have")
+				setAgentInfo(agentinfo.data.getAgent);
+			}
+			
+			
+		}
+		catch (err) {
+			console.log(err);
+		}
+
+	}
+
 	const checkAuthentication = (data) => {
 		if (agent !== null || data.status === 'SIGNED') {
 			setViewMode(true);
 		} else {
 			setViewMode(false);
 			sendViewStatus(data);
+			getAgentDetail(data.senderId)
+			//console.log("getting agent detail",agentInfo.email);
 		}
 	};
 
@@ -75,10 +101,10 @@ const FormController = (props) => {
 		}
 	};
 
-	const handleFormSubmission =   (data, type) => {
-	    
+	const handleFormSubmission =   (data, type) => {	    
 		try {
 			 API.graphql(graphqlOperation(updateFormData, { input: data })).then( (editForm) =>{
+				
 				formEventsHandler(editForm.data.updateFormData.id, type, [
 					{ name: editForm.data.updateFormData.receiverName, email: editForm.data.updateFormData.receiverEmail }
 					]).then( () => {
@@ -91,19 +117,25 @@ const FormController = (props) => {
 							console.log(data);
 							setFormData(data)
 							
-			 
+							let doclink = `${base_url}/formSubmission/${receiverId}`;
+
 							let emailData = {
+								subject:`Everyone has signed ${formData.formName}`,
 								from_name: 'cribfox',
-								to_name: formData.receiverName,
-								message: `Form has been signed ${base_url}/formSubmission/${receiverId}`,
-								reply_to: 'simarjots9@gmail.com',
-								to_email: formData.receiverEmail
+								to_name: [formData.receiverName,agentInfo.name],
+								// message: `Form has been signed ${base_url}/formSubmission/${receiverId}`,
+								reply_to: 'info@cribfox.com',
+								to_email: [formData.receiverEmail,agentInfo.email],
+								html:signedEmail(formData.formName,formData.receiverName,formData.receiverEmail,doclink)
 							};
-			
+							
 							try {
 								emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
 									 
-									function (response) {},
+									function (response) {
+										window.location.reload();
+
+									},
 									function (err) {
 										console.log(err);
 									}
@@ -120,15 +152,7 @@ const FormController = (props) => {
 				  
 			);
 			
-			// if (formDataArg) {
-			// 	formEventsHandler(formDataArg.id, type, [
-			// 		{ name: formDataArg.receiverName, email: formDataArg.receiverEmail }
-			// 	]);
-			// } else {
-			// 	formEventsHandler(formData.id, type, [
-			// 		{ name: formData.receiverName, email: formData.receiverEmail }
-			// 	]);
-			// }
+			 
 
 			
 		} catch (err) {
