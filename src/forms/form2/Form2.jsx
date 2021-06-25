@@ -25,7 +25,7 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 	const signPad = useRef({});
 	const isHandleShow = () => setIsShow(true);
 	const isHandleClose = () => setIsShow(false);
-	
+	const handleShow = () => setShow(true);
 	const handleClose = () => setShow(false);
 	const [signImage, setSignImage] = useState('');
 	const [signAsText, setSignAsText] = useState('');
@@ -36,15 +36,9 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 	const [count, setCount] = useState(0);
 	const [countInTimeout, setCountInTimeout] = useState(0);
 
-
-	 
-
-	const handleShow = () => { 
-		if(signPad.current?.fromDataURL){
-			signPad.current.fromDataURL(signImage)
-		} 
-		
-		setShow(true) };
+	useEffect(() => {
+		if (show && signImage) signPad.current.fromDataURL(signImage);
+	}, [show]);
 
 	const redirectToUrl = () => {
 		setIsShow(true);
@@ -55,8 +49,6 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 			}, 2000);
 		}
 	};
-
-	
 
 	const date = new Date();
 	let today = format(date, 'MM/dd/yyyy');
@@ -74,10 +66,7 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 	};
 
 	function clear() {
-	
 		signPad.current.clear();
-		
-
 	}
 
 	const toggleMethod = () => {
@@ -133,8 +122,8 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 		// 	id: formData.id,
 		// 	data
 		// };
-		let finalObject = { ...formData}
-		
+		let finalObject = { ...formData };
+
 		finalObject.status = 'SIGNED';
 		finalObject.data = data;
 
@@ -151,8 +140,6 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 
 		onFormSubmission(finalObject, 'SIGNED');
 	};
-
-	
 
 	return (
 		<Container className="form2">
@@ -543,14 +530,14 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 									height: 'auto',
 									className: 'sigCanvas'
 								}}
-								ref={ref => {signPad.current = ref}}
+								ref={signPad}
 							/>
 							<p style={{ paddingTop: 10, paddingLeft: 30 }}>
 								I am {formik.values.signerName} and this is my legal representation of my
 								Signature.
 							</p>
 							<div className="d-flex justify-content-center">
-								<Button variant="secondary" onClick={ clear} className="mr-3">
+								<Button variant="secondary" onClick={clear} className="mr-3">
 									Clear{' '}
 								</Button>
 								<Button variant="primary" onClick={genrateImage}>

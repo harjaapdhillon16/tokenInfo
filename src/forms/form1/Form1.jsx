@@ -30,15 +30,15 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
 	const [startDate, setStartDate] = useState(new Date());
 	const [formSubmitStatus, setFormSubmitStatus] = useState(false);
 	const [viewedStatus, setViewedStatus] = useState(false);
-	const[oldSignature,setOldSignature] = useState('');
+	const [oldSignature, setOldSignature] = useState('');
 
+	useEffect(() => {
+		if (show && signImage) sigPad.current.fromDataURL(signImage);
+	}, [show]);
 
-		console.log("form item checking",formItem);
-		console.log("form datachecking",formData);
-
-		useEffect(()=>{
-			setFormItem(formData);
-		},[formData])
+	useEffect(() => {
+		setFormItem(formData);
+	}, [formData]);
 
 	const date = new Date();
 	let today = format(date, 'MM/dd/yyyy');
@@ -46,7 +46,6 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
 
 	function clear() {
 		sigPad.current.clear();
-		
 	}
 
 	const generateImage = () => {
@@ -56,7 +55,6 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
 		const data = sigPad.current.toData();
 		console.log(data);
 		setOldSignature(data);
-		
 	};
 
 	const handleSignAsText = () => {
@@ -116,11 +114,10 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
 			values.currentDate
 		];
 
-		let finalObject = { ...formData}
-		
+		let finalObject = { ...formData };
+
 		finalObject.status = 'SIGNED';
-		finalObject.data = data;	
-	
+		finalObject.data = data;
 
 		if (signAsText !== '') {
 			finalObject.isSignatureTyped = true;
@@ -186,7 +183,6 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
 			<Form onSubmit={formik.handleSubmit}>
 				<Form.Row className="detail pt-5">
 					<Col md={4}>
-						{}
 						{viewMode ? (
 							<Form.Group controlId="formBasicSign">
 								{formItem.isSignatureTyped === true ? (
@@ -372,10 +368,9 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
 									width: 400,
 									height: 'auto',
 									className: 'sigCanvas',
-									fromData :{oldSignature}
+									fromData: { oldSignature }
 								}}
 								ref={sigPad}
-								
 							/>
 							<p style={{ paddingTop: 10, paddingLeft: 30 }}>
 								I am {formik.values.fullName} and this is my legal representation of my

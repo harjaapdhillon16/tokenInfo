@@ -37,6 +37,10 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
 		format: [9, 22]
 	};
 
+	useEffect(() => {
+		if (show && signImage) sigPad.current.fromDataURL(signImage);
+	}, [show]);
+
 	const genrateImage = () => {
 		setShow(false);
 		setSignMethod('draw');
@@ -130,11 +134,10 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
 		// 	status: 'SIGNED'
 		// };
 
-		let finalObject = { ...formData}
-		
+		let finalObject = { ...formData };
+
 		finalObject.status = 'SIGNED';
 		finalObject.data = data;
-		
 
 		if (signAsText !== '') {
 			finalObject.isSignatureTyped = true;
