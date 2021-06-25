@@ -212,6 +212,9 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 				html: sendTemplateToReceiver(agent.name, agent.email, data.formName, docLink, receiverId)
 			};
 
+
+
+			
 			let emailDataForSender = {
 				subject: `${data.formName} has been sent for e-signature`,
 				from_name: "CribFox",
