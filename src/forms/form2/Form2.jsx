@@ -35,9 +35,10 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 	const [viewedStatus, setViewedStatus] = useState(false);
 	const [count, setCount] = useState(0);
 	const [countInTimeout, setCountInTimeout] = useState(0);
+	const [signTabState, setSignTabState] = useState('link-1');
 
 	useEffect(() => {
-		if (show && signImage) signPad.current.fromDataURL(signImage);
+		if (show && signImage && signPad.current!== null) signPad.current.fromDataURL(signImage);
 	}, [show]);
 
 	const redirectToUrl = () => {
@@ -66,24 +67,34 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 	};
 
 	function clear() {
-		signPad.current.clear();
+		setSignAsText('')
+		setSignImage('')
+		
+		if(signPad.current!== null){
+			signPad.current.clear();
+
+		}
 	}
 
 	const toggleMethod = () => {
 		if (canvasShow == false) {
 			setCanvasShow(true);
+			setSignTabState('link-1')
 			setFieldShow(false);
 		} else {
-			setCanvasShow(false);
+			//setCanvasShow(false);
+			setSignTabState('link-2')
 		}
 	};
 
 	const toggleField = () => {
 		if (fieldShow == false) {
 			setFieldShow(true);
+			setSignTabState('link-2')
 			setCanvasShow(false);
 		} else {
-			setFieldShow(false);
+			setSignTabState('link-1')
+			//setFieldShow(false);
 		}
 	};
 
@@ -384,9 +395,16 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 									<label class="pt-2 input-head">
 										Buyer/Tenant/Seller/Landlord Signature
 									</label>
-									{formData.isSignatureTyped === null && (
+									{formData.isSignatureTyped === true && (
 										<div class="form-control">
-											<img class="signature" src={formData.signature} />
+											{/* <img class="signature" src={formData.signature} /> */}
+											<input
+													type="text"
+													class=" border-0 apply-font"
+													value={formData.signature}
+													style={{fontFamily:formData.signatureFont}}
+												/>
+											
 										</div>
 									)}
 									{formData.isSignatureTyped === false && (
@@ -510,7 +528,7 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body className="draw-modal">
-					<Nav fill variant="tabs" defaultActiveKey="link-1">
+					<Nav fill variant="tabs" defaultActiveKey={signTabState}>
 						<Nav.Item>
 							<Nav.Link onClick={toggleMethod} eventKey="link-1">
 								Draw

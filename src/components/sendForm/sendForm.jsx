@@ -151,9 +151,9 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 			data[4] = 'property_address';
 			data[5] = '';
 			data[6] = 'real_estate_name';
-			data[7] = formData.name;
+			data[7] = agent.name;
 			data[8] = 'name_of_brockerage_company';
-			data[9] = formData.companyName;
+			data[9] = agent.brokerageName;
 			data[10] = 'checkValueFirst';
 			data[11] = '';
 			data[12] = 'checkValueSecond';
@@ -204,7 +204,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
             let receiverId = createdContact.data.createFormData.id;
 			let docLink = `${base_url}/formSubmission/${receiverId}`;
 			let emailDataForReceiver = {
-				subject: `${data.formName} has been sent for e-signature`,
+				subject: `${data.formName} Signature requested by ${agent.email}`,
 				from_name: agent.name,
 				to_name: data.receiverName,
 				reply_to: agent.email,

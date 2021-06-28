@@ -31,14 +31,16 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
 	const [activeFontFamily, setActiveFontFamily] = useState('Open Sans');
 	const [formSubmitStatus, setFormSubmitStatus] = useState(false);
 	const [viewedStatus, setViewedStatus] = useState(false);
-	const options = {
-		orientation: 'portrait',
-		unit: 'in',
-		format: [9, 22]
-	};
+	const [signTabState, setSignTabState] = useState('link-1');
+	// const options = {
+	// 	orientation: 'portrait',
+	// 	unit: 'in',
+	// 	format: [9, 22]
+	// };
+	console.log(formData);
 
 	useEffect(() => {
-		if (show && signImage) sigPad.current.fromDataURL(signImage);
+		if (show && signImage && sigPad.current!== null) sigPad.current.fromDataURL(signImage);
 	}, [show]);
 
 	const genrateImage = () => {
@@ -53,24 +55,34 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
 	};
 
 	function clear() {
-		sigPad.current.clear();
+		setSignAsText('')
+		setSignImage('')
+		
+		if(sigPad.current!== null){
+			sigPad.current.clear();
+
+		}
 	}
 
 	const toggleMethod = () => {
 		if (canvasShow == false) {
 			setCanvasShow(true);
+			setSignTabState('link-1')
 			setFieldShow(false);
 		} else {
-			setCanvasShow(false);
+			//setCanvasShow(false);
+			setSignTabState('link-2')
 		}
 	};
 
 	const toggleField = () => {
 		if (fieldShow == false) {
 			setFieldShow(true);
+			setSignTabState('link-2')
 			setCanvasShow(false);
 		} else {
-			setFieldShow(false);
+			//setFieldShow(false);
+			setSignTabState('link-1')
 		}
 	};
 	const date = new Date();
@@ -148,6 +160,9 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
 			finalObject.signature = signImage;
 			finalObject.status = 'SIGNED';
 		}
+		
+		console.log("final values sent",finalObject);
+		
 
 		onFormSubmission(finalObject, 'SIGNED');
 	};
@@ -468,8 +483,9 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
 											) : (
 												<input
 													type="text"
-													class="form-control apply-font"
+													class="form-control  apply-font"
 													value={signAsText}
+													
 												/>
 											)}
 										</>
@@ -509,6 +525,7 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
 											type="text"
 											class="form-control apply-font"
 											value={formData.signature}
+											style={{fontFamily:formData.signatureFont}}
 											disabled
 										/>
 									)}
@@ -541,7 +558,7 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
                 /> */}
 								<label class="pt-2  pl-3 d-block inputhead">Date</label>
 							</div>
-							-
+							
 						</div>
 						<div class="form-row detail pt-">
 							<div class="col-md-4 mb-3">
@@ -657,7 +674,7 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body className="draw-modal">
-					<Nav fill variant="tabs" defaultActiveKey="link-1">
+					<Nav fill variant="tabs" defaultActiveKey={signTabState}>
 						<Nav.Item>
 							<Nav.Link onClick={toggleMethod} eventKey="link-1">
 								Draw

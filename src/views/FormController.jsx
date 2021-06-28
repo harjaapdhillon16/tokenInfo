@@ -23,6 +23,7 @@ const FormController = (props) => {
 	const [viewMode, setViewMode] = useState(false);
 	const { agent } = useContext(AppContext);
 	const [agentInfo, setAgentInfo] = useState('');
+	
 	let base_url = window.location.origin;
 
 	const {innerWidth:width,innerHeight:height} = window;
@@ -101,7 +102,8 @@ const FormController = (props) => {
 		}
 	};
 
-	const handleFormSubmission =   (data, type) => {	    
+	const handleFormSubmission =   (data, type) => {	   
+		debugger 
 		try {
 			 API.graphql(graphqlOperation(updateFormData, { input: data })).then( (editForm) =>{
 				

@@ -31,9 +31,11 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
 	const [formSubmitStatus, setFormSubmitStatus] = useState(false);
 	const [viewedStatus, setViewedStatus] = useState(false);
 	const [oldSignature, setOldSignature] = useState('');
+	const [signTabState, setSignTabState] = useState('link-1');
+
 
 	useEffect(() => {
-		if (show && signImage) sigPad.current.fromDataURL(signImage);
+		if (show && signImage && sigPad.current!== null) sigPad.current.fromDataURL(signImage);
 	}, [show]);
 
 	useEffect(() => {
@@ -45,8 +47,14 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
 	today = moment(today, 'MM-DD-YYYY').toDate();
 
 	function clear() {
-		sigPad.current.clear();
-	}
+		setSignAsText('')
+		setSignImage('')
+		
+		if(sigPad.current!== null){
+			sigPad.current.clear();
+
+		}
+		}
 
 	const generateImage = () => {
 		setShow(false);
@@ -65,18 +73,23 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
 	const toggleMethod = () => {
 		if (canvasShow == false) {
 			setCanvasShow(true);
+			setSignTabState('link-1')
 			setFieldShow(false);
 		} else {
-			setCanvasShow(false);
+			//setCanvasShow(false);
+			setSignTabState('link-2')
 		}
 	};
 
 	const toggleField = () => {
 		if (fieldShow == false) {
+			console.log("i am here on signature field")
 			setFieldShow(true);
+			setSignTabState('link-2')
 			setCanvasShow(false);
 		} else {
-			setFieldShow(false);
+			//setFieldShow(false);
+			setSignTabState('link-1')
 		}
 	};
 	// formItem.data[7]
@@ -190,6 +203,7 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
 										className="apply-font"
 										type="text"
 										value={formItem.signature}
+										style={{fontFamily:formItem.signatureFont}}
 									/>
 								) : (
 									<div className="sign-field">
@@ -349,7 +363,7 @@ const Form1 = ({ formData, viewMode, onFormSubmission }) => {
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body className="draw-modal">
-					<Nav fill variant="tabs" defaultActiveKey="link-1">
+					<Nav fill variant="tabs" defaultActiveKey={signTabState}>
 						<Nav.Item>
 							<Nav.Link onClick={toggleMethod} eventKey="link-1">
 								Draw

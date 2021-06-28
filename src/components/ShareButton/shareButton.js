@@ -82,7 +82,7 @@ const ShareButton = ({ itemData, item, itemUrl }) => {
 
 	return (
 		<>
-			<Button variant="outline-secondary cf-black px-5" onClick={() => handleShow()}>
+			<Button variant="outline-secondary cf-black px-2" onClick={() => handleShow()}>
 				Share
 			</Button>
 			<Dropdown className="dotaction d-inline-block">
