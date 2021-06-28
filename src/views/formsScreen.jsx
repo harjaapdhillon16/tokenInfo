@@ -203,7 +203,7 @@ const FormsScreen = () => {
 					<h3 className="d-flex justify-content-center mt-5">No Forms Data Here</h3>
 				) : (
 					filtered.map((item) => (
-						<Row className=" border-bottom pb-3 mt-5 ">
+						<Row className=" border-bottom pb-3 mt-5 form-row ">
 							<Col md={6}>
 								<h6>{item.formName}</h6>
 								<Link to="#">{item.receiverName}</Link>

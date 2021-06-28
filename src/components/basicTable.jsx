@@ -62,8 +62,8 @@ export const BasicTable = ({ tableData, onDeleteContact, data }) => {
 							</td>
 							<td>{item.email}</td>
 							<td>{item.phoneNum}</td>
-							<td>{item.companyName}</td>
-							<td>{item.title}</td>
+							<td><span className="overFlowEllipse">{item.companyName}</span></td>
+							<td><span className="overFlowEllipse">{item.title}</span></td>
 							<td>{item.roleInCompany}</td>
 							<td>
 								<Moment format="MM-DD-YYYY">{item.createdAt}</Moment>

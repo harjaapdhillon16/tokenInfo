@@ -151,7 +151,7 @@ const UpdateContactForm = ({ show, handleClose, setShow, data }) => {
 						className="mb-3"
 						name="phoneNum"
 						value={formik.values.phoneNum}
-						type="number"
+						type="text"
 						placeholder="Enter your valid phone number"
 						onBlur={formik.handleBlur}
 						onChange={formik.handleChange}

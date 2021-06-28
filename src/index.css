@@ -1,36 +1,36 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-.card{
+.card {
   padding: 24px;
   box-shadow: 0 2px 8px rgb(0 0 0 / 16%);
   border-radius: 8px;
   display: block;
 }
-.card h6{
+.card h6 {
   margin-bottom: 0.5rem;
   margin: 0;
   font-weight: 700;
 }
-.card-body{
-  padding:0px !important;
+.card-body {
+  padding: 0px !important;
 }
 .cardBoxIcon {
   margin-bottom: 0.5rem;
 }
-.header{
-    box-shadow: 0px 1px 2px rgb(0 0 0 / 18%);
-    margin: auto!important;
+.header {
+  box-shadow: 0px 1px 2px rgb(0 0 0 / 18%);
+  margin: auto !important;
 }
 .drop-btn {
   background-color: transparent;
@@ -38,34 +38,35 @@ code {
   /* outline: none; */
   border: none;
 }
-.account{
+.account {
   justify-content: end;
-    flex-direction: column;
-    align-items: center;
-    display: flex;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
 }
 .drop-btn {
   background: transparent !important;
-  color: #000  !important;
+  color: #000 !important;
   border: none !important;
 }
-.drop-btn:focus{
-  background:transparent;
-  box-shadow:none !important;
+.drop-btn:focus {
+  background: transparent;
+  box-shadow: none !important;
 }
-.send, .invite {
-  background: transparent  !important;
+.send,
+.invite {
+  background: transparent !important;
   color: #000 !important;
   width: 120px;
   border: solid 1px #000 !important;
 }
-.breadcrumb-item+.breadcrumb-item::before{
-  content:">";
+.breadcrumb-item + .breadcrumb-item::before {
+  content: ">";
 }
-.title-bar{
-  background-color:none !important;
+.title-bar {
+  background-color: none !important;
 }
-.options{
+.options {
   font-size: 14px;
   width: 140px;
   margin-right: 4px;
@@ -74,17 +75,17 @@ code {
 .options:hover {
   color: #000;
   background-color: none !important;
-  border-color:none !important;
+  border-color: none !important;
 }
-.sent-option{
+.sent-option {
   padding: 9px 30px 9px !important;
   border-radius: 50px !important;
   /* background-color: #307AFE !important; */
   display: inline-block !important;
-  font-size: .9em !important;
+  font-size: 0.9em !important;
   color: #ffffff !important;
   box-shadow: 0 0 5px rgb(0 0 0 / 10%) !important;
-  margin-right:4px;
+  margin-right: 4px;
 }
 .title-bar ol {
   background: transparent;
@@ -93,33 +94,34 @@ code {
   margin-bottom: 0px;
 }
 .title-bar ol a {
-  color:#000;
+  color: #000;
 }
-.cardtext h6 ,p{
-  color:#000;
+.cardtext h6,
+p {
+  color: #000;
 }
-a:hover{
- text-decoration:none  !important
+a:hover {
+  text-decoration: none !important;
 }
-.card-text p:focus{
-  outline:none !important;
+.card-text p:focus {
+  outline: none !important;
 }
 .pop-btn {
   padding: 5px 40px 5px 40px !important;
 }
-.input-group-text{
-  background-color:transparent !important;
-  border:none !important;
+.input-group-text {
+  background-color: transparent !important;
+  border: none !important;
 }
 #formBasicSearch {
   width: 80%;
   margin-left: 5%;
 }
-#formBasicEmail{
-  width:300px;
+#formBasicEmail {
+  width: 300px;
 }
-.pop-header{
-  border-bottom:none !important;
+.pop-header {
+  border-bottom: none !important;
 }
 .add-client svg {
   width: 100%;
@@ -129,25 +131,25 @@ a:hover{
 .border-bottom {
   border-bottom: 1px solid #000 !important;
 }
-.form-check{
+.form-check {
   margin: 0px 0px 15px 20px;
 }
-.contact-table td{
-  font-size:14px;
+.contact-table td {
+  font-size: 14px;
   text-align: center;
-
 }
-.check-head{
-  margin:0px;
+.check-head {
+  margin: 0px;
 }
-.contact-table th{
+.contact-table th {
   border: 1px solid #dee2e6;
 }
-.table thead th{
+.table thead th {
   vertical-align: middle !important;
 }
-.table-bordered thead td, .table-bordered thead th{
-  font-weight:normal;
+.table-bordered thead td,
+.table-bordered thead th {
+  font-weight: normal;
 }
 .add-contact {
   width: 100%;
@@ -159,92 +161,100 @@ a:hover{
 .close {
   margin-left: 0 !important;
 }
-.text-error{
-  color:red;
+.text-error {
+  color: red;
 }
-.deal-right ul{
-  list-style:none;
+.deal-right ul {
+  list-style: none;
 }
-.form-group{
-  position:relative !important;
+.form-group {
+  position: relative !important;
 }
 .form-group img {
   height: 100px;
   margin-top: -22%;
   z-index: 1;
-  position:absolute;
-}
-.contact-right{
-  padding-left:15%;
-}
-.sign{
   position: absolute;
-    margin-top: -10%;
+}
+.contact-right {
+  padding-left: 15%;
+}
+.sign {
+  position: absolute;
+  margin-top: -10%;
 }
 .contactsList {
   height: 255px;
   overflow-y: scroll;
 }
 
-
-
-
-.detail-contact-right{
+.detail-contact-right {
   border: solid 1px #000;
 }
-.about-detail{
-  box-shadow:none;
+.about-detail {
+  box-shadow: none;
   border: 1px solid #000 !important;
 }
-.about-detail .card-header{
-  background:transparent;
+.about-detail .card-header {
+  background: transparent;
   padding-top: 0;
 }
 .about-detail .btn.btn-link {
   color: #000;
 }
-.about-detail .btn.btn-link:focus{
-  box-shadow:none;
+.about-detail .btn.btn-link:focus {
+  box-shadow: none;
 }
 
-.table-bordered td, .table-bordered th{
- 
- 
+.table-bordered td,
+.table-bordered th {
 }
-.fixedWidth{ min-width: 150px;}
-
+.fixedWidth {
+  min-width: 150px;
+}
 
 /* media queries start */
-@media (min-width:420px){
-  .profile{
-  display: none;
+@media (min-width: 420px) {
+  .profile {
+    display: none;
+  }
 }
+@media (min-width: 1024px) and (max-width: 1200px) {
 }
-@media (min-width: 1024px) and (max-width: 1200px){
-
+@media (min-width: 992px) and (max-width: 1024px) {
 }
-@media (min-width: 992px) and (max-width: 1024px){}
-@media (min-width: 768px) and (max-width: 992px){}
-@media (min-width: 576px) and (max-width: 768px){}
-@media (min-width: 420px) and (max-width: 576px){}
-@media (min-width: 320px) and (max-width: 420px){
- .account .dropdown{
-  display: none;
+@media (min-width: 768px) and (max-width: 992px) {
 }
-.profile{
-  padding-left: 13px;
+@media (min-width: 576px) and (max-width: 768px) {
+}
+@media (min-width: 420px) and (max-width: 576px) {
+}
+@media (min-width: 320px) and (max-width: 420px) {
+  .account .dropdown {
+    display: none;
+  }
+  .profile {
+    padding-left: 13px;
     padding-top: 3px;
+  }
+  .header {
+    position: relative !important;
+  }
+  .top-head {
+    position: absolute !important;
+  }
 }
-.header{
-  position:relative !important;
+
+.form-row .btn-outline-secondary {
+  min-width: 125px;
 }
-.top-head{
-  position:absolute !important; 
+.form-row .badge {
+  min-width: 100px;
 }
+.overFlowEllipse {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 120px;
+  display: block;
+  text-overflow: ellipsis;
 }
-
-
-
-
-
-

@@ -103,7 +103,7 @@ const FormController = (props) => {
 	};
 
 	const handleFormSubmission =   (data, type) => {	   
-		debugger 
+		  
 		try {
 			 API.graphql(graphqlOperation(updateFormData, { input: data })).then( (editForm) =>{
 				

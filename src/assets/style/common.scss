@@ -158,14 +158,14 @@ a {
   border-radius: 50px;
   background-color: rgba($black, 0.5);
   display: inline-block;
-  font-size: .9em;
+  font-size: 0.9em;
   color: #ffffff;
   box-shadow: 0 0 5px rgba($black, 0.1);
   text-transform: capitalize;
-  svg{
+  svg {
     width: 18px;
     height: 18px;
-    path{
+    path {
       fill: #ffffff;
     }
   }
@@ -181,12 +181,17 @@ a {
     color: $white;
   }
 }
-.refreshIcon{ margin-left: 20px; svg{
-  height: 20px;
-  width: 20px;
-  cursor: pointer;
-  path{ fill: $success;}
-} }
+.refreshIcon {
+  margin-left: 20px;
+  svg {
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+    path {
+      fill: $success;
+    }
+  }
+}
 
 .cardBox {
   // margin-top: 30px;
@@ -206,10 +211,9 @@ a {
     transform: scale(1.05);
     box-shadow: 0 2px 16px rgba($black, 0.16);
   }
-  &.noAnimation{
+  &.noAnimation {
     &:hover {
-       
-      transform:none;
+      transform: none;
       box-shadow: 0 2px 8px rgba($black, 0.16);
     }
   }
@@ -280,7 +284,6 @@ a {
   top: 100px;
 }
 
-
 .text-error {
   color: $error;
 }
@@ -289,62 +292,64 @@ a {
   -ms-flex: 1;
   flex: 1;
 }
-.dropdown-item,.requestQueriesCard .dropdown .dropdown-toggle{ text-transform: capitalize;}
-.locationItem{  
- 
+.dropdown-item,
+.requestQueriesCard .dropdown .dropdown-toggle {
+  text-transform: capitalize;
+}
+.locationItem {
   padding: 10px 0;
-  .locationItemRow{ 
+  .locationItemRow {
     display: flex;
   }
- 
- .editIcon
-{
-     
-    padding: 0 0 0 12px  !important;
-    font-size: .9em;
 
-  
-  &.border-right{
-    border-right:2px solid #008489;
-    border-radius: 0; 
-    padding: 0 12px 0 12px  !important;
-  }
-    svg { 
-      width: 16px;  margin-top: -4px;
+  .editIcon {
+    padding: 0 0 0 12px !important;
+    font-size: 0.9em;
+
+    &.border-right {
+      border-right: 2px solid #008489;
+      border-radius: 0;
+      padding: 0 12px 0 12px !important;
     }
+    svg {
+      width: 16px;
+      margin-top: -4px;
+    }
+  }
 }
+.addButton {
+  color: #008489;
+  font-weight: 700;
+  font-size: 14px;
+  svg {
+    width: 20px;
+    margin-right: 5px;
+    path {
+      fill: #008489;
+      stroke: 1px;
+    }
+  }
 }
-.addButton{ 
-   color:#008489;
-   font-weight:700 ;
-   font-size: 14px;
-  svg{
-  width: 20px;
-  margin-right: 5px;
-  ;
-  path{fill:#008489; stroke: 1px;}
-}}
-.btn-group{ margin-left: auto;}
-.attr-list{
-   li{
-      display: inline-block;
-      margin-left: 2px;
-     &::after{
-       content: ",";
-     } 
-     &:last-child{
-      &::after{
+.btn-group {
+  margin-left: auto;
+}
+.attr-list {
+  li {
+    display: inline-block;
+    margin-left: 2px;
+    &::after {
+      content: ",";
+    }
+    &:last-child {
+      &::after {
         content: "";
-      } 
-     }
-   }
+      }
+    }
+  }
 }
-
- 
 
 // .date-picker-set{
 //   .react-datepicker-wrapper{
 //     display: block!important;
 //   }
 // }
-

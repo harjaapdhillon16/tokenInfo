@@ -135,7 +135,7 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
 						className="mb-3"
 						name="phoneNum"
 						// value={formik.values.phoneNum}
-						type="number"
+						type="text"
 						placeholder="Phone Number (optional)"
 						onBlur={formik.handleBlur}
 						onChange={formik.handleChange}

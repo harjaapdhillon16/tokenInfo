@@ -172,7 +172,7 @@ a:hover {
   border-radius: 50px;
   background-color: rgba(0, 0, 0, 0.5);
   display: inline-block;
-  font-size: .9em;
+  font-size: 0.9em;
   color: #ffffff;
   -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
           box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -329,7 +329,8 @@ a:hover {
   flex: 1;
 }
 
-.dropdown-item, .requestQueriesCard .dropdown .dropdown-toggle {
+.dropdown-item,
+.requestQueriesCard .dropdown .dropdown-toggle {
   text-transform: capitalize;
 }
 
@@ -344,14 +345,14 @@ a:hover {
 }
 
 .locationItem .editIcon {
-  padding: 0 0 0 12px  !important;
-  font-size: .9em;
+  padding: 0 0 0 12px !important;
+  font-size: 0.9em;
 }
 
 .locationItem .editIcon.border-right {
   border-right: 2px solid #008489;
   border-radius: 0;
-  padding: 0 12px 0 12px  !important;
+  padding: 0 12px 0 12px !important;
 }
 
 .locationItem .editIcon svg {
