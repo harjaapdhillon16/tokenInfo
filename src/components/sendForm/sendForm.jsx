@@ -12,7 +12,9 @@ import * as emailjs from 'emailjs-com';
 import CreateContactForm from '../../../src/components/createContactForm/createContactForm';
 import formEventsHandler from '../../utils/formEventsHelpers';
 import { globalConstants } from '../../globalVariables';
-import {sendTemplateToReceiver , sendTemplateToSender} from '../emailTemplates/formSentEmail'
+import { sendTemplateToReceiver, sendTemplateToSender } from '../emailTemplates/formSentEmail';
+import { encode } from '../../utils/base64';
+
 const SendForm = ({ formModal, onHandleFormModal }) => {
 	const [currentState, handleCurrentState] = useState(1);
 	const [show, setShow] = useState(false);
@@ -194,37 +196,49 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 			});
 		}
 	};
-	
 
 	const handleFormData = async (data) => {
 		try {
 			const createdContact = await API.graphql(
 				graphqlOperation(createFormData, { input: data })
 			);
-            let receiverId = createdContact.data.createFormData.id;
-			let docLink = `${base_url}/formSubmission/${receiverId}`;
+			const formDataId = createdContact.data.createFormData.id;
+			const senderLink = `${base_url}/formSubmission/${formDataId}`;
+			const recieverLink = `${base_url}/formSubmission/${encode({
+				formDataId,
+				isContact: true
+			})}`;
 			let emailDataForReceiver = {
 				subject: `${data.formName} Signature requested by ${agent.email}`,
 				from_name: agent.name,
 				to_name: data.receiverName,
 				reply_to: agent.email,
 				to_email: data.receiverEmail,
-				html: sendTemplateToReceiver(agent.name, agent.email, data.formName, docLink, receiverId)
+				html: sendTemplateToReceiver(
+					agent.name,
+					agent.email,
+					data.formName,
+					recieverLink,
+					formDataId
+				)
 			};
 
-
-
-			
 			let emailDataForSender = {
 				subject: `${data.formName} has been sent for e-signature`,
-				from_name: "CribFox",
+				from_name: 'CribFox',
 				to_name: agent.name,
-				reply_to: "info@cribfox.com",
+				reply_to: 'info@cribfox.com',
 				to_email: agent.email,
-				html: sendTemplateToSender(data.formName,data.receiverName,data.receiverEmail,docLink,receiverId  )
+				html: sendTemplateToSender(
+					data.formName,
+					data.receiverName,
+					data.receiverEmail,
+					senderLink,
+					formDataId
+				)
 			};
 			try {
-				formEventsHandler(receiverId, 'SENT', [
+				formEventsHandler(formDataId, 'SENT', [
 					{ name: data.receiverName, email: data.receiverEmail },
 					{ name: agent.name, email: agent.email }
 				]);
@@ -234,14 +248,12 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 
 			handleEmailTransfer(emailDataForReceiver);
 			handleEmailTransfer(emailDataForSender);
-			
 
 			const forms = [...formItems, createdContact.data.createFormData];
-				onFormItemsUpdate(forms);
+			onFormItemsUpdate(forms);
 		} catch (err) {
 			console.log('Error creating Formdata', err);
 		}
-
 
 		let updateContactId = updatedContacts.filter(function (item) {
 			if (item.id) {
@@ -251,20 +263,17 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 		});
 
 		setUpdatedContacts(updateContactId);
-
 	};
 	const handleEmailTransfer = (emailData) => {
-		const { SERVICE_ID,TEMPLATE_ID,USER_ID} = globalConstants;
+		const { SERVICE_ID, TEMPLATE_ID, USER_ID } = globalConstants;
 
 		emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
-			function (response) {
-				
-			},
+			function (response) {},
 			function (err) {
 				console.log(err);
 			}
 		);
-	}
+	};
 
 	const formSelection = () => {
 		return (
