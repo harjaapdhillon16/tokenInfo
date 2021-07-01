@@ -198,6 +198,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 	};
 
 	const handleFormData = async (data) => {
+		debugger
 		try {
 			const createdContact = await API.graphql(
 				graphqlOperation(createFormData, { input: data })
@@ -227,7 +228,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 				subject: `${data.formName} has been sent for e-signature`,
 				from_name: 'CribFox',
 				to_name: agent.name,
-				reply_to: 'info@cribfox.com',
+				reply_to: 'team@cribfox.com',
 				to_email: agent.email,
 				html: sendTemplateToSender(
 					data.formName,

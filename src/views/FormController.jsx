@@ -120,7 +120,7 @@ const FormController = (props) => {
 							from_name: 'Cribfox',
 							to_name: [formData.receiverName, agentInfo.name],
 							// message: `Form has been signed ${base_url}/formSubmission/${receiverId}`,
-							reply_to: 'info@cribfox.com',
+							reply_to: 'team@cribfox.com',
 							to_email: [formData.receiverEmail, agentInfo.email],
 							html: signedEmail(
 								formData.formName,

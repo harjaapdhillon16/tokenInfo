@@ -37,6 +37,10 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 	const [countInTimeout, setCountInTimeout] = useState(0);
 	const [signTabState, setSignTabState] = useState('link-1');
 
+	
+
+	//console.log("viewMode",viewMode);
+
 	useEffect(() => {
 		if (show && signImage && signPad.current!== null) signPad.current.fromDataURL(signImage);
 	}, [show]);
@@ -421,7 +425,7 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 								</div>
 							) : (
 								<div class="col-md-8 mb-3 d-flex">
-									{viewedStatus ? (
+									{viewMode   ?  (
 										<label class="pt-2 input-head">
 											Buyer/Tenant/Seller/Landlord Signature
 										</label>
@@ -431,7 +435,7 @@ const Form2 = ({ formData, viewMode, onFormSubmission }) => {
 										</label>
 									)}
 
-									{viewedStatus ? (
+									{viewMode ? (
 										<>
 											{signMethod === 'draw' ? (
 												<div class="form-control">
