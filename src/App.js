@@ -11,7 +11,7 @@ import Loader from './components/Loader/Loader';
 import FormController from './views/FormController';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { sendEmail } from './utils/email';
 
 function App() {
 	const { setAgent, setUser } = useContext(appContext);
@@ -57,7 +57,7 @@ function App() {
 
 	return (
 		<>
-		<ToastContainer />
+			<ToastContainer />
 			<AuthRouter />
 			<AppRouter />
 			<Route path="/formSubmission/:id" component={FormController} />

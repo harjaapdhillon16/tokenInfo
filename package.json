@@ -11,6 +11,7 @@
     "ag-grid-community": "^25.1.0",
     "ag-grid-react": "^25.1.0",
     "aws-amplify": "^3.3.26",
+    "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "date-fns": "^2.22.1",
     "emailjs-com": "^2.6.4",
