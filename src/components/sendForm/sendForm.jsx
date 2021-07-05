@@ -14,6 +14,7 @@ import formEventsHandler from '../../utils/formEventsHelpers';
 import { globalConstants } from '../../globalVariables';
 import { sendTemplateToReceiver, sendTemplateToSender } from '../emailTemplates/formSentEmail';
 import { encode } from '../../utils/base64';
+import {sendEmail} from  '../../utils/email';
 
 const SendForm = ({ formModal, onHandleFormModal }) => {
 	const [currentState, handleCurrentState] = useState(1);
@@ -198,7 +199,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 	};
 
 	const handleFormData = async (data) => {
-		debugger
+		
 		try {
 			const createdContact = await API.graphql(
 				graphqlOperation(createFormData, { input: data })
@@ -209,35 +210,39 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 				formDataId,
 				isContact: true
 			})}`;
-			let emailDataForReceiver = {
-				subject: `${data.formName} Signature requested by ${agent.email}`,
-				from_name: agent.name,
-				to_name: data.receiverName,
-				reply_to: agent.email,
-				to_email: data.receiverEmail,
-				html: sendTemplateToReceiver(
-					agent.name,
-					agent.email,
-					data.formName,
-					recieverLink,
-					formDataId
-				)
-			};
 
-			let emailDataForSender = {
-				subject: `${data.formName} has been sent for e-signature`,
-				from_name: 'CribFox',
-				to_name: agent.name,
-				reply_to: 'team@cribfox.com',
-				to_email: agent.email,
-				html: sendTemplateToSender(
-					data.formName,
-					data.receiverName,
-					data.receiverEmail,
-					senderLink,
-					formDataId
-				)
-			};
+
+
+			// let emailDataForReceiver = {
+			// 	subject: `${data.formName} Signature requested by ${agent.email}`,
+			// 	from_name: agent.name,
+			// 	to_name: data.receiverName,
+			// 	reply_to: agent.email,
+			// 	to_email: data.receiverEmail,
+			// 	html: sendTemplateToReceiver(
+			// 		agent.name,
+			// 		agent.email,
+			// 		data.formName,
+			// 		recieverLink,
+			// 		formDataId
+			// 	)
+			// };
+
+
+			// let emailDataForSender = {
+			// 	subject: `${data.formName} has been sent for e-signature`,
+			// 	from_name: 'CribFox',
+			// 	to_name: agent.name,
+			// 	reply_to: 'team@cribfox.com',
+			// 	to_email: agent.email,
+			// 	html: sendTemplateToSender(
+			// 		data.formName,
+			// 		data.receiverName,
+			// 		data.receiverEmail,
+			// 		senderLink,
+			// 		formDataId
+			// 	)
+			// };
 			try {
 				formEventsHandler(formDataId, 'SENT', [
 					{ name: data.receiverName, email: data.receiverEmail },
@@ -247,8 +252,44 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 				console.log('audit trail error', err);
 			}
 
-			handleEmailTransfer(emailDataForReceiver);
-			handleEmailTransfer(emailDataForSender);
+			let senderParam  = {
+				subject: `${data.formName} has been sent for e-signature`,
+					reply_to: 'team@cribfox.com',
+					to_email: agent.email,
+					html: sendTemplateToSender(
+						data.formName,
+						data.receiverName,
+						data.receiverEmail,
+						senderLink,
+						formDataId
+					)
+			}
+			let receiverParam = {
+				subject: `${data.formName} Signature requested by ${agent.email}`,
+				reply_to: agent.email,
+				to_email: data.receiverEmail,
+				html:sendTemplateToReceiver(
+					agent.name,
+					agent.email,
+					data.formName,
+					recieverLink,
+					formDataId
+				)
+
+
+
+			}
+			// let testMail = {
+			// 		subject: 'hello',
+			// 		reply_to: 'faisalarshed28@gmail.com',
+			// 		to_email: 'testingCribMailinator.com',
+			// 		html: '<h2>hey here!</h2>'
+			// 	}
+			// 	sendEmail(testMail);
+			sendEmail(receiverParam);
+			sendEmail(senderParam);
+			// handleEmailTransfer(emailDataForReceiver);
+			// handleEmailTransfer(emailDataForSender);
 
 			const forms = [...formItems, createdContact.data.createFormData];
 			onFormItemsUpdate(forms);

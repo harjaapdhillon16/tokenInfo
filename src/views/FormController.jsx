@@ -15,7 +15,7 @@ import * as emailjs from 'emailjs-com';
 import { globalConstants } from '../globalVariables';
 import { signedEmail } from '../components/emailTemplates/formSentEmail';
 import { decode } from '../utils/base64';
-
+import {sendEmail} from  '../utils/email';
 const FormController = (props) => {
 	const [loading, setLoading] = useState(true);
 	const [formData, setFormData] = useState([]);
@@ -115,30 +115,44 @@ const FormController = (props) => {
 
 						let doclink = `${base_url}/formSubmission/${receiverId}`;
 
-						let emailData = {
+						// let emailData = {
+						// 	subject: `Everyone has signed ${formData.formName}`,
+						// 	from_name: 'Cribfox',
+						// 	to_name: [formData.receiverName, agentInfo.name],
+						// 	// message: `Form has been signed ${base_url}/formSubmission/${receiverId}`,
+						// 	reply_to: 'team@cribfox.com',
+						// 	to_email: [formData.receiverEmail, agentInfo.email],
+						// 	html: signedEmail(
+						// 		formData.formName,
+						// 		formData.receiverName,
+						// 		formData.receiverEmail,
+						// 		doclink
+						// 	)
+						// };
+						let emailParams = {
 							subject: `Everyone has signed ${formData.formName}`,
-							from_name: 'Cribfox',
-							to_name: [formData.receiverName, agentInfo.name],
-							// message: `Form has been signed ${base_url}/formSubmission/${receiverId}`,
 							reply_to: 'team@cribfox.com',
-							to_email: [formData.receiverEmail, agentInfo.email],
+						 	to_email: [formData.receiverEmail, agentInfo.email],
 							html: signedEmail(
-								formData.formName,
-								formData.receiverName,
-								formData.receiverEmail,
-								doclink
-							)
-						};
+										formData.formName,
+										formData.receiverName,
+										formData.receiverEmail,
+										doclink
+									)
+
+						}
 
 						try {
-							emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
-								function (response) {
-									window.location.reload();
-								},
-								function (err) {
-									console.log(err);
-								}
-							);
+							// emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
+							// 	function (response) {
+							// 		window.location.reload();
+							// 	},
+							// 	function (err) {
+							// 		console.log(err);
+							// 	}
+							// );
+							sendEmail(emailParams);
+							
 						} catch (err) {
 							console.log('Error creating Formdata', err);
 						}
