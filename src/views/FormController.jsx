@@ -15,7 +15,7 @@ import * as emailjs from 'emailjs-com';
 import { globalConstants } from '../globalVariables';
 import { signedEmail } from '../components/emailTemplates/formSentEmail';
 import { decode } from '../utils/base64';
-import {sendEmail} from  '../utils/email';
+import { sendEmail } from '../utils/email';
 const FormController = (props) => {
 	const [loading, setLoading] = useState(true);
 	const [formData, setFormData] = useState([]);
@@ -131,16 +131,14 @@ const FormController = (props) => {
 						// };
 						let emailParams = {
 							subject: `Everyone has signed ${formData.formName}`,
-							reply_to: 'team@cribfox.com',
-						 	to_email: [formData.receiverEmail, agentInfo.email],
+							to_email: [formData.receiverEmail, agentInfo.email],
 							html: signedEmail(
-										formData.formName,
-										formData.receiverName,
-										formData.receiverEmail,
-										doclink
-									)
-
-						}
+								formData.formName,
+								formData.receiverName,
+								formData.receiverEmail,
+								doclink
+							)
+						};
 
 						try {
 							// emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
@@ -152,7 +150,6 @@ const FormController = (props) => {
 							// 	}
 							// );
 							sendEmail(emailParams);
-							
 						} catch (err) {
 							console.log('Error creating Formdata', err);
 						}

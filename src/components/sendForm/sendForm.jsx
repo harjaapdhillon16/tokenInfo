@@ -14,7 +14,7 @@ import formEventsHandler from '../../utils/formEventsHelpers';
 import { globalConstants } from '../../globalVariables';
 import { sendTemplateToReceiver, sendTemplateToSender } from '../emailTemplates/formSentEmail';
 import { encode } from '../../utils/base64';
-import {sendEmail} from  '../../utils/email';
+import { sendEmail } from '../../utils/email';
 
 const SendForm = ({ formModal, onHandleFormModal }) => {
 	const [currentState, handleCurrentState] = useState(1);
@@ -199,7 +199,6 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 	};
 
 	const handleFormData = async (data) => {
-		
 		try {
 			const createdContact = await API.graphql(
 				graphqlOperation(createFormData, { input: data })
@@ -210,8 +209,6 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 				formDataId,
 				isContact: true
 			})}`;
-
-
 
 			// let emailDataForReceiver = {
 			// 	subject: `${data.formName} Signature requested by ${agent.email}`,
@@ -227,7 +224,6 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 			// 		formDataId
 			// 	)
 			// };
-
 
 			// let emailDataForSender = {
 			// 	subject: `${data.formName} has been sent for e-signature`,
@@ -252,33 +248,28 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 				console.log('audit trail error', err);
 			}
 
-			let senderParam  = {
+			let senderParam = {
 				subject: `${data.formName} has been sent for e-signature`,
-					reply_to: 'team@cribfox.com',
-					to_email: agent.email,
-					html: sendTemplateToSender(
-						data.formName,
-						data.receiverName,
-						data.receiverEmail,
-						senderLink,
-						formDataId
-					)
-			}
+				to_email: agent.email,
+				html: sendTemplateToSender(
+					data.formName,
+					data.receiverName,
+					data.receiverEmail,
+					senderLink,
+					formDataId
+				)
+			};
 			let receiverParam = {
 				subject: `${data.formName} Signature requested by ${agent.email}`,
-				reply_to: agent.email,
 				to_email: data.receiverEmail,
-				html:sendTemplateToReceiver(
+				html: sendTemplateToReceiver(
 					agent.name,
 					agent.email,
 					data.formName,
 					recieverLink,
 					formDataId
 				)
-
-
-
-			}
+			};
 			// let testMail = {
 			// 		subject: 'hello',
 			// 		reply_to: 'faisalarshed28@gmail.com',
