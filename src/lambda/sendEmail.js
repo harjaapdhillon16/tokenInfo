@@ -3,20 +3,18 @@ const aws = require('aws-sdk');
 const ses = new aws.SES({ region: 'us-east-2' });
 
 exports.handler = async function (event) {
-	const args = JSON.parse(event.body);
-
 	const params = {
 		Destination: {
-			ToAddresses: [args.to_email]
+			ToAddresses: [event.to_email]
 		},
 		Message: {
 			Body: {
-				Html: { Data: args.html }
+				Html: { Data: event.html }
 			},
 
-			Subject: { Data: args.subject }
+			Subject: { Data: event.subject }
 		},
-		Source: args.reply_to
+		Source: event.reply_to
 	};
 
 	const result = await ses.sendEmail(params).promise();
