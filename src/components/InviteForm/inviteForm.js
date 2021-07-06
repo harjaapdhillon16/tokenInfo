@@ -96,8 +96,8 @@ const InviteForm = ({ show, handleClose, setShow }) => {
 
     let emailParam = {
       subject: emailSubject,
-      to_email: emails,
       reply_to: user.attributes.email,
+      to_email: emails,
       html: inviteEmail(agent.name, agent.email, docLink),
     };
     try {

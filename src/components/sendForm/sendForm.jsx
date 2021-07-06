@@ -250,8 +250,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 
 			let senderParam = {
 				subject: `${data.formName} has been sent for e-signature`,
-				to_email: agent.email,
 				reply_to: 'team@cribfox.com',
+				to_email: agent.email,
 				html: sendTemplateToSender(
 					data.formName,
 					data.receiverName,
@@ -262,8 +262,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 			};
 			let receiverParam = {
 				subject: `${data.formName} Signature requested by ${agent.email}`,
-				to_email: data.receiverEmail,
 				reply_to: agent.email,
+				to_email: data.receiverEmail,
 				html: sendTemplateToReceiver(
 					agent.name,
 					agent.email,
