@@ -131,6 +131,7 @@ const FormController = (props) => {
 						// };
 						let emailParams = {
 							subject: `Everyone has signed ${formData.formName}`,
+							reply_to: 'team@cribfox.com',
 							to_email: [formData.receiverEmail, agentInfo.email],
 							html: signedEmail(
 								formData.formName,
