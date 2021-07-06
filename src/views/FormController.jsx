@@ -151,6 +151,7 @@ const FormController = (props) => {
 							// 	}
 							// );
 							sendEmail(emailParams);
+							window.location.reload();
 						} catch (err) {
 							console.log('Error creating Formdata', err);
 						}
