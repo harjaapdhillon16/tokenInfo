@@ -45,7 +45,8 @@ const FormsScreen = () => {
 		try {
 			const newFormsData = await API.graphql(
 				graphqlOperation(listFormDatas, {
-					filter: { senderId: { eq: agent.id } }
+					filter: { senderId: { eq: agent.id } },
+					limit: 99999999
 				})
 			);
 
@@ -225,11 +226,13 @@ const FormsScreen = () => {
 								</p>
 							</Col>
 							<Col md={4} className="text-right pr-0">
-							 
-									<a target="_blank"  className="btn btn-outline-secondary cf-black mr-3" href={`${base_url}/formSubmission/${item.id}`}>
-										View Form
-									</a>
-							
+								<a
+									target="_blank"
+									className="btn btn-outline-secondary cf-black mr-3"
+									href={`${base_url}/formSubmission/${item.id}`}>
+									View Form
+								</a>
+
 								{item.status === 'SENT' && <SendReminder itemData={item} />}
 
 								{item.status === 'VIEWED' && <SendReminder itemData={item} />}

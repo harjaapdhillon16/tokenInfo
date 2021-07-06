@@ -27,7 +27,6 @@ const CreateContactForm = ({ show, handleClose, setShow }) => {
 			title: '',
 			phoneNum: '',
 			roleInCompany: ''
-
 			// agentId: "",
 			// type:''
 		},
