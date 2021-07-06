@@ -150,8 +150,11 @@ const FormController = (props) => {
 							// 		console.log(err);
 							// 	}
 							// );
-							sendEmail(emailParams);
-							window.location.reload();
+							sendEmail(emailParams)
+							setTimeout(() => {
+								window.location.reload()
+							}, 1500)
+							
 						} catch (err) {
 							console.log('Error creating Formdata', err);
 						}
