@@ -111,6 +111,8 @@ const ShareForm = ({ show, handleClose, setShow, formData, url }) => {
     };
     try {
       sendEmail(emailParam);
+      toast.success("Email Send Successfully!");
+      setEmails([]);
     } catch (err) {
       console.log(err);
     }

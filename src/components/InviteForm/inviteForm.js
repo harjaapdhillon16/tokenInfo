@@ -84,7 +84,7 @@ const InviteForm = ({ show, handleClose, setShow }) => {
 
     const { SERVICE_ID, TEMPLATE_ID, USER_ID } = globalConstants;
     let docLink = window.location.origin;
-    let emailSubject = `You have received a document through Cribfox`;
+    let emailSubject = `${agent.name} invited you to collaborate on Cribfox`;
     // let emailData = {
     //   subject: emailSubject,
     //   from_name: user.username,
@@ -102,13 +102,14 @@ const InviteForm = ({ show, handleClose, setShow }) => {
     };
     try {
       sendEmail(emailParam);
+      setEmails([]);
+      handleClose();
     } catch (err) {
       console.log(err);
     }
     // emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
     //   function (response) {
-    //     setEmails([]);
-    //     handleClose();
+    //
     //     // console.log(response);
     //     // console.log(response.status, response.text);
     //   },
