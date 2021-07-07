@@ -78,7 +78,7 @@ export default function SignUp() {
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Container fluid="sm" className="py-5">
           <Row className="justify-content-md-center mt-5">
-            <Col xs={4}>
+            <Col md={4}>
               <FormLabel>First name</FormLabel>
               <TextInput.Control
                 placeholder="Enter your first name"
@@ -92,7 +92,7 @@ export default function SignUp() {
             </Col>
           </Row>
           <Row className="justify-content-md-center mt-2">
-            <Col xs={4}>
+            <Col md={4}>
               <FormLabel>Last name</FormLabel>
               <TextInput.Control
                 placeholder="Enter your last name"
@@ -106,7 +106,7 @@ export default function SignUp() {
             </Col>
           </Row>
           <Row className="justify-content-md-center my-2">
-            <Col xs={4}>
+            <Col md={4}>
               <FormLabel>Email</FormLabel>
               <TextInput.Control
                 placeholder="Enter your email"
@@ -120,7 +120,7 @@ export default function SignUp() {
             </Col>
           </Row>
           <Row className="justify-content-md-center">
-            <Col xs={4}>
+            <Col md={4}>
               <FormLabel>Password</FormLabel>
               <TextInput.Control
                 placeholder="Enter your password"
@@ -135,10 +135,10 @@ export default function SignUp() {
             </Col>
           </Row>
           <Row className="justify-content-md-center my-2">
-            <Col xs={4}>
+            <Col md={4}>
               <FormLabel>Company name</FormLabel>
               <TextInput.Control
-                placeholder="Enter your Company name"
+                placeholder="Enter your company name"
                 {...getFieldProps("companyName")}
               />
               {touched.companyName && errors.companyName && (
@@ -149,10 +149,10 @@ export default function SignUp() {
             </Col>
           </Row>
           <Row className="justify-content-md-center my-2">
-            <Col xs={4}>
+            <Col md={4}>
               <FormLabel>State of licensure</FormLabel>
               <TextInput.Control
-                placeholder="Enter your State of licensure"
+                placeholder="Enter your state of licensure"
                 {...getFieldProps("stateLicensure")}
               />
               {touched.stateLicensure && errors.stateLicensure && (
