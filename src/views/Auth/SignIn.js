@@ -40,7 +40,7 @@ export default function SignUp() {
 			<Form autoComplete="off" noValidate onSubmit={handleSubmit}>
 				<Container fluid="sm" className="py-5">
 					<Row className="justify-content-md-center mt-5 mb-2">
-						<Col xs={4}>
+						<Col md={4}>
 							<FormLabel>Email</FormLabel>
 							<TextInput.Control
 								placeholder="Enter your email"
@@ -52,7 +52,7 @@ export default function SignUp() {
 						</Col>
 					</Row>
 					<Row className="justify-content-md-center">
-						<Col xs={4} >
+						<Col md={4} >
 							<FormLabel>Password</FormLabel>
 							<TextInput.Control
 								placeholder="Enter your password"
