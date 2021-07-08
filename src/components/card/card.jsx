@@ -1,11 +1,15 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
+import { Card ,Button} from 'react-bootstrap';
 import {Link} from "react-router-dom";
  const AppCard = (props) => {
+
+ 
+
  
     return ( 
-      <Link to={props.sectionPath}>
-        <Card className="mt-4 cardtext">
+     
+      
+        <Card className="mt-4 cardtext" >
             <Card.Body>
               <div className="cardBoxIcon ">
                 {props.icon}
@@ -18,7 +22,9 @@ import {Link} from "react-router-dom";
               </Card.Text>
             </Card.Body>
           </Card>
-          </Link>
+        
+          
+          
      );
 }
  

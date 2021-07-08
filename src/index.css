@@ -258,3 +258,17 @@ a:hover {
   display: block;
   text-overflow: ellipsis;
 }
+.cardwrap {
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+.cardwrap:hover,
+.cardwrap:focus {
+  background-color: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+a.cardwrap.disabled .card {
+  background: #f3f3f3;
+}
