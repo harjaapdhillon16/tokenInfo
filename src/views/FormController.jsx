@@ -11,8 +11,6 @@ import { Row, Col } from 'react-bootstrap';
 import { updateFormData } from '../graphql/mutations';
 import formEventsHandler from '../utils/formEventsHelpers';
 import { toast } from 'react-toastify';
-import * as emailjs from 'emailjs-com';
-import { globalConstants } from '../globalVariables';
 import { signedEmail } from '../components/emailTemplates/formSentEmail';
 import { decode } from '../utils/base64';
 import { sendEmail } from '../utils/email';
@@ -107,7 +105,6 @@ const FormController = (props) => {
 					if (type === 'SIGNED') {
 						toast.success('Form Signed Successfully!');
 
-						const { SERVICE_ID, TEMPLATE_ID, USER_ID } = globalConstants;
 						let receiverId = formData.id;
 						setViewMode(true);
 						console.log(data);
@@ -142,19 +139,10 @@ const FormController = (props) => {
 						};
 
 						try {
-							// emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
-							// 	function (response) {
-							// 		window.location.reload();
-							// 	},
-							// 	function (err) {
-							// 		console.log(err);
-							// 	}
-							// );
-							sendEmail(emailParams)
+							sendEmail(emailParams);
 							setTimeout(() => {
-								window.location.reload()
-							}, 1500)
-							
+								window.location.reload();
+							}, 1500);
 						} catch (err) {
 							console.log('Error creating Formdata', err);
 						}
@@ -203,7 +191,7 @@ const FormController = (props) => {
 	};
 
 	if (loading) return <Loader />;
-	console.log(globalConstants);
+
 	return (
 		<>
 			<div className="" ref={ref}>

@@ -11,7 +11,6 @@ import { createFormData } from '../../graphql/mutations';
 import * as emailjs from 'emailjs-com';
 import CreateContactForm from '../../../src/components/createContactForm/createContactForm';
 import formEventsHandler from '../../utils/formEventsHelpers';
-import { globalConstants } from '../../globalVariables';
 import { sendTemplateToReceiver, sendTemplateToSender } from '../emailTemplates/formSentEmail';
 import { encode } from '../../utils/base64';
 import { sendEmail } from '../../utils/email';
@@ -298,16 +297,6 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 		});
 
 		setUpdatedContacts(updateContactId);
-	};
-	const handleEmailTransfer = (emailData) => {
-		const { SERVICE_ID, TEMPLATE_ID, USER_ID } = globalConstants;
-
-		emailjs.send(SERVICE_ID, TEMPLATE_ID, emailData, USER_ID).then(
-			function (response) {},
-			function (err) {
-				console.log(err);
-			}
-		);
 	};
 
 	const formSelection = () => {
