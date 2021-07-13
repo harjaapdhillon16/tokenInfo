@@ -57,6 +57,19 @@ export class AppContext extends Component {
           },
         ],
       },
+      {
+        id: 5,
+        title: "New York State Housing Discrimination Disclosure Form",
+        data: [
+          {
+            name: "",
+            date: "",
+            property_address: "",
+            real_estate_name: "",
+            name_of_brockerage_company: "",
+          },
+        ],
+      },
     ],
     formItems: [],
     contacts: [],
