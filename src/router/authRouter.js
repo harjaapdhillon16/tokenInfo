@@ -2,6 +2,7 @@ import React from 'react';
 import PublicRoute from '../wrappers/PublicRoute';
 import SignUp from '../views/Auth/SignUp';
 import SignIn from '../views/Auth/SignIn';
+import ConfirmSignUp from '../views/Auth/ConfirmSignUp';
 
 export default function AuthRouter() {
 	return (
@@ -11,6 +12,9 @@ export default function AuthRouter() {
 			</PublicRoute>
 			<PublicRoute exact path="/register">
 				<SignUp />
+			</PublicRoute>
+			<PublicRoute exact path="/confirmSignup">
+				<ConfirmSignUp />
 			</PublicRoute>
 		</>
 	);
