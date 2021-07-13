@@ -198,10 +198,10 @@ const Form4 = () => {
               </div>
             </Col>
           </Row>
-          <Row className="pt-4">
+          {/* <Row className="pt-4"> */}
             {/* <div className="pt-3 text-bottom-border"></div> */}
-            <Col md={12}>
-              <form class="form-inline submit-form">
+            {/* <Col md={12}> */}
+              <form class="form-inline submit-form pt-4">
                 <Row>
                   <Col md={12}>
                     <ul class="form-inline">
@@ -219,7 +219,9 @@ const Form4 = () => {
                             type="text"
                           />
                         </span>
-                        <p className="text-center">(Print Name of Licensee) </p>
+                        <p className="text-center font-italic">
+                          (Print Name of Licensee){" "}
+                        </p>
                       </li>
                       <li>
                         <p className="apply-font"> of</p>
@@ -233,7 +235,7 @@ const Form4 = () => {
                             name="senderCompany"
                           />
                         </span>
-                        <p className="text-center">
+                        <p className="text-center font-italic">
                           (Print Name of Company, Firm or Brokerage){" "}
                         </p>
                       </li>
@@ -249,40 +251,263 @@ const Form4 = () => {
 
                 <Row className="w-100">
                   <Col md={6}>
-                    <div className="align-items-md-center d-flex cf-text-wrapper flex-column  my-2">
-                      <div className="my-2">
-                        <Form.Control type="checkbox" className="mr-2 " />
-                        <span className="font-weight-lighter mt-3">
-                          Seller as a (check relationship below)
-                        </span>
-                      </div>
-                      <div className="my-2">
-                        <Form.Control
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input main-check"
+                        id="exampleCheck1"
+                      />
+                      <label class="form-check-label" for="exampleCheck1">
+                        Seller as a (check relationship below)
+                      </label>
+                    </div>
+                    <div>
+                      <div class="form-check">
+                        <input
                           type="checkbox"
-                          className="mr-2  cf-small-box"
-                          name="seller"
+                          class="form-check-input"
+                          id="exampleCheck2"
                         />
-                        <span className="font-weight-lighter mt-3">
+                        <label class="form-check-label" for="exampleCheck2">
                           Seller’s Agent
-                        </span>
+                        </label>
                       </div>
-                      <div className="my-2">
-                        <Form.Control
+                      <div class="form-check">
+                        <input
                           type="checkbox"
-                          className="mr-2  cf-small-box"
-                          name="broker"
+                          class="form-check-input"
+                          id="exampleCheck3"
                         />
-                        <span className="font-weight-lighter mt-3">
+                        <label class="form-check-label" for="exampleCheck3">
                           Broker’s Agent
-                        </span>
+                        </label>
                       </div>
                     </div>
                   </Col>
-                  <Col md={6}></Col>
+                  <Col md={6}>
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input  main-check"
+                        id="exampleCheck4"
+                      />
+                      <label class="form-check-label" for="exampleCheck4">
+                        Buyer as a (check relationship below)
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck5"
+                      />
+                      <label class="form-check-label" for="exampleCheck5">
+                        Buyer’s Agent
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="exampleCheck6"
+                      />
+                      <label class="form-check-label" for="exampleCheck6">
+                        Broker’s Agent{" "}
+                      </label>
+                    </div>
+                  </Col>
+                </Row>
+                <Row className="w-100">
+                  <Col md={5} className="m-auto">
+                    <div class="form-check dual-check" style={{marginLeft:"-48%"}}>
+                      <input
+                        type="checkbox"
+                        class="form-check-input main-check"
+                        id="exampleCheck7"
+                      />
+                      <label class="form-check-label" for="exampleCheck7">
+                        Dual Agent{" "}
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input main-check"
+                        id="exampleCheck8"
+                      />
+                      <label class="form-check-label" for="exampleCheck8">
+                        Dual Agent with Designated Sales Agent{" "}
+                      </label>
+                    </div>
+                  </Col>
+                  <p className="pt-4">
+                    For advance informed consent to either dual agency or dual
+                    agency with designated sales agents complete section below:
+                  </p>
+                  <div className="m-auto">
+                    <div class="form-check dual-check1" style={{marginLeft:"-37%"}}>
+                      <input
+                        type="checkbox"
+                        class="form-check-input main-check"
+                        id="exampleCheck9"
+                      />
+                      <label class="form-check-label" for="exampleCheck9">
+                        Advance Informed Consent Dual Agency{" "}
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        class="form-check-input main-check"
+                        id="exampleCheck10"
+                      />
+                      <label class="form-check-label" for="exampleCheck10">
+                        Advance Informed Consent to Dual Agency with Designated
+                        Sales Agents{" "}
+                      </label>
+                    </div>
+                  </div>
                 </Row>
               </form>
-            </Col>
-          </Row>
+              <form className="pt-3">
+              <Row>
+                <Col md={12} className="p-0">
+                <ul class="form-inline pt-5 pl-md-2">
+                      <li>
+                        <p className="apply-font">
+                        If dual agent with designated sales agents is indicated above:
+                        </p>
+                      </li>
+                      <li>
+                        <span className="mx-3 text-field">
+                          <Form.Control
+                            class="form-control"
+                            id="senderName"
+                            name="senderName"
+                            type="text"
+                          />
+                        </span>
+                      </li>
+                      <li>
+                        <p className="apply-font">is appointed to represent the</p>
+                      </li>
+                      <li>
+                        <p className="apply-font">
+                        buyer; and:
+                        </p>
+                      </li>
+                      <li>
+                        <span className="mx-3 text-field1">
+                          <Form.Control
+                            class="form-control"
+                            id="senderName"
+                            name="senderName"
+                            type="text"
+                          />
+                        </span>
+                      </li>
+                      <li>
+                        <p className="apply-font">is appointed to represent the seller in this transaction.</p>
+                      </li>
+                      <li>
+                        <p className="apply-font">
+                        (I) (We)
+                        </p>
+                      </li>
+                      <li>
+                        <span className="mx-3 text-field1">
+                          <Form.Control
+                            class="form-control"
+                            id="senderName"
+                            name="senderName"
+                            type="text"
+                          />
+                        </span>
+                      </li>
+                      <li>
+                        <p className="apply-font">acknowledge receipt of a copy of this disclosure form:</p>
+                      </li>
+                    </ul>
+                    <div className="d-flex py-3">
+                      Signature of 
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input main-check"
+                          id="exampleCheck11"
+                        />
+                        <label class="form-check-label pl-3" for="exampleCheck11">
+                        Buyer(s) and/or 
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input
+                          type="checkbox"
+                          class="form-check-input main-check"
+                          id="exampleCheck12"
+                        />
+                        <label class="form-check-label pl-3" for="exampleCheck12">
+                          Seller(s):
+                        </label>
+                      </div>
+                    </div>
+                </Col>  
+              </Row>
+              <Row>
+                <Col md={6}>
+                <Form.Control
+                            className="form-control my-5 empty-field "
+                            id="senderName"
+                            name="senderName"
+                            type="text"
+                  />
+                  <Form.Control
+                            className="form-control  my-5 empty-field "
+                            id="senderName"
+                            name="senderName"
+                            type="text"
+                  />
+                  <div className="d-flex my-5 text-field1">
+                      <label className="text-center font-italic pr-2">
+                          Date:
+                      </label>
+                      <Form.Control
+                            class="form-control"
+                            type="text"
+                            id="senderCompany"
+                            name="senderCompany"
+                      />
+                  </div>
+                   
+                      
+                </Col>
+                <Col md={6}>
+                <Form.Control
+                            className="form-control my-5 empty-field "
+                            id="senderName"
+                            name="senderName"
+                            type="text"
+                  />
+                  <Form.Control
+                            className="form-control  my-5 empty-field "
+                            id="senderName"
+                            name="senderName"
+                            type="text"
+                  />
+                  <div className="d-flex my-5 text-field1">
+                      <label className="text-center font-italic pr-2">
+                          Date:
+                      </label>
+                      <Form.Control
+                            class="form-control"
+                            type="text"
+                            id="senderCompany"
+                            name="senderCompany"
+                      />
+                  </div>
+                </Col>
+              </Row>
+              </form>
         </Col>
       </Row>
     </Container>

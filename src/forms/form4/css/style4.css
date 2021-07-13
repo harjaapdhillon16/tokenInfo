@@ -40,13 +40,43 @@
 .form4 .detail .form-control:focus {
   box-shadow: none;
 }
-.cf-text-wrapper input.form-control {
-  width: 39px !important;
-  height: 29px;
+.main-check{
+  height:25px;
+  width:25px;
 }
-.cf-text-wrapper input.mr-2.cf-small-box.form-control {
-  height: 15px;
-  /* width: 29px; */
+/* .form-inline .form-check{
+  justify-content: left;
+} */
+.text-field input {
+  width: 300px !important;
+  border: none;
+  border-bottom: solid 1px #000;
+  border-radius: 0;
+  background-color:#f1f4ff;
+}
+.text-field1 input {
+  width: 530px !important;
+  border: none;
+  border-bottom: solid 1px #000;
+  background-color:#f1f4ff;
+  border-radius: 0;
+}
+.text-field1 input:focus{
+  border-color:#000;
+  box-shadow:none;
+}
+.text-field input:focus{
+  border-color:#000;
+  box-shadow:none;
+}
+.empty-field {
+  border: none ;
+  border-bottom: solid 1px #000;
+  border-radius: 0;
+}
+.empty-field:focus{
+  border-color:#000;
+  box-shadow:none;
 }
 /* Responsive design with media queries */
 
@@ -78,6 +108,9 @@
   .form4 .title-bar h4 {
     font-size: 23px;
   }
+  .form4 .submit-form .form-control {
+    width:500px;
+  }
 }
 @media (min-width: 576px) and (max-width: 768px) {
   .form4 .border-left {
@@ -87,12 +120,15 @@
   .top-title {
     padding-top: 50px;
   }
-  /* .form4 .date-block{
-        margin-left:46% !important;
-    } */
   .form4 .detail .form-control {
     width: 80%;
   }
+.dual-check{
+  margin-right:-9%;
+}
+.dual-check1{
+  margin-left: -31% !important;
+}
 }
 @media (min-width: 420px) and (max-width: 576px) {
   .form4 .logo {
