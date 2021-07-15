@@ -186,24 +186,21 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
   };
 
   const handleSecondForm = () => {
-     debugger
-    let selectedforms = updatedFormTypes.filter(
+    
+    let selectedForms = updatedFormTypes.filter(
       (item) => item.isActive === true
     );
-    selectedforms.map(function(item)  {
+
+    selectedForms.map(function(item)  {
       if(item.title === 'New York State Disclosure Form for Buyer and Seller'){
-        console.log(item
-          .filter(
-          (item) => item.title === 'New York State Disclosure Form for Buyer and Seller'
-        ));
-
-        //handleCurrentState(currentState + 1);
-
-
-      }else if(item.title === 'New York State Housing Discrimination Disclosure Form'){
+       
+        handleCurrentState(currentState + 1);
+      }
+      else if(item.title === 'New York State Housing Discrimination Disclosure Form'){
         handleCurrentState(currentState + 2);
       }
       else{
+        handleFormSubmission(selectedForms);
         handleCurrentState(currentState + 3);
       }
       
@@ -211,34 +208,33 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 
   };
 
-  const handleFormSubmission = () => {
-    
-    // let selectedcontacts = updatedContacts.filter(
-    //   (item) => item.isActive === true
-    // );
+  const handleFormSubmission = (selectedForms) => {
+    let selectedcontacts = updatedContacts.filter(
+      (item) => item.isActive === true
+    );
 
-    // let finalData = [];
+    let finalData = [];
 
-    // selectedcontacts.map((item) => {
-    //   selectedforms.map(function (form) {
-    //     let finalObject = {};
-    //     finalObject.senderId = agent.id;
-    //     finalObject.receiverId = item.id;
-    //     finalObject.receiverName = item.name;
-    //     finalObject.receiverEmail = item.email;
-    //     finalObject.formName = form.title;
-    //     finalObject.status = "SENT";
+    selectedcontacts.map((item) => {
+      selectedForms.map(function (form) {
+        let finalObject = {};
+        finalObject.senderId = agent.id;
+        finalObject.receiverId = item.id;
+        finalObject.receiverName = item.name;
+        finalObject.receiverEmail = item.email;
+        finalObject.formName = form.title;
+        finalObject.status = "SENT";
 
-    //     finalObject.data = handleMultipleFormsData(form.id, item, agent);
-    //     finalData = [...finalData, finalObject];
-    //   });
-    // });
+        finalObject.data = handleMultipleFormsData(form.id, item, agent);
+        finalData = [...finalData, finalObject];
+      });
+    });
 
-    // if (finalData.length > 0) {
-    //   finalData.map((item) => {
-    //     handleFormData(item);
-    //   });
-    // }
+    if (finalData.length > 0) {
+      finalData.map((item) => {
+        handleFormData(item);
+      });
+    }
   }
 
   const handleFormData = async (data) => {
@@ -622,7 +618,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
               type="checkbox"
               checked={(optionNo == 1) ? true : false }
 			  onChange={()=> handleCheckBox(1)}
-              label="I'm acting in the interest of the Seller"
+              label="I'm acting in the interest of the Landlord"
             />
           </Form.Group>
 		  	{(optionNo == 1) &&
@@ -631,7 +627,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 					className="mb-3 check-inside"
 					controlId="formBasicCheckbox1"
 					>
-					<Form.Check type="checkbox" label="As the Seller’s Agent" />
+					<Form.Check type="checkbox" label="As the Landlord’s Agent" />
 					</Form.Group>
 					<Form.Group
 					className="mb-3 check-inside"
@@ -648,7 +644,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           >
             <Form.Check
               type="checkbox"
-              label="I'm acting in the interest of the Buyer"
+              label="I'm acting in the interest of the Tenant"
               checked={(optionNo == 2) ? true : false }
               onChange={()=> handleCheckBox(2)}
             />
@@ -659,7 +655,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
               className="mb-3 check-inside"
               controlId="formBasicCheckbox4"
             >
-              <Form.Check type="checkbox" label="As the Seller’s Agent" />
+              <Form.Check type="checkbox" label="As the Tenant’s Agent" />
             </Form.Group>
             <Form.Group
               className="mb-3 check-inside"
@@ -701,7 +697,10 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
               className="mb-3 check-inside"
               controlId="formBasicCheckbox9"
             >
-              <Form.Check type="checkbox" label="Advance informed consent to dual agency with designated sales agents" />
+              <Form.Check
+               type="checkbox"
+               label="Advance informed consent to dual agency with designated sales agents"                
+               />
             </Form.Group>
           </div>
       }
