@@ -1,8 +1,8 @@
 export function sendEmail(params) {
 	if (Array.isArray(params.to_email)) {
-		params.to_email.forEach((item) => handleEmail({ ...params, to_email: item }));
+	//	params.to_email.forEach((item) => handleEmail({ ...params, to_email: item }));
 	} else {
-		handleEmail(params);
+	//	handleEmail(params);
 	}
 }
 
