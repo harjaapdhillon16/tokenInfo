@@ -5,5 +5,10 @@ import appContext from '../context/appContext';
 export default function PublicRoute({ children, ...rest }) {
 	const { agent } = useContext(appContext);
 
-	return <Route {...rest} render={() => (agent ? <Redirect to="/" /> : children)} />;
+	return (
+		<Route
+			{...rest}
+			render={(props) => (agent ? <Redirect to="/" /> : React.cloneElement(children, props))}
+		/>
+	);
 }
