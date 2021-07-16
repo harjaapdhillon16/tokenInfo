@@ -78,7 +78,6 @@ const FormController = (props) => {
 			);
 
 			if (agentinfo.data.getAgent !== '') {
-				console.log('yes we have');
 				setAgentInfo(agentinfo.data.getAgent);
 			}
 		} catch (err) {
