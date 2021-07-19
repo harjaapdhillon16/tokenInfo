@@ -11,6 +11,8 @@ export default function ConfirmSignUp(props) {
 	const code = query.get('code');
 	const [isLoading, setLoading] = useState(true);
 
+	console.log({ code, username });
+
 	useEffect(() => {
 		if (username && code) {
 			Auth.confirmSignUp(username, code)
