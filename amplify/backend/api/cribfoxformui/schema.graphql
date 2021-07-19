@@ -62,8 +62,8 @@ type FormEvent
 	ip: String
 }
 
-# type ContactHistory { # }
-
-# type Deal {}
-
-# type ContactDeals {}
+type Plan @model @key(name: "byAgent", fields: ["agentId"], queryField: "planByAgent") {
+	id: ID!
+	agentId: ID!
+	type: String
+}
