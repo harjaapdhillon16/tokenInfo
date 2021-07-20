@@ -28,6 +28,7 @@ export class AppContext extends Component {
             real_estate_brockerage_company: "",
             firstdate: "",
             lastdate: "",
+            
           },
         ],
       },
@@ -44,32 +45,32 @@ export class AppContext extends Component {
           },
         ],
       },
-      {
-        id: 4,
-        title: "New York State Disclosure Form for Buyer and Seller",
-        data: [
-          {
-            name: "",
-            date: "",
-            property_address: "",
-            real_estate_name: "",
-            name_of_brockerage_company: "",
-          },
-        ],
-      },
-      {
-        id: 5,
-        title: "New York State Housing Discrimination Disclosure Form",
-        data: [
-          {
-            name: "",
-            date: "",
-            property_address: "",
-            real_estate_name: "",
-            name_of_brockerage_company: "",
-          },
-        ],
-      },
+      // {
+      //   id: 4,
+      //   title: "New York State Disclosure Form for Buyer and Seller",
+      //   data: [
+      //     {
+      //       name: "",
+      //       date: "",
+      //       property_address: "",
+      //       real_estate_name: "",
+      //       name_of_brockerage_company: "",
+      //     },
+      //   ],
+      // },
+      // {
+      //   id: 5,
+      //   title: "New York State Housing Discrimination Disclosure Form",
+      //   data: [
+      //     {
+      //       name: "",
+      //       date: "",
+      //       property_address: "",
+      //       real_estate_name: "",
+      //       name_of_brockerage_company: "",
+      //     },
+      //   ],
+      // },
     ],
     formItems: [],
     contacts: [],
