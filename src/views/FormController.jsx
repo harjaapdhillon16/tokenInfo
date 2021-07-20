@@ -6,6 +6,7 @@ import Form2 from '../forms/form2/Form2';
 import Form3 from '../forms/form3/Form3';
 import Form4 from '../forms/form4/Form4';
 import Form5 from '../forms/form5/form5';
+import Form6 from '../forms/form6/form6';
 import Loader from '../components/Loader/Loader';
 import AuditTrail from '../components/AuditTrail';
 import ReactToPdf from 'react-to-pdf';
@@ -202,7 +203,14 @@ const FormController = (props) => {
 						onFormSubmission={handleFormSubmission}
 					/>
 				);
-
+				case 'New York State Disclosure Form for Landlord and Tenant ' :				
+				return (
+					<Form6
+						formData={formData}
+						viewMode={viewMode}
+						onFormSubmission={handleFormSubmission}
+					/>
+				);
 			default:
 				return 'Not Found!';
 		}
