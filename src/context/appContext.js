@@ -28,12 +28,25 @@ export class AppContext extends Component {
             real_estate_brockerage_company: "",
             firstdate: "",
             lastdate: "",
-            
+
           },
         ],
       },
       {
         id: 3,
+        title: "New York State Housing Discrimination Disclosure Form",
+        data: [
+          {
+            name: "",
+            date: "",
+            property_address: "",
+            real_estate_name: "",
+            name_of_brockerage_company: "",
+          },
+        ],
+      },
+      {
+        id: 4,
         title: "REBNY COVID Health Screening Form",
         data: [
           {
@@ -45,32 +58,33 @@ export class AppContext extends Component {
           },
         ],
       },
-      // {
-      //   id: 4,
-      //   title: "New York State Disclosure Form for Buyer and Seller",
-      //   data: [
-      //     {
-      //       name: "",
-      //       date: "",
-      //       property_address: "",
-      //       real_estate_name: "",
-      //       name_of_brockerage_company: "",
-      //     },
-      //   ],
-      // },
-      // {
-      //   id: 5,
-      //   title: "New York State Housing Discrimination Disclosure Form",
-      //   data: [
-      //     {
-      //       name: "",
-      //       date: "",
-      //       property_address: "",
-      //       real_estate_name: "",
-      //       name_of_brockerage_company: "",
-      //     },
-      //   ],
-      // },
+      {
+        id: 5,
+        title: "New York State Disclosure Form for Buyer and Seller",
+        data: [
+          {
+            name: "",
+            date: "",
+            property_address: "",
+            real_estate_name: "",
+            name_of_brockerage_company: "",
+          },
+        ],
+      },
+      {
+        id: 6,
+        title: "New York State Disclosure Form for Landlord and Tenant ",
+        data: [
+          {
+            name: "",
+            date: "",
+            property_address: "",
+            real_estate_name: "",
+            name_of_brockerage_company: "",
+          },
+        ],
+      },
+
     ],
     formItems: [],
     contacts: [],
