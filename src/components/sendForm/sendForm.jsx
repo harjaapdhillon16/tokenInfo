@@ -1,43 +1,33 @@
-import React, { useEffect, useState, useContext } from "react";
-import { IconPlus } from "../../assets/icons/icons";
-import {
-  Container,
-  Modal,
-  InputGroup,
-  Form,
-  Row,
-  Col,
-  Button,
-} from "react-bootstrap";
-import { Dropdown } from "react-bootstrap";
-import AppCard from "../card/card";
-import Header from "../header/header";
-import AppContext from "../../context/appContext";
-import { API, graphqlOperation } from "aws-amplify";
-import { listContacts } from "../../graphql/queries";
-import { createFormData } from "../../graphql/mutations";
-import * as emailjs from "emailjs-com";
-import CreateContactForm from "../../../src/components/createContactForm/createContactForm";
-import formEventsHandler from "../../utils/formEventsHelpers";
-import {
-  sendTemplateToReceiver,
-  sendTemplateToSender,
-} from "../emailTemplates/formSentEmail";
-import { encode } from "../../utils/base64";
-import { sendEmail } from "../../utils/email";
+import React, { useEffect, useState, useContext } from 'react';
+import { IconPlus } from '../../assets/icons/icons';
+import { Container, Modal, InputGroup, Form, Row, Col, Button } from 'react-bootstrap';
+import { Dropdown } from 'react-bootstrap';
+import AppCard from '../card/card';
+import Header from '../header/header';
+import AppContext from '../../context/appContext';
+import { API, graphqlOperation } from 'aws-amplify';
+import { listContacts } from '../../graphql/queries';
+import { createFormData } from '../../graphql/mutations';
+import * as emailjs from 'emailjs-com';
+import CreateContactForm from '../../../src/components/createContactForm/createContactForm';
+import formEventsHandler from '../../utils/formEventsHelpers';
+import { sendTemplateToReceiver, sendTemplateToSender } from '../emailTemplates/formSentEmail';
+import { encode } from '../../utils/base64';
+import { sendEmail } from '../../utils/email';
 
 const SendForm = ({ formModal, onHandleFormModal }) => {
   const [currentState, handleCurrentState] = useState(1);
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const [moreOptions, setMoreOptions] = useState(false);
-  const [optionNo, setOptionNo] = useState(0);
+  const [mainType, setMainType] = useState("");
+  const [optionNo, setOptionNo] = useState("");
+  const [optionName, setOptionName] = useState("");
   const handleClose = () => setShow(false);
   const [email, setEmail] = useState("sandalsimar@gmail.com");
   const [updatedFormTypes, setUpdatedFormTypes] = useState([]);
   const [updatedContacts, setUpdatedContacts] = useState([]);
   const [input, setInput] = useState("");
-  
   const [contactList, setContactList] = useState();
   let base_url = window.location.origin;
 
@@ -133,7 +123,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
   };
 
   const hanldeContactSelection = () => {
-    console.log("current state",currentState);
+    console.log("current state", currentState);
     handleCurrentState(currentState + 1);
   };
 
@@ -162,7 +152,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       data[5] = formData.name;
       data[6] = "date";
       data[7] = "";
-    } else if (formid === 3) {
+    } else if (formid === 4) {
       data[0] = "name";
       data[1] = formData.name;
       data[2] = "date";
@@ -185,33 +175,39 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
     return data;
   };
 
-  const handleSecondForm = () => {
-    
+  const handleSecondForm = (nextStep) => {
+    debugger
     let selectedForms = updatedFormTypes.filter(
       (item) => item.isActive === true
     );
-
-    selectedForms.map(function(item)  {
-      if(item.title === 'New York State Disclosure Form for Buyer and Seller'){
-       
-        handleCurrentState(currentState + 1);
+    const checkFirstForm = selectedForms.filter(item => item.title === "New York State Disclosure Form for Buyer and Seller")
+    const checkSecondForm = selectedForms.filter(item => item.title === "New York State Disclosure Form for Landlord and Tenant ")
+    if (nextStep === 2) {
+      if (checkFirstForm.length > 0) {
+        handleCurrentState(3);
+        return;
       }
-      else if(item.title === 'New York State Housing Discrimination Disclosure Form'){
-        handleCurrentState(currentState + 2);
+      if (checkSecondForm.length > 0) {
+        handleCurrentState(4);
+        return;
       }
-      else{
-        handleFormSubmission(selectedForms);
-        handleCurrentState(currentState + 3);
+    }
+    else if (nextStep === 3) {
+      if (checkSecondForm.length > 0) {
+        handleCurrentState(4);
+        return;
       }
-      
-    })
-
+    }
+    handleCurrentState(5);
+    handleFormSubmission(selectedForms);
   };
 
   const handleFormSubmission = (selectedForms) => {
+    debugger
     let selectedcontacts = updatedContacts.filter(
       (item) => item.isActive === true
     );
+    setContactList(selectedcontacts);
 
     let finalData = [];
 
@@ -224,17 +220,17 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         finalObject.receiverEmail = item.email;
         finalObject.formName = form.title;
         finalObject.status = "SENT";
-
         finalObject.data = handleMultipleFormsData(form.id, item, agent);
         finalData = [...finalData, finalObject];
+
+
       });
     });
-
-    if (finalData.length > 0) {
-      finalData.map((item) => {
-        handleFormData(item);
-      });
-    }
+    // if (finalData.length > 0) {
+    //   finalData.map((item) => {
+    //     handleFormData(item);
+    //   });
+    // }
   }
 
   const handleFormData = async (data) => {
@@ -339,16 +335,16 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
     setUpdatedContacts(updateContactId);
   };
 
-  const handleCheckBox = (data) =>{
-    console.log("data coming from function",data);
-	if(moreOptions === false){
-		setMoreOptions(true);
-    setOptionNo(data);
-	}
-	else{
-		setMoreOptions(false);
-    setOptionNo(0);
-	}
+  const handleCheckBox = (data) => {
+    console.log("data coming from function", data);
+    if (moreOptions === false) {
+      setMoreOptions(true);
+      setOptionNo(data);
+    }
+    else {
+      setMoreOptions(false);
+      setOptionNo(0);
+    }
   };
 
   const formSelection = () => {
@@ -434,7 +430,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button
-            onClick={() => handleSecondForm()}
+            onClick={() => handleSecondForm(2)}
             variant="outline-secondary  pop-btn d-flex ml-auto mr-auto"
           >
             Next
@@ -443,6 +439,29 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       </Modal>
     );
   };
+
+  const selectedForms = () => {
+
+    let selectedForms = updatedFormTypes.filter(
+      (item) => item.isActive === true
+    );
+    console.log("selected forms", selectedForms)
+    return (
+
+      selectedForms.map((form) => <span type="button" class="btn btn-light bg-white border-dark py-2 my-2 w-100">{form.title}</span>)
+    )
+  }
+
+  const selectedContacts = () => {
+
+    return (
+      contactList.map((contact) => <div>
+
+        <h5>{contact.name}</h5>
+        {selectedForms()}
+      </div>)
+    )
+  }
 
   const formSubmitted = () => {
     return (
@@ -454,10 +473,14 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         <Modal.Header closeButton className="pop-header">
           <Modal.Title></Modal.Title>
         </Modal.Header>
-        <Modal.Body className="modal-options">
+        <Modal.Body className="modal-options px-4">
           <h4 className="d-flex ml-auto mr-auto justify-content-center">
             Your form has been sent !
           </h4>
+          <div className="d-flex flex-column my-4">
+            {selectedContacts()}
+          </div>
+
           {/* <Button variant="outline-secondary mt-4 d-flex ml-auto mr-auto">
             View REBNY COVID Liability Form
           </Button>{" "} */}
@@ -490,104 +513,134 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
             controlId="formBasicCheckbox"
           >
             <Form.Check
-              type="checkbox"
-              checked={(optionNo == 1) ? true : false }
-			  onChange={()=> handleCheckBox(1)}
+              type="radio"
+              name="option"
+              onChange={() => setMainType(`I'm acting in the interest of the Seller`)}
               label="I'm acting in the interest of the Seller"
             />
           </Form.Group>
-		  	{(optionNo == 1) &&
-				<div className="ml-5">
-					<Form.Group
-					className="mb-3 check-inside"
-					controlId="formBasicCheckbox1"
-					>
-					<Form.Check type="checkbox" label="As the Seller’s Agent" />
-					</Form.Group>
-					<Form.Group
-					className="mb-3 check-inside"
-					controlId="formBasicCheckbox2"
-					>
-					<Form.Check type="checkbox" label="As the Broker’s Agent" />
-					</Form.Group>
-				</div>
-  			}
-  	
-		  <Form.Group
+          {(mainType == `I'm acting in the interest of the Seller`) &&
+            <div className="ml-5">
+              <Form.Group
+                className="mb-3 check-inside"
+                controlId="formBasicCheckbox1"
+              >
+                <Form.Check type="radio"
+                  name="option1"
+                  label="As the Seller’s Agent"
+                  onChange={() => setOptionNo(`As the Seller’s Agent`)}
+                />
+              </Form.Group>
+              <Form.Group
+                className="mb-3 check-inside"
+                controlId="formBasicCheckbox2"
+              >
+                <Form.Check type="radio"
+                  name="option1"
+                  label="As the Broker’s Agent"
+                  onChange={() => setOptionNo(`As the Seller’s Agent`)}
+                />
+              </Form.Group>
+            </div>
+          }
+
+          <Form.Group
             className="mb-3 check-fields"
             controlId="formBasicCheckbox3"
           >
             <Form.Check
-              type="checkbox"
+              type="radio"
               label="I'm acting in the interest of the Buyer"
-              checked={(optionNo == 2) ? true : false }
-              onChange={()=> handleCheckBox(2)}
+              name="option"
+              onChange={() => setMainType(`I'm acting in the interest of the Buyer`)}
             />
           </Form.Group>
-          {(optionNo == 2) &&
-          <div className="ml-5">
-            <Form.Group
-              className="mb-3 check-inside"
-              controlId="formBasicCheckbox4"
-            >
-              <Form.Check type="checkbox" label="As the Seller’s Agent" />
-            </Form.Group>
-            <Form.Group
-              className="mb-3 check-inside"
-              controlId="formBasicCheckbox5"
-            >
-              <Form.Check type="checkbox" label="As the Broker’s Agent" />
-            </Form.Group>
-          </div>
-  }
-		  <Form.Group
+          {(mainType == `I'm acting in the interest of the Buyer`) &&
+            <div className="ml-5">
+              <Form.Group
+                className="mb-3 check-inside"
+                controlId="formBasicCheckbox4"
+              >
+                <Form.Check type="radio"
+                  name="option1"
+                  label="As the Seller’s Agent"
+                  onChange={() => setOptionNo(`As the Seller’s Agent`)}
+                />
+              </Form.Group>
+              <Form.Group
+                className="mb-3 check-inside"
+                controlId="formBasicCheckbox5"
+              >
+                <Form.Check type="radio"
+                  name="option1"
+                  label="As the Broker’s Agent"
+                  onChange={() => setOptionNo(`As the Broker’s Agent`)}
+                />
+              </Form.Group>
+            </div>
+          }
+          <Form.Group
             className="mb-3 check-fields"
             controlId="formBasicCheckbox6"
           >
             <Form.Check
-              type="checkbox"
+              type="radio"
               label="I'm acting as a dual agent"
+              name="option"
+              onChange={() => setMainType(`I'm acting as a dual agent`)}
             />
           </Form.Group>
-		  <Form.Group
+          <Form.Group
             className="mb-3 check-fields"
             controlId="formBasicCheckbox7"
           >
             <Form.Check
-              type="checkbox"
+              type="radio"
               label="I'm acting as a dual agent with designated sales agent"
-              checked={(optionNo == 4) ? true : false }
-              onChange={()=> handleCheckBox(4)}
+              name="option"
+              onChange={() => setMainType(`I'm acting as a dual agent with designated sales agent`)}
             />
           </Form.Group>
-          {(optionNo == 4) &&
-          <div className="ml-5">
-            <Form.Group
-              className="mb-3 check-inside"
-              controlId="formBasicCheckbox8"
-            >
-              <Form.Check type="checkbox" label="Advance informed consent dual agency" />
-            </Form.Group>
-            <Form.Group
-              className="mb-3 check-inside"
-              controlId="formBasicCheckbox9"
-            >
-              <Form.Check type="checkbox" label="Advance informed consent to dual agency with designated sales agents" />
-            </Form.Group>
-          </div>
-      }
-		  <div className="mx-4">
-		  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-    			<Form.Control type="text" placeholder="name of agent representing buyer" />
-  			</Form.Group>
-			  <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-    			<Form.Control type="text" placeholder="name of agent representing seller" />
-  			</Form.Group>
-		  </div>
+          {(mainType == `I'm acting as a dual agent with designated sales agent`) &&
+            <div className="ml-5">
+              <Form.Group
+                className="mb-3 check-inside"
+                controlId="formBasicCheckbox8"
+              >
+                <Form.Check type="radio"
+                  name="option1"
+                  label="Advance informed consent dual agency"
+                  onChange={() => setOptionNo(`Advance informed consent dual agency`)}
+                />
+              </Form.Group>
+              <Form.Group
+                className="mb-3 check-inside"
+                controlId="formBasicCheckbox9"
+
+              >
+                <Form.Check type="radio"
+                  name="option1"
+                  label="Advance informed consent to dual agency with designated sales agents"
+                  onChange={() => setOptionNo(`Advance informed consent to dual agency with designated sales agents`)}
+                />
+              </Form.Group>
+            </div>
+          }
+          {
+            (optionNo == `Advance informed consent to dual agency with designated sales agents`) &&
+            <div className="mx-4">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Control type="text" placeholder="name of agent representing buyer" />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+                <Form.Control type="text" placeholder="name of agent representing seller" />
+              </Form.Group>
+            </div>
+          }
         </Modal.Body>
         <Modal.Footer>
           <Button
-            onClick={() => handleSecondForm()}
+            onClick={() => handleSecondForm(3)}
             variant="outline-secondary  pop-btn d-flex ml-auto mr-auto"
           >
             Next
@@ -609,109 +662,144 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           Additional Form Fields
         </Modal.Title>
         <Modal.Body className="modal-options">
-          <h5 className="px-3 mb-4">New York State Housing Discrimination Disclosure Form</h5>
+          <h5 className="px-3 mb-4">New York State Disclosure Form for Landlord and Tenant</h5>
           <Form.Group
             className="mb-3 check-fields"
             controlId="formBasicCheckbox"
           >
             <Form.Check
-              type="checkbox"
-              checked={(optionNo == 1) ? true : false }
-			  onChange={()=> handleCheckBox(1)}
+              type="radio"
+              name="option"
+              onChange={() => setMainType(`I'm acting in the interest of the Landlord`)}
               label="I'm acting in the interest of the Landlord"
             />
           </Form.Group>
-		  	{(optionNo == 1) &&
-				<div className="ml-5">
-					<Form.Group
-					className="mb-3 check-inside"
-					controlId="formBasicCheckbox1"
-					>
-					<Form.Check type="checkbox" label="As the Landlord’s Agent" />
-					</Form.Group>
-					<Form.Group
-					className="mb-3 check-inside"
-					controlId="formBasicCheckbox2"
-					>
-					<Form.Check type="checkbox" label="As the Broker’s Agent" />
-					</Form.Group>
-				</div>
-  			}
-  	
-		  <Form.Group
+          {(mainType == `I'm acting in the interest of the Landlord`) &&
+            <div className="ml-5">
+              <Form.Group
+                className="mb-3 check-inside"
+                controlId="formBasicCheckbox1"
+
+              >
+                <Form.Check
+                  type="radio"
+                  name="option"
+                  label="As the Landlord’s Agent"
+                  onChange={() => setOptionNo(`As the Landlord’s Agent`)}
+                />
+              </Form.Group>
+              <Form.Group
+                className="mb-3 check-inside"
+                controlId="formBasicCheckbox2"
+              >
+                <Form.Check
+                  type="radio"
+                  label="As the Broker’s Agent"
+                  name="option"
+                  onChange={() => setOptionNo(`As the Broker’s Agent`)}
+                />
+              </Form.Group>
+            </div>
+          }
+
+          <Form.Group
             className="mb-3 check-fields"
             controlId="formBasicCheckbox3"
           >
             <Form.Check
-              type="checkbox"
+              type="radio"
               label="I'm acting in the interest of the Tenant"
-              checked={(optionNo == 2) ? true : false }
-              onChange={()=> handleCheckBox(2)}
+              onChange={() => setMainType(`I'm acting in the interest of the Tenant`)}
+              name="option"
+
             />
           </Form.Group>
-          {(optionNo == 2) &&
-          <div className="ml-5">
-            <Form.Group
-              className="mb-3 check-inside"
-              controlId="formBasicCheckbox4"
-            >
-              <Form.Check type="checkbox" label="As the Tenant’s Agent" />
-            </Form.Group>
-            <Form.Group
-              className="mb-3 check-inside"
-              controlId="formBasicCheckbox5"
-            >
-              <Form.Check type="checkbox" label="As the Broker’s Agent" />
-            </Form.Group>
-          </div>
-  }
-		  <Form.Group
+          {(mainType == `I'm acting in the interest of the Tenant`) &&
+            <div className="ml-5">
+              <Form.Group
+                className="mb-3 check-inside"
+                controlId="formBasicCheckbox4"
+              >
+                <Form.Check
+                  type="radio"
+                  label="As the Tenant’s Agent"
+                  name="option1"
+                  onChange={() => setOptionNo(`As the Tenant’s Agent`)}
+                />
+              </Form.Group>
+              <Form.Group
+                className="mb-3 check-inside"
+                controlId="formBasicCheckbox5"
+              >
+                <Form.Check
+                  type="radio"
+                  label="As the Broker’s Agent"
+                  name="option1"
+                  onChange={() => setOptionNo(`As the Broker’s Agent`)}
+                />
+              </Form.Group>
+            </div>
+          }
+          <Form.Group
             className="mb-3 check-fields"
             controlId="formBasicCheckbox6"
           >
             <Form.Check
-              type="checkbox"
+              type="radio"
               label="I'm acting as a dual agent"
+              name="option"
+              onChange={() => setMainType(`I'm acting as a dual agent`)}
             />
           </Form.Group>
-		  <Form.Group
+          <Form.Group
             className="mb-3 check-fields"
             controlId="formBasicCheckbox7"
           >
             <Form.Check
-              type="checkbox"
+              type="radio"
               label="I'm acting as a dual agent with designated sales agent"
-              checked={(optionNo == 4) ? true : false }
-              onChange={()=> handleCheckBox(4)}
+              name="option"
+              onChange={() => setMainType(`I'm acting as a dual agent with designated sales agent`)}
             />
           </Form.Group>
-          {(optionNo == 4) &&
-          <div className="ml-5">
-            <Form.Group
-              className="mb-3 check-inside"
-              controlId="formBasicCheckbox8"
-            >
-              <Form.Check type="checkbox" label="Advance informed consent dual agency" />
-            </Form.Group>
-            <Form.Group
-              className="mb-3 check-inside"
-              controlId="formBasicCheckbox9"
-            >
-              <Form.Check
-               type="checkbox"
-               label="Advance informed consent to dual agency with designated sales agents"                
-               />
-            </Form.Group>
-          </div>
-      }
-		  <div className="mx-4">
-		  <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-    			<Form.Control type="text" placeholder="name of agent representing buyer" />
-  			</Form.Group>
-			  <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-    			<Form.Control type="text" placeholder="name of agent representing seller" />
-  			</Form.Group>
-		  </div>
+          {(mainType == `I'm acting as a dual agent with designated sales agent`) &&
+            <div className="ml-5">
+              <Form.Group
+                className="mb-3 check-inside"
+                controlId="formBasicCheckbox8"
+              >
+                <Form.Check
+                  type="radio"
+                  label="Advance informed consent dual agency"
+                  name="option1"
+                  onChange={() => setOptionNo(`Advance informed consent dual agency`)}
+
+                />
+              </Form.Group>
+              <Form.Group
+                className="mb-3 check-inside"
+                controlId="formBasicCheckbox9"
+              >
+                <Form.Check
+                  type="radio"
+                  name="option1"
+                  label="Advance informed consent to dual agency with designated sales agents"
+                  onChange={() => setOptionNo(`Advance informed consent to dual agency with designated sales agents`)}
+                />
+              </Form.Group>
+            </div>
+          }{
+            (optionNo == `Advance informed consent to dual agency with designated sales agents`) &&
+            <div className="mx-4">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <Form.Control type="text" placeholder="name of agent representing buyer" />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
+                <Form.Control type="text" placeholder="name of agent representing seller" />
+              </Form.Group>
+            </div>
+          }
+
         </Modal.Body>
         <Modal.Footer>
           <Button
@@ -735,7 +823,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       case 4:
         return additionalFormFields2();
       case 5:
-          return formSubmitted();
+        return formSubmitted();
       default:
         return "Not Found!";
     }

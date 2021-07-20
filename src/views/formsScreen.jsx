@@ -131,9 +131,30 @@ const FormsScreen = () => {
 								</Dropdown.Item>
 								<Dropdown.Item
 									onClick={() =>
+										handleFilter(
+											'formName',
+											'New York State Housing Discrimination Disclosure Form'
+										)
+									}>
+									New York State Housing Discrimination Disclosure Form
+								</Dropdown.Item>
+								<Dropdown.Item
+									onClick={() =>
 										handleFilter('formName', 'REBNY COVID Health Screening Form')
 									}>
 									REBNY COVID Health Screening Form
+								</Dropdown.Item>
+								<Dropdown.Item
+									onClick={() =>
+										handleFilter('formName', 'New York State Disclosure Form for Buyer and Seller')
+									}>
+									New York State Disclosure Form for Buyer and Seller
+								</Dropdown.Item>
+								<Dropdown.Item
+									onClick={() =>
+										handleFilter('formName', 'New York State Disclosure Form for Landlord and Tenant ')
+									}>
+									New York State Disclosure Form for Landlord and Tenant 
 								</Dropdown.Item>
 								{/* <Dropdown.Item
 									onClick={() =>
