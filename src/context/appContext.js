@@ -34,19 +34,6 @@ export class AppContext extends Component {
       },
       {
         id: 3,
-        title: "New York State Housing Discrimination Disclosure Form",
-        data: [
-          {
-            name: "",
-            date: "",
-            property_address: "",
-            real_estate_name: "",
-            name_of_brockerage_company: "",
-          },
-        ],
-      },
-      {
-        id: 4,
         title: "REBNY COVID Health Screening Form",
         data: [
           {
@@ -59,7 +46,7 @@ export class AppContext extends Component {
         ],
       },
       {
-        id: 5,
+        id: 4,
         title: "New York State Disclosure Form for Buyer and Seller",
         data: [
           {
@@ -72,7 +59,7 @@ export class AppContext extends Component {
         ],
       },
       {
-        id: 6,
+        id: 5,
         title: "New York State Disclosure Form for Landlord and Tenant ",
         data: [
           {
