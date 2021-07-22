@@ -73,10 +73,10 @@ const FormsScreen = () => {
 	const filtered =
 		filterKey !== null && filterValue !== null
 			? sortedForms.filter(function (item) {
-					if (item[filterKey] === filterValue) {
-						return item;
-					}
-			  })
+				if (item[filterKey] === filterValue) {
+					return item;
+				}
+			})
 			: sortedForms;
 
 	const labels = {
@@ -129,15 +129,7 @@ const FormsScreen = () => {
 									}>
 									New York State Housing and Anti-Discrimination Disclosure
 								</Dropdown.Item>
-								<Dropdown.Item
-									onClick={() =>
-										handleFilter(
-											'formName',
-											'New York State Housing Discrimination Disclosure Form'
-										)
-									}>
-									New York State Housing Discrimination Disclosure Form
-								</Dropdown.Item>
+
 								<Dropdown.Item
 									onClick={() =>
 										handleFilter('formName', 'REBNY COVID Health Screening Form')
@@ -154,7 +146,7 @@ const FormsScreen = () => {
 									onClick={() =>
 										handleFilter('formName', 'New York State Disclosure Form for Landlord and Tenant ')
 									}>
-									New York State Disclosure Form for Landlord and Tenant 
+									New York State Disclosure Form for Landlord and Tenant
 								</Dropdown.Item>
 								{/* <Dropdown.Item
 									onClick={() =>

@@ -40,7 +40,7 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
 	console.log(formData);
 
 	useEffect(() => {
-		if (show && signImage && sigPad.current!== null) sigPad.current.fromDataURL(signImage);
+		if (show && signImage && sigPad.current !== null) sigPad.current.fromDataURL(signImage);
 	}, [show]);
 
 	const genrateImage = () => {
@@ -57,8 +57,8 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
 	function clear() {
 		setSignAsText('')
 		setSignImage('')
-		
-		if(sigPad.current!== null){
+
+		if (sigPad.current !== null) {
 			sigPad.current.clear();
 
 		}
@@ -160,9 +160,9 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
 			finalObject.signature = signImage;
 			finalObject.status = 'SIGNED';
 		}
-		
-		console.log("final values sent",finalObject);
-		
+
+		console.log("final values sent", finalObject);
+
 
 		onFormSubmission(finalObject, 'SIGNED');
 	};
@@ -485,7 +485,7 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
 													type="text"
 													class="form-control  apply-font"
 													value={signAsText}
-													
+
 												/>
 											)}
 										</>
@@ -525,7 +525,7 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
 											type="text"
 											class="form-control apply-font"
 											value={formData.signature}
-											style={{fontFamily:formData.signatureFont}}
+											style={{ fontFamily: formData.signatureFont }}
 											disabled
 										/>
 									)}
@@ -558,7 +558,7 @@ const Form3 = ({ formData, viewMode, onFormSubmission }) => {
                 /> */}
 								<label class="pt-2  pl-3 d-block inputhead">Date</label>
 							</div>
-							
+
 						</div>
 						<div class="form-row detail pt-">
 							<div class="col-md-4 mb-3">

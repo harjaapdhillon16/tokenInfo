@@ -195,15 +195,7 @@ const FormController = (props) => {
 						onFormSubmission={handleFormSubmission}
 					/>
 				);
-			case 'New York State Housing Discrimination Disclosure Form':
-				return (
-					<Form5
-						formData={formData}
-						viewMode={viewMode}
-						onFormSubmission={handleFormSubmission}
-					/>
-				);
-				case 'New York State Disclosure Form for Landlord and Tenant ' :				
+			case 'New York State Disclosure Form for Landlord and Tenant ':
 				return (
 					<Form6
 						formData={formData}

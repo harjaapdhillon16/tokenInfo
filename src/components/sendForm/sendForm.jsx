@@ -22,13 +22,19 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
   const [moreOptions, setMoreOptions] = useState(false);
   const [mainType, setMainType] = useState("");
   const [optionNo, setOptionNo] = useState("");
-  const [optionName, setOptionName] = useState("");
+  const [mainType2, setMainType2] = useState("");
+  const [optionNo2, setOptionNo2] = useState("");
   const handleClose = () => setShow(false);
   const [email, setEmail] = useState("sandalsimar@gmail.com");
   const [updatedFormTypes, setUpdatedFormTypes] = useState([]);
   const [updatedContacts, setUpdatedContacts] = useState([]);
   const [input, setInput] = useState("");
   const [contactList, setContactList] = useState();
+  const [representBuyer1, setRepresentBuyer1] = useState();
+  const [representBuyer2, setRepresentBuyer2] = useState();
+  const [representSeller1, setRepresentSeller1] = useState();
+  const [representSeller2, setRepresentSeller2] = useState();
+
   let base_url = window.location.origin;
 
   const {
@@ -100,7 +106,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 
   const handleFormCheck = (formid) => {
     let updateFormId = updatedFormTypes.filter(function (item) {
-      if (item.id == formid) {
+      if (item.id === formid) {
         item.isActive = !item.isActive;
       }
       return item;
@@ -113,7 +119,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 
   const onhandleContactMethod = (contactid) => {
     let updateContactId = updatedContacts.filter(function (item) {
-      if (item.id == contactid) {
+      if (item.id === contactid) {
         item.isActive = !item.isActive;
       }
       return item;
@@ -122,7 +128,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
     setUpdatedContacts(updateContactId);
   };
 
-  const hanldeContactSelection = () => {
+  const handleContactSelection = () => {
     console.log("current state", currentState);
     handleCurrentState(currentState + 1);
   };
@@ -152,7 +158,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       data[5] = formData.name;
       data[6] = "date";
       data[7] = "";
-    } else if (formid === 4) {
+    } else if (formid === 3) {
+      console.log("form 3 from data filling", formData);
       data[0] = "name";
       data[1] = formData.name;
       data[2] = "date";
@@ -172,11 +179,24 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       data[14] = "checkValueFourth";
       data[15] = "";
     }
+    else if (formid === 4) {
+      data[0] = "name";
+      data[1] = formData.name;
+      data[2] = "real_estate_name";
+      data[3] = agent.name;
+      data[4] = "Name of  Brokerage";
+      data[5] = agent.brokerageName;
+      data[6] = mainType;
+      data[7] = optionNo;
+      data[8] = "date";
+      data[9] = "";
+    }
+
     return data;
   };
 
   const handleSecondForm = (nextStep) => {
-    debugger
+
     let selectedForms = updatedFormTypes.filter(
       (item) => item.isActive === true
     );
@@ -198,20 +218,26 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         return;
       }
     }
-    handleCurrentState(5);
-    handleFormSubmission(selectedForms);
-  };
-
-  const handleFormSubmission = (selectedForms) => {
-    debugger
     let selectedcontacts = updatedContacts.filter(
       (item) => item.isActive === true
     );
     setContactList(selectedcontacts);
 
+    handleCurrentState(5);
+    // handleFormSubmission(selectedForms);
+
+  };
+
+  const handleFormSubmission = (selectedForms) => {
+
+    // let selectedcontacts = updatedContacts.filter(
+    //   (item) => item.isActive === true
+    // );
+    console.log(selectedForms);
+
     let finalData = [];
 
-    selectedcontacts.map((item) => {
+    contactList.map((item) => {
       selectedForms.map(function (form) {
         let finalObject = {};
         finalObject.senderId = agent.id;
@@ -226,14 +252,15 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 
       });
     });
-    // if (finalData.length > 0) {
-    //   finalData.map((item) => {
-    //     handleFormData(item);
-    //   });
-    // }
+    if (finalData.length > 0) {
+      finalData.map((item) => {
+        handleFormData(item);
+      });
+    }
   }
 
   const handleFormData = async (data) => {
+
     try {
       const createdContact = await API.graphql(
         graphqlOperation(createFormData, { input: data })
@@ -334,18 +361,24 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 
     setUpdatedContacts(updateContactId);
   };
-
-  const handleCheckBox = (data) => {
-    console.log("data coming from function", data);
-    if (moreOptions === false) {
-      setMoreOptions(true);
-      setOptionNo(data);
-    }
-    else {
-      setMoreOptions(false);
-      setOptionNo(0);
-    }
-  };
+  const handleSelectedFormData = () => {
+    let selectedForms = updatedFormTypes.filter(
+      (item) => item.isActive === true
+    );
+    handleFormSubmission(selectedForms);
+    onHandleFormModal(formModal)
+  }
+  // const handleCheckBox = (data) => {
+  //   console.log("data coming from function", data);
+  //   if (moreOptions === false) {
+  //     setMoreOptions(true);
+  //     setOptionNo(data);
+  //   }
+  //   else {
+  //     setMoreOptions(false);
+  //     setOptionNo(0);
+  //   }
+  // };
 
   const formSelection = () => {
     return (
@@ -358,6 +391,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           <Modal.Title></Modal.Title>
         </Modal.Header>
         <Modal.Body className="modal-options">
+
           {updatedFormTypes.map((item) => (
             <Form.Check
               id={item.id}
@@ -370,9 +404,10 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button
-            onClick={() => hanldeContactSelection()}
+            onClick={() => handleContactSelection()}
             // onClick={() => emailSend("simarjots9@gmail.com")}
             variant="outline-secondary  pop-btn d-flex ml-auto mr-auto"
+            disabled={updatedFormTypes.filter(item => item.isActive === true).length <= 0}
           >
             Next
           </Button>
@@ -432,6 +467,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           <Button
             onClick={() => handleSecondForm(2)}
             variant="outline-secondary  pop-btn d-flex ml-auto mr-auto"
+            disabled={updatedContacts.filter(item => item.isActive === true).length <= 0}
           >
             Next
           </Button>{" "}
@@ -445,7 +481,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
     let selectedForms = updatedFormTypes.filter(
       (item) => item.isActive === true
     );
-    console.log("selected forms", selectedForms)
+
     return (
 
       selectedForms.map((form) => <span type="button" class="btn btn-light bg-white border-dark py-2 my-2 w-100">{form.title}</span>)
@@ -487,7 +523,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button
-            onClick={() => onHandleFormModal(formModal)}
+            onClick={() => handleSelectedFormData()}
             variant="outline-secondary  pop-btn d-flex ml-auto mr-auto"
           >
             Close
@@ -538,7 +574,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
                 <Form.Check type="radio"
                   name="option1"
                   label="As the Broker’s Agent"
-                  onChange={() => setOptionNo(`As the Seller’s Agent`)}
+                  onChange={() => setOptionNo(`As the Broker’s Agent`)}
                 />
               </Form.Group>
             </div>
@@ -563,8 +599,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
               >
                 <Form.Check type="radio"
                   name="option1"
-                  label="As the Seller’s Agent"
-                  onChange={() => setOptionNo(`As the Seller’s Agent`)}
+                  label="As the Buyer’s Agent"
+                  onChange={() => setOptionNo(`As the Buyer’s Agent`)}
                 />
               </Form.Group>
               <Form.Group
@@ -630,10 +666,18 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
             (optionNo == `Advance informed consent to dual agency with designated sales agents`) &&
             <div className="mx-4">
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Control type="text" placeholder="name of agent representing buyer" />
+                <Form.Control
+                  type="text"
+                  placeholder="name of agent representing buyer"
+                  onChange={(e) => setRepresentBuyer1(e.target.value)}
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-                <Form.Control type="text" placeholder="name of agent representing seller" />
+                <Form.Control
+                  type="text"
+                  placeholder="name of agent representing seller"
+                  onChange={(e) => setRepresentSeller1(e.target.value)}
+                />
               </Form.Group>
             </div>
           }
@@ -669,12 +713,12 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
           >
             <Form.Check
               type="radio"
-              name="option"
-              onChange={() => setMainType(`I'm acting in the interest of the Landlord`)}
+              name="option2"
+              onChange={() => setMainType2(`I'm acting in the interest of the Landlord`)}
               label="I'm acting in the interest of the Landlord"
             />
           </Form.Group>
-          {(mainType == `I'm acting in the interest of the Landlord`) &&
+          {(mainType2 === `I'm acting in the interest of the Landlord`) &&
             <div className="ml-5">
               <Form.Group
                 className="mb-3 check-inside"
@@ -683,9 +727,9 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
               >
                 <Form.Check
                   type="radio"
-                  name="option"
+                  name="option3"
                   label="As the Landlord’s Agent"
-                  onChange={() => setOptionNo(`As the Landlord’s Agent`)}
+                  onChange={() => setOptionNo2(`As the Landlord’s Agent`)}
                 />
               </Form.Group>
               <Form.Group
@@ -695,8 +739,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
                 <Form.Check
                   type="radio"
                   label="As the Broker’s Agent"
-                  name="option"
-                  onChange={() => setOptionNo(`As the Broker’s Agent`)}
+                  name="option3"
+                  onChange={() => setOptionNo2(`As the Broker’s Agent`)}
                 />
               </Form.Group>
             </div>
@@ -709,12 +753,12 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
             <Form.Check
               type="radio"
               label="I'm acting in the interest of the Tenant"
-              onChange={() => setMainType(`I'm acting in the interest of the Tenant`)}
-              name="option"
+              onChange={() => setMainType2(`I'm acting in the interest of the Tenant`)}
+              name="option2"
 
             />
           </Form.Group>
-          {(mainType == `I'm acting in the interest of the Tenant`) &&
+          {(mainType2 === `I'm acting in the interest of the Tenant`) &&
             <div className="ml-5">
               <Form.Group
                 className="mb-3 check-inside"
@@ -723,8 +767,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
                 <Form.Check
                   type="radio"
                   label="As the Tenant’s Agent"
-                  name="option1"
-                  onChange={() => setOptionNo(`As the Tenant’s Agent`)}
+                  name="option3"
+                  onChange={() => setOptionNo2(`As the Tenant’s Agent`)}
                 />
               </Form.Group>
               <Form.Group
@@ -734,8 +778,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
                 <Form.Check
                   type="radio"
                   label="As the Broker’s Agent"
-                  name="option1"
-                  onChange={() => setOptionNo(`As the Broker’s Agent`)}
+                  name="option3"
+                  onChange={() => setOptionNo2(`As the Broker’s Agent`)}
                 />
               </Form.Group>
             </div>
@@ -747,8 +791,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
             <Form.Check
               type="radio"
               label="I'm acting as a dual agent"
-              name="option"
-              onChange={() => setMainType(`I'm acting as a dual agent`)}
+              name="option2"
+              onChange={() => setMainType2(`I'm acting as a dual agent`)}
             />
           </Form.Group>
           <Form.Group
@@ -758,11 +802,11 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
             <Form.Check
               type="radio"
               label="I'm acting as a dual agent with designated sales agent"
-              name="option"
-              onChange={() => setMainType(`I'm acting as a dual agent with designated sales agent`)}
+              name="option2"
+              onChange={() => setMainType2(`I'm acting as a dual agent with designated sales agent`)}
             />
           </Form.Group>
-          {(mainType == `I'm acting as a dual agent with designated sales agent`) &&
+          {(mainType2 === `I'm acting as a dual agent with designated sales agent`) &&
             <div className="ml-5">
               <Form.Group
                 className="mb-3 check-inside"
@@ -771,8 +815,8 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
                 <Form.Check
                   type="radio"
                   label="Advance informed consent dual agency"
-                  name="option1"
-                  onChange={() => setOptionNo(`Advance informed consent dual agency`)}
+                  name="option3"
+                  onChange={() => setOptionNo2(`Advance informed consent dual agency`)}
 
                 />
               </Form.Group>
@@ -782,20 +826,27 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
               >
                 <Form.Check
                   type="radio"
-                  name="option1"
+                  name="option3"
                   label="Advance informed consent to dual agency with designated sales agents"
-                  onChange={() => setOptionNo(`Advance informed consent to dual agency with designated sales agents`)}
+                  onChange={() => setOptionNo2(`Advance informed consent to dual agency with designated sales agents`)}
                 />
               </Form.Group>
             </div>
           }{
-            (optionNo == `Advance informed consent to dual agency with designated sales agents`) &&
+            (optionNo2 === `Advance informed consent to dual agency with designated sales agents`) &&
             <div className="mx-4">
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                <Form.Control type="text" placeholder="name of agent representing buyer" />
+                <Form.Control
+                  type="text"
+                  placeholder="name of agent representing buyer"
+                  onChange={(e) => setRepresentBuyer2(e.target.value)}
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="exampleForm.ControlInput2">
-                <Form.Control type="text" placeholder="name of agent representing seller" />
+                <Form.Control type="text"
+                  placeholder="name of agent representing seller"
+                  onChange={(e) => setRepresentSeller2(e.target.value)}
+                />
               </Form.Group>
             </div>
           }
