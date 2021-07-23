@@ -186,10 +186,39 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       data[3] = agent.name;
       data[4] = "Name of  Brokerage";
       data[5] = agent.brokerageName;
-      data[6] = mainType;
-      data[7] = optionNo;
-      data[8] = "date";
-      data[9] = "";
+      data[6] = "mainOption";
+      data[7] = mainType;
+      data[8] = "option";
+      data[9] = optionNo;
+      data[10] = "BuyerDate";
+      data[11] = "";
+      data[12] = "SellerCurrentDate";
+      data[13] = "";
+      data[14] = "represent Buyer";
+      data[15] = representBuyer1;
+      data[16] = "represent Seller";
+      data[17] = representSeller1;
+
+    }
+    else if (formid === 5) {
+      data[0] = "name";
+      data[1] = formData.name;
+      data[2] = "real_estate_name";
+      data[3] = agent.name;
+      data[4] = "Name of  Brokerage";
+      data[5] = agent.brokerageName;
+      data[6] = "mainOption2";
+      data[7] = mainType2;
+      data[8] = "option2";
+      data[9] = optionNo2;
+      data[10] = "landLordDate";
+      data[11] = "";
+      data[12] = "SellerCurrentDate";
+      data[13] = "";
+      data[14] = "represent Buyer";
+      data[15] = representBuyer2;
+      data[16] = "represent Seller";
+      data[17] = representSeller2;
     }
 
     return data;
