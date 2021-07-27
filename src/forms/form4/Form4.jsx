@@ -158,6 +158,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
       SellerCurrentDate: formData.data[13] ? new Date(formData.data[13]) : today,
       representBuyerName: formData.data[15],
       representSellerName: formData.data[17],
+      signatureAs: formData.data[19],
     },
     validationSchema: Yup.object({
       fullName: Yup.string().required('Please enter the name'),
@@ -165,6 +166,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
       companyName: Yup.string().required('Please enter the Real Estate Company'),
       BuyerCurrentDate: Yup.string().required('Please enter the Date'),
       SellerCurrentDate: Yup.string().required('Please enter the Date'),
+      signatureAs: Yup.string().required('Please select the Signature option'),
       // representBuyerName: Yup.string().required('Please enter the Represent Buyer Name'),
       // representSellerName: Yup.string().required('Please enter the Represent Seller Name'),
     }),
@@ -191,7 +193,10 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
       'representBuyerName',
       values.representBuyerName,
       'representSellerName',
-      values.representSellerName
+      values.representSellerName,
+      "signatureAs",
+      values.signatureAs
+
     ]
     let finalObject = { ...formData };
 
@@ -221,7 +226,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
     onFormSubmission(finalObject, 'SIGNED');
 
   }
-
+  console.log("formik values", formik.values);
 
   return (
     <Container className="form4">
@@ -496,6 +501,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input main-check"
                         id="exampleCheck1"
+                        disabled={true}
                       />
                     }
                     <label class="form-check-label" for="exampleCheck1">
@@ -516,6 +522,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                           type="checkbox"
                           class="form-check-input"
                           id="exampleCheck2"
+                          disabled={true}
                         />
 
                       }
@@ -536,6 +543,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                           type="checkbox"
                           class="form-check-input"
                           id="exampleCheck3"
+                          disabled={true}
                         />
                       }
                       <label class="form-check-label" for="exampleCheck3">
@@ -559,6 +567,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input  main-check"
                         id="exampleCheck4"
+                        disabled={true}
                       />
                     }
                     <label class="form-check-label" for="exampleCheck4">
@@ -579,6 +588,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input"
                         id="exampleCheck5"
+                        disabled={true}
                       />
                     }
                     <label class="form-check-label" for="exampleCheck5">
@@ -598,7 +608,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input"
                         id="exampleCheck6"
-
+                        disabled={true}
                       />
                     }
                     <label class="form-check-label" for="exampleCheck6">
@@ -624,6 +634,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input main-check"
                         id="exampleCheck7"
+                        disabled={true}
                       />
                     }
                     <label class="form-check-label" for="exampleCheck7">
@@ -644,6 +655,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                           type="checkbox"
                           class="form-check-input main-check"
                           id="exampleCheck8"
+                          disabled={true}
                         />
                     }
 
@@ -670,6 +682,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input main-check"
                         id="exampleCheck9"
+                        disabled={true}
                       />
                     }
                     <label class="form-check-label" for="exampleCheck9">
@@ -690,6 +703,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input main-check"
                         id="exampleCheck10"
+                        disabled={true}
                       />
                     }
                     <label class="form-check-label" for="exampleCheck10">
@@ -717,8 +731,8 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                           name="representBuyerName"
                           type="text"
                           value={formik.values.representBuyerName}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
+                        // onChange={formik.handleChange}
+                        // onBlur={formik.handleBlur}
                         />
                       </span>
                       {formik.touched.representBuyerName && formik.errors.representBuyerName && (
@@ -743,8 +757,8 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                           name="representSellerName"
                           type="text"
                           value={formik.values.representSellerName}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
+                        // onChange={formik.handleChange}
+                        // onBlur={formik.handleBlur}
                         />
                       </span>
                       {formik.touched.representSellerName && formik.errors.representSellerName && (
@@ -769,8 +783,8 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                           name="fullName"
                           type="text"
                           value={formik.values.fullName}
-                          onChange={formik.handleChange}
-                          onBlur={formik.handleBlur}
+                        // onChange={formik.handleChange}
+                        // onBlur={formik.handleBlur}
                         />
                       </span>
                       {formik.touched.fullName && formik.errors.fullName && (
@@ -789,7 +803,11 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                       <input
                         type="checkbox"
                         class="form-check-input main-check"
-                        id="exampleCheck11"
+                        name="Sign"
+                        checked={formik.values.signatureAs === 'Buyer' ? true : false}
+                        value={formik.values.signatureAs}
+                        onChange={() => formik.setFieldValue('signatureAs', 'Buyer')}
+
                       />
                       <label class="form-check-label pl-3" for="exampleCheck11">
                         Buyer(s) and/or
@@ -799,13 +817,22 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                       <input
                         type="checkbox"
                         class="form-check-input main-check"
-                        id="exampleCheck12"
+                        name="Sign"
+                        value={formik.values.signatureAs}
+                        checked={formik.values.signatureAs === 'Seller' ? true : false}
+                        onChange={() => formik.setFieldValue('signatureAs', 'Seller')}
+
                       />
                       <label class="form-check-label pl-3" for="exampleCheck12">
                         Seller(s):
                       </label>
                     </div>
                   </div>
+                  {formik.touched.signatureAs && formik.errors.signatureAs && (
+                    <Form.Text className="text-error mx-3">
+                      {formik.errors.signatureAs}
+                    </Form.Text>
+                  )}
                 </Col>
               </Row>
               <Row>
@@ -847,10 +874,26 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                           style={{ fontFamily: formData.signatureFont }}
                         />
                       ) : (
-                        <div className="empty-field ">
-                          <img src={formData.signature} className="img-set " />
-                        </div>
-                      )}
+                        <>
+                          {(formData.signature) ? (
+
+                            <div className="empty-field ">
+                              <img src={formData.signature} className="img-set " />
+                            </div>
+                          ) : (
+                            <>
+                              <div className="empty-field my-5 p-2">
+                                <img src={formData.signature} className="img-set " />
+                              </div>
+                            </>
+                          )
+
+                          }
+
+                        </>
+                      )
+
+                      }
 
                     </>
                   )
@@ -881,7 +924,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                   name="senderName"
                   type="text"
                 /> */}
-                  {!viewMode ? (
+                  {/* {!viewMode ? (
                     <>
                       <div id="signModal" onClick={handleShow2} >
                         {signMethod2 === 'draw' ? (
@@ -954,7 +997,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                       onChange={(date) => formik.setFieldValue('SellerCurrentDate', date)}
                       disabled={viewMode}
                     />
-                  </div>
+                  </div> */}
                 </Col>
               </Row>
               {(signImage !== '' || signAsText !== '' || signImage2 !== '' || signAsText2 !== '') && !viewMode && (

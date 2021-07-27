@@ -156,6 +156,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
       SellerCurrentDate: formData.data[13] ? new Date(formData.data[13]) : today,
       representLandlordName: formData.data[15],
       representTenantName: formData.data[17],
+      signatureAs: formData.data[19],
     },
     validationSchema: Yup.object({
       fullName: Yup.string().required('Please enter the name'),
@@ -163,6 +164,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
       companyName: Yup.string().required('Please enter the Real Estate Company'),
       BuyerCurrentDate: Yup.string().required('Please enter the Date'),
       SellerCurrentDate: Yup.string().required('Please enter the Date'),
+      signatureAs: Yup.string().required('Please select the Signature option'),
       // representLandlordName: Yup.string().required('Please enter the Represent Buyer Name'),
       // representTenantName: Yup.string().required('Please enter the Represent Seller Name'),
     }),
@@ -190,7 +192,9 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
       'representLandlordName',
       values.representLandlordName,
       'representTenantName',
-      values.representTenantName
+      values.representTenantName,
+      "signatureAs",
+      values.signatureAs
     ]
     let finalObject = { ...formData };
 
@@ -221,7 +225,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
 
   }
 
-
+  console.log("formik values", formik.values);
   return (
     <Container className="form6">
       <Form onSubmit={formik.handleSubmit}>
@@ -510,6 +514,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input main-check"
                         id="exampleCheck1"
+                        disabled={true}
                       />
                     }
                     <label class="form-check-label" for="exampleCheck1">
@@ -535,6 +540,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                           type="checkbox"
                           class="form-check-input"
                           id="exampleCheck2"
+                          disabled={true}
                         />
 
                       }
@@ -560,6 +566,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                           type="checkbox"
                           class="form-check-input"
                           id="exampleCheck3"
+                          disabled={true}
                         />
                       }
                       <label class="form-check-label" for="exampleCheck3">
@@ -587,6 +594,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input  main-check"
                         id="exampleCheck4"
+                        disabled={true}
                       />
                     }
                     <label class="form-check-label" for="exampleCheck4">
@@ -611,6 +619,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input"
                         id="exampleCheck5"
+                        disabled={true}
                       />
                     }
                     <label class="form-check-label" for="exampleCheck5">
@@ -635,6 +644,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input"
                         id="exampleCheck6"
+                        disabled={true}
 
                       />
                     }
@@ -666,6 +676,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input main-check"
                         id="exampleCheck7"
+                        disabled={true}
                       />
                     }
                     <label class="form-check-label" for="exampleCheck7">
@@ -691,6 +702,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                           type="checkbox"
                           class="form-check-input main-check"
                           id="exampleCheck8"
+                          disabled={true}
                         />
                     }
                     <label class="form-check-label" for="exampleCheck8">
@@ -721,6 +733,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input main-check"
                         id="exampleCheck9"
+                        disabled={true}
                       />
                     }
                     <label class="form-check-label" for="exampleCheck9">
@@ -745,6 +758,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input main-check"
                         id="exampleCheck10"
+                        disabled={true}
                       />
                     }
                     <label class="form-check-label" for="exampleCheck10">
@@ -772,7 +786,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                           name="representLandlordName"
                           type="text"
                           value={formik.values.representLandlordName}
-                          onChange={formik.handleChange}
+                          // onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                         />
                       </span>
@@ -798,7 +812,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                           name="representTenantName"
                           type="text"
                           value={formik.values.representTenantName}
-                          onChange={formik.handleChange}
+                          // onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                         />
                       </span>
@@ -824,7 +838,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                           name="fullName"
                           type="text"
                           value={formik.values.fullName}
-                          onChange={formik.handleChange}
+                          // onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
                         />
                       </span>
@@ -845,6 +859,11 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input main-check"
                         id="exampleCheck11"
+                        name="Sign"
+                        checked={formik.values.signatureAs === 'Landlord' ? true : false}
+                        value={formik.values.signatureAs}
+                        onChange={() => formik.setFieldValue('signatureAs', 'Landlord')}
+
                       />
                       <label class="form-check-label pl-3" for="exampleCheck11">
                         Landord(s)  and/or
@@ -854,13 +873,24 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                       <input
                         type="checkbox"
                         class="form-check-input main-check"
-                        id="exampleCheck12"
+                        id="exampleCheck11"
+                        value={formik.values.signatureAs}
+                        checked={formik.values.signatureAs === 'Tenant' ? true : false}
+                        onChange={() => formik.setFieldValue('signatureAs', 'Tenant')}
+                        name="Sign"
                       />
                       <label class="form-check-label pl-3" for="exampleCheck12">
                         Tenant(s):
                       </label>
+
                     </div>
+
                   </div>
+                  {formik.touched.signatureAs && formik.errors.signatureAs && (
+                    <Form.Text className="text-error mx-3">
+                      {formik.errors.signatureAs}
+                    </Form.Text>
+                  )}
                 </Col>
               </Row>
               <Row>
@@ -902,9 +932,24 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                           style={{ fontFamily: formData.signatureFont }}
                         />
                       ) : (
-                        <div className="empty-field ">
-                          <img src={formData.signature} className="img-set " />
-                        </div>
+                        <>
+                          {(formData.signature) ? (
+
+                            <div className="empty-field ">
+                              <img src={formData.signature} className="img-set " />
+                            </div>
+                          ) : (
+                            <>
+                              <div className="empty-field my-5 p-2">
+                                <img src={formData.signature} className="img-set " />
+                              </div>
+                            </>
+                          )
+
+                          }
+
+                        </>
+
                       )}
 
                     </>
@@ -936,7 +981,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                   name="senderName"
                   type="text"
                 /> */}
-                  {!viewMode ? (
+                  {/* {!viewMode ? (
                     <>
                       <div id="signModal" onClick={handleShow2} >
                         {signMethod2 === 'draw' ? (
@@ -981,9 +1026,9 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                     </>
                   )
 
-                  }
+                  } */}
 
-                  <div className="d-flex my-5 text-field1 date-picker-set">
+                  {/* <div className="d-flex my-5 text-field1 date-picker-set">
                     <label className="text-center font-italic pr-2 ">
                       Date:
                     </label>
@@ -995,7 +1040,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                       onChange={(date) => formik.setFieldValue('SellerCurrentDate', date)}
                       disabled={viewMode}
                     />
-                  </div>
+                  </div> */}
                 </Col>
               </Row>
               {(signImage !== '' || signAsText !== '' || signImage2 !== '' || signAsText2 !== '') && !viewMode && (
