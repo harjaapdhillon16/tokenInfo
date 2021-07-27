@@ -135,7 +135,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
     setOptionNo2('')
 
 
-    console.log("current state", currentState);
+
     handleCurrentState(currentState + 1);
   };
 
@@ -275,7 +275,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
     // let selectedcontacts = updatedContacts.filter(
     //   (item) => item.isActive === true
     // );
-    console.log(selectedForms);
+
 
     let finalData = [];
 
@@ -309,12 +309,12 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       );
       const formDataId = createdContact.data.createFormData.id;
       const senderLink = `${base_url}/formSubmission/${formDataId}`;
-      console.log("senderLink ", senderLink);
+
       const recieverLink = `${base_url}/formSubmission/${encode({
         formDataId,
         isContact: true,
       })}`;
-      console.log("Recieverlink  ", recieverLink);
+
 
       // let emailDataForReceiver = {
       // 	subject: `${data.formName} Signature requested by ${agent.email}`,

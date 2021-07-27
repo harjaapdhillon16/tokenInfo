@@ -220,7 +220,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
     //   finalObject.status2 = 'SIGNED';
     // }
 
-    console.log("final formData", finalObject);
+
     onFormSubmission(finalObject, 'SIGNED');
 
   }

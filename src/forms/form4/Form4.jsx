@@ -222,11 +222,11 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
     //   finalObject.status2 = 'SIGNED';
     // }
 
-    console.log("final formData", finalObject);
+
     onFormSubmission(finalObject, 'SIGNED');
 
   }
-  console.log("formik values", formik.values);
+
 
   return (
     <Container className="form4">
