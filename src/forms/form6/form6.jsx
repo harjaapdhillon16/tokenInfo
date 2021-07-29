@@ -863,6 +863,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                         checked={formik.values.signatureAs === 'Landlord' ? true : false}
                         value={formik.values.signatureAs}
                         onChange={() => formik.setFieldValue('signatureAs', 'Landlord')}
+                        disabled={formData.status === `SIGNED` ? true : false}
 
                       />
                       <label class="form-check-label pl-3" for="exampleCheck11">
@@ -878,6 +879,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                         checked={formik.values.signatureAs === 'Tenant' ? true : false}
                         onChange={() => formik.setFieldValue('signatureAs', 'Tenant')}
                         name="Sign"
+                        disabled={formData.status === `SIGNED` ? true : false}
                       />
                       <label class="form-check-label pl-3" for="exampleCheck12">
                         Tenant(s):

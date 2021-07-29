@@ -272,6 +272,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 
   const handleFormSubmission = (selectedForms) => {
 
+
     // let selectedcontacts = updatedContacts.filter(
     //   (item) => item.isActive === true
     // );

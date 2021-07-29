@@ -25,7 +25,9 @@ const Header = () => {
 			<Col className="top-head">
 				<Navbar collapseOnSelect expand="lg pt-3">
 					<div className="">
-						<IconMenu />
+						{/* sd */}
+						{/* <IconMenu /> */}
+						<img src="https://cribfox.com/wp-content/uploads/2021/04/CRIBFOX-text-logo-84x35.png" alt="logo" className="img-fluid" />
 					</div>
 				</Navbar>
 			</Col>

@@ -140,8 +140,6 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
   };
 
 
-
-
   const date = new Date();
   let today = format(date, 'MM/dd/yyyy');
   today = moment(today, 'MM-DD-YYYY').toDate();
@@ -807,6 +805,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         checked={formik.values.signatureAs === 'Buyer' ? true : false}
                         value={formik.values.signatureAs}
                         onChange={() => formik.setFieldValue('signatureAs', 'Buyer')}
+                        disabled={formData.status === `SIGNED` ? true : false}
 
                       />
                       <label class="form-check-label pl-3" for="exampleCheck11">
@@ -821,6 +820,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         value={formik.values.signatureAs}
                         checked={formik.values.signatureAs === 'Seller' ? true : false}
                         onChange={() => formik.setFieldValue('signatureAs', 'Seller')}
+                        disabled={formData.status === `SIGNED` ? true : false}
 
                       />
                       <label class="form-check-label pl-3" for="exampleCheck12">
