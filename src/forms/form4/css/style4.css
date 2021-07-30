@@ -1,3 +1,6 @@
+.form4.container {
+  overflow-x: hidden;
+}
 .form4 span {
   font-weight: 700;
 }
@@ -189,4 +192,32 @@
   .form4 .input-head {
     font-size: 13px !important;
   }
+  .form4 .submit-form .form-control{
+    width: 296px;
+  }
+  .advance-form {
+    margin-left: 20px !important;
+}
+.dual-agent-form{
+  padding: 0px 32px 0px 32px;
+}
+.dual-agent-form li {
+  margin-bottom: 0;
+}
+.text-field1 input{
+  width:300px !important;
+}
+.signature-check {
+  flex-wrap: wrap;
+  padding: 0px 32px 0px 32px;
+}
+.d-flex.my-5.text-field1.date-picker-set input{
+  width: 250px !important;
+}
+.last-section{
+  padding: 3em 1em;
+}
+.downloadBar{
+  right: -38px;
+}
 }

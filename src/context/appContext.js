@@ -51,10 +51,15 @@ export class AppContext extends Component {
         data: [
           {
             name: "",
-            date: "",
-            property_address: "",
             real_estate_name: "",
-            name_of_brockerage_company: "",
+            name_of_brokerage: "",
+            mainOption: "",
+            option: "",
+            buyerDate: "",
+            sellerCurrentDate: "",
+            represent_Buyer: "",
+            represent_Seller: "",
+            signatureAs: ""
           },
         ],
       },
@@ -64,10 +69,15 @@ export class AppContext extends Component {
         data: [
           {
             name: "",
-            date: "",
-            property_address: "",
             real_estate_name: "",
-            name_of_brockerage_company: "",
+            name_of_brokerage: "",
+            mainOption2: "",
+            option2: "",
+            landLordDate: "",
+            sellerCurrentDate: "",
+            represent_Landlord: "",
+            represent_Seller: "",
+            signatureAs: ""
           },
         ],
       },

@@ -502,7 +502,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         disabled={true}
                       />
                     }
-                    <label class="form-check-label" for="exampleCheck1">
+                    <label class="form-check-label pl-3" for="exampleCheck1">
                       Seller as a (check relationship below)
                     </label>
                   </div>
@@ -568,7 +568,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         disabled={true}
                       />
                     }
-                    <label class="form-check-label" for="exampleCheck4">
+                    <label class="form-check-label  pl-3" for="exampleCheck4">
                       Buyer as a (check relationship below)
                     </label>
                   </div>
@@ -657,17 +657,17 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         />
                     }
 
-                    <label class="form-check-label" for="exampleCheck8">
+                    <label class="form-check-label  pl-3" for="exampleCheck8">
                       Dual Agent with Designated Sales Agent{" "}
                     </label>
                   </div>
                 </Col>
-                <p className="pt-4">
+                <p className="pt-4 pl-4">
                   For advance informed consent to either dual agency or dual
                   agency with designated sales agents complete section below:
                 </p>
                 <div className="m-auto">
-                  <div class="form-check dual-check1" style={{ marginLeft: "-37%" }}>
+                  <div class="form-check dual-check1  advance-form" style={{ marginLeft: "-37%" }}>
                     {(formik.values.mainOption === `I'm acting as a dual agent with designated sales agent` && formik.values.childOption === `Advance informed consent dual agency`) ?
                       <input
                         type="checkbox"
@@ -683,7 +683,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         disabled={true}
                       />
                     }
-                    <label class="form-check-label" for="exampleCheck9">
+                    <label class="form-check-label pl-3" for="exampleCheck9">
                       Advance Informed Consent Dual Agency{" "}
                     </label>
                   </div>
@@ -704,7 +704,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         disabled={true}
                       />
                     }
-                    <label class="form-check-label" for="exampleCheck10">
+                    <label class="form-check-label pl-3" for="exampleCheck10">
                       Advance Informed Consent to Dual Agency with Designated
                       Sales Agents{" "}
                     </label>
@@ -715,7 +715,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
             <div className="pt-3">
               <Row>
                 <Col md={12} className="p-0">
-                  <ul class="form-inline pt-5 pl-md-2">
+                  <ul class="form-inline dual-agent-form  pt-5 pl-md-2">
                     <li>
                       <p className="apply-font">
                         If dual agent with designated sales agents is indicated above:
@@ -795,7 +795,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                       <p className="apply-font">acknowledge receipt of a copy of this disclosure form:</p>
                     </li>
                   </ul>
-                  <div className="d-flex py-3">
+                  <div className="d-flex py-3 signature-check">
                     Signature of
                     <div class="form-check">
                       <input
@@ -837,70 +837,72 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
               </Row>
               <Row>
                 <Col md={6}>
-                  {!viewMode ? (
-                    <>
-                      <div onClick={handleShow} >
-                        {signMethod === 'draw' ? (
+                  <div>
+                    {!viewMode ? (
+                      <>
+                        <div onClick={handleShow} >
+                          {signMethod === 'draw' ? (
+                            <>
+                              {signImage ? (
+                                <div className="empty-field ">
+                                  <img src={signImage} className="img-set " />
+                                </div>
+                              ) : (
+                                <div className="empty-field mt-5 pb-3">
+                                  <img src={signImage} />
+                                </div>
+                              )
+
+                              }
+                            </>
+
+
+                          ) : (
+                            <Form.Control className="form-control mt-5 empty-field" type="text" value={signAsText} />
+                          )}
+
+                        </div>
+
+
+                      </>
+                    ) : (
+                      <>
+                        {formData.isSignatureTyped === true ? (
+                          <Form.Control
+                            className="form-control mt-5 empty-field "
+                            type="text"
+                            value={formData.signature}
+                            style={{ fontFamily: formData.signatureFont }}
+                          />
+                        ) : (
                           <>
-                            {signImage ? (
+                            {(formData.signature) ? (
+
                               <div className="empty-field ">
-                                <img src={signImage} className="img-set " />
+                                <img src={formData.signature} className="img-set " />
                               </div>
                             ) : (
-                              <div className="empty-field my-5 pb-3">
-                                <img src={signImage} />
-                              </div>
+                              <>
+                                <div className="empty-field mt-5 p-2">
+                                  <img src={formData.signature} className="img-set " />
+                                </div>
+                              </>
                             )
 
                             }
+
                           </>
+                        )
 
+                        }
 
-                        ) : (
-                          <Form.Control className="form-control my-5 empty-field" type="text" value={signAsText} />
-                        )}
+                      </>
+                    )
 
-                      </div>
+                    }
+                    <label class="pt-2   input-head">Signature</label>
 
-
-                    </>
-                  ) : (
-                    <>
-                      {formData.isSignatureTyped === true ? (
-                        <Form.Control
-                          className="form-control my-5 empty-field "
-                          type="text"
-                          value={formData.signature}
-                          style={{ fontFamily: formData.signatureFont }}
-                        />
-                      ) : (
-                        <>
-                          {(formData.signature) ? (
-
-                            <div className="empty-field ">
-                              <img src={formData.signature} className="img-set " />
-                            </div>
-                          ) : (
-                            <>
-                              <div className="empty-field my-5 p-2">
-                                <img src={formData.signature} className="img-set " />
-                              </div>
-                            </>
-                          )
-
-                          }
-
-                        </>
-                      )
-
-                      }
-
-                    </>
-                  )
-
-                  }
-
-
+                  </div>
                   <div className="d-flex my-5 text-field1 date-picker-set">
                     <label className="text-center font-italic pr-2 ">
                       Date:

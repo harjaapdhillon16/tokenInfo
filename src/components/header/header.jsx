@@ -8,6 +8,7 @@ import { Dropdown } from 'react-bootstrap';
 import SendForm from '../sendForm/sendForm';
 import InviteForm from '../InviteForm/inviteForm';
 import AppContext from '../../context/appContext';
+import { Link } from "react-router-dom";
 const Header = () => {
 	const { user } = useContext(AppContext);
 	const [formModal, setFormModal] = useState(false);
@@ -51,11 +52,11 @@ const Header = () => {
 							<span>{user.attributes.given_name}</span>
 						</Dropdown.Toggle>
 						<Dropdown.Menu>
-							<Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-							<Dropdown.Item href="#/action-2">{user.username}</Dropdown.Item>
-							<Dropdown.Item>
+							<Link to="/account"><Dropdown.Item href="/account">Account</Dropdown.Item></Link>
+							<Dropdown.Item href="#" onClick={() => Auth.signOut()}>Logout</Dropdown.Item>
+							{/* <Dropdown.Item>
 								<Button onClick={() => Auth.signOut()}>Logout</Button>
-							</Dropdown.Item>
+							</Dropdown.Item> */}
 						</Dropdown.Menu>
 					</Dropdown>
 					<div className="profile">
