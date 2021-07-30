@@ -183,7 +183,7 @@ export const inviteEmail = (signUser, signUserEmail, docurl) => {
                               
                               <tr>
                               <td align="center">
-                              <div style="margin-top:40px;display: flex;justify-content: center;">                                 
+                              <div style="margin-top:40px; justify-content: center;">                                 
                                 <div class="notifications" style="vertical-align:top;padding-left: 5px;text-align: center;">
                                   <p style="margin: 0;font-size: 12px;font-weight: 300;line-height: 15px;">Warning: To prevent unauthorized users from accessing this document, please do not forward this email.</p>
                                 </div>

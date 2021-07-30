@@ -517,7 +517,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                         disabled={true}
                       />
                     }
-                    <label class="form-check-label" for="exampleCheck1">
+                    <label class="form-check-label pl-3" for="exampleCheck1">
                       Landlord as a (check relationship below)
                     </label>
                   </div>
@@ -597,7 +597,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                         disabled={true}
                       />
                     }
-                    <label class="form-check-label" for="exampleCheck4">
+                    <label class="form-check-label pl-3" for="exampleCheck4">
                       Tenant as a (check relationship below)
                     </label>
                   </div>
@@ -705,17 +705,17 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                           disabled={true}
                         />
                     }
-                    <label class="form-check-label" for="exampleCheck8">
+                    <label class="form-check-label pl-3" for="exampleCheck8">
                       Dual Agent with Designated Sales Agent{" "}
                     </label>
                   </div>
                 </Col>
-                <p className="pt-4">
+                <p className="pt-4 pl-4">
                   For advance informed consent to either dual agency or dual
                   agency with designated sales agents complete section below:
                 </p>
                 <div className="m-auto">
-                  <div class="form-check dual-check1" style={{ marginLeft: "-37%" }}>
+                  <div class="form-check dual-check1 advance-form" style={{ marginLeft: "-37%" }}>
                     {/* <input
                     type="checkbox"
                     class="form-check-input main-check"
@@ -736,7 +736,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                         disabled={true}
                       />
                     }
-                    <label class="form-check-label" for="exampleCheck9">
+                    <label class="form-check-label pl-2" for="exampleCheck9">
                       Advance Informed Consent Dual Agency{" "}
                     </label>
                   </div>
@@ -761,7 +761,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                         disabled={true}
                       />
                     }
-                    <label class="form-check-label" for="exampleCheck10">
+                    <label class="form-check-label pl-2" for="exampleCheck10">
                       Advance Informed Consent to Dual Agency with Designated
                       Sales Agents{" "}
                     </label>
@@ -772,7 +772,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
             <div className="pt-3">
               <Row>
                 <Col md={12} className="p-0">
-                  <ul class="form-inline pt-5 pl-md-2">
+                  <ul class="form-inline dual-agent-form pt-5 pl-md-2">
                     <li>
                       <p className="apply-font">
                         If dual agent with designated sales agents is indicated above:
@@ -852,7 +852,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                       <p className="apply-font">acknowledge receipt of a copy of this disclosure form:</p>
                     </li>
                   </ul>
-                  <div className="d-flex py-3">
+                  <div className="d-flex py-3 signature-check">
                     Signature of
                     <div class="form-check">
                       <input
