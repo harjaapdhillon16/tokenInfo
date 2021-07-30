@@ -837,70 +837,72 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
               </Row>
               <Row>
                 <Col md={6}>
-                  {!viewMode ? (
-                    <>
-                      <div onClick={handleShow} >
-                        {signMethod === 'draw' ? (
+                  <div>
+                    {!viewMode ? (
+                      <>
+                        <div onClick={handleShow} >
+                          {signMethod === 'draw' ? (
+                            <>
+                              {signImage ? (
+                                <div className="empty-field ">
+                                  <img src={signImage} className="img-set " />
+                                </div>
+                              ) : (
+                                <div className="empty-field mt-5 pb-3">
+                                  <img src={signImage} />
+                                </div>
+                              )
+
+                              }
+                            </>
+
+
+                          ) : (
+                            <Form.Control className="form-control mt-5 empty-field" type="text" value={signAsText} />
+                          )}
+
+                        </div>
+
+
+                      </>
+                    ) : (
+                      <>
+                        {formData.isSignatureTyped === true ? (
+                          <Form.Control
+                            className="form-control mt-5 empty-field "
+                            type="text"
+                            value={formData.signature}
+                            style={{ fontFamily: formData.signatureFont }}
+                          />
+                        ) : (
                           <>
-                            {signImage ? (
+                            {(formData.signature) ? (
+
                               <div className="empty-field ">
-                                <img src={signImage} className="img-set " />
+                                <img src={formData.signature} className="img-set " />
                               </div>
                             ) : (
-                              <div className="empty-field my-5 pb-3">
-                                <img src={signImage} />
-                              </div>
+                              <>
+                                <div className="empty-field mt-5 p-2">
+                                  <img src={formData.signature} className="img-set " />
+                                </div>
+                              </>
                             )
 
                             }
+
                           </>
+                        )
 
+                        }
 
-                        ) : (
-                          <Form.Control className="form-control my-5 empty-field" type="text" value={signAsText} />
-                        )}
+                      </>
+                    )
 
-                      </div>
+                    }
+                    <label class="pt-2   input-head">Signature</label>
 
-
-                    </>
-                  ) : (
-                    <>
-                      {formData.isSignatureTyped === true ? (
-                        <Form.Control
-                          className="form-control my-5 empty-field "
-                          type="text"
-                          value={formData.signature}
-                          style={{ fontFamily: formData.signatureFont }}
-                        />
-                      ) : (
-                        <>
-                          {(formData.signature) ? (
-
-                            <div className="empty-field ">
-                              <img src={formData.signature} className="img-set " />
-                            </div>
-                          ) : (
-                            <>
-                              <div className="empty-field my-5 p-2">
-                                <img src={formData.signature} className="img-set " />
-                              </div>
-                            </>
-                          )
-
-                          }
-
-                        </>
-                      )
-
-                      }
-
-                    </>
-                  )
-
-                  }
-
-
+                  </div>
                   <div className="d-flex my-5 text-field1 date-picker-set">
                     <label className="text-center font-italic pr-2 ">
                       Date:

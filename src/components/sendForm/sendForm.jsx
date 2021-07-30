@@ -191,19 +191,19 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       data[1] = formData.name;
       data[2] = "real_estate_name";
       data[3] = agent.name;
-      data[4] = "Name of  Brokerage";
+      data[4] = "name_of_brokerage";
       data[5] = agent.brokerageName;
       data[6] = "mainOption";
       data[7] = mainType;
       data[8] = "option";
       data[9] = optionNo;
-      data[10] = "BuyerDate";
+      data[10] = "buyerDate";
       data[11] = "";
-      data[12] = "SellerCurrentDate";
+      data[12] = "sellerCurrentDate";
       data[13] = "";
-      data[14] = "represent Buyer";
+      data[14] = "represent_Buyer";
       data[15] = representBuyer1;
-      data[16] = "represent Seller";
+      data[16] = "represent_Seller";
       data[17] = representSeller1;
       data[18] = "signatureAs";
       data[19] = "";
@@ -216,7 +216,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       data[1] = formData.name;
       data[2] = "real_estate_name";
       data[3] = agent.name;
-      data[4] = "Name of  Brokerage";
+      data[4] = "name_of_brokerage";
       data[5] = agent.brokerageName;
       data[6] = "mainOption2";
       data[7] = mainType2;
@@ -224,11 +224,11 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
       data[9] = optionNo2;
       data[10] = "landLordDate";
       data[11] = "";
-      data[12] = "SellerCurrentDate";
+      data[12] = "sellerCurrentDate";
       data[13] = "";
-      data[14] = "represent Buyer";
+      data[14] = "represent_Landlord";
       data[15] = representBuyer2;
-      data[16] = "represent Seller";
+      data[16] = "represent_Seller";
       data[17] = representSeller2;
       data[18] = "signatureAs";
       data[19] = "";
@@ -272,7 +272,6 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
 
   const handleFormSubmission = (selectedForms) => {
 
-
     // let selectedcontacts = updatedContacts.filter(
     //   (item) => item.isActive === true
     // );
@@ -315,6 +314,7 @@ const SendForm = ({ formModal, onHandleFormModal }) => {
         formDataId,
         isContact: true,
       })}`;
+
 
 
       // let emailDataForReceiver = {

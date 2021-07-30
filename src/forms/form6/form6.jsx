@@ -907,7 +907,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                                 <img src={signImage} className="img-set " />
                               </div>
                             ) : (
-                              <div className="empty-field my-5 pb-3">
+                              <div className="empty-field mt-5 pb-3">
                                 <img src={signImage} />
                               </div>
                             )
@@ -917,7 +917,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
 
 
                         ) : (
-                          <Form.Control className="form-control my-5 empty-field" type="text" value={signAsText} />
+                          <Form.Control className="form-control mt-5 empty-field" type="text" value={signAsText} />
                         )}
 
                       </div>
@@ -928,7 +928,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                     <>
                       {formData.isSignatureTyped === true ? (
                         <Form.Control
-                          className="form-control my-5 empty-field "
+                          className="form-control mt-5 empty-field "
                           type="text"
                           value={formData.signature}
                           style={{ fontFamily: formData.signatureFont }}
@@ -942,7 +942,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
                             </div>
                           ) : (
                             <>
-                              <div className="empty-field my-5 p-2">
+                              <div className="empty-field mt-5 p-2">
                                 <img src={formData.signature} className="img-set " />
                               </div>
                             </>
@@ -959,7 +959,7 @@ const Form6 = ({ formData, viewMode, onFormSubmission }) => {
 
                   }
 
-
+                  <label class="pt-2   input-head">Signature</label>
                   <div className="d-flex my-5 text-field1 date-picker-set">
                     <label className="text-center font-italic pr-2 ">
                       Date:
