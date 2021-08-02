@@ -170,7 +170,7 @@ const FormsScreen = () => {
 						</Dropdown>
 					</Col>
 
-					<Col md={2} className="dashboardCards pt-5 text-center pr-0">
+					<Col md={2} className="dashboardCard-1 pt-5  pr-0">
 						<Dropdown>
 							<Dropdown.Toggle className="drop-btn pt-0 pl-0">
 								{filterKey === 'status' && filterValue != null ? (
@@ -196,7 +196,7 @@ const FormsScreen = () => {
 						</Dropdown>
 					</Col>
 
-					<Col md={4} className="dashboardCards pt-5 d-flex justify-content-end pl-0 pr-5">
+					<Col md={4} className="dashboardCard-2 pt-5 d-flex  pr-5">
 						<Dropdown>
 							<Dropdown.Toggle className="drop-btn pt-0 pl-0">
 								{currentSorted === 'desc' ? 'Most Recent' : 'Most Dated'}

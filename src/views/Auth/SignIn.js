@@ -72,6 +72,9 @@ export default function SignUp() {
 					<Row className="align-items-md-center  justify-content-md-center">
 					<Link to="/register">Don't have an account yet?</Link>
 					</Row>
+					<div className="align-items-center d-flex justify-content-center pt-2">
+						<Link to ="#">Reset Password</Link>
+					</div>
 					
 				</Container>
 			</Form>
