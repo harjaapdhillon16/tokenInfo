@@ -11,6 +11,15 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+.dashboardCard-1 .drop-btn{
+  margin: auto;
+  display: block;
+}
+.dashboardCard-2 .drop-btn{
+  margin: auto;
+  display: block;
+}
+
 .card {
   padding: 24px;
   box-shadow: 0 2px 8px rgb(0 0 0 / 16%);
@@ -205,7 +214,6 @@ a:hover {
 .about-detail .btn.btn-link:focus {
   box-shadow: none;
 }
-
 .table-bordered td,
 .table-bordered th {
 }
@@ -230,6 +238,12 @@ a:hover {
 @media (min-width: 420px) and (max-width: 576px) {
 }
 @media (min-width: 320px) and (max-width: 420px) {
+  .dashboardCard-1 .drop-btn {
+    margin: inherit;
+  }
+  .dashboardCard-2 .drop-btn {
+    margin: inherit;
+  }
   .account .dropdown {
     display: none;
   }
@@ -241,12 +255,16 @@ a:hover {
     position: relative !important;
   }
   .top-head {
-    position: absolute !important;
+    display: flex;
+    justify-content: center;
+  }
+  .dashboardCards{
+    text-align: left !important;
   }
 }
 
 .form-row .btn-outline-secondary {
-  min-width: 135px;
+  min-width: 140px;
 }
 .form-row .badge {
   min-width: 100px;
@@ -272,3 +290,9 @@ a:hover {
 a.cardwrap.disabled .card {
   background: #f3f3f3;
 }
+/* .dashboardCard-2{
+  justify-content: flex-start !important;
+} */
+/* .send-form-btn{
+  background-color:#355779;
+} */

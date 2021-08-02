@@ -164,7 +164,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
       companyName: Yup.string().required('Please enter the Real Estate Company'),
       BuyerCurrentDate: Yup.string().required('Please enter the Date'),
       SellerCurrentDate: Yup.string().required('Please enter the Date'),
-      signatureAs: Yup.string().required('Please select the Signature option'),
+      signatureAs: Yup.string().required('Please check one of the above option'),
       // representBuyerName: Yup.string().required('Please enter the Represent Buyer Name'),
       // representSellerName: Yup.string().required('Please enter the Represent Seller Name'),
     }),

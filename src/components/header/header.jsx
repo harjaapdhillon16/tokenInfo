@@ -23,7 +23,7 @@ const Header = () => {
 
 	return (
 		<Row className="header">
-			<Col className="top-head">
+			<Col md={6} xs={12} className="top-head">
 				<Navbar collapseOnSelect expand="lg pt-3">
 					<div className="">
 						{/* sd */}
@@ -32,7 +32,7 @@ const Header = () => {
 					</div>
 				</Navbar>
 			</Col>
-			<Col md={6} className="account">
+			<Col md={6} xs={12} className="account">
 				<div class=" d-flex ml-auto pt-3 p-2">
 					<Button className="send mr-3" onClick={handleShow}>
 						Invite
