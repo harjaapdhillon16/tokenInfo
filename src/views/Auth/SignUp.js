@@ -148,11 +148,11 @@ export default function SignUp() {
 						</Col>
 					</Row>
 					<Row
-						className="align-items-md-center justify-content-md-center mt-3"
+						className="align-items-center justify-content-center mt-3"
 						style={{ justifyContent: 'space-evenly' }}>
 						<Button type="submit">Register</Button>
 					</Row>
-					<Row className="align-items-md-center  justify-content-md-center mt-1">
+					<Row className="align-items-center  justify-content-center mt-1">
 						<Link to="/login">Already have an account?</Link>
 					</Row>
 				</Container>
