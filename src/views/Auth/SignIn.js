@@ -69,7 +69,7 @@ export default function SignUp() {
 						style={{ justifyContent: 'space-evenly' }}>
 						<Button type="submit" className="px-4 mb-2">Login</Button>
 					</Row >
-					<Row className="align-items-md-center  justify-content-md-center">
+					<Row className="align-items-center  justify-content-center">
 					<Link to="/register">Don't have an account yet?</Link>
 					</Row>
 					<div className="align-items-center d-flex justify-content-center pt-2">
