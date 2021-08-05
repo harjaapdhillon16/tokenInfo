@@ -103,7 +103,7 @@ const FormsScreen = () => {
 					</Col>
 				</Row>
 				<Row>
-					<Col md={6} className="dashboardCards pt-5">
+					<Col md={6} xs={4} className="dashboardCards pt-5">
 						<Dropdown>
 							<Dropdown.Toggle className="drop-btn pt-0 pl-0">
 								{/* {filterValue !== null ? filterValue: <> All forms</>} */}
@@ -170,7 +170,7 @@ const FormsScreen = () => {
 						</Dropdown>
 					</Col>
 
-					<Col md={2} className="dashboardCard-1 pt-5  pr-0">
+					<Col md={2} xs={4} className="dashboardCard-1 pt-5  pr-0">
 						<Dropdown>
 							<Dropdown.Toggle className="drop-btn pt-0 pl-0">
 								{filterKey === 'status' && filterValue != null ? (
@@ -196,7 +196,7 @@ const FormsScreen = () => {
 						</Dropdown>
 					</Col>
 
-					<Col md={4} className="dashboardCard-2 pt-5 d-flex  pr-5">
+					<Col md={4}  xs={4}  className="dashboardCard-2 pt-5 d-flex  pr-5">
 						<Dropdown>
 							<Dropdown.Toggle className="drop-btn pt-0 pl-0">
 								{currentSorted === 'desc' ? 'Most Recent' : 'Most Dated'}
@@ -222,7 +222,7 @@ const FormsScreen = () => {
 								<h6>{item.formName}</h6>
 								<Link to="#">{item.receiverName}</Link>
 							</Col>
-							<Col md={2} className="text-center">
+							<Col md={2} className="text-center status-badges">
 								{item.status === 'SENT' && (
 									<Badge variant="danger sent-option text-center">Sent</Badge>
 								)}
@@ -238,7 +238,7 @@ const FormsScreen = () => {
 									<Moment fromNow>{item.updatedAt}</Moment>
 								</p>
 							</Col>
-							<Col md={4} className="text-right pr-0">
+							<Col md={4} className="text-right status-btn pr-0">
 								<a
 									target="_blank"
 									className="btn btn-outline-secondary cf-black mr-3"

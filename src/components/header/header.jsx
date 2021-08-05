@@ -25,15 +25,15 @@ const Header = () => {
 		<Row className="header">
 			<Col md={6} xs={12} className="top-head">
 				<Navbar collapseOnSelect expand="lg pt-3">
-					<div className="">
+					<Link to="/">
 						{/* sd */}
 						{/* <IconMenu /> */}
 						<img src="https://cribfox.com/wp-content/uploads/2021/04/CRIBFOX-text-logo-84x35.png" alt="logo" className="img-fluid" />
-					</div>
+					</Link>
 				</Navbar>
 			</Col>
 			<Col md={6} xs={12} className="account">
-				<div class=" d-flex ml-auto pt-3 p-2">
+				<div class=" d-flex ml-auto pt-3 p-2 header-right">
 					<Button className="send mr-3" onClick={handleShow}>
 						Invite
 					</Button>

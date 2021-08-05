@@ -194,5 +194,18 @@
     .text-field{
         width: 111px !important;
     }
+    .header-right{
+      margin: auto !important;
+    }
+    .dashboardCard-2 {
+      padding-left: 0px;
+  }
+  .status-badges, .status-btn {
+    text-align: left !important;
+    margin-top: 10px;
+  }
+  .status-btn .form-row .btn-outline-secondary {
+    min-width: 130px;
+}
   }
   
