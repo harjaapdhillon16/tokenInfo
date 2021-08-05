@@ -116,11 +116,11 @@ const Contacts = () => {
 					</Breadcrumb.Item>
 					<Breadcrumb.Item>Contacts</Breadcrumb.Item>
 				</Breadcrumb>
-				<Row className="pt-4">
-					<Col md={10}>
+				<Row className="pt-4 ">
+					<Col md={10} xs={6}>
 						<h5>Contacts</h5>
 					</Col>
-					<Col md={2}>
+					<Col md={2} xs={6}>
 						<Button variant="outline-secondary add-contact" onClick={handleShow}>
 							Add Contact
 						</Button>
