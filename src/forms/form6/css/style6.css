@@ -55,9 +55,9 @@
   background-color:#f1f4ff;
 }
 .text-field1 input {
-  width: 530px !important;
+  width: 530px;
   border: none;
-  border-bottom: solid 1px #000;
+  /* border-bottom: solid 1px #000; */
   background-color:#f1f4ff;
   border-radius: 0;
 }
@@ -77,6 +77,13 @@
 .empty-field:focus{
   border-color:#000;
   box-shadow:none;
+}
+.d-flex.my-5.text-field1.date-picker-set input {
+  width: 388px;
+}
+.img-set{
+  max-width: 47%;
+    height: auto;
 }
 /* Responsive design with media queries */
 
@@ -184,4 +191,11 @@
   .form6 .input-head {
     font-size: 13px !important;
   }
+  .form6 .submit-form .form-control{
+    width: 250px;
+  }
+  .last-section {
+    padding: 3em 1em !important;
+    font-size:14px;
+}
 }

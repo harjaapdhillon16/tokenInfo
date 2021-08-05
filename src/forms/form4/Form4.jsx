@@ -23,22 +23,38 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
   console.log("formData of Form 4", formData);
 
   const [show, setShow] = useState(false);
+  const [show2, setShow2] = useState(false);
   const [canvasShow, setCanvasShow] = useState(true);
+  const [canvasShow2, setCanvasShow2] = useState(true);
   const [fieldShow, setFieldShow] = useState(false);
+  const [fieldShow2, setFieldShow2] = useState(false);
   const sigPad = useRef({});
+  const sigPad2 = useRef({});
   const handleShow = () => setShow(true);
+  const handleShow2 = () => setShow2(true);
   const handleClose = () => setShow(false);
+  const handleClose2 = () => setShow2(false);
   const [signImage, setSignImage] = useState('');
+  const [signImage2, setSignImage2] = useState('');
   const [signAsText, setSignAsText] = useState('');
+  const [signAsText2, setSignAsText2] = useState('');
   const [activeFontFamily, setActiveFontFamily] = useState('Open Sans');
+  const [activeFontFamily2, setActiveFontFamily2] = useState('Open Sans');
   const [signMethod, setSignMethod] = useState('draw');
+  const [signMethod2, setSignMethod2] = useState('draw');
   const [formSubmitStatus, setFormSubmitStatus] = useState(false);
+  const [viewedStatus, setViewedStatus] = useState(false);
   const [signTabState, setSignTabState] = useState('link-1');
+  const [signTabState2, setSignTabState2] = useState('link-1');
 
 
   useEffect(() => {
     if (show && signImage && sigPad.current !== null) sigPad.current.fromDataURL(signImage);
   }, [show]);
+
+  useEffect(() => {
+    if (show2 && signImage2 && sigPad2.current !== null) sigPad2.current.fromDataURL(signImage2);
+  }, [show2]);
 
   const genrateImage = () => {
     setShow(false);
@@ -46,9 +62,19 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
     setSignImage(sigPad.current.toDataURL());
   };
 
+  const genrateImage2 = () => {
+    setShow2(false);
+    setSignMethod2('draw');
+    setSignImage2(sigPad2.current.toDataURL());
+  };
+
   const handleSignAsText = () => {
     setShow(false);
     setSignMethod('sign');
+  };
+  const handleSignAsText2 = () => {
+    setShow2(false);
+    setSignMethod2('sign');
   };
 
   function clear() {
@@ -57,6 +83,15 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
 
     if (sigPad.current !== null) {
       sigPad.current.clear();
+
+    }
+  }
+  function clear2() {
+    setSignAsText2('')
+    setSignImage2('')
+
+    if (sigPad2.current !== null) {
+      sigPad2.current.clear();
 
     }
   }
@@ -72,6 +107,17 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
     }
   };
 
+  const toggleMethod2 = () => {
+    if (canvasShow2 == false) {
+      setCanvasShow2(true);
+      setSignTabState2('link-1')
+      setFieldShow2(false);
+    } else {
+      //setCanvasShow(false);
+      setSignTabState2('link-2')
+    }
+  };
+
   const toggleField = () => {
     if (fieldShow == false) {
       setFieldShow(true);
@@ -82,6 +128,17 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
       setSignTabState('link-1')
     }
   };
+  const toggleField2 = () => {
+    if (fieldShow2 == false) {
+      setFieldShow2(true);
+      setSignTabState2('link-2')
+      setCanvasShow2(false);
+    } else {
+      //setFieldShow(false);
+      setSignTabState2('link-1')
+    }
+  };
+
 
   const date = new Date();
   let today = format(date, 'MM/dd/yyyy');
@@ -93,10 +150,13 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
       fullName: formData.data[1],
       nameOfLicensee: formData.data[3],
       companyName: formData.data[5],
-      mainOption: formData.data[6],
-      childOption: formData.data[7],
-      BuyerCurrentDate: formData.data[9] ? new Date(formData.data[9]) : today,
-      SellerCurrentDate: formData.data[9] ? new Date(formData.data[9]) : today,
+      mainOption: formData.data[7],
+      childOption: formData.data[9],
+      BuyerCurrentDate: formData.data[11] ? new Date(formData.data[11]) : today,
+      SellerCurrentDate: formData.data[13] ? new Date(formData.data[13]) : today,
+      representBuyerName: formData.data[15],
+      representSellerName: formData.data[17],
+      signatureAs: formData.data[19],
     },
     validationSchema: Yup.object({
       fullName: Yup.string().required('Please enter the name'),
@@ -104,11 +164,67 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
       companyName: Yup.string().required('Please enter the Real Estate Company'),
       BuyerCurrentDate: Yup.string().required('Please enter the Date'),
       SellerCurrentDate: Yup.string().required('Please enter the Date'),
+      signatureAs: Yup.string().required('Please check one of the above option'),
+      // representBuyerName: Yup.string().required('Please enter the Represent Buyer Name'),
+      // representSellerName: Yup.string().required('Please enter the Represent Seller Name'),
     }),
     onSubmit: (value) => {
-      console.log("values", value);
+      submitForm(value);
     }
   })
+  const submitForm = async (values) => {
+    let data = [
+      'name',
+      values.fullName,
+      'nameOfLicensee',
+      values.nameOfLicensee,
+      'companyName',
+      values.companyName,
+      'mainOption',
+      values.mainOption,
+      'childOption',
+      values.childOption,
+      'BuyerDate',
+      values.BuyerCurrentDate,
+      'SellerCurrentDate',
+      values.SellerCurrentDate,
+      'representBuyerName',
+      values.representBuyerName,
+      'representSellerName',
+      values.representSellerName,
+      "signatureAs",
+      values.signatureAs
+
+    ]
+    let finalObject = { ...formData };
+
+    finalObject.status = 'SIGNED';
+    finalObject.data = data;
+    if (signAsText !== '') {
+      finalObject.isSignatureTyped = true;
+      finalObject.signatureFont = activeFontFamily;
+      finalObject.signature = signAsText;
+    } else if (signImage !== '') {
+      finalObject.isSignatureTyped = false;
+      finalObject.signature = signImage;
+      finalObject.status = 'SIGNED';
+    }
+
+    // if (signAsText2 !== '') {
+    //   finalObject.isSignatureTyped2 = true;
+    //   finalObject.signatureFont2 = activeFontFamily2;
+    //   finalObject.signature2 = signAsText2;
+    // } else if (signImage2 !== '') {
+    //   finalObject.isSignatureTyped2 = false;
+    //   finalObject.signature2 = signImage2;
+    //   finalObject.status2 = 'SIGNED';
+    // }
+
+
+    onFormSubmission(finalObject, 'SIGNED');
+
+  }
+
 
   return (
     <Container className="form4">
@@ -383,9 +499,10 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input main-check"
                         id="exampleCheck1"
+                        disabled={true}
                       />
                     }
-                    <label class="form-check-label" for="exampleCheck1">
+                    <label class="form-check-label pl-3" for="exampleCheck1">
                       Seller as a (check relationship below)
                     </label>
                   </div>
@@ -403,6 +520,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                           type="checkbox"
                           class="form-check-input"
                           id="exampleCheck2"
+                          disabled={true}
                         />
 
                       }
@@ -423,6 +541,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                           type="checkbox"
                           class="form-check-input"
                           id="exampleCheck3"
+                          disabled={true}
                         />
                       }
                       <label class="form-check-label" for="exampleCheck3">
@@ -446,9 +565,10 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input  main-check"
                         id="exampleCheck4"
+                        disabled={true}
                       />
                     }
-                    <label class="form-check-label" for="exampleCheck4">
+                    <label class="form-check-label  pl-3" for="exampleCheck4">
                       Buyer as a (check relationship below)
                     </label>
                   </div>
@@ -466,6 +586,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input"
                         id="exampleCheck5"
+                        disabled={true}
                       />
                     }
                     <label class="form-check-label" for="exampleCheck5">
@@ -485,7 +606,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input"
                         id="exampleCheck6"
-
+                        disabled={true}
                       />
                     }
                     <label class="form-check-label" for="exampleCheck6">
@@ -511,6 +632,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input main-check"
                         id="exampleCheck7"
+                        disabled={true}
                       />
                     }
                     <label class="form-check-label" for="exampleCheck7">
@@ -531,20 +653,21 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                           type="checkbox"
                           class="form-check-input main-check"
                           id="exampleCheck8"
+                          disabled={true}
                         />
                     }
 
-                    <label class="form-check-label" for="exampleCheck8">
+                    <label class="form-check-label  pl-3" for="exampleCheck8">
                       Dual Agent with Designated Sales Agent{" "}
                     </label>
                   </div>
                 </Col>
-                <p className="pt-4">
+                <p className="pt-4 pl-4">
                   For advance informed consent to either dual agency or dual
                   agency with designated sales agents complete section below:
                 </p>
                 <div className="m-auto">
-                  <div class="form-check dual-check1" style={{ marginLeft: "-37%" }}>
+                  <div class="form-check dual-check1  advance-form" style={{ marginLeft: "-37%" }}>
                     {(formik.values.mainOption === `I'm acting as a dual agent with designated sales agent` && formik.values.childOption === `Advance informed consent dual agency`) ?
                       <input
                         type="checkbox"
@@ -557,9 +680,10 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input main-check"
                         id="exampleCheck9"
+                        disabled={true}
                       />
                     }
-                    <label class="form-check-label" for="exampleCheck9">
+                    <label class="form-check-label pl-3" for="exampleCheck9">
                       Advance Informed Consent Dual Agency{" "}
                     </label>
                   </div>
@@ -577,9 +701,10 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         type="checkbox"
                         class="form-check-input main-check"
                         id="exampleCheck10"
+                        disabled={true}
                       />
                     }
-                    <label class="form-check-label" for="exampleCheck10">
+                    <label class="form-check-label pl-3" for="exampleCheck10">
                       Advance Informed Consent to Dual Agency with Designated
                       Sales Agents{" "}
                     </label>
@@ -590,7 +715,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
             <div className="pt-3">
               <Row>
                 <Col md={12} className="p-0">
-                  <ul class="form-inline pt-5 pl-md-2">
+                  <ul class="form-inline dual-agent-form  pt-5 pl-md-2">
                     <li>
                       <p className="apply-font">
                         If dual agent with designated sales agents is indicated above:
@@ -601,10 +726,18 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         <Form.Control
                           class="form-control"
                           id="senderName"
-                          name="senderName"
+                          name="representBuyerName"
                           type="text"
+                          value={formik.values.representBuyerName}
+                        // onChange={formik.handleChange}
+                        // onBlur={formik.handleBlur}
                         />
                       </span>
+                      {formik.touched.representBuyerName && formik.errors.representBuyerName && (
+                        <Form.Text className="text-error mx-3">
+                          {formik.errors.representBuyerName}
+                        </Form.Text>
+                      )}
                     </li>
                     <li>
                       <p className="apply-font">is appointed to represent the</p>
@@ -619,10 +752,18 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         <Form.Control
                           class="form-control"
                           id="senderName"
-                          name="senderName"
+                          name="representSellerName"
                           type="text"
+                          value={formik.values.representSellerName}
+                        // onChange={formik.handleChange}
+                        // onBlur={formik.handleBlur}
                         />
                       </span>
+                      {formik.touched.representSellerName && formik.errors.representSellerName && (
+                        <Form.Text className="text-error mx-3">
+                          {formik.errors.representSellerName}
+                        </Form.Text>
+                      )}
                     </li>
                     <li>
                       <p className="apply-font">is appointed to represent the seller in this transaction.</p>
@@ -637,22 +778,35 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         <Form.Control
                           class="form-control"
                           id="senderName"
-                          name="senderName"
+                          name="fullName"
                           type="text"
+                          value={formik.values.fullName}
+                        // onChange={formik.handleChange}
+                        // onBlur={formik.handleBlur}
                         />
                       </span>
+                      {formik.touched.fullName && formik.errors.fullName && (
+                        <Form.Text className="text-error mx-3">
+                          {formik.errors.fullName}
+                        </Form.Text>
+                      )}
                     </li>
                     <li>
                       <p className="apply-font">acknowledge receipt of a copy of this disclosure form:</p>
                     </li>
                   </ul>
-                  <div className="d-flex py-3">
+                  <div className="d-flex py-3 signature-check">
                     Signature of
                     <div class="form-check">
                       <input
                         type="checkbox"
                         class="form-check-input main-check"
-                        id="exampleCheck11"
+                        name="Sign"
+                        checked={formik.values.signatureAs === 'Buyer' ? true : false}
+                        value={formik.values.signatureAs}
+                        onChange={() => formik.setFieldValue('signatureAs', 'Buyer')}
+                        disabled={formData.status === `SIGNED` ? true : false}
+
                       />
                       <label class="form-check-label pl-3" for="exampleCheck11">
                         Buyer(s) and/or
@@ -662,43 +816,98 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                       <input
                         type="checkbox"
                         class="form-check-input main-check"
-                        id="exampleCheck12"
+                        name="Sign"
+                        value={formik.values.signatureAs}
+                        checked={formik.values.signatureAs === 'Seller' ? true : false}
+                        onChange={() => formik.setFieldValue('signatureAs', 'Seller')}
+                        disabled={formData.status === `SIGNED` ? true : false}
+
                       />
                       <label class="form-check-label pl-3" for="exampleCheck12">
                         Seller(s):
                       </label>
                     </div>
                   </div>
+                  {formik.touched.signatureAs && formik.errors.signatureAs && (
+                    <Form.Text className="text-error mx-3">
+                      {formik.errors.signatureAs}
+                    </Form.Text>
+                  )}
                 </Col>
               </Row>
               <Row>
                 <Col md={6}>
+                  <div>
+                    {!viewMode ? (
+                      <>
+                        <div onClick={handleShow} >
+                          {signMethod === 'draw' ? (
+                            <>
+                              {signImage ? (
+                                <div className="empty-field ">
+                                  <img src={signImage} className="img-set " />
+                                </div>
+                              ) : (
+                                <div className="empty-field mt-5 pb-3">
+                                  <img src={signImage} />
+                                </div>
+                              )
+
+                              }
+                            </>
 
 
-                  <Form.Control
-                    className="form-control my-5 empty-field "
-                    id="senderName"
-                    name="senderName"
-                    type="text"
-                  />
+                          ) : (
+                            <Form.Control className="form-control mt-5 empty-field" type="text" value={signAsText} />
+                          )}
 
-                  <Form.Control
-                    className="form-control  my-5 empty-field "
-                    id="senderName"
-                    name="senderName"
-                    type="text"
-                  />
+                        </div>
+
+
+                      </>
+                    ) : (
+                      <>
+                        {formData.isSignatureTyped === true ? (
+                          <Form.Control
+                            className="form-control mt-5 empty-field "
+                            type="text"
+                            value={formData.signature}
+                            style={{ fontFamily: formData.signatureFont }}
+                          />
+                        ) : (
+                          <>
+                            {(formData.signature) ? (
+
+                              <div className="empty-field ">
+                                <img src={formData.signature} className="img-set " />
+                              </div>
+                            ) : (
+                              <>
+                                <div className="empty-field mt-5 p-2">
+                                  <img src={formData.signature} className="img-set " />
+                                </div>
+                              </>
+                            )
+
+                            }
+
+                          </>
+                        )
+
+                        }
+
+                      </>
+                    )
+
+                    }
+                    <label class="pt-2   input-head">Signature</label>
+
+                  </div>
                   <div className="d-flex my-5 text-field1 date-picker-set">
-                    <label className="text-center font-italic pr-2">
+                    <label className="text-center font-italic pr-2 ">
                       Date:
                     </label>
-                    {/* <Form.Control
-                    class="form-control"
-                    type="text"
-                    id="senderCompany"
-                    name="senderCompany"
-                    value={formik.values.currentDate}
-                  /> */}
+
                     <DatePicker
                       className="form-control"
                       name="currentDate"
@@ -711,28 +920,78 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
 
                 </Col>
                 <Col md={6}>
-                  <Form.Control
-                    className="form-control my-5 empty-field "
-                    id="senderName"
-                    name="senderName"
-                    type="text"
-                  />
-                  <Form.Control
-                    className="form-control  my-5 empty-field "
-                    id="senderName"
-                    name="senderName"
-                    type="text"
-                  />
+                  {/* <Form.Control
+                  className="form-control my-5 empty-field "
+                  id="senderName"
+                  name="senderName"
+                  type="text"
+                /> */}
+                  {/* {!viewMode ? (
+                    <>
+                      <div id="signModal" onClick={handleShow2} >
+                        {signMethod2 === 'draw' ? (
+                          <>
+                            {signImage2 ? (
+                              <div className="empty-field ">
+                                <img src={signImage2} className="img-set " />
+                              </div>
+                            ) : (
+                              <div className="empty-field my-5 pb-3">
+                                <img src={signImage2} />
+                              </div>
+                            )
+
+                            }
+                          </>
+
+
+                        ) : (
+                          <Form.Control className="form-control my-5 empty-field" type="text" value={signAsText2} />
+                        )}
+
+                      </div>
+
+
+                    </>
+                  ) : (
+                    <>
+                      {formData.isSignatureTyped2 === true ? (
+                        <Form.Control
+                          className="form-control my-5 empty-field "
+                          type="text"
+                          value={formData.signature2}
+                          style={{ fontFamily: formData.signatureFont2 }}
+                        />
+                      ) : (
+                        <>
+                          {formData.signature2 ? (
+                            <div className="empty-field my-5 py-2">
+                              <img src={formData.signature2} className="img-set" />
+                            </div>
+                          ) : (
+                            <>
+                              <Form.Control
+                                className="form-control my-5 empty-field "
+                                type="text"
+                              />
+                            </>
+                          )
+
+                          }
+
+                        </>
+                      )}
+
+                    </>
+                  )
+
+                  }
+
                   <div className="d-flex my-5 text-field1 date-picker-set">
-                    <label className="text-center font-italic pr-2">
+                    <label className="text-center font-italic pr-2 ">
                       Date:
                     </label>
-                    {/* <Form.Control
-                    class="form-control"
-                    type="text"
-                    id="senderCompany"
-                    name="senderCompany"
-                  /> */}
+
                     <DatePicker
                       className="form-control"
                       name="currentDate"
@@ -740,10 +999,18 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                       onChange={(date) => formik.setFieldValue('SellerCurrentDate', date)}
                       disabled={viewMode}
                     />
-                  </div>
+                  </div> */}
                 </Col>
               </Row>
-
+              {(signImage !== '' || signAsText !== '' || signImage2 !== '' || signAsText2 !== '') && !viewMode && (
+                <Row className="bottomBar">
+                  <Col md={12} className="py-3 d-flex justify-content-center">
+                    <button class="btn btn-secondary" type="submit">
+                      Submit
+                    </button>
+                  </Col>
+                </Row>
+              )}
               {/* {viewMode && (
                 <Row className="bottomBar">
                   <Col md={12} className="py-3 d-flex justify-content-center">
@@ -833,8 +1100,84 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
           )}
         </Modal.Body>
       </Modal>
+      <Modal show={show2} onHide={handleClose2}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <h5>Please Confirm Full name and Signature Modal 2</h5>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="draw-modal">
+          <Nav fill variant="tabs" defaultActiveKey={signTabState2}>
+            <Nav.Item>
+              <Nav.Link onClick={toggleMethod2} eventKey="link-1">
+                Draw
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
+              <Nav.Link onClick={toggleField2} eventKey="link-2">
+                Type
+              </Nav.Link>
+            </Nav.Item>
+          </Nav>
+          {canvasShow2 && (
+            <>
+              <SignaturePad
+                canvasProps={{
+                  width: 400,
+                  height: 'auto',
+                  className: 'sigCanvas'
+                }}
+                ref={sigPad2}
+              />
+              <p style={{ paddingTop: 10, paddingLeft: 30 }}>
+                I am {formik.values.fullName} and this is my legal representation of my
+                Signature.
+              </p>
+              <div className="d-flex justify-content-center">
+                <Button variant="secondary" onClick={clear2} className="mr-3">
+                  Clear
+                </Button>
+                <Button variant="primary" onClick={genrateImage2}>
+                  Insert Signature
+                </Button>
+              </div>
+            </>
+          )}
 
-    </Container>
+          {fieldShow2 && (
+            <>
+              <div className="d-flex">
+                <Form.Control
+                  type="text"
+                  value={signAsText2}
+                  onChange={(e) => setSignAsText2(e.target.value)}
+                  placeholder="Type your name here"
+                  className="toggle-field apply-font"
+                />
+                <FontPicker
+                  apiKey="AIzaSyBCM9e_yuN64gSRUQxGrmHTJtK1v2YKvL8"
+                  activeFontFamily={activeFontFamily2}
+                  onChange={(nextFont) => setActiveFontFamily2(nextFont.family)}
+                />
+              </div>
+              <p style={{ paddingTop: 10, paddingLeft: 30 }}>
+                I am {formik.values.fullName} and this is my legal representation of my
+                Signature.
+              </p>
+              <div className="d-flex justify-content-center">
+                <Button variant="secondary" onClick={clear2} className="mr-3">
+                  Clear{' '}
+                </Button>
+                <Button variant="primary" onClick={handleSignAsText2}>
+                  Insert Signature
+                </Button>
+              </div>
+            </>
+          )}
+        </Modal.Body>
+      </Modal>
+
+    </Container >
   );
 };
 

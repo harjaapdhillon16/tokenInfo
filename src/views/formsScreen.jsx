@@ -170,7 +170,7 @@ const FormsScreen = () => {
 						</Dropdown>
 					</Col>
 
-					<Col md={2} className="dashboardCards pt-5 text-center pr-0">
+					<Col md={2} className="dashboardCard-1 pt-5  pr-0">
 						<Dropdown>
 							<Dropdown.Toggle className="drop-btn pt-0 pl-0">
 								{filterKey === 'status' && filterValue != null ? (
@@ -196,7 +196,7 @@ const FormsScreen = () => {
 						</Dropdown>
 					</Col>
 
-					<Col md={4} className="dashboardCards pt-5 d-flex justify-content-end pl-0 pr-5">
+					<Col md={4} className="dashboardCard-2 pt-5 d-flex  pr-5">
 						<Dropdown>
 							<Dropdown.Toggle className="drop-btn pt-0 pl-0">
 								{currentSorted === 'desc' ? 'Most Recent' : 'Most Dated'}
@@ -216,8 +216,8 @@ const FormsScreen = () => {
 				{filtered.length === 0 ? (
 					<h3 className="d-flex justify-content-center mt-5">No Forms Data Here</h3>
 				) : (
-					filtered.map((item) => (
-						<Row className=" border-bottom pb-3 mt-5 form-row ">
+					filtered.map((item, i) => (
+						<Row className=" border-bottom pb-3 mt-5 form-row " key={i}>
 							<Col md={6}>
 								<h6>{item.formName}</h6>
 								<Link to="#">{item.receiverName}</Link>
