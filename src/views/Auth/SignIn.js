@@ -24,8 +24,9 @@ export default function SignUp() {
 			try {
 				await Auth.signIn(email, password);
 				setSubmitting(false);
+				enqueueSnackbar('Successfully logged in', { variant: 'success' });
 			} catch (e) {
-				console.error(e);
+				enqueueSnackbar(e.message, { variant: 'error' });
 				setSubmitting(false);
 			}
 		}
@@ -52,7 +53,7 @@ export default function SignUp() {
 						</Col>
 					</Row>
 					<Row className="justify-content-md-center">
-						<Col md={4} >
+						<Col md={4}>
 							<FormLabel>Password</FormLabel>
 							<TextInput.Control
 								placeholder="Enter your password"
@@ -67,12 +68,16 @@ export default function SignUp() {
 					<Row
 						className="align-items-md-center mt-3 justify-content-md-center"
 						style={{ justifyContent: 'space-evenly' }}>
-						<Button type="submit" className="px-4 mb-2">Login</Button>
-					</Row >
-					<Row className="align-items-md-center  justify-content-md-center">
-					<Link to="/register">Don't have an account yet?</Link>
+						<Button type="submit" className="px-4 mb-2">
+							Login
+						</Button>
 					</Row>
-					
+					<Row className="align-items-md-center  justify-content-md-center">
+						<Link to="/register">Don't have an account yet?</Link>
+					</Row>
+					<Row className="align-items-md-center  justify-content-md-center">
+						<Link to="/forgot-password">Forgot password?</Link>
+					</Row>
 				</Container>
 			</Form>
 		</FormikProvider>
