@@ -38,7 +38,7 @@ export const BasicTable = ({ tableData, onDeleteContact, data }) => {
 
 	return (
 		<Container className="p-0">
-			<Table striped  bordered hover>
+			<Table striped bordered hover className="table-responsive-sm">
 				<thead>
 					<tr>
 						{/* <th>AgentID</th> */}
