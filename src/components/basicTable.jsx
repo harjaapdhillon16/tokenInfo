@@ -38,7 +38,7 @@ export const BasicTable = ({ tableData, onDeleteContact, data }) => {
 
 	return (
 		<Container className="p-0">
-			<Table striped bordered hover>
+			<Table striped  bordered hover>
 				<thead>
 					<tr>
 						{/* <th>AgentID</th> */}
@@ -49,7 +49,7 @@ export const BasicTable = ({ tableData, onDeleteContact, data }) => {
 						<th>Title</th>
 						<th>Role</th>
 						<th className="fixedWidth">Created</th>
-						<th className="fixedWidth">Last update</th>
+						{/* <th className="fixedWidth">Last update</th> */}
 						<th></th>
 					</tr>
 				</thead>
@@ -68,9 +68,9 @@ export const BasicTable = ({ tableData, onDeleteContact, data }) => {
 							<td>
 								<Moment format="MM-DD-YYYY">{item.createdAt}</Moment>
 							</td>
-							<td>
+							{/* <td>
 								<Moment format="MM-DD-YYYY">{item.updatedAt}</Moment>
-							</td>
+							</td> */}
 							<td className="dotaction   ">
 								<Dropdown>
 									<Dropdown.Toggle className="drop-btn">

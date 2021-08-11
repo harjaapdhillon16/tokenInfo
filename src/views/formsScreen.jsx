@@ -73,10 +73,10 @@ const FormsScreen = () => {
 	const filtered =
 		filterKey !== null && filterValue !== null
 			? sortedForms.filter(function (item) {
-					if (item[filterKey] === filterValue) {
-						return item;
-					}
-			  })
+				if (item[filterKey] === filterValue) {
+					return item;
+				}
+			})
 			: sortedForms;
 
 	const labels = {
@@ -103,7 +103,7 @@ const FormsScreen = () => {
 					</Col>
 				</Row>
 				<Row>
-					<Col md={6} className="dashboardCards pt-5">
+					<Col md={6} xs={4} className="dashboardCards pt-5">
 						<Dropdown>
 							<Dropdown.Toggle className="drop-btn pt-0 pl-0">
 								{/* {filterValue !== null ? filterValue: <> All forms</>} */}
@@ -129,11 +129,24 @@ const FormsScreen = () => {
 									}>
 									New York State Housing and Anti-Discrimination Disclosure
 								</Dropdown.Item>
+
 								<Dropdown.Item
 									onClick={() =>
 										handleFilter('formName', 'REBNY COVID Health Screening Form')
 									}>
 									REBNY COVID Health Screening Form
+								</Dropdown.Item>
+								<Dropdown.Item
+									onClick={() =>
+										handleFilter('formName', 'New York State Disclosure Form for Buyer and Seller')
+									}>
+									New York State Disclosure Form for Buyer and Seller
+								</Dropdown.Item>
+								<Dropdown.Item
+									onClick={() =>
+										handleFilter('formName', 'New York State Disclosure Form for Landlord and Tenant ')
+									}>
+									New York State Disclosure Form for Landlord and Tenant
 								</Dropdown.Item>
 								{/* <Dropdown.Item
 									onClick={() =>
@@ -157,7 +170,7 @@ const FormsScreen = () => {
 						</Dropdown>
 					</Col>
 
-					<Col md={2} className="dashboardCards pt-5 text-center pr-0">
+					<Col md={2} xs={4} className="dashboardCard-1 pt-5  pr-0">
 						<Dropdown>
 							<Dropdown.Toggle className="drop-btn pt-0 pl-0">
 								{filterKey === 'status' && filterValue != null ? (
@@ -183,7 +196,7 @@ const FormsScreen = () => {
 						</Dropdown>
 					</Col>
 
-					<Col md={4} className="dashboardCards pt-5 d-flex justify-content-end pl-0 pr-5">
+					<Col md={4}  xs={4}  className="dashboardCard-2 pt-5 d-flex  pr-5">
 						<Dropdown>
 							<Dropdown.Toggle className="drop-btn pt-0 pl-0">
 								{currentSorted === 'desc' ? 'Most Recent' : 'Most Dated'}
@@ -203,13 +216,13 @@ const FormsScreen = () => {
 				{filtered.length === 0 ? (
 					<h3 className="d-flex justify-content-center mt-5">No Forms Data Here</h3>
 				) : (
-					filtered.map((item) => (
-						<Row className=" border-bottom pb-3 mt-5 form-row ">
+					filtered.map((item, i) => (
+						<Row className=" border-bottom pb-3 mt-5 form-row " key={i}>
 							<Col md={6}>
 								<h6>{item.formName}</h6>
 								<Link to="#">{item.receiverName}</Link>
 							</Col>
-							<Col md={2} className="text-center">
+							<Col md={2} className="text-center status-badges">
 								{item.status === 'SENT' && (
 									<Badge variant="danger sent-option text-center">Sent</Badge>
 								)}
@@ -225,7 +238,7 @@ const FormsScreen = () => {
 									<Moment fromNow>{item.updatedAt}</Moment>
 								</p>
 							</Col>
-							<Col md={4} className="text-right pr-0">
+							<Col md={4} className="text-right status-btn pr-0">
 								<a
 									target="_blank"
 									className="btn btn-outline-secondary cf-black mr-3"

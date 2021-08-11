@@ -5,6 +5,7 @@ import { ReactMultiEmail, isEmail } from 'react-multi-email';
 import * as emailjs from 'emailjs-com';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import 'react-multi-email/style.css';
+import { toast } from 'react-toastify';
 import { inviteEmail } from '../emailTemplates/formSentEmail';
 import { sendEmail } from '../../utils/email';
 
@@ -70,7 +71,7 @@ const InviteForm = ({ show, handleClose, setShow }) => {
 	// };
 
 	const sharedWithEmails = () => {
-		console.log(emails);
+		// console.log(emails);
 
 		let docLink = window.location.origin;
 		let emailSubject = `${agent.name} invited you to collaborate on Cribfox`;
@@ -93,6 +94,7 @@ const InviteForm = ({ show, handleClose, setShow }) => {
 			sendEmail(emailParam);
 			setEmails([]);
 			handleClose();
+			toast.success('Invite share successfully!');
 		} catch (err) {
 			console.log(err);
 		}
@@ -167,7 +169,7 @@ const InviteForm = ({ show, handleClose, setShow }) => {
 								}}
 							/>
 
-							<InputGroup.Prepend>
+							<InputGroup.Prepend className="send-form-btn">
 								<Button
 									variant="outline-secondary"
 									className="m-auto px-2"

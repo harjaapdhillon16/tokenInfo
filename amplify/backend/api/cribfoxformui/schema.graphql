@@ -61,9 +61,3 @@ type FormEvent
 	subjects: [Subject]
 	ip: String
 }
-
-type Plan @model @key(name: "byAgent", fields: ["agentId"], queryField: "planByAgent") {
-	id: ID!
-	agentId: ID!
-	type: String
-}

@@ -28,7 +28,7 @@ export class AppContext extends Component {
             real_estate_brockerage_company: "",
             firstdate: "",
             lastdate: "",
-            
+
           },
         ],
       },
@@ -45,32 +45,43 @@ export class AppContext extends Component {
           },
         ],
       },
-      // {
-      //   id: 4,
-      //   title: "New York State Disclosure Form for Buyer and Seller",
-      //   data: [
-      //     {
-      //       name: "",
-      //       date: "",
-      //       property_address: "",
-      //       real_estate_name: "",
-      //       name_of_brockerage_company: "",
-      //     },
-      //   ],
-      // },
-      // {
-      //   id: 5,
-      //   title: "New York State Housing Discrimination Disclosure Form",
-      //   data: [
-      //     {
-      //       name: "",
-      //       date: "",
-      //       property_address: "",
-      //       real_estate_name: "",
-      //       name_of_brockerage_company: "",
-      //     },
-      //   ],
-      // },
+      {
+        id: 4,
+        title: "New York State Disclosure Form for Buyer and Seller",
+        data: [
+          {
+            name: "",
+            real_estate_name: "",
+            name_of_brokerage: "",
+            mainOption: "",
+            option: "",
+            buyerDate: "",
+            sellerCurrentDate: "",
+            represent_Buyer: "",
+            represent_Seller: "",
+            signatureAs: ""
+          },
+        ],
+      },
+      {
+        id: 5,
+        title: "New York State Disclosure Form for Landlord and Tenant ",
+        data: [
+          {
+            name: "",
+            real_estate_name: "",
+            name_of_brokerage: "",
+            mainOption2: "",
+            option2: "",
+            landLordDate: "",
+            sellerCurrentDate: "",
+            represent_Landlord: "",
+            represent_Seller: "",
+            signatureAs: ""
+          },
+        ],
+      },
+
     ],
     formItems: [],
     contacts: [],

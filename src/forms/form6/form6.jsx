@@ -10,15 +10,15 @@ import {
   Nav
 } from "react-bootstrap";
 import Logo from "../../assets/FormImages/og_image.png";
+import "./css/style6.css";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import DatePicker from 'react-datepicker';
-import "./css/style4.css";
 import moment from 'moment';
 import { format } from 'date-fns';
 import FontPicker from 'font-picker-react';
 import SignaturePad from 'react-signature-canvas';
-const Form4 = ({ formData, viewMode, onFormSubmission }) => {
+const Form6 = ({ formData, viewMode, onFormSubmission }) => {
 
   console.log("formData of Form 4", formData);
 
@@ -140,10 +140,10 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
   };
 
 
+
   const date = new Date();
   let today = format(date, 'MM/dd/yyyy');
   today = moment(today, 'MM-DD-YYYY').toDate();
-
 
   const formik = useFormik({
     initialValues: {
@@ -154,8 +154,8 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
       childOption: formData.data[9],
       BuyerCurrentDate: formData.data[11] ? new Date(formData.data[11]) : today,
       SellerCurrentDate: formData.data[13] ? new Date(formData.data[13]) : today,
-      representBuyerName: formData.data[15],
-      representSellerName: formData.data[17],
+      representLandlordName: formData.data[15],
+      representTenantName: formData.data[17],
       signatureAs: formData.data[19],
     },
     validationSchema: Yup.object({
@@ -164,14 +164,15 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
       companyName: Yup.string().required('Please enter the Real Estate Company'),
       BuyerCurrentDate: Yup.string().required('Please enter the Date'),
       SellerCurrentDate: Yup.string().required('Please enter the Date'),
-      signatureAs: Yup.string().required('Please check one of the above option'),
-      // representBuyerName: Yup.string().required('Please enter the Represent Buyer Name'),
-      // representSellerName: Yup.string().required('Please enter the Represent Seller Name'),
+      signatureAs: Yup.string().required('Please select the Signature option'),
+      // representLandlordName: Yup.string().required('Please enter the Represent Buyer Name'),
+      // representTenantName: Yup.string().required('Please enter the Represent Seller Name'),
     }),
     onSubmit: (value) => {
-      submitForm(value);
+      submitForm(value)
     }
   })
+
   const submitForm = async (values) => {
     let data = [
       'name',
@@ -184,17 +185,16 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
       values.mainOption,
       'childOption',
       values.childOption,
-      'BuyerDate',
+      'landLordDate',
       values.BuyerCurrentDate,
       'SellerCurrentDate',
       values.SellerCurrentDate,
-      'representBuyerName',
-      values.representBuyerName,
-      'representSellerName',
-      values.representSellerName,
+      'representLandlordName',
+      values.representLandlordName,
+      'representTenantName',
+      values.representTenantName,
       "signatureAs",
       values.signatureAs
-
     ]
     let finalObject = { ...formData };
 
@@ -225,9 +225,9 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
 
   }
 
-
+  console.log("formik values", formik.values);
   return (
-    <Container className="form4">
+    <Container className="form6">
       <Form onSubmit={formik.handleSubmit}>
         <Row className="pt-4">
           <Col md={2} sm={12} xs={12}>
@@ -260,7 +260,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
           <Col md={12}>
             <div className="title-bar">
               <h4 className="py-2 mb-0">
-                New York State Disclosure Form for Buyer and Seller
+                New York State Disclosure Form for Landlord and Tenant
               </h4>
             </div>
             <Row>
@@ -271,19 +271,19 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                   </h5>
                   <p>
                     New York State law requires real estate licensees who are
-                    acting as agents of buyers or sellers of property to advise
-                    the potential buyers or sellers with whom they work of the
-                    nature of their agency relationship and the rights and
-                    obligations it creates. This disclosure will help you to make
-                    informed choices about your relationship with the real estate
-                    broker and its sales agents.{" "}
+                    acting as agents of landlords and tenants of real property to
+                    advise the potential landlords and tenants with whom they
+                    work of the nature of their agency relationship and the rights
+                    and obligations it creates. This disclosure will help you to
+                    make informed choices about your relationship with the real
+                    estate broker and its sales agents. {" "}
                   </p>
                   <p>
-                    Throughout the transaction you may receive more than one
-                    disclosure form. The law may require each agent assisting in
-                    the transaction to present you with this disclosure form. A
-                    real estate agent is a person qualified to advise about real
-                    estate.
+                    Throughout the transaction you may receive more than
+                    one disclosure form. The law may require each agent
+                    assisting in the transaction to present you with this
+                    disclosure form. A real estate agent is a person qualified to
+                    advise about real estate.
                   </p>
                   <p>
                     If you need legal, tax or other advice, consult with a
@@ -292,124 +292,128 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                 </div>
                 <div className="pt-3 ">
                   <h5 className="py-2 mb-0 text-center font-weight-bold">
-                    Disclosure Regarding Real Estate Agency Relationships
+                    Disclosure Regarding Real Estate
+                    Agency Relationships
                   </h5>
-                  <h6 className="mb-0 font-weight-bold">Seller’s Agent</h6>
+                  <h6 className="mb-0 font-weight-bold">Landlord’s Agent </h6>
                   <p>
-                    A seller’s agent is an agent who is engaged by a seller to
-                    represent the seller’s interests. The seller’s agent does this
-                    by securing a buyer for the seller’s home at a price and on
-                    terms acceptable to the seller. A seller’s agent has, without
-                    limitation, the following fiduciary duties to the seller:
-                    reasonable care, undivided loyalty, confidentiality, full
-                    disclosure, obedience and duty to account. A seller’s agent
-                    does not represent the interests of the buyer. The obligations
-                    of a seller’s agent are also subject to any specific
-                    provisions set forth in an agreement between the agent and the
-                    seller. In dealings with the buyer, a seller’s agent should
-                    (a) exercise reasonable skill and care in performance of the
-                    agent’s duties; (b) deal honestly, fairly and in good faith;
-                    and (c) disclose all facts known to the agent materially
-                    affecting the value or desirability of property, except as
-                    otherwise provided by law.
+                    A landlord’s agent is an agent who is engaged by a landlord
+                    to represent the landlord’s interest. The landlord’s agent
+                    does this by securing a tenant for the landlord’s apartment or
+                    house at a rent and on terms acceptable to the landlord. A
+                    landlord’s agent has, without limitation, the following
+                    fiduciary duties to the landlord: reasonable care, undivided
+                    loyalty, confidentiality, full disclosure, obedience and duty to
+                    account. A landlord’s agent does not represent the interests
+                    of the tenant. The obligations of a landlord’s agent are also
+                    subject to any specific provisions set forth in an agreement
+                    between the agent and the landlord. In dealings with the
+                    tenant, a landlord’s agent should (a) exercise reasonable
+                    skill and care in performance of the agent’s duties; (b) deal
+                    honestly, fairly and in good faith; and (c) disclose all facts
+                    known to the agent materially affecting the value or
+                    desirability of property, except as otherwise provided by law.
+
                   </p>
                 </div>
                 <div className="pt-3 ">
-                  <h6 className="font-weight-bold">Buyer’s Agent</h6>
+                  <h6 className="font-weight-bold">Tenant’s Agent</h6>
                   <p>
-                    A buyer’s agent is an agent who is engaged by a buyer to
-                    represent the buyer’s interest. The buyer’s agent does this by
-                    negotiating the purchase of a home at a price and on terms
-                    acceptable to the buyer. A buyer’s agent has, without
-                    limitation, the following fiduciary duties to the buyer:
-                    reasonable care, undivided loyalty, confidentiality, full
-                    disclosure, obedience and duty to account. A buyer’s agent
-                    does not represent the interest of the seller. The obligations
-                    of a buyer’s agent are also subject to any specific provisions
-                    set forth in an agreement between the agent and the buyer. In
-                    dealings with the seller, a buyer’s agent should (a) exercise
-                    reasonable skill and care in performance of the
+                    A tenant’s agent is an agent who is engaged by a tenant to
+                    represent the tenant’s interest. The tenant’s agent does this
+                    by negotiating the rental or lease of an apartment or house
+                    at a rent and on terms acceptable to the tenant. A tenant’s
+                    agent has, without limitation, the following fiduciary duties to
+                    the tenant: reasonable care, undivided loyalty,
+                    confidentiality, full disclosure, obedience and duty to
+                    account. A tenant’s agent does not represent the interest of
+                    the landlord. The obligations of a tenant’s agent are also
+                    subject to any specific provisions set forth in an agreement
+                    between the agent and the tenant. In dealings with the
+                    landlord, a tenant’s agent should (a) exercise reasonable
                   </p>
                   <p>
-                    function as the seller’s agent representing the interests of
-                    and advocating on behalf of the seller in the negotiations
-                    between the buyer and seller. A designated sales agent cannot
-                    provide the full range of fiduciary duties to the landlord or
-                    tenant. A designated sales agent cannot provide full range of
-                    fiduciary duties to the buyer or seller. The designated sales
-                    agent must explain that like the dual agent
+                    tenant’s agent representing the interests of and advocating
+                    on behalf of the tenant and the designated sales agent for
+                    the landlord will function as the landlord’s agent representing
+                    the interests of and advocating on behalf of the landlord in
+                    the negotiations between the tenant and the landlord. A
+                    designated sales agent cannot provide the full range of
+                    fiduciary duties to the landlord or tenant. The designated
+                    sales agent must explain that like the dual agent under
                   </p>
                 </div>
               </Col>
               <Col md={6}>
                 <div className="pt-3 ">
                   <p>
-                    agent’s duties; (b) deal honestly, fairly and in good faith;
-                    and (c) disclose all facts known to the agent materially
-                    affecting the buyer’s ability and/or willingness to perform a
-                    contract to acquire seller’s property that are not consistent
-                    with the agent’s fiduciary duties to the buyer
+                    skill and care in performance of the agent’s duties; (b) deal
+                    honestly, fairly and in good faith; and (c) disclose all facts
+                    known to the agent materially affecting the tenant’s ability
+                    and/or willingness to perform a contract to rent or lease
+                    landlord’s property that are not consistent with the agent’s
+                    fiduciary duties to the tenant.
                   </p>
                   <h6 className="font-weight-bold">Broker’s Agents</h6>
                   <p>
-                    A broker’s agent is an agent that cooperates or is engaged by
-                    a listing agent or a buyer’s agent (but does not work for the
-                    same firm as the listing agent or buyer’s agent) to assist the
-                    listing agent or buyer’s agent in locating a property to sell
-                    or buy, respectively, for the listing agent’s seller or the
-                    buyer agent’s buyer. The broker’s agent does not have a direct
-                    relationship with the buyer or seller and the buyer or seller
-                    cannot provide instructions or direction directly to the
-                    broker’s agent. The buyer and the seller therefore do not have
-                    vicarious liability for the acts of the broker’s agent. The
-                    listing agent or buyer’s agent do provide direction and
+                    A broker’s agent is an agent that cooperates or is engaged
+                    by a listing agent or a tenant’s agent (but does not work for
+                    the same firm as the listing agent or tenant’s agent) to assist
+                    the listing agent or tenant’s agent in locating a property to
+                    rent or lease for the listing agent’s landlord or the tenant
+                    agent’s tenant. The broker’s agent does not have a direct
+                    relationship with the tenant or landlord and the tenant or
+                    landlord cannot provide instructions or direction directly to
+                    the broker’s agent. The tenant and the landlord therefore do
+                    not have vicarious liability for the acts of the broker’s agent.
+                    The listing agent or tenant’s agent do provide direction and
                     instruction to the broker’s agent and therefore the listing
-                    agent or buyer’s agent will have liability for the acts of the
-                    broker’s agent.{" "}
+                    agent or tenant’s agent will have liability for the acts of the
+                    broker’s agent. {" "}
                   </p>
                   <h6 className="mb-0 font-weight-bold">Dual Agent</h6>
                   <p>
-                    A real estate broker may represent both the buyer and the
-                    seller if both the buyer and seller give their informed
+                    A real estate broker may represent both the tenant and the
+                    landlord if both the tenant and landlord give their informed
                     consent in writing. In such a dual agency situation, the agent
-                    will not be able to provide the full range of fiduciary duties
-                    to the buyer and seller. The obligations of an agent are also
-                    subject to any specific provisions set forth in an agreement
-                    between the agent, and the buyer and seller. An agent acting
-                    as a dual agent must explain carefully to both the buyer and
-                    seller that the agent is acting for the other party as well.
-                    The agent should also explain the possible effects of dual
-                    representation, including that by consenting to the dual
-                    agency relationship the buyer and seller are giving up their
-                    right to undivided loyalty. A buyer or seller should carefully
-                    consider the possible consequences of a dual agency
-                    relationship before agreeing to such representation. A seller
-                    or buyer may provide advance informed consent to dual agency
-                    by indicating the same on this form.{" "}
+                    will not be able to provide the full range of fiduciary duties to
+                    the landlord and the tenant. The obligations of an agent are
+                    also subject to any specific provisions set forth in an
+                    agreement between the agent, and the tenant and landlord.
+                    An agent acting as a dual agent must explain carefully to
+                    both the landlord and tenant that the agent is acting for the
+                    other party as well. The agent should also explain the
+                    possible effects of dual representation, including that by
+                    consenting to the dual agency relationship the landlord and
+                    tenant are giving up their right to undivided loyalty. A
+                    landlord and tenant should carefully consider the possible
+                    consequences of a dual agency relationship before agreeing
+                    to such representation. A landlord or tenant may provide
+                    advance informed consent to dual agency by indicating the
+                    same on this form.{" "}
                   </p>
                   <h6 className="mb-0 font-weight-bold">
                     Dual Agent with Designated Sales Agents
                   </h6>
                   <p>
-                    If the buyer and seller provide their informed consent in
-                    writing, the principals and the real estate broker who
-                    represents both parties as a dual agent may designate a sales
-                    agent to represent the buyer and another sales agent to
-                    represent the seller. A sales agent works under the
+                    If the tenant and the landlord provide their informed consent
+                    in writing, the principals and the real estate broker who
+                    represents both parties as a dual agent may designate a
+                    sales agent to represent the tenant and another sales agent
+                    to represent the landlord. A sales agent works under the
                     supervision of the real estate broker. With the informed
-                    consent of the buyer and the seller in writing, the designated
-                    sales agent for the buyer will function as the buyer’s agent
-                    representing the interests of and advocating on behalf of the
-                    buyer and the designated sales agent for the seller will
+                    consent in writing of the tenant and the landlord, the
+                    designated sales agent for the tenant will function as the
                   </p>
                   <p>
-                    under whose supervision they function, they cannot provide
-                    undivided loyalty. A buyer or seller should carefully consider
-                    the possible consequences of a dual agency relationship with
-                    designated sales agents before agreeing to such
-                    representation. A seller or buyer provide advance informed
-                    consent to dual agency with designated sales agents by
-                    indicating the same on this form.
+                    whose supervision they function, they cannot provide
+                    undivided loyalty. A landlord or tenant should carefully
+                    consider the possible consequences of a dual agency
+                    relationship with designated sales agents before agreeing to
+                    such representation. A landlord or tenant may provide
+                    advance informed consent to dual agency with designated
+                    sales agents by indicating the same on this form.
+
                   </p>
                 </div>
               </Col>
@@ -428,6 +432,12 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                     </li>
                     <li>
                       <span>
+                        {/* <Form.Control
+                        class="form-control mb-2 mr-sm-2"
+                        id="senderName"
+                        name="senderName"
+                        type="text"
+                      /> */}
                         <Form.Control
                           class="form-control mb-2 mr-sm-2"
                           id="senderName"
@@ -444,16 +454,21 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                           {formik.errors.nameOfLicensee}
                         </Form.Text>
                       )}
-
                       <p className="text-center font-italic">
                         (Print Name of Licensee){" "}
                       </p>
                     </li>
                     <li>
-                      <p className="apply-font pl-2"> of</p>
+                      <p className="apply-font"> of</p>
                     </li>
                     <li>
                       <span>
+                        {/* <Form.Control
+                        class="form-control mb-2 mr-sm-2"
+                        type="text"
+                        id="senderCompany"
+                        name="senderCompany"
+                      /> */}
                         <Form.Control
                           class="form-control mb-2 mr-sm-2"
                           type="text"
@@ -487,7 +502,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
               <Row className="w-100">
                 <Col md={6}>
                   <div class="form-check">
-                    {(formik.values.mainOption === `I'm acting in the interest of the Seller`) ?
+                    {(formik.values.mainOption === `I'm acting in the interest of the Landlord`) ?
                       <input
                         type="checkbox"
                         class="form-check-input main-check"
@@ -503,12 +518,17 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                       />
                     }
                     <label class="form-check-label pl-3" for="exampleCheck1">
-                      Seller as a (check relationship below)
+                      Landlord as a (check relationship below)
                     </label>
                   </div>
                   <div>
                     <div class="form-check">
-                      {(formik.values.mainOption === `I'm acting in the interest of the Seller` && formik.values.childOption === `As the Seller’s Agent`) ?
+                      {/* <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="exampleCheck2"
+                    /> */}.
+                      {(formik.values.mainOption === `I'm acting in the interest of the Landlord` && formik.values.childOption === `As the Landlord’s Agent`) ?
                         <input
                           type="checkbox"
                           class="form-check-input"
@@ -525,11 +545,16 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
 
                       }
                       <label class="form-check-label" for="exampleCheck2">
-                        Seller’s Agent
+                        Landlord’s Agent
                       </label>
                     </div>
                     <div class="form-check">
-                      {(formik.values.mainOption === `I'm acting in the interest of the Seller` && formik.values.childOption === `As the Broker’s Agent`) ?
+                      {/* <input
+                      type="checkbox"
+                      class="form-check-input"
+                      id="exampleCheck3"
+                    /> */}
+                      {(formik.values.mainOption === `I'm acting in the interest of the Landlord` && formik.values.childOption === `As the Broker’s Agent`) ?
                         <input
                           type="checkbox"
                           class="form-check-input"
@@ -552,8 +577,12 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                 </Col>
                 <Col md={6}>
                   <div class="form-check">
-
-                    {(formik.values.mainOption === `I'm acting in the interest of the Buyer`) ?
+                    {/* <input
+                    type="checkbox"
+                    class="form-check-input  main-check"
+                    id="exampleCheck4"
+                  /> */}
+                    {(formik.values.mainOption === `I'm acting in the interest of the Tenant`) ?
                       <input
                         type="checkbox"
                         class="form-check-input  main-check"
@@ -568,13 +597,17 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         disabled={true}
                       />
                     }
-                    <label class="form-check-label  pl-3" for="exampleCheck4">
-                      Buyer as a (check relationship below)
+                    <label class="form-check-label pl-3" for="exampleCheck4">
+                      Tenant as a (check relationship below)
                     </label>
                   </div>
                   <div class="form-check">
-
-                    {(formik.values.childOption === `As the Buyer’s Agent`) ?
+                    {/* <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="exampleCheck5"
+                  /> */}
+                    {(formik.values.childOption === `As the Tenant’s Agent`) ?
                       <input
                         type="checkbox"
                         class="form-check-input"
@@ -590,11 +623,16 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                       />
                     }
                     <label class="form-check-label" for="exampleCheck5">
-                      Buyer’s Agent
+                      Tenant’s Agent
                     </label>
                   </div>
                   <div class="form-check">
-                    {(formik.values.mainOption === `I'm acting in the interest of the Buyer` && formik.values.childOption === `As the Broker’s Agent`) ?
+                    {/* <input
+                    type="checkbox"
+                    class="form-check-input"
+                    id="exampleCheck6"
+                  /> */}
+                    {(formik.values.mainOption === `I'm acting in the interest of the Tenant` && formik.values.childOption === `As the Broker’s Agent`) ?
                       <input
                         type="checkbox"
                         class="form-check-input"
@@ -607,10 +645,12 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         class="form-check-input"
                         id="exampleCheck6"
                         disabled={true}
+
                       />
                     }
+
                     <label class="form-check-label" for="exampleCheck6">
-                      Broker’s Agent{" "}
+                      Broker’s Agent {" "}
                     </label>
                   </div>
                 </Col>
@@ -618,7 +658,11 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
               <Row className="w-100">
                 <Col md={5} className="m-auto">
                   <div class="form-check dual-check" style={{ marginLeft: "-48%" }}>
-
+                    {/* <input
+                    type="checkbox"
+                    class="form-check-input main-check"
+                    id="exampleCheck7"
+                  /> */}
                     {(formik.values.mainOption === `I'm acting as a dual agent`) ?
 
                       <input
@@ -640,6 +684,11 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                     </label>
                   </div>
                   <div class="form-check">
+                    {/* <input
+                    type="checkbox"
+                    class="form-check-input main-check"
+                    id="exampleCheck8"
+                  /> */}
                     {
                       (formik.values.mainOption === `I'm acting as a dual agent with designated sales agent`) ?
                         <input
@@ -656,8 +705,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                           disabled={true}
                         />
                     }
-
-                    <label class="form-check-label  pl-3" for="exampleCheck8">
+                    <label class="form-check-label pl-3" for="exampleCheck8">
                       Dual Agent with Designated Sales Agent{" "}
                     </label>
                   </div>
@@ -667,7 +715,12 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                   agency with designated sales agents complete section below:
                 </p>
                 <div className="m-auto">
-                  <div class="form-check dual-check1  advance-form" style={{ marginLeft: "-37%" }}>
+                  <div class="form-check dual-check1 advance-form" style={{ marginLeft: "-37%" }}>
+                    {/* <input
+                    type="checkbox"
+                    class="form-check-input main-check"
+                    id="exampleCheck9"
+                  /> */}
                     {(formik.values.mainOption === `I'm acting as a dual agent with designated sales agent` && formik.values.childOption === `Advance informed consent dual agency`) ?
                       <input
                         type="checkbox"
@@ -683,12 +736,16 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         disabled={true}
                       />
                     }
-                    <label class="form-check-label pl-3" for="exampleCheck9">
+                    <label class="form-check-label pl-2" for="exampleCheck9">
                       Advance Informed Consent Dual Agency{" "}
                     </label>
                   </div>
                   <div class="form-check">
-
+                    {/* <input
+                    type="checkbox"
+                    class="form-check-input main-check"
+                    id="exampleCheck10"
+                  /> */}
                     {(formik.values.mainOption === `I'm acting as a dual agent with designated sales agent` && formik.values.childOption === `Advance informed consent to dual agency with designated sales agents`) ?
                       <input
                         type="checkbox"
@@ -704,7 +761,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         disabled={true}
                       />
                     }
-                    <label class="form-check-label pl-3" for="exampleCheck10">
+                    <label class="form-check-label pl-2" for="exampleCheck10">
                       Advance Informed Consent to Dual Agency with Designated
                       Sales Agents{" "}
                     </label>
@@ -715,7 +772,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
             <div className="pt-3">
               <Row>
                 <Col md={12} className="p-0">
-                  <ul class="form-inline dual-agent-form  pt-5 pl-md-2">
+                  <ul class="form-inline dual-agent-form pt-5 pl-md-2">
                     <li>
                       <p className="apply-font">
                         If dual agent with designated sales agents is indicated above:
@@ -726,16 +783,16 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         <Form.Control
                           class="form-control"
                           id="senderName"
-                          name="representBuyerName"
+                          name="representLandlordName"
                           type="text"
-                          value={formik.values.representBuyerName}
-                        // onChange={formik.handleChange}
-                        // onBlur={formik.handleBlur}
+                          value={formik.values.representLandlordName}
+                          // onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                         />
                       </span>
-                      {formik.touched.representBuyerName && formik.errors.representBuyerName && (
+                      {formik.touched.representLandlordName && formik.errors.representLandlordName && (
                         <Form.Text className="text-error mx-3">
-                          {formik.errors.representBuyerName}
+                          {formik.errors.representLandlordName}
                         </Form.Text>
                       )}
                     </li>
@@ -744,7 +801,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                     </li>
                     <li>
                       <p className="apply-font">
-                        buyer; and:
+                        tenant; and:
                       </p>
                     </li>
                     <li>
@@ -752,21 +809,21 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                         <Form.Control
                           class="form-control"
                           id="senderName"
-                          name="representSellerName"
+                          name="representTenantName"
                           type="text"
-                          value={formik.values.representSellerName}
-                        // onChange={formik.handleChange}
-                        // onBlur={formik.handleBlur}
+                          value={formik.values.representTenantName}
+                          // onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                         />
                       </span>
-                      {formik.touched.representSellerName && formik.errors.representSellerName && (
+                      {formik.touched.representTenantName && formik.errors.representTenantName && (
                         <Form.Text className="text-error mx-3">
-                          {formik.errors.representSellerName}
+                          {formik.errors.representTenantName}
                         </Form.Text>
                       )}
                     </li>
                     <li>
-                      <p className="apply-font">is appointed to represent the seller in this transaction.</p>
+                      <p className="apply-font">is appointed to represent the landlord in this transaction.</p>
                     </li>
                     <li>
                       <p className="apply-font">
@@ -781,8 +838,8 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                           name="fullName"
                           type="text"
                           value={formik.values.fullName}
-                        // onChange={formik.handleChange}
-                        // onBlur={formik.handleBlur}
+                          // onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                         />
                       </span>
                       {formik.touched.fullName && formik.errors.fullName && (
@@ -801,32 +858,35 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                       <input
                         type="checkbox"
                         class="form-check-input main-check"
+                        id="exampleCheck11"
                         name="Sign"
-                        checked={formik.values.signatureAs === 'Buyer' ? true : false}
+                        checked={formik.values.signatureAs === 'Landlord' ? true : false}
                         value={formik.values.signatureAs}
-                        onChange={() => formik.setFieldValue('signatureAs', 'Buyer')}
+                        onChange={() => formik.setFieldValue('signatureAs', 'Landlord')}
                         disabled={formData.status === `SIGNED` ? true : false}
 
                       />
                       <label class="form-check-label pl-3" for="exampleCheck11">
-                        Buyer(s) and/or
+                        Landord(s)  and/or
                       </label>
                     </div>
                     <div class="form-check">
                       <input
                         type="checkbox"
                         class="form-check-input main-check"
-                        name="Sign"
+                        id="exampleCheck11"
                         value={formik.values.signatureAs}
-                        checked={formik.values.signatureAs === 'Seller' ? true : false}
-                        onChange={() => formik.setFieldValue('signatureAs', 'Seller')}
+                        checked={formik.values.signatureAs === 'Tenant' ? true : false}
+                        onChange={() => formik.setFieldValue('signatureAs', 'Tenant')}
+                        name="Sign"
                         disabled={formData.status === `SIGNED` ? true : false}
-
                       />
                       <label class="form-check-label pl-3" for="exampleCheck12">
-                        Seller(s):
+                        Tenant(s):
                       </label>
+
                     </div>
+
                   </div>
                   {formik.touched.signatureAs && formik.errors.signatureAs && (
                     <Form.Text className="text-error mx-3">
@@ -837,72 +897,69 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
               </Row>
               <Row>
                 <Col md={6}>
-                  <div>
-                    {!viewMode ? (
-                      <>
-                        <div onClick={handleShow} >
-                          {signMethod === 'draw' ? (
-                            <>
-                              {signImage ? (
-                                <div className="empty-field ">
-                                  <img src={signImage} className="img-set " />
-                                </div>
-                              ) : (
-                                <div className="empty-field mt-5 pb-3">
-                                  <img src={signImage} />
-                                </div>
-                              )
-
-                              }
-                            </>
-
-
-                          ) : (
-                            <Form.Control className="form-control mt-5 empty-field" type="text" value={signAsText} />
-                          )}
-
-                        </div>
-
-
-                      </>
-                    ) : (
-                      <>
-                        {formData.isSignatureTyped === true ? (
-                          <Form.Control
-                            className="form-control mt-5 empty-field "
-                            type="text"
-                            value={formData.signature}
-                            style={{ fontFamily: formData.signatureFont }}
-                          />
-                        ) : (
+                  {!viewMode ? (
+                    <>
+                      <div onClick={handleShow} >
+                        {signMethod === 'draw' ? (
                           <>
-                            {(formData.signature) ? (
-
+                            {signImage ? (
                               <div className="empty-field ">
-                                <img src={formData.signature} className="img-set " />
+                                <img src={signImage} className="img-set " />
                               </div>
                             ) : (
-                              <>
-                                <div className="empty-field mt-5 p-2">
-                                  <img src={formData.signature} className="img-set " />
-                                </div>
-                              </>
+                              <div className="empty-field mt-5 pb-3">
+                                <img src={signImage} />
+                              </div>
                             )
 
                             }
-
                           </>
-                        )
 
-                        }
 
-                      </>
-                    )
+                        ) : (
+                          <Form.Control className="form-control mt-5 empty-field" type="text" value={signAsText} />
+                        )}
 
-                    }
-                    <label class="pt-2   input-head">Signature</label>
+                      </div>
 
-                  </div>
+
+                    </>
+                  ) : (
+                    <>
+                      {formData.isSignatureTyped === true ? (
+                        <Form.Control
+                          className="form-control mt-5 empty-field "
+                          type="text"
+                          value={formData.signature}
+                          style={{ fontFamily: formData.signatureFont }}
+                        />
+                      ) : (
+                        <>
+                          {(formData.signature) ? (
+
+                            <div className="empty-field ">
+                              <img src={formData.signature} className="img-set " />
+                            </div>
+                          ) : (
+                            <>
+                              <div className="empty-field mt-5 p-2">
+                                <img src={formData.signature} className="img-set " />
+                              </div>
+                            </>
+                          )
+
+                          }
+
+                        </>
+
+                      )}
+
+                    </>
+                  )
+
+                  }
+
+                  <label class="pt-2   input-head">Signature</label>
                   <div className="d-flex my-5 text-field1 date-picker-set">
                     <label className="text-center font-italic pr-2 ">
                       Date:
@@ -933,7 +990,7 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                           <>
                             {signImage2 ? (
                               <div className="empty-field ">
-                                <img src={signImage2} className="img-set " />
+                                <img src={signImage2} className="img-set" />
                               </div>
                             ) : (
                               <div className="empty-field my-5 pb-3">
@@ -963,31 +1020,17 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                           style={{ fontFamily: formData.signatureFont2 }}
                         />
                       ) : (
-                        <>
-                          {formData.signature2 ? (
-                            <div className="empty-field my-5 py-2">
-                              <img src={formData.signature2} className="img-set" />
-                            </div>
-                          ) : (
-                            <>
-                              <Form.Control
-                                className="form-control my-5 empty-field "
-                                type="text"
-                              />
-                            </>
-                          )
-
-                          }
-
-                        </>
+                        <div className="empty-field my-5 py-2">
+                          <img src={formData.signature2} className="img-set " />
+                        </div>
                       )}
 
                     </>
                   )
 
-                  }
+                  } */}
 
-                  <div className="d-flex my-5 text-field1 date-picker-set">
+                  {/* <div className="d-flex my-5 text-field1 date-picker-set">
                     <label className="text-center font-italic pr-2 ">
                       Date:
                     </label>
@@ -1011,15 +1054,6 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
                   </Col>
                 </Row>
               )}
-              {/* {viewMode && (
-                <Row className="bottomBar">
-                  <Col md={12} className="py-3 d-flex justify-content-center">
-                    <button class="btn btn-secondary" type="submit">
-                      Submit
-                    </button>
-                  </Col>
-                </Row>
-              )} */}
             </div>
           </Col>
         </Row>
@@ -1176,9 +1210,8 @@ const Form4 = ({ formData, viewMode, onFormSubmission }) => {
           )}
         </Modal.Body>
       </Modal>
-
-    </Container >
+    </Container>
   );
 };
 
-export default Form4;
+export default Form6;

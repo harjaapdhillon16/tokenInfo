@@ -36,7 +36,7 @@ export default function AuditTrail(props) {
 	}, [props.formDataId]);
 
 	return events.length !== 0 ? (
-		<Container fluid="sm" style={{ borderTop: '1px solid #e2e2e2', padding: '3em 0' }}>
+		<Container fluid="sm last-section" style={{ borderTop: '1px solid #e2e2e2', padding: '3em 0' }}>
 			<Row className="justify-content-md-between align-items-md-center my-2 mb-3">
 				<Col>
 					<h6>
