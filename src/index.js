@@ -14,7 +14,7 @@ ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
 			<AppContext>
-				<SnackbarProvider maxSnack={3}>
+				<SnackbarProvider maxSnack={3} autoHideDuration={3500}>
 					<App />
 				</SnackbarProvider>
 			</AppContext>

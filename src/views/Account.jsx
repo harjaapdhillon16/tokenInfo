@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { API, graphqlOperation } from 'aws-amplify';
 import { IconChecked } from '../assets/icons/icons';
-import { Container, Row, Col, Card, InputGroup, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import Editable from '../components/Editable';
 import { Link } from 'react-router-dom';
 import Header from '../components/header/header';
@@ -28,7 +28,7 @@ const FormsScreen = () => {
 	if (!agent) return <Loader />;
 
 	return (
-		<Container fluid  className="p-0">
+		<Container fluid className="p-0">
 			<Header />
 			<Container>
 				<Breadcrumb className="title-bar">
