@@ -66,7 +66,7 @@ export default function ResetPassword() {
 								Enter a new password. Make sure it's at least 8 characters
 							</FormLabel>
 							<TextInput.Control
-								placeholder="Enter new password"
+								placeholder="Enter a new password that's at least 8 characters long"
 								type="password"
 								{...getFieldProps('password')}
 							/>
