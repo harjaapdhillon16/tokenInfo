@@ -37,7 +37,10 @@ const teamAccount = [
 const FormsScreen = (props) => {
   const [show, setShow] = useState(false);
   const [editRole, setEditRole] = useState(false);
+  const [joinTeam, setJoinTeam] =useState (false);
   const [editPermissions, setEditPermissions] = useState(false);
+  const [joinStatus, setJoinStatus] =useState(false);
+  const [addMembers, setAddMembers] =useState(false)
   const [visible, setVisible] = useState(false);
   const handleShow = () => {
     setShow(false);
@@ -46,7 +49,6 @@ const FormsScreen = (props) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [inviteStatus, setInviteStatus] = useState(false);
-  const [handleStatus, setHandleStatus] = useState();
   const [formSubmit, setFormSubmit] = useState(false);
   const { agent, setAgent } = useContext(appContext);
 
@@ -120,7 +122,7 @@ const FormsScreen = (props) => {
                   <Button
                     variant="outline-secondary"
                     className="send mr-3 p-1"
-                    onClick={() => setShow(true)}
+                    onClick={() => setAddMembers(true)}
                   >
                     Add Members
                   </Button>
@@ -153,7 +155,7 @@ const FormsScreen = (props) => {
                   <Button
                     variant="outline-secondary"
                     className="send mr-4"
-                    onClick={() => setShow(true)}
+                    onClick={() => setJoinTeam(true)}
                   >
                     Join a team
                   </Button>
@@ -343,7 +345,7 @@ const FormsScreen = (props) => {
             </Modal.Header>
             <Modal.Body>
               <Row className="border-bottom">
-                <Col md={9}>
+                <Col md={9} xs={6}>
                   <ul>
                     <li>Ronald Storm</li>
                     <li>Mont Sky Real Estate</li>
@@ -351,7 +353,7 @@ const FormsScreen = (props) => {
                   </ul>
                 </Col>
                 <Col
-                  md={3}
+                  md={3} xs={6}
                   className="d-flex justify-content-center align-items-center"
                 >
                   <DropdownButton
@@ -377,7 +379,7 @@ const FormsScreen = (props) => {
                 </Col>
               </Row>
               <Row className="pt-3">
-                <Col md={9}>
+                <Col md={9} xs={6}>
                   <ul>
                     <li>Joseph Ragon</li>
                     <li>Mont Sky Real Estate</li>
@@ -385,7 +387,7 @@ const FormsScreen = (props) => {
                   </ul>
                 </Col>
                 <Col
-                  md={3}
+                  md={3} xs={6}
                   className="d-flex justify-content-center align-items-center"
                 >
                   <DropdownButton
@@ -408,6 +410,156 @@ const FormsScreen = (props) => {
             onClick={() => {
               setEditModal(false);
               setEditRole(false);
+            }}
+          >
+            Done
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={joinTeam} className="edit-details">
+            <Modal.Header>
+              <Modal.Title className="m-auto">Join a team</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+          <Form>
+            <div class="input-group mb-3 account-details">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Name"
+                aria-describedby="basic-addon2"
+              />
+              <div class="input-group-append px-2">
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  className="p-1"
+                >
+                  <Search />
+                </button>
+              </div>
+            </div>
+            <Row>
+              {teamAccount.map((item) => (
+                <Col md={12}>
+                  <div className="team-list">
+                    <ul>
+                      <li>{item.name}</li>
+                      <li>
+                        {item.address}
+                        <Button
+                          variant="outline-secondary"
+                          className="send d-flex align-items-center justify-content-center float-right"
+                          onClick={() => setInviteStatus(true)}
+                        >
+                          {inviteStatus ? <>Pending!</> : <>Join</>}
+                        </Button>
+                      </li>
+                      <li>{item.city}</li>
+                    </ul>
+                  </div>
+                </Col>
+              ))}
+            </Row>
+            <div class="input-group mb-3 account-details">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Email address(es) separated by commas"
+                aria-describedby="basic-addon2"
+              />
+              <div class="input-group-append px-2 send-append">
+                <button class="btn-secondary" type="button" className="p-1">
+                  Send
+                </button>
+              </div>
+            </div>
+          </Form>
+          <p>
+            Find your Team on Cribfox, or invite them by email to start a team that you can join if they don't have an account yet.
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="outline-secondary"
+            className="m-auto"
+            onClick={() => {
+              setJoinTeam(false);
+            }}
+          >
+            Done
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <Modal show={addMembers} className="edit-details">
+            <Modal.Header>
+              <Modal.Title className="m-auto">Add team members</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+          <Form>
+            <div class="input-group mb-3 account-details">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Name"
+                aria-describedby="basic-addon2"
+              />
+              <div class="input-group-append px-2">
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  className="p-1"
+                >
+                  <Search />
+                </button>
+              </div>
+            </div>
+            <Row>
+              {teamAccount.map((item) => (
+                <Col md={12}>
+                  <div className="team-list">
+                    <ul>
+                      <li>{item.name}</li>
+                      <li>
+                        {item.address}
+                        <Button
+                          variant="outline-secondary"
+                          className="send d-flex align-items-center justify-content-center float-right"
+                          onClick={() => setInviteStatus(true)}
+                        >
+                          {inviteStatus ? <>Pending!</> : <>Join</>}
+                        </Button>
+                      </li>
+                      <li>{item.city}</li>
+                    </ul>
+                  </div>
+                </Col>
+              ))}
+            </Row>
+            <div class="input-group mb-3 account-details">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Email address(es) separated by commas"
+                aria-describedby="basic-addon2"
+              />
+              <div class="input-group-append px-2 send-append">
+                <button class="btn-secondary" type="button" className="p-1">
+                  Send
+                </button>
+              </div>
+            </div>
+          </Form>
+          <p>
+          Invite your teammates to join your team on Cribfox, even if they don't have an account yet.
+          </p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="outline-secondary"
+            className="m-auto"
+            onClick={() => {
+              setAddMembers(false);
             }}
           >
             Done
