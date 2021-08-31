@@ -9,6 +9,10 @@ export const getAgent = /* GraphQL */ `
       email
       brokerageName
       stateOfLicensure
+      teamID
+      brokerageId
+      leadingTeamId
+      leadingBrokerageId
       createdAt
       updatedAt
     }
@@ -27,6 +31,10 @@ export const listAgents = /* GraphQL */ `
         email
         brokerageName
         stateOfLicensure
+        teamID
+        brokerageId
+        leadingTeamId
+        leadingBrokerageId
         createdAt
         updatedAt
       }

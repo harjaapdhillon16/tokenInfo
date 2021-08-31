@@ -12,6 +12,10 @@ export const createAgent = /* GraphQL */ `
       email
       brokerageName
       stateOfLicensure
+      teamID
+      brokerageId
+      leadingTeamId
+      leadingBrokerageId
       createdAt
       updatedAt
     }
@@ -28,6 +32,10 @@ export const updateAgent = /* GraphQL */ `
       email
       brokerageName
       stateOfLicensure
+      teamID
+      brokerageId
+      leadingTeamId
+      leadingBrokerageId
       createdAt
       updatedAt
     }
@@ -44,6 +52,10 @@ export const deleteAgent = /* GraphQL */ `
       email
       brokerageName
       stateOfLicensure
+      teamID
+      brokerageId
+      leadingTeamId
+      leadingBrokerageId
       createdAt
       updatedAt
     }
