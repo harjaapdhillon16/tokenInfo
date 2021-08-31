@@ -204,8 +204,19 @@
     text-align: left !important;
     margin-top: 10px;
   }
-  .status-btn .form-row .btn-outline-secondary {
+  .status-btn .btn-outline-secondary.cf-black {
     min-width: 130px;
+}
+.dashboardCards .dropdown-menu.show{
+  overflow: hidden;
+  width: 320px;
+  flex-wrap: wrap;
+}
+.dashboardCards .dropdown-item{
+  white-space: pre-wrap;
+}
+.add-contact{
+  max-width: 122px;
 }
   }
   

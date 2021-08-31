@@ -85,6 +85,43 @@
   max-width: 47%;
     height: auto;
 }
+/* Account page css */
+.account-details .input-group-append {
+  border: 1px solid #ced4da;
+  border-radius: 2px;
+}
+.account-details input{
+  border-right:0;
+}
+.account-details :focus{
+  box-shadow: none !important;
+  border-color: #ced4da !important;
+}
+.account-details button{
+  border:0;
+  background: transparent;
+}
+.send-append{
+  background-color: #e9ecef;
+}
+  .team-list ul{
+    list-style:none;
+    padding-left:10px;
+  }
+  .edit-details .dropdown-menu{
+    min-width: 5rem;
+  }
+  .edit-details ul{
+    list-style:none;
+  }
+  .check-field input {
+    height: 20px;
+    width: 30px;
+}
+.check-field label {
+  padding-left: 14px;
+  padding-top: 2px;
+}
 /* Responsive design with media queries */
 
 @media (max-width: 1200px) {
