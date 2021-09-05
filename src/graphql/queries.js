@@ -173,6 +173,35 @@ export const listFormEvents = /* GraphQL */ `
     }
   }
 `;
+export const getTeam = /* GraphQL */ `
+  query GetTeam($id: ID!) {
+    getTeam(id: $id) {
+      id
+      name
+      isBrokerage
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listTeams = /* GraphQL */ `
+  query ListTeams(
+    $filter: ModelTeamFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listTeams(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        isBrokerage
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const contactByAgent = /* GraphQL */ `
   query ContactByAgent(
     $agentId: ID

@@ -66,7 +66,7 @@ type FormEvent
 	ip: String
 }
 
-type Team {
+type Team @model {
 	id: ID!
 	name: String!
 	isBrokerage: Boolean

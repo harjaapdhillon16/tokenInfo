@@ -217,3 +217,36 @@ export const onDeleteFormEvent = /* GraphQL */ `
     }
   }
 `;
+export const onCreateTeam = /* GraphQL */ `
+  subscription OnCreateTeam {
+    onCreateTeam {
+      id
+      name
+      isBrokerage
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateTeam = /* GraphQL */ `
+  subscription OnUpdateTeam {
+    onUpdateTeam {
+      id
+      name
+      isBrokerage
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteTeam = /* GraphQL */ `
+  subscription OnDeleteTeam {
+    onDeleteTeam {
+      id
+      name
+      isBrokerage
+      createdAt
+      updatedAt
+    }
+  }
+`;
