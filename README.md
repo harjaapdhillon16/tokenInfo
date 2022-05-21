@@ -1,7 +1,7 @@
 # ⚡ A hobby project with integrated DAPP Login
 Project Name : Token info WEB APP
 # Working code in a public repo or PR to a public repo
-https://github.com/harjaapdhillon16/Friends-SHOW
+https://github.com/harjaapdhillon16/tokenInfo
 # Recorded video demo of the integration
 https://youtu.be/sWDUx6KjAgA
 # Discord ID: 
