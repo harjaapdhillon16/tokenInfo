@@ -1,0 +1,22 @@
+@tailwind base;
+
+/* Your own custom base styles */
+
+/* Start purging... */
+@tailwind components;
+/* Stop purging. */
+
+/* Your own custom component styles */
+
+/* Start purging... */
+@tailwind utilities;
+/* Stop purging. */
+
+/* Your own custom utilities */
+.websiteFont {
+  font-family: "Lexend", sans-serif;
+}
+
+.headingFont {
+    font-family: 'Heebo', sans-serif;
+}
